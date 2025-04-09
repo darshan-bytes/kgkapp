@@ -77,9 +77,7 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
   }
 
   void handleSelectSetting(BuildContext context) {
-    if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-      appBloc.diyStyleForDIY = diyStyleListModel;
-    }
+    appBloc.diyStyleForDIY = diyStyleListModel;
     final String route = screenIdentifier == ScreenIdentifier.jewelleryForDIY ? AppRoutes.stoneListingPage : AppRoutes.completeProductPage;
     final Map<RoutesData, dynamic> arguments = {
       RoutesData.settingId: settingId,

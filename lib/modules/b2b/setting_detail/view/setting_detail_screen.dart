@@ -99,9 +99,11 @@ class SettingDetailScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  if (bloc.productDetails!.brandName.isNotNullNorEmpty)
+                  if (bloc.productDetails != null && bloc.productDetails!.brandName.isNotNullNorEmpty)
                     SmartText(bloc.productDetails?.brandName, style: style.ringTypeStyle),
-                  if (bloc.productDetails!.brandName.isNotNullNorEmpty && bloc.productDetails!.productSku.isNotNullNorEmpty) ...[
+                  if (bloc.productDetails != null &&
+                      bloc.productDetails!.brandName.isNotNullNorEmpty &&
+                      bloc.productDetails!.productSku.isNotNullNorEmpty) ...[
                     SizedBox(width: 8.w),
                     Container(
                       height: 4.w,

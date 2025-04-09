@@ -66,21 +66,9 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
       (data) {
         diamondData = data;
         if (diamondData != null) {
-          bool isDiscounted = diamondData!.discountPercentage != null && diamondData!.discountPercentage! > 0;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
-          productDetails = ProductDetailsModel(
-            productId: productId,
-            name: productName,
-            lotCode: diamondData!.lotCode,
-            finalPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
-            originalPrice: diamondData!.finalPrice?.setCurrency,
-            discountPercentageString:
-                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
-            productSku: diamondData!.lotCode,
-            commodity: Commodity.diamond,
-            stoneElements: diamondData?.components,
-          );
+          productDetails = Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamondData!);
         }
       },
     );

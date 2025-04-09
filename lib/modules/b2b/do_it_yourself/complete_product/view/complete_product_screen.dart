@@ -114,9 +114,11 @@ class CompleteProductScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              if (bloc.productDetails!.brandName.isNotNullNorEmpty)
+              if (bloc.productDetails != null && bloc.productDetails!.brandName.isNotNullNorEmpty)
                 SmartText(bloc.productDetails?.brandName, style: style.productTypeStyle),
-              if (bloc.productDetails!.brandName.isNotNullNorEmpty && bloc.productDetails!.productSku.isNotNullNorEmpty) ...[
+              if (bloc.productDetails != null &&
+                  bloc.productDetails!.brandName.isNotNullNorEmpty &&
+                  bloc.productDetails!.productSku.isNotNullNorEmpty) ...[
                 SizedBox(width: 8.w),
                 Container(
                   height: 4.w,
@@ -128,41 +130,40 @@ class CompleteProductScreen extends StatelessWidget {
                 ),
                 SizedBox(width: 8.w),
               ],
-              if (bloc.productDetails!.productSku.isNotNullNorEmpty)
+              if (bloc.productDetails != null && bloc.productDetails!.productSku.isNotNullNorEmpty)
                 SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle),
             ],
           ),
           SizedBox(height: 8.h),
-          SmartText(
-            bloc.productName,
-            style: style.productNameStyle,
-          ),
+          SmartText(bloc.productName, style: style.productNameStyle),
           Divider(height: 40.h),
-          ProductSelectedSettings(
-            onTap: () {
-              context.popUntilOfContext((route) => route.settings.name == AppRoutes.stoneListingPage);
-            },
-            selectedSettings: SelectedSettings(
-              name: bloc.diamondDetails?.name,
-              price: bloc.diamondDetails?.finalPrice,
-              specification: bloc.displaySpecification,
-              image: AppImages.icBlankDiamond,
-              imageColor: style.ratingGlowColor,
+          if ((bloc.diamondDetails?.name).isNotNullNorEmpty) ...[
+            ProductSelectedSettings(
+              onTap: () {
+                context.popUntilOfContext((route) => route.settings.name == AppRoutes.stoneListingPage);
+              },
+              selectedSettings: SelectedSettings(
+                name: bloc.diamondDetails?.name,
+                price: bloc.diamondDetails?.finalPrice,
+                specification: bloc.displaySpecification,
+                image: AppImages.icBlankDiamond,
+                imageColor: style.ratingGlowColor,
+              ),
             ),
-          ),
-          SizedBox(height: 24.h),
-          ProductSelectedSettings(
-            onTap: () {
-              context.popUntilOfContext((route) => route.settings.name == AppRoutes.settingListingPage);
-            },
-            selectedSettings: SelectedSettings(
-              name: bloc.productName,
-              price: bloc.productDetails!.finalPrice,
-              specification: null,
-              image: AppImages.icRing,
+            SizedBox(height: 24.h),
+          ],
+          if (bloc.productName.isNotNullNorEmpty) ...[
+            ProductSelectedSettings(
+              onTap: () => context.popUntilOfContext((route) => route.settings.name == AppRoutes.settingListingPage),
+              selectedSettings: SelectedSettings(
+                name: bloc.productName,
+                price: bloc.productDetails?.finalPrice,
+                specification: null,
+                image: AppImages.icRing,
+              ),
             ),
-          ),
-          SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
+          ],
           Row(
             children: [
               SmartText(APPStrings.buyingInBulk.tr, style: style.productTypeStyle),
@@ -190,16 +191,9 @@ class CompleteProductScreen extends StatelessWidget {
           SizedBox(height: 32.h),
           Row(
             children: [
-              SmartImage(
-                path: AppImages.icDiamond,
-                height: 24.w,
-                width: 24.w,
-              ),
+              SmartImage(path: AppImages.icDiamond, height: 24.w, width: 24.w),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.diamondPurityYouCanTrust.tr,
-                style: style.diamondPurityStyle,
-              )
+              SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle)
             ],
           ),
           SizedBox(height: 16.h),
@@ -207,19 +201,13 @@ class CompleteProductScreen extends StatelessWidget {
             children: [
               const SmartImage(path: AppImages.icTruck),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.shippingAcrossAllCountries.tr,
-                style: style.diamondPurityStyle,
-              )
+              SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.diamondPurityStyle)
             ],
           ),
           SizedBox(height: 32.h),
           Divider(height: 1.h),
           SizedBox(height: 28.h),
-          const InquiryWidget(
-            email: 'enquiry.diaind@kgkmail.com',
-            phone: '+91 - 1234567830',
-          ),
+          const InquiryWidget(email: 'enquiry.diaind@kgkmail.com', phone: '+91 - 1234567830'),
           SizedBox(height: 24.h),
         ],
       ),
