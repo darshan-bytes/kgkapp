@@ -1051,6 +1051,7 @@ class APPStrings {
   static const String shippingAndBillingBoth = 'mob_shipping_and_billing_both';
   static const String productNo = 'mob_product_no';
   static const String selectContact = 'mob_select_contact';
+  static const String editReview = 'mob_edit_review';
 
   static const String complete = 'mob_complete';
   static const String choose = 'mob_choose';

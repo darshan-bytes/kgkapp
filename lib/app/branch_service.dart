@@ -19,6 +19,7 @@ class BranchService {
 
   static const String branchLinkType = 'branch_link_type';
   static const String linkExtraData = 'extra_data';
+  static const String desktopUrl = 'desktop_url';
   static const String clickedBranchLink = '+clicked_branch_link';
 
   // Initialize Branch SDK
@@ -30,6 +31,8 @@ class BranchService {
         (Map<dynamic, dynamic> data) {
           kgk_logger.log('🔗 Branch Deep Link Data: ${jsonEncode(data)}');
           if (data.containsKey(clickedBranchLink) && data[clickedBranchLink] == true) {
+            kgk_logger.log('🔗 Branch linkExtraData type: ${data[linkExtraData]?.runtimeType}');
+            kgk_logger.log('🔗 Branch linkExtraData: ${data[linkExtraData]}');
             if (data[linkExtraData].runtimeType != Map) {
               data[linkExtraData] = data[linkExtraData]?.toString().customStringToJson;
             }
@@ -66,6 +69,7 @@ class BranchService {
     kgk_logger.log('Branch link title: $title');
     if (extraData != null) {
       buo.contentMetadata ??= BranchContentMetaData();
+      buo.contentMetadata?.addCustomMetadata(desktopUrl, "${AppConst.frontendLink}/commodity/${extraData.webPath}/${extraData.id}");
       buo.contentMetadata?.addCustomMetadata(linkExtraData, extraData.toJson());
     }
 
