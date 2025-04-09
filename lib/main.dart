@@ -24,9 +24,11 @@ void main() async {
   if (!kDebugMode) {
     await AppCrashlytics.instance.initialize();
   }
-  Timer.periodic(Duration(seconds: 1), (timer) {
-    //logMemoryUsage();
-  });
+
+  /// Below line is used to log memory usage. Uncomment it when need to log the memory usage
+  // Timer.periodic(Duration(seconds: 1), (timer) {
+  //logMemoryUsage();
+  // });
 
   /// Initializing app
   runApp(const MyApp());

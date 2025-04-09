@@ -97,15 +97,15 @@ dependencies:
   webview_flutter: ^4.10.0
 
   #For Google Map
-  google_maps_flutter: ^2.12.0
+  google_maps_flutter: ^2.12.1
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^29.1.33
+  syncfusion_flutter_sliders: ^29.1.35
 
   #For Calendar
-  syncfusion_flutter_calendar: ^29.1.33
+  syncfusion_flutter_calendar: ^29.1.35
 
-  syncfusion_flutter_charts: ^29.1.33
+  syncfusion_flutter_charts: ^29.1.35
 
   #For QR Code
   qr_flutter: ^4.1.0
@@ -127,7 +127,7 @@ dependencies:
   http_parser: ^4.1.2
 
   # access location
-  geolocator: ^13.0.3
+  geolocator: ^13.0.4
 
   # For Url Launcher
   url_launcher: ^6.3.1
@@ -139,10 +139,10 @@ dependencies:
 
   # For Photo View
   photo_view: ^0.15.0
-  model_viewer_plus: ^1.9.1
+  model_viewer_plus: ^1.9.3
 
-  firebase_core: ^3.12.1
-  firebase_crashlytics: ^4.3.4
+  firebase_core: ^3.13.0
+  firebase_crashlytics: ^4.3.5
 
   flutter_langdetect: ^0.0.2
 

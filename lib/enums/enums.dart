@@ -114,20 +114,20 @@ enum Edge { top, end, bottom, start }
 enum Clipper { start, center, end }
 
 enum Commodity {
-  diamond('diamond'),
-  gemstone('gemstone'),
-  jewellery('jewellery'),
-  styleLibrary('style_library'),
-  skuLibrary('sku_library'),
-  cadLibrary('cad_library'),
-  designLibrary('design_library'),
-  finishedGoodLibrary('finished_good_library'),
-  diy('diy'),
+  diamond('diamond', 'diamonds'),
+  gemstone('gemstone', 'gemstones'),
+  jewellery('jewellery', 'jewellery'),
+  styleLibrary('style_library', 'product-library/style'),
+  skuLibrary('sku_library', 'product-library/sku'),
+  cadLibrary('cad_library', 'product-library/cad'),
+  designLibrary('design_library', 'product-library/design'),
+  diy('diy', 'diy'),
   ;
 
-  const Commodity(this.value);
+  const Commodity(this.value, this.webPath);
 
   final String value;
+  final String webPath;
 }
 
 enum FilterType {

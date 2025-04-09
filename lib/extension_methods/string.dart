@@ -126,7 +126,12 @@ extension StringExtensions on String {
       // Split by comma and process each key-value pair
       Map<String, dynamic> result = {};
       for (var pair in cleaned.split(', ')) {
-        var keyValue = pair.split('=');
+        List<String> keyValue = [];
+        if (pair.contains('=')) {
+          keyValue = pair.split('=');
+        } else if (pair.contains(':')) {
+          keyValue = pair.split(':');
+        }
         if (keyValue.length == 2) {
           result[keyValue[0].trim()] = keyValue[1].trim();
         }

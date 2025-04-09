@@ -65,7 +65,9 @@ class ApiClient {
 
   static const String productReviews = '$apiBaseUrl/product/reviews';
 
-  static String productReviewsFilter(String productId) => '$apiBaseUrl/product/reviews/filter/$productId';
+  static String productReviewsById(String id) => '$apiBaseUrl/product/reviews/$id';
+
+  static const String productReviewsFilter = '$apiBaseUrl/product/reviews/filter';
 
   static String auctionDetails(String auctionId) => '$apiBaseUrl/auctions/$auctionId';
 

@@ -153,7 +153,6 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         name: jewelleryData.productDescription ?? '',
         jewelleryType: jewelleryData.jewelleryType,
         originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
-        offerPrice: jewelleryData.discountPrice?.toString().setCurrency,
         finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
         discountPercentageString:
             isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
@@ -175,7 +174,6 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         suid: diamondData.suid,
         name: diamondData.rmDescription ?? '',
         originalPrice: diamondData.finalPrice?.toString().setCurrency,
-        offerPrice: diamondData.discountPrice?.toString().setCurrency,
         finalPrice: diamondData.discountPrice?.toString().setCurrency,
         discountPercentageString:
             isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData.discountPercentage]) : null,
@@ -198,10 +196,8 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         suid: gemstoneData.suid,
         name: gemstoneData.rmDescription ?? '',
         originalPrice: gemstoneData.finalPrice?.toString().setCurrency,
-        offerPrice: gemstoneData.discountPrice?.toString().setCurrency,
+        discountPrice: gemstoneData.discountPrice?.toString().setCurrency,
         finalPrice: gemstoneData.discountPrice?.toString().setCurrency,
-        // offerPrice: isDiscounted ? (gemstoneData!.discountPrice ?? 0).toString().setCurrency : null,
-        // originalPrice: gemstoneData!.finalPrice?.setCurrency,
         discountPercentageString:
             isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData.discountPercentage]) : null,
         productSku: gemstoneData.lotCode,

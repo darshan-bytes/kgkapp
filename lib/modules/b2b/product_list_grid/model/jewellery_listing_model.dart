@@ -188,6 +188,10 @@ class JewelleryDataModel {
     this.customerScope,
     this.kgkCoutureImage,
     this.isCommented = false,
+    this.inHouse,
+    this.leavingSoon,
+    this.specialOffer,
+    this.trending,
   });
 
   dynamic metalColor3RefSuid;
@@ -341,6 +345,10 @@ class JewelleryDataModel {
   dynamic customerScope;
   String? kgkCoutureImage;
   bool isCommented;
+  String? inHouse;
+  String? leavingSoon;
+  String? specialOffer;
+  String? trending;
 
   factory JewelleryDataModel.fromJson(Map<String, dynamic> json) {
     return JewelleryDataModel(
@@ -503,6 +511,10 @@ class JewelleryDataModel {
       customerScopeRefSuid: json["customer_scope_ref_suid"],
       customerScope: json["customer_scope"],
       isCommented: json["is_commented"] ?? false,
+      inHouse: json["in_house"]?.toString(),
+      leavingSoon: json["leaving_soon"]?.toString(),
+      specialOffer: json["special_offer"]?.toString(),
+      trending: json["trending"]?.toString(),
     );
   }
 
@@ -653,6 +665,12 @@ class JewelleryDataModel {
         "subarea_name": subareaName,
         "customer_scope_ref_suid": customerScopeRefSuid,
         "customer_scope": customerScope,
+        "kgk_couture_image": kgkCoutureImage,
+        "is_commented": isCommented,
+        "in_house": inHouse,
+        "leaving_soon": leavingSoon,
+        "special_offer": specialOffer,
+        "trending": trending,
       };
 
   @override
@@ -677,8 +695,11 @@ extension JewelleryListingModelExtension on JewelleryDataModel {
   List<String> get imageListEXT {
     final list = <String>[];
     for (var element in multipleFinishedViewImage) {
-      for (var e in element.multiAngleUrl) {
-        if (element.imageAvailable?.toLowerCase() == ApiKey.yes) {
+      if (element.imageAvailable?.toLowerCase() == ApiKey.yes) {
+        if (element.imageUrl.isNotNullNorEmpty) {
+          list.add(element.imageUrl!);
+        }
+        for (var e in element.multiAngleUrl) {
           if (e.url.isNotNullNorEmpty) {
             list.add(e.url!);
           }

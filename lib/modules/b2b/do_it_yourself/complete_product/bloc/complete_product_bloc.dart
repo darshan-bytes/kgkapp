@@ -60,9 +60,10 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
         diyFinalDetailsModel = r;
         if (r.product != null) {
           DiyStyleListModel item = r.product!;
-          if (item.imageSketch.isNotNullNorEmpty) {
-            imgList.clear();
-            imgList.add(item.imageSketch ?? '');
+          imgList.clear();
+          for (MultipleFinishedViewImage element in item.multipleFinishedViewImage) {
+            imgList.add(element.imageUrl ?? "");
+            imgList.addAll(element.multiAngleUrl.where((e) => e.url.isNotNullNorEmpty).map((e) => e.url!));
           }
           productName = item.longDescription ?? '';
 
@@ -72,7 +73,6 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
             imageUrl: item.imageSketch,
             subTitle: item.autoDescription,
             originalPrice: item.finalPrice?.toString().setCurrency,
-            offerPrice: item.discountPrice?.toString().setCurrency,
             finalPrice: item.discountPrice?.toString().setCurrency,
             commodity: Commodity.diy,
             businessCategoryName: item.businessCategoryName ?? "",
@@ -88,7 +88,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
             productId: diamondData.suid,
             suid: diamondData.suid,
             name: diamondData.rmDescription,
-            offerPrice: diamondData.discountPrice?.setCurrency,
+            finalPrice: diamondData.discountPrice?.setCurrency,
             originalPrice: diamondData.finalPrice?.setCurrency,
             productSku: diamondData.lotCode,
             reviewCount: diamondData.reviewCount,

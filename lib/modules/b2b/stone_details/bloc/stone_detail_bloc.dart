@@ -50,9 +50,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
 
   Future<void> _onStoneDetailSelectStoneForDIYEvent(StoneDetailSelectStoneForDIYEvent event, Emitter<StoneDetailState> emit) async {
     appBloc.diamondDataForDIY = diamondData;
-    final route = screenIdentifier == ScreenIdentifier.diamondForDIY
-        ? AppRoutes.settingListingPage
-        :  AppRoutes.completeProductPage;
+    final route = screenIdentifier == ScreenIdentifier.diamondForDIY ? AppRoutes.settingListingPage : AppRoutes.completeProductPage;
 
     await event.context.pushNamed(route);
   }
@@ -68,21 +66,9 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
       (data) {
         diamondData = data;
         if (diamondData != null) {
-          bool isDiscounted = diamondData!.discountPercentage != null && diamondData!.discountPercentage! > 0;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
-          productDetails = ProductDetailsModel(
-            productId: productId,
-            name: productName,
-            lotCode: diamondData!.lotCode,
-            offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
-            originalPrice: diamondData!.finalPrice?.setCurrency,
-            discountPercentageString:
-                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
-            productSku: diamondData!.lotCode,
-            commodity: Commodity.diamond,
-            stoneElements: diamondData?.components,
-          );
+          productDetails = Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamondData!);
         }
       },
     );

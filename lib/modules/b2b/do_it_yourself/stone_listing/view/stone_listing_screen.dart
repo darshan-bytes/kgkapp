@@ -259,9 +259,9 @@ class StoneListingScreen extends StatelessWidget {
                             arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId});
                       }
                     },
-                    onEyeTap: () {},
+                    onEyeTap: bloc.isFavWatchListNotEnableForDIY ? () {} : null,
                     isFavourite: productDetails.isFavourite,
-                    onFavTap: () {},
+                    onFavTap: bloc.isFavWatchListNotEnableForDIY ? () {} : null,
                     onAddToBagTap: (productDetails.isForAuction ||
                             (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
                                 bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY))
@@ -391,7 +391,7 @@ class StoneListingScreen extends StatelessWidget {
                             productDetails: ProductDetailsModel(
                               suid: product.suid,
                               productInfoClarityChat: ProductInfoClarityChat(
-                                perCts: product.offerPrice?.setCurrency,
+                                perCts: product.finalPrice?.setCurrency,
                                 stock: product.location,
                                 commodity: product.commodity?.value,
                                 rapRate: product.rappaportPrice?.setCurrency,

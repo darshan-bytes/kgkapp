@@ -133,8 +133,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   List<ProductDetailsModel> recentlyViewedProductList = [];
 
   List<ReviewDataModel> reviewList = [];
+  ProductReviewModel? myReview;
 
   bool userReviewSubmitted = false;
+
+  bool get isShowEditReview => myReview != null && (myReview!.status == AppConst.pending || myReview!.status == AppConst.rejected);
 
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
   StreamSubscription<CompareProductState>? compareProductStream;
@@ -587,13 +590,18 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
-  Future<void> productReviewsFilter(BuildContext context, String productId, Emitter<ProductDetailsState> emit) async {
+  Future<void> productReviewsFilter(BuildContext context, String productId, Emitter<ProductDetailsState> emit,
+      {bool isLoadMore = false}) async {
     if (isClosed) return;
     emit(const ReloadProductDetailsState());
-
+    Map<String, String> query = {
+      ApiKey.productId_: productId,
+      ApiKey.limit: "6",
+      ApiKey.page: "1",
+    };
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
     Either<ErrorResponse, ProductReviewWrapperModel>? response =
-        await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"}, isLoadMore: false);
+        await AppRepository(context).productReviewsFilter(query: query, isLoadMore: isLoadMore);
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -603,6 +611,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       (data) {
         if (isClosed) return;
         userReviewSubmitted = data.userReviewSubmitted;
+        myReview = data.myReview;
         reviewList = (data.dataList)?.map((e) {
               return ReviewDataModel(
                 id: e.id,
@@ -764,9 +773,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         return;
       }
     }
-    context.pushNamed(AppRoutes.writeReviewPage, arguments: {
+    await context.pushNamed(AppRoutes.writeReviewPage, arguments: {
       RoutesData.productId: productDetails?.productId,
       RoutesData.commodity: productDetails?.commodity,
+      RoutesData.myReview: myReview,
+    }).then((val) async {
+      await productReviewsFilter(context, productId, emit, isLoadMore: true);
     });
   }
 
@@ -875,9 +887,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   // Share link
-  Future<void> onTapShareLink({required BuildContext context}) async {
+  Future<void> onTapShareLink({required BuildContext context, required String link}) async {
     context.pop();
-    await Share.share("https://dev.kgk.magnetoinfotech.com");
+    await Share.share(link);
   }
 
   void initCompareProductChangesStream(BuildContext context) {

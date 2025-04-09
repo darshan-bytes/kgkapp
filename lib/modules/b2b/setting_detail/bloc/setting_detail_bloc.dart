@@ -63,7 +63,6 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
               imageUrl: diyStyleListModel!.imageSketch,
               subTitle: diyStyleListModel!.autoDescription,
               originalPrice: diyStyleListModel!.finalPrice?.toString().setCurrency,
-              offerPrice: diyStyleListModel!.discountPrice?.toString().setCurrency,
               finalPrice: diyStyleListModel!.discountPrice?.toString().setCurrency,
               commodity: Commodity.diy,
               businessCategoryName: diyStyleListModel!.businessCategoryName ?? "",
@@ -78,9 +77,7 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
   }
 
   void handleSelectSetting(BuildContext context) {
-    if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-      appBloc.diyStyleForDIY = diyStyleListModel;
-    }
+    appBloc.diyStyleForDIY = diyStyleListModel;
     final String route = screenIdentifier == ScreenIdentifier.jewelleryForDIY ? AppRoutes.stoneListingPage : AppRoutes.completeProductPage;
     final Map<RoutesData, dynamic> arguments = {
       RoutesData.settingId: settingId,

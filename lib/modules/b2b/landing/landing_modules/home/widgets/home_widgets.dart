@@ -70,7 +70,6 @@ class HomeWidgets {
                   onPageChanged: (index, reason) => homeBloc.add(HomeJewelleryImagePageChangeEvent(index: index)),
                 ),
               ),
-              SizedBox(height: 16.h),
               BlocBuilder<HomeBloc, HomeState>(
                 buildWhen: (_, current) => current is HomeJewelleryImagePageChangeState || current is HomeReloadState,
                 builder: (context, state) {

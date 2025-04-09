@@ -306,6 +306,87 @@ class ApiService implements ApiProvider {
       return Left(errorResponse);
     }
   }
+
+  @override
+  Future<Either<ErrorResponse, dynamic>?> patchMultipartMethod<T>(
+    String url,
+    Map<String, dynamic> body, {
+    Map<String, String>? headers,
+    Map<String, dynamic>? query,
+    List<ModelMultiPartFile>? files,
+    bool withFullResponse = false,
+    bool withCurrencyHeader = false,
+  }) async {
+    try {
+      if (await ConnectivityManager().checkInternet()) {
+        Uri uri = Uri.parse(url);
+        if (query != null && query.isNotEmpty) {
+          uri = uri.replace(queryParameters: query.map((key, value) => MapEntry(key, value.toString())));
+          url = uri.toString();
+        }
+
+        var request = http.MultipartRequest('PATCH', Uri.parse(url));
+
+        _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader).forEach((key, value) {
+          request.headers[key] = value;
+        });
+
+        // Add files to the request if provided
+        if (files != null) {
+          for (var fileData in files) {
+            File file = File(fileData.filePath);
+            String fileName = (fileData.filePath).split('/').last;
+            List<String> mimeType = (mime(fileName) ?? '').split('/');
+            var stream = http.ByteStream(file.openRead());
+            var length = await file.length();
+            var multipartFile = http.MultipartFile(
+              fileData.apiKey,
+              stream,
+              length,
+              filename: fileName.split('.').first.toLowerCase(),
+              contentType: MediaType(mimeType.first, mimeType.last),
+            );
+            request.files.add(multipartFile);
+          }
+        }
+
+        // Add other body parameters if provided
+        if (body.isNotEmpty) {
+          body.forEach((key, value) {
+            request.fields[key] = value.toString();
+          });
+        }
+
+        kgk_logger.log(
+            'Request URL: $url method: Patch Multipart Method headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
+
+        var response = await http.Response.fromStream(await request.send());
+
+        var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
+
+        if (commonResponse.isTokenExpired) {
+          /// todo : Show token expired popup
+          /// Utils.showSmartModalBottomSheet(context: getNavigatorKeyContext, builder: (context) => const TokenExpireDialog());
+          return null;
+        }
+
+        return commonResponse.isSuccess
+            ? withFullResponse
+                ? Right(commonResponse)
+                : Right(commonResponse.responseData)
+            : Left(ErrorResponse.fromJson(jsonDecode(response.body)));
+      } else {
+        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
+        return Left(errorResponse);
+      }
+    } on KGKException catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
+      return Left(errorResponse);
+    } catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
+      return Left(errorResponse);
+    }
+  }
 }
 
 enum _ApiType { get, post, put, patch, delete }

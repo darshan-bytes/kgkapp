@@ -294,13 +294,13 @@ class CartProductItem extends StatelessWidget {
       children: [
         Flexible(
           child: SmartText(
-            productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
+            productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: priceTextStyle ?? style.priceTextStyle,
           ),
         ),
-        if (productDetails.offerPrice.isNotNullNorEmpty) ...[
+        if (productDetails.finalPrice.isNotNullNorEmpty == true && (productDetails.finalPrice != productDetails.originalPrice)) ...[
           SizedBox(width: 10.w),
           Flexible(
             child: SmartText(
