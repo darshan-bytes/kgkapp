@@ -144,7 +144,7 @@ class CompleteProductScreen extends StatelessWidget {
               },
               selectedSettings: SelectedSettings(
                 name: bloc.diamondDetails?.name,
-                price: bloc.diamondDetails?.offerPrice,
+                price: bloc.diamondDetails?.finalPrice,
                 specification: bloc.displaySpecification,
                 image: AppImages.icBlankDiamond,
                 imageColor: style.ratingGlowColor,
@@ -157,7 +157,7 @@ class CompleteProductScreen extends StatelessWidget {
               onTap: () => context.popUntilOfContext((route) => route.settings.name == AppRoutes.settingListingPage),
               selectedSettings: SelectedSettings(
                 name: bloc.productName,
-                price: bloc.productDetails?.offerPrice,
+                price: bloc.productDetails?.finalPrice,
                 specification: null,
                 image: AppImages.icRing,
               ),
