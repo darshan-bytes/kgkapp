@@ -29,7 +29,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   /// This `SfRangeValues` instance holds the initial minimum and maximum values
   /// for the price range slider used in the UI. It is set with a start value of 500
   /// and an end value of 10000, defining the default price range for filtering.
-  SfRangeValues values = const SfRangeValues(0.00, 1000000.00);
+  SfRangeValues values = const SfRangeValues(0.00, 500000.00);
   TextEditingController minPriceController = TextEditingController();
   TextEditingController maxPriceController = TextEditingController();
 
@@ -182,7 +182,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       /// Show the total number of records in the UI side
       totalFilteredRecords = success.filteredRecords;
       productList.addAll(
-        diamondList.map((diamond) => _convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
+        diamondList.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
       );
 
       /// Here sometime the pagination is not completed and called multiple times so we have managed it

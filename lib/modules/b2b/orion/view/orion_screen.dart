@@ -126,25 +126,43 @@ class OrionScreen extends StatelessWidget {
 
                       return ProductInfoItem(
                         isFromBag: false,
-                        onTap360View: () => printWrapped("onTap360View"),
                         productFeaturesList: attributes,
+                        onTap360View: () {
+                          if (product.video.isNotNullNorEmpty) {
+                            Utils.launchUrlFromString(product.video!);
+                          } else {
+                            Utils.showMessage(APPStrings.no3DViewAvailable.tr);
+                          }
+                        },
                         onTapDNA: () {
-                          context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                            RoutesData.cmsPageData: CmsWebViewDataModel(
-                              url: product.openDnaUrl,
-                              title: APPStrings.dna.tr,
-                            )
-                          });
+                          if (product.openDnaUrl != null) {
+                            Utils.launchUrlFromString(product.openDnaUrl!);
+                          } else {
+                            Utils.showMessage(APPStrings.noDnaAvailable.tr);
+                          }
                         },
                         onTapCertificate: () {
-                          context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                            RoutesData.cmsPageData: CmsWebViewDataModel(
-                              url: product.certificateFile,
-                              title: APPStrings.certificate.tr,
-                            )
-                          });
+                          if (product.certificateFile != null) {
+                            Utils.launchUrlFromString(product.certificateFile!);
+                          } else {
+                            Utils.showMessage(APPStrings.noCertificateAvailable.tr);
+                          }
                         },
-                        onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                        onTapImageViewer: () {
+                          if (product.imageUrl != null) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog.fullscreen(
+                                  backgroundColor: Colors.transparent,
+                                  child: ProductPhotoViewGallery(imageUrls: [product.imageUrl ?? '']),
+                                );
+                              },
+                            );
+                          } else {
+                            Utils.showMessage(APPStrings.noImageAvailable.tr);
+                          }
+                        },
                         onTapUSA: () => printWrapped("onTapUSA"),
                         onTapMenuButton: () {
                           Utils.showSmartModalBottomSheet(
@@ -326,7 +344,7 @@ class OrionScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SmartText(APPStrings.preferredPriceRange.tr, style: style.selectionTitleStyle),
+          SmartText(APPStrings.preferredPriceRange.tr.interpolate([APPStrings.price.tr]), style: style.selectionTitleStyle),
           SizedBox(height: 16.h),
           BlocBuilder<OrionBloc, OrionState>(
             buildWhen: (previous, current) => previous != current && current is OrionPriceRangeChangedState,
@@ -427,7 +445,6 @@ class OrionScreen extends StatelessWidget {
                       maximum: bloc.maximumXAxis,
                       interval: 1,
                       axisLabelFormatter: (AxisLabelRenderDetails details) {
-                        print("details.value ::: ${details.value}");
                         return ChartAxisLabel(
                           '${details.value.toInt()} ct',
                           const TextStyle(color: Colors.black),
@@ -438,8 +455,15 @@ class OrionScreen extends StatelessWidget {
                     ),
                     primaryYAxis: NumericAxis(
                       axisLabelFormatter: (AxisLabelRenderDetails details) {
+                        // String formattedPrice = NumberFormat.compact().format(details.value); // Output: 1.2M
+                        AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+                        String formattedCurrency = NumberFormat.compactCurrency(
+                          locale: appLocalizations.locale?.languageCode, // For Indian locale
+                          decimalDigits: 2,
+                          symbol: ''.setCurrency, // Indian Rupee symbol
+                        ).format(details.value);
                         // Format the label to display as price
-                        return ChartAxisLabel('\$${details.value.toStringAsFixed(2).padRight(0)}', const TextStyle(color: Colors.black));
+                        return ChartAxisLabel(formattedCurrency.padRight(0), const TextStyle(color: Colors.black));
                       },
                       onRendererCreated: (NumericAxisController controller) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -452,27 +476,22 @@ class OrionScreen extends StatelessWidget {
                       majorGridLines: const MajorGridLines(width: 0),
                     ),
                     onChartTouchInteractionMove: (tapArgs) {
-                      print(">>>>>>>>>> onChartTouchInteractionMove");
                       bloc.add(OrionDiamondChartTouchInteractionMoveEvent(tapArgs: tapArgs));
                     },
                     onChartTouchInteractionDown: (tapArgs) {
-                      print(">>>>>>>>>> onChartTouchInteractionDown");
                       bloc.add(OrionDiamondChartTouchInteractionDownEvent(context: context, tapArgs: tapArgs));
                     },
                     onChartTouchInteractionUp: (tapArgs) {
-                      print(">>>>>>>>>> onChartTouchInteractionUp");
                       bloc.add(OrionDiamondChartTouchInteractionUpEvent(context: context, tapArgs: tapArgs));
                     },
                     series: <CartesianSeries<ChartDataModel, num>>[
                       ScatterSeries<ChartDataModel, num>(
                         markerSettings: const MarkerSettings(isVisible: true),
                         onPointTap: (value) {
-                          print(">>>>>>>>>> value");
                           bloc.add(OrionDiamondOnPointTapEvent(context: context, index: value.pointIndex ?? 0, pointDetails: value));
                         },
                         onPointLongPress: (pointInteractionDetails) {
-                          print(">>>>>>>>>> pointInteractionDetails");
-                          bloc.add(OrionDiamondChangePointIndexEvent(context: context,index: pointInteractionDetails.pointIndex ?? 0));
+                          bloc.add(OrionDiamondChangePointIndexEvent(context: context, index: pointInteractionDetails.pointIndex ?? 0));
                         },
                         dataSource: bloc.chartData,
                         onRendererCreated: (ChartSeriesController controller) {
@@ -496,11 +515,9 @@ class OrionScreen extends StatelessWidget {
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onPanUpdate: (value) {
-                          print(">>>>>>>>>> OrionDiamondUpdatePinPositionEvent");
                           bloc.add(OrionDiamondUpdatePinPositionEvent(context: context, dragUpdateDetails: value));
                         },
                         onPanEnd: (details) {
-                          print(">>>>>>>>>> OrionDiamondSnapNearestPoint");
                           bloc.add(OrionDiamondSnapNearestPoint(context: context));
                         },
                         child: SmartImage(
@@ -526,11 +543,11 @@ class OrionScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SmartText(
-                    "Price: \$${bloc.currentPrice.toStringAsFixed(2)}",
+                    "${APPStrings.price.tr}: ${bloc.currentPrice.toStringAsFixed(2).setCurrency}",
                     style: style.selectionTitleStyle,
                   ),
                   SmartText(
-                    "Carat: ${bloc.currentCarat.toStringAsFixed(2)} ct",
+                    "${APPStrings.carat.tr}: ${bloc.currentCarat.toStringAsFixed(2)} ct",
                     style: style.selectionTitleStyle,
                   ),
                 ],
