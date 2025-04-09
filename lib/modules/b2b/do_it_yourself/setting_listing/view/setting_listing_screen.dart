@@ -57,7 +57,7 @@ class SettingListingScreen extends StatelessWidget {
                 child: SmartSingleChildScrollView(
               controller: settingListingBloc.paginationScrollController.scrollController,
               onRefresh: () async {
-                await settingListingBloc.pullToRefresh(context);
+                settingListingBloc.add(SettingListPullToRefreshEvent(context: context));
               },
               padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
               child: Column(
@@ -160,8 +160,6 @@ class SettingListingScreen extends StatelessWidget {
                               ProductDetailsModel productDetails = settingListingBloc.productList[index];
                               return ProductGridItem(
                                 productDetails: productDetails,
-                                onEyeTap: () {},
-                                onFavTap: () {},
                                 onTap: () {
                                   context.pushNamed(AppRoutes.settingDetailPage, arguments: {
                                     RoutesData.settingId: productDetails.suid,
@@ -180,8 +178,6 @@ class SettingListingScreen extends StatelessWidget {
                         onTap: () {
                           settingListingBloc.add(SettingListingOnTapEvent(context: context, index: index));
                         },
-                        onEyeTap: () {},
-                        onFavTap: () {},
                         productDetails: settingListingBloc.productList[index],
                       ),
                       itemCount: settingListingBloc.productList.length,

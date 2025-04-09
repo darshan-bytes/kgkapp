@@ -857,5 +857,7 @@
   "mob_shipping_and_billing_both": "शिपिंग और बिलिंग दोनों",
   "mob_product_no": "उत्पाद संख्या",
   "mob_select_contact": "संपर्क चुनें",
-  "mob_edit_review": "एडिट रिव्यु"
+  "mob_edit_review": "एडिट रिव्यु",
+   "mob_complete": "पूरा",
+  "mob_choose" : "चुनें"
 }

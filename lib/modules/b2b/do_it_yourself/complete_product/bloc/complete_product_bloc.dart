@@ -60,9 +60,10 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
         diyFinalDetailsModel = r;
         if (r.product != null) {
           DiyStyleListModel item = r.product!;
-          if (item.imageSketch.isNotNullNorEmpty) {
-            imgList.clear();
-            imgList.add(item.imageSketch ?? '');
+          imgList.clear();
+          for (MultipleFinishedViewImage element in item.multipleFinishedViewImage) {
+            imgList.add(element.imageUrl ?? "");
+            imgList.addAll(element.multiAngleUrl.where((e) => e.url.isNotNullNorEmpty).map((e) => e.url!));
           }
           productName = item.longDescription ?? '';
 

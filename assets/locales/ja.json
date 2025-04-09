@@ -857,5 +857,7 @@
   "mob_shipping_and_billing_both": "配送と請求の両方",
   "mob_product_no": "製品番号",
   "mob_select_contact": "連絡先を選択",
-  "mob_edit_review": "レビューを編集します"
+  "mob_edit_review": "レビューを編集します",
+  "mob_complete": "完了",
+  "mob_choose" : "選択"
 }

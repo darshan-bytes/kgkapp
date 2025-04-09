@@ -6,6 +6,7 @@ part 'stone_listing_state.dart';
 
 class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   late AppBloc appBloc;
+
   /// This variable is used to check whether the toggle is Precious tab or Semi Precious tab
   bool isInitialToggle = true;
 
@@ -56,6 +57,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Stream subscription for wishlist updates
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
+
+  bool get isFavWatchListNotEnableForDIY =>
+      !(screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.jewelleryForDIY);
 
   /// Stone listing constructor
   StoneListingBloc() : super(const StoneListingInitial()) {
@@ -144,11 +148,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     filterDataMap = data?[RoutesData.filterData];
     String? title = data?[RoutesData.appBarTitle];
 
-    if(screenIdentifier == ScreenIdentifier.jewelleryForDIY){
+    if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       settingId = data?[RoutesData.settingId];
       diyStyleListModel = appBloc.diyStyleForDIY;
-      filterDataMap ??={};
-      filterDataMap![ApiKey.shapeCode] = diyStyleListModel?.applicableDiamondShape.map((e)=> e.shapeCode).join(',');
+      filterDataMap ??= {};
+      filterDataMap![ApiKey.shapeCode] = diyStyleListModel?.applicableDiamondShape.map((e) => e.shapeCode).join(',');
     }
     if (title != null) {
       appbarTitle = title;
@@ -570,7 +574,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
       case ScreenIdentifier.jewelleryForDIY:
-        _setupTitles(APPStrings.diy.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
+        _setupTitles(APPStrings.doItYourself.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         break;
       case ScreenIdentifier.productForDiamonds:
       case ScreenIdentifier.diamondForDefault:
