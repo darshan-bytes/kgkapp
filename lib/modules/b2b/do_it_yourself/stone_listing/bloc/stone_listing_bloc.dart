@@ -207,7 +207,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Setup titles
   void _setupTitles(String appbarTitleValue, String tabOne, String tabTwo) {
-    appbarTitle = appbarTitleValue;
+    if (appbarTitle.isEmpty) {
+      appbarTitle = appbarTitleValue;
+    }
     tabOneTitle = tabOne;
     tabTwoTitle = tabTwo;
   }
@@ -560,17 +562,17 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   void _getStoneListName() {
-    if (appbarTitle.isNotNullNorEmpty) {
-      return;
+    if (appbarTitle.isEmpty) {
+      appbarTitle = APPStrings.diamonds.tr;
+      if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
+        appbarTitle = APPStrings.youMayAlsoLike.tr;
+        return;
+      } else if (productNavigation == AppConst.recentlyViewed && productId.isNotEmpty) {
+        appbarTitle = APPStrings.recentlyViewed.tr;
+        return;
+      }
     }
-    appbarTitle = APPStrings.diamonds.tr;
-    if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
-      appbarTitle = APPStrings.youMayAlsoLike.tr;
-      return;
-    } else if (productNavigation == AppConst.recentlyViewed && productId.isNotEmpty) {
-      appbarTitle = APPStrings.recentlyViewed.tr;
-      return;
-    }
+
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
       case ScreenIdentifier.jewelleryForDIY:

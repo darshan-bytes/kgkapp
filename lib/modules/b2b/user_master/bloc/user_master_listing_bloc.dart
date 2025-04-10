@@ -38,6 +38,15 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     UserLocationModel(name: "Mumbai"),
   ];
 
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  FocusNode newPasswordFocusNode = FocusNode();
+  FocusNode confirmPasswordFocusNode = FocusNode();
+
+  String? passwordError;
+  String? confirmPasswordError;
+
   UserMasterListingBloc() : super(UserMasterListingInitial()) {
     on<InitialUserMasterListingEvent>(_onInitialUserMasterListEvent);
     on<UserMasterListLoadMoreEvent>(_onUserMasterListLoadMoreEvent);
@@ -45,6 +54,9 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     on<UserMasterListingSearchEvent>(_onUserMasterListingSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<UserMasterChangeLocationTypeEvent>(_onUserMasterChangeLocationTypeEvent);
     on<UserMasterChangeStatusEvent>(_onUserMasterChangeStatus);
+    on<UserMasterChangePasswordInitialEvent>(_onUserMasterChangePasswordInitial);
+    on<UserMasterChangePasswordFieldChangeEvent>(_onChangePasswordFieldChangeEvent);
+    on<UserMasterChangePasswordEvent>(_onUserMasterChangePasswordEvent);
   }
 
   @override
@@ -256,5 +268,84 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
         );
       }
     }
+  }
+
+  void _onUserMasterChangePasswordInitial(UserMasterChangePasswordInitialEvent event, Emitter<UserMasterListingState> emit) {
+    emit(UserMasterListReloadState());
+    newPasswordController.clear();
+    confirmPasswordController.clear();
+    passwordError = null;
+    confirmPasswordError = null;
+    newPasswordFocusNode.unfocus();
+    confirmPasswordFocusNode.unfocus();
+  }
+
+  void _onChangePasswordFieldChangeEvent(UserMasterChangePasswordFieldChangeEvent event, Emitter<UserMasterListingState> emit) {
+    emit(UserMasterListReloadState());
+    switch (event.fieldType) {
+      case FieldTypeValidationEnum.password:
+        passwordError = null;
+        break;
+      case FieldTypeValidationEnum.confirmPassword:
+        confirmPasswordError = null;
+        break;
+      default:
+        break;
+    }
+    emit(UserMasterChangePasswordFieldErrorState(fieldType: event.fieldType));
+  }
+
+  Future<void> _onUserMasterChangePasswordEvent(UserMasterChangePasswordEvent event, Emitter<UserMasterListingState> emit) async {
+    emit(UserMasterListReloadState());
+    if (_validateChangePassword(emit)) {
+      await _callChangePasswordApi(event: event);
+    }
+  }
+
+  bool _validateChangePassword(Emitter<UserMasterListingState> emit) {
+    bool isValidate = true;
+
+    if (newPasswordController.text.trim().isEmpty) {
+      passwordError = APPStrings.errorPasswordRequired.tr;
+      emit(UserMasterChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.password));
+      isValidate = false;
+    } else if (!Utils.isValidPassword(newPasswordController.text.trim())) {
+      passwordError = APPStrings.validPassword.tr;
+      emit(UserMasterChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.password));
+      isValidate = false;
+    }
+    if (confirmPasswordController.text.trim().isEmpty) {
+      confirmPasswordError = APPStrings.errorConfirmPasswordRequired.tr;
+      emit(UserMasterChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.confirmPassword));
+      isValidate = false;
+    } else if (newPasswordController.text != confirmPasswordController.text) {
+      confirmPasswordError = APPStrings.errorPasswordNotMatch.tr;
+      emit(UserMasterChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.confirmPassword));
+      isValidate = false;
+    }
+    return isValidate;
+  }
+
+  Future<void> _callChangePasswordApi({required UserMasterChangePasswordEvent event}) async {
+    final Map<String, dynamic> params = {
+      ApiKey.isAdminChange: true,
+      ApiKey.userId: userMasterDataList[event.index].id?.toInt,
+      ApiKey.newPassword: newPasswordController.text.trim(),
+      ApiKey.oldPassword: null,
+    };
+    event.context.setAppLoading(true);
+
+    Either<ErrorResponse, CommonResponse>? response = await UserRepository(event.context).changePasswordApi(params);
+    event.context.setAppLoading(false);
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) async {
+        add(UserMasterChangePasswordInitialEvent());
+        event.context.pop();
+        await Utils.showMessage(success.message);
+      },
+    );
   }
 }

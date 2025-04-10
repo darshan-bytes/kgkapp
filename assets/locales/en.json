@@ -702,7 +702,7 @@
   "mob_error_confirm_password_required": "Confirm password is required",
   "mob_error_password_not_match": "Password does not match",
   "mob_you_have_saved_x": "You have saved {#}",
-  "mob_text_copied": "Text copied!",
+  "mob_text_copied": "Link copied!",
   "mob_scan_this_qr_code": "Scan this QR Code",
   "mob_scan_this_qr_code_details": "Scan this QR code to get more product details",
   "mob_logging_in": "Logging in...",

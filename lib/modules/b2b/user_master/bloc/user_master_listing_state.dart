@@ -53,3 +53,12 @@ final class UserMasterLoadingState extends UserMasterListingState {
   @override
   List<Object> get props => [];
 }
+
+final class UserMasterChangePasswordFieldErrorState extends UserMasterListingState {
+  final FieldTypeValidationEnum fieldType;
+
+  const UserMasterChangePasswordFieldErrorState({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}
