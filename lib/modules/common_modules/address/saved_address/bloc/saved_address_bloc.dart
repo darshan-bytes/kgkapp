@@ -9,9 +9,11 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   late AppBloc appBloc;
   List<AddressDetails> _addressList = [];
 
-  List<AddressDetails> get shippingAddressList => _addressList.where((e) => e.type == AppConst.addressTypeIsShipping).toList();
+  List<AddressDetails> get shippingAddressList =>
+      _addressList.where((e) => e.type == AppConst.addressTypeIsShipping || e.type == AppConst.both).toList();
 
-  List<AddressDetails> get billingAddressList => _addressList.where((e) => e.type == AppConst.addressTypeIsBilling).toList();
+  List<AddressDetails> get billingAddressList =>
+      _addressList.where((e) => e.type == AppConst.addressTypeIsBilling || e.type == AppConst.both).toList();
 
   SavedAddressBloc() : super(const SavedAddressInitial()) {
     on<SavedAddressInitialEvent>(_onSavedAddressInitialEvent);

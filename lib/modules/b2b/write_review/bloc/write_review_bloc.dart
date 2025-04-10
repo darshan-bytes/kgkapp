@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:http/http.dart' as http;
 
 part 'write_review_event.dart';
 
@@ -32,7 +33,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     on<WriteReviewSubmitEvent>(_onWriteReviewSubmitEvent);
   }
 
-  void _onInitEvent(WriteReviewInitialEvent event, Emitter<WriteReviewState> emit) {
+  Future<void> _onInitEvent(WriteReviewInitialEvent event, Emitter<WriteReviewState> emit) async {
     productId = (event.context.routesData?[RoutesData.productId] as String?) ?? '';
     commodity = event.context.routesData?[RoutesData.commodity] as Commodity?;
     myReview = event.context.routesData?[RoutesData.myReview];
@@ -40,6 +41,8 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
       titleController.text = myReview?.title ?? '';
       reviewController.text = myReview?.description ?? '';
       selectedRating = myReview?.rating ?? 0;
+
+      await downloadImages(event.context);
       emit(const WriteReviewLoadedState());
     } else {
       add(const WriteReviewResetEvent());
@@ -154,9 +157,33 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     await response?.fold((error) {
       Utils.showMessage(error.message);
     }, (data) async {
-      event.context.pop();
+      event.context.pop(arguments: {RoutesData.isEdited: true});
       await Future.delayed(const Duration(milliseconds: 500));
       Utils.showMessage(data.message);
     });
+  }
+
+  /// Download images from the server using http.get method
+  Future<void> downloadImages(BuildContext context) async {
+    context.setAppLoading(true);
+    try {
+      for (var imageUrl in myReview?.displayImage ?? []) {
+        final response = await http.get(Uri.parse(imageUrl));
+        if (response.statusCode == 200) {
+          final bytes = response.bodyBytes;
+          final tempDir = await getTemporaryDirectory();
+          final filePath = '${tempDir.path}/${imageUrl.split('/').last}';
+          final file = File(filePath);
+          await file.writeAsBytes(bytes);
+          imageFileList.add(XFile(filePath));
+        } else {
+          throw Exception('Failed to download image');
+        }
+      }
+    } catch (e) {
+      debugPrint('Error downloading images: $e');
+    } finally {
+      context.setAppLoading(false);
+    }
   }
 }

@@ -27,7 +27,13 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   AddressDetails? selectedShippingAddress;
   AddressDetails? selectedBillingAddress;
-  List<AddressDetails> addressList = [];
+  List<AddressDetails> _addressList = [];
+
+  List<AddressDetails> get shippingAddressList =>
+      _addressList.where((e) => e.type == AppConst.addressTypeIsShipping || e.type == AppConst.both).toList();
+
+  List<AddressDetails> get billingAddressList =>
+      _addressList.where((e) => e.type == AppConst.addressTypeIsBilling || e.type == AppConst.both).toList();
 
   bool isBillingAndShippingSame = true;
 
@@ -39,12 +45,12 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     myBagBloc = BlocProvider.of<MyBagBloc>(event.context);
     userType = appBloc.userType;
     await appBloc.fetchAddressList(event.context, isForceFetch: true);
-    addressList = appBloc.savedAddressList;
-    selectedShippingAddress = addressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? addressList.firstOrNull;
-    selectedBillingAddress = addressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? addressList.firstOrNull;
+    _addressList = appBloc.savedAddressList;
+    selectedShippingAddress = _addressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? _addressList.firstOrNull;
+    selectedBillingAddress = _addressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? _addressList.firstOrNull;
     isBillingAndShippingSame = selectedShippingAddress == selectedBillingAddress;
     bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
-    emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
+    emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
     if (selectedShippingAddress != null) {
       await updateSelectedAddressAPI(event.context);
       myBagBloc.add(FetchOrderSummaryDataEvent(event.context));
@@ -53,11 +59,11 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   Future<void> _onChangeSelectedAddressEvent(ChangeSelectedAddressEvent event, Emitter<AddressListState> emit) async {
     AddressDetails? selectedAddress = event.isBilling ? selectedBillingAddress : selectedShippingAddress;
-    int oldIndex = addressList.indexOf(selectedAddress ?? AddressDetails());
+    int oldIndex = _addressList.indexOf(selectedAddress ?? AddressDetails());
     if (event.isBilling) {
-      selectedBillingAddress = addressList[event.index];
+      selectedBillingAddress = billingAddressList[event.index];
     } else {
-      selectedShippingAddress = addressList[event.index];
+      selectedShippingAddress = shippingAddressList[event.index];
       if (isBillingAndShippingSame) {
         selectedBillingAddress = selectedShippingAddress;
       }
@@ -72,7 +78,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   Future<void> _onDeleteAddressEvent(DeleteAddressEvent event, Emitter<AddressListState> emit) async {
     emit(const AddressListReloadState());
 
-    AddressDetails address = addressList[event.index];
+    AddressDetails address = _addressList[event.index];
 
     final response = await AppRepository(event.context).deleteAddress(address.id ?? '');
     response?.fold(
@@ -80,14 +86,14 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
         Utils.showMessage(l.message);
       },
       (r) {
-        if (selectedShippingAddress == address && addressList.length > 1 && event.index != 0) {
-          selectedShippingAddress = addressList.first;
+        if (selectedShippingAddress == address && _addressList.length > 1 && event.index != 0) {
+          selectedShippingAddress = _addressList.first;
         }
-        if (selectedBillingAddress == address && addressList.length > 1 && event.index != 0) {
-          selectedBillingAddress = addressList.first;
+        if (selectedBillingAddress == address && _addressList.length > 1 && event.index != 0) {
+          selectedBillingAddress = _addressList.first;
         }
-        addressList.removeAt(event.index);
-        emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
+        _addressList.removeAt(event.index);
+        emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
       },
     );
 
@@ -95,20 +101,22 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   Future<void> _onEditAddressEvent(EditAddressEvent event, Emitter<AddressListState> emit) async {
-    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.addressDetails: addressList[event.index]}).then(
+    await event.context.pushNamed(AppRoutes.addAddressPage,
+        arguments: {RoutesData.addressDetails: (event.isBilling ? billingAddressList : shippingAddressList)[event.index]}).then(
       (value) async {
         if (value != null) {
           try {
             AddressDetails? addressDetails = value[RoutesData.addressDetails];
 
             if (addressDetails != null) {
-              addressList[event.index] = addressDetails;
+              int index = _addressList.indexWhere((element) => element.id == addressDetails.id);
+              _addressList[index] = addressDetails;
             }
-            selectedShippingAddress = addressList[event.index];
+            selectedShippingAddress = _addressList[event.index];
             if (isBillingAndShippingSame) {
-              selectedBillingAddress = addressList[event.index];
+              selectedBillingAddress = _addressList[event.index];
             }
-            emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
+            emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
             if (selectedShippingAddress != null) {
               await updateSelectedAddressAPI(event.context);
               myBagBloc.add(FetchOrderSummaryDataEvent(event.context));
@@ -126,7 +134,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
         await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isFromCheckout: true});
     if (result != null && result.containsKey(RoutesData.addressDetails) && result[RoutesData.addressDetails] is AddressDetails) {
       AddressDetails addressDetails = result[RoutesData.addressDetails];
-      addressList.add(addressDetails);
+      _addressList.add(addressDetails);
       selectedShippingAddress = addressDetails;
       if (isBillingAndShippingSame) {
         selectedBillingAddress = addressDetails;
@@ -140,7 +148,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     if (isBillingAndShippingSame) {
       selectedBillingAddress = selectedShippingAddress;
     } else {
-      selectedBillingAddress = addressList.firstWhereOrNull((e) => e.isDefaultBilling) ?? addressList.firstOrNull;
+      selectedBillingAddress = _addressList.firstWhereOrNull((e) => e.isDefaultBilling) ?? _addressList.firstOrNull;
     }
     emit(ToggleBillingAndShippingSameState(isBillingAndShippingSame));
   }
@@ -246,6 +254,6 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   void _onOrderSummaryDataRefreshEvent(OrderSummaryDataRefreshEvent event, Emitter<AddressListState> emit) {
     emit(AddressListReloadState());
     bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
-    emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
+    emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
   }
 }

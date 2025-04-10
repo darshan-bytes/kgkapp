@@ -134,7 +134,7 @@ class AddressListScreen extends StatelessWidget {
       builder: (context, state) {
         return ListView.separated(
           shrinkWrap: true,
-          itemCount: addressListBloc.addressList.length,
+          itemCount: addressListBloc.shippingAddressList.length,
           padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
           physics: const NeverScrollableScrollPhysics(),
           primary: false,
@@ -143,7 +143,7 @@ class AddressListScreen extends StatelessWidget {
               buildWhen: (previous, current) =>
                   current is ChangeSelectedAddressState && !current.isBilling && (current.index == index || current.oldIndex == index),
               builder: (context, state) {
-                final AddressDetails address = addressListBloc.addressList[index];
+                final AddressDetails address = addressListBloc.shippingAddressList[index];
                 return AddressSelectionWidget(
                   address: address,
                   isDefault: address.isDefaultShipping,
@@ -188,7 +188,7 @@ class AddressListScreen extends StatelessWidget {
       builder: (context, state) {
         return ListView.separated(
           shrinkWrap: true,
-          itemCount: addressListBloc.addressList.length,
+          itemCount: addressListBloc.billingAddressList.length,
           padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
           physics: const NeverScrollableScrollPhysics(),
           primary: false,
@@ -197,7 +197,7 @@ class AddressListScreen extends StatelessWidget {
               buildWhen: (previous, current) =>
                   current is ChangeSelectedAddressState && current.isBilling && (current.index == index || current.oldIndex == index),
               builder: (context, state) {
-                final AddressDetails address = addressListBloc.addressList[index];
+                final AddressDetails address = addressListBloc.billingAddressList[index];
                 return AddressSelectionWidget(
                   address: address,
                   isDefault: address.isDefaultBilling,
@@ -206,7 +206,7 @@ class AddressListScreen extends StatelessWidget {
                   },
                   groupValue: addressListBloc.selectedBillingAddress,
                   onEdit: () {
-                    addressListBloc.add(EditAddressEvent(index, context));
+                    addressListBloc.add(EditAddressEvent(index, context, isBilling: true));
                   },
                   onDelete: () {
                     Utils.showSmartModalBottomSheet(

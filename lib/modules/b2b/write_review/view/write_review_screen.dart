@@ -28,7 +28,7 @@ class WriteReviewScreen extends StatelessWidget {
                   SizedBox(height: 24.h),
                   _buildReviewField(bloc, style, context),
                   SizedBox(height: 24.h),
-                  if (!bloc.isEdit) _buildPickImageSection(bloc, style),
+                  _buildPickImageSection(bloc, style),
                 ],
               ),
             ),

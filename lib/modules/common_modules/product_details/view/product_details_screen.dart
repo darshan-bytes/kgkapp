@@ -341,6 +341,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 },
                                                 onTapCopy: () async {
                                                   await Clipboard.setData(ClipboardData(text: link));
+                                                  Utils.showMessage(APPStrings.textCopied.tr);
                                                 },
                                                 onTapOther: () async {
                                                   bloc.onTapShareLink(context: sheetContext, link: link);
