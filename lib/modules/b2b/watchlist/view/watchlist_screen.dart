@@ -92,6 +92,7 @@ class WatchlistScreen extends StatelessWidget {
       itemCount: bloc.watchListingList.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.only(bottom: 40.h),
       itemBuilder: (context, index) => _buildWatchlistItem(bloc, index, builderContext),
     );
   }
