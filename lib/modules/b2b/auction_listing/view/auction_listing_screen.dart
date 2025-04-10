@@ -87,6 +87,7 @@ class AuctionListingScreen extends StatelessWidget {
                 ListView.separated(
                   itemCount: auctionListingBloc.auctionList.length,
                   shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: 40.h),
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];

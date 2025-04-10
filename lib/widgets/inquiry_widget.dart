@@ -32,7 +32,10 @@ class InquiryWidget extends StatelessWidget {
                 SizedBox(height: 12.h),
                 Row(
                   children: [
-                    const SmartImage(path: AppImages.icPhone),
+                    const SmartImage(
+                      path: AppImages.icPhone,
+                      matchTextDirection: true,
+                    ),
                     SizedBox(width: 8.w),
                     SmartText(
                       phone,
@@ -46,7 +49,10 @@ class InquiryWidget extends StatelessWidget {
                 SizedBox(height: 14.h),
                 Row(
                   children: [
-                    const SmartImage(path: AppImages.icMail),
+                    const SmartImage(
+                      path: AppImages.icMail,
+                      matchTextDirection: true,
+                    ),
                     SizedBox(width: 8.w),
                     SmartText(
                       email,
@@ -65,7 +71,12 @@ class InquiryWidget extends StatelessWidget {
               height: 32.w,
               width: 32.w,
               alignment: AlignmentDirectional.center,
-              child: SmartImage(path: AppImages.icArrowRight, height: 14.w, width: 14.w),
+              child: SmartImage(
+                path: AppImages.icArrowRight,
+                height: 14.w,
+                width: 14.w,
+                matchTextDirection: true,
+              ),
             )
         ],
       ),
