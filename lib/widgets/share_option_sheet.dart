@@ -71,11 +71,11 @@ class ShareOptionSheet extends StatelessWidget {
         _buildShareButtons(style.iconButtonTextStyle, AppImages.icQrCode, APPStrings.qrCode.tr, () {
           onTapQrCode?.call();
         }),
-        _buildShareButtons(style.iconButtonTextStyle, AppImages.icOther, APPStrings.other.tr, () {
-          onTapOther?.call();
-        }),
         _buildShareButtons(style.iconButtonTextStyle, AppImages.icCopy, APPStrings.copyLink.tr, () {
           onTapCopy?.call();
+        }),
+        _buildShareButtons(style.iconButtonTextStyle, AppImages.icOther, APPStrings.other.tr, () {
+          onTapOther?.call();
         }),
       ],
     );

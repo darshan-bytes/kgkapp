@@ -1056,4 +1056,7 @@ class APPStrings {
   static const String complete = 'mob_complete';
   static const String choose = 'mob_choose';
   static const String price = 'mob_price';
+  static const String markAsInActive = 'mob_mark_as_in_active';
+  static const String markAsActive = 'mob_mark_as_active';
+  static const String userStatusChangeMsg = 'mob_user_status_change_msg';
 }

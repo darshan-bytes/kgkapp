@@ -38,7 +38,7 @@ class CompareProductScreen extends StatelessWidget {
                             children: [
                               Table(
                                 defaultColumnWidth: const IntrinsicColumnWidth(),
-                                columnWidths: bloc.generateTableColumnWidths(bloc.productIdList.length, 124.w),
+                                columnWidths: bloc.generateTableColumnWidths(bloc.compareResult.length, 124.w),
                                 children: [_buildTableRow(context, style, bloc)],
                               ),
                               SizedBox(
@@ -71,7 +71,7 @@ class CompareProductScreen extends StatelessWidget {
                             children: [
                               TableRow(
                                   children: List.generate(
-                                      bloc.productIdList.length,
+                                      bloc.compareResult.length,
                                       (index) => SizedBox(
                                           width: 130.w,
                                           child: Column(
@@ -126,11 +126,12 @@ class CompareProductScreen extends StatelessWidget {
   }
 
   TableRow _buildTableRow(BuildContext context, CompareProductStyle style, CompareProductBloc bloc) {
-    return TableRow(children: List.generate(bloc.productIdList.length, (index) => _buildTableCell(context, index, style, bloc)));
+    return TableRow(children: List.generate(bloc.compareResult.length, (index) => _buildTableCell(context, index, style, bloc)));
   }
 
   Widget _buildTableCell(BuildContext context, int index, CompareProductStyle style, CompareProductBloc bloc) {
     ProductDetailsModel productDetail = bloc.productList[index];
+    Map<String, dynamic> productMap = bloc.compareResult[index];
     return Container(
       width: 130.w,
       color: Colors.white,
@@ -139,8 +140,8 @@ class CompareProductScreen extends StatelessWidget {
         children: [
           SmartImage(
             path: bloc.commodity == Commodity.jewellery
-                ? (((bloc.compareResult[index]['multiple_finished_view_image'] as List?)?.firstOrNull)?['IMAGE_URL'] ?? '')
-                : (bloc.compareResult[index]['image'] as List?)?.firstOrNull['URL'] ?? '',
+                ? (((productMap['multiple_finished_view_image'] as List?)?.firstOrNull)?['IMAGE_URL'] ?? '')
+                : (productMap['image'] as List?)?.firstOrNull['URL'] ?? '',
             width: 114.w,
             height: 114.w,
             onTap: () {
@@ -175,7 +176,7 @@ class CompareProductScreen extends StatelessWidget {
           SizedBox(height: 28.h),
           ...(List.generate(bloc.filterList.length, (filterIndex) {
             FilterOptionModel filter = bloc.filterList[filterIndex];
-            Map<String, dynamic> productDetail = bloc.compareResult[index];
+            Map<String, dynamic> productDetail = productMap;
             String? value;
             if (productDetail[filter.slug] is List) {
               value = (productDetail[filter.slug] as List).where((e) => e != null).map((e) => e.toString()).join(', ');

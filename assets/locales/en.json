@@ -859,6 +859,9 @@
   "mob_select_contact": "Select Contact",
   "mob_edit_review": "Edit Review",
   "mob_complete": "Complete",
-  "mob_choose" : "Choose a",
-  "mob_price": "Price"
+  "mob_choose": "Choose a",
+  "mob_price": "Price",
+  "mob_mark_as_in_active": "Mark as Inactive",
+  "mob_mark_as_active": "Mark as Active",
+  "mob_user_status_change_msg": "You want to change status for this user?"
 }

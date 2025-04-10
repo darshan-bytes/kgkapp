@@ -19,13 +19,14 @@ class BranchService {
 
   static const String branchLinkType = 'branch_link_type';
   static const String linkExtraData = 'extra_data';
-  static const String desktopUrl = 'desktop_url';
+  static const String desktopUrl = '\$desktop_url';
   static const String clickedBranchLink = '+clicked_branch_link';
 
   // Initialize Branch SDK
   Future<void> initialize() async {
     try {
       await FlutterBranchSdk.init(enableLogging: true);
+
       // Listen to deep link data stream
       _deepLinkSubscription = FlutterBranchSdk.listSession().listen(
         (Map<dynamic, dynamic> data) {
@@ -54,12 +55,12 @@ class BranchService {
   Future<BranchResponse> createDeepLink({
     required String title,
     required String description,
-    required String destination,
+    String? destination,
     BranchLinkDataModel? extraData,
     String imageUrl = '',
   }) async {
     BranchUniversalObject buo = BranchUniversalObject(
-      canonicalIdentifier: destination,
+      canonicalIdentifier: destination ?? extraData?.id ?? AppConst.frontendLink,
       title: title,
       contentDescription: description,
       imageUrl: imageUrl,
@@ -67,24 +68,25 @@ class BranchService {
     );
 
     kgk_logger.log('Branch link title: $title');
-    if (extraData != null) {
-      buo.contentMetadata ??= BranchContentMetaData();
-      buo.contentMetadata?.addCustomMetadata(desktopUrl, "${AppConst.frontendLink}/commodity/${extraData.webPath}/${extraData.id}");
-      buo.contentMetadata?.addCustomMetadata(linkExtraData, extraData.toJson());
-    }
-
-    BranchLinkProperties linkProperties = BranchLinkProperties(
-      // Below are static for now but it will be modified in future when we have more use cases
-      channel: 'app',
-      feature: 'sharing',
-    );
 
     try {
+      if (extraData != null) {
+        buo.contentMetadata ??= BranchContentMetaData();
+        buo.contentMetadata?.addCustomMetadata(desktopUrl, "${AppConst.frontendLink}/commodity/${extraData.webPath}/${extraData.id}");
+        buo.contentMetadata?.addCustomMetadata(linkExtraData, extraData.toJson());
+      }
+
+      BranchLinkProperties linkProperties = BranchLinkProperties(
+        // Below are static for now but it will be modified in future when we have more use cases
+        channel: 'app',
+        feature: 'sharing',
+      );
+
       BranchResponse response = await FlutterBranchSdk.getShortUrl(
         buo: buo,
         linkProperties: linkProperties,
       );
-      kgk_logger.log('Branch link created: ${response.toString()}');
+      kgk_logger.log('Branch link created: ${response.result}');
       return response;
     } catch (e) {
       kgk_logger.log('Failed to create Branch link: $e', error: e);

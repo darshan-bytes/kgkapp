@@ -10,6 +10,7 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
 
   /// This list is used to show the digital catalogues in screen view
   List<B2BCustomListingDataModel> userMasterList = [];
+  List<UserMasterListingModelClass> userMasterDataList = [];
 
   /// paginationScrollController is used to control the pagination
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
@@ -43,6 +44,7 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     on<UserMasterListingPullToRefreshEvent>(_onUserMasterListingPullToRefreshEvent);
     on<UserMasterListingSearchEvent>(_onUserMasterListingSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<UserMasterChangeLocationTypeEvent>(_onUserMasterChangeLocationTypeEvent);
+    on<UserMasterChangeStatusEvent>(_onUserMasterChangeStatus);
   }
 
   @override
@@ -94,6 +96,10 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
 
   /// Initialize pagination
   void _initializePagination(BuildContext context) {
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+    }
+
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(UserMasterListLoadMoreEvent(context: context, currentPage: currentPage));
@@ -179,8 +185,8 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
       Utils.showMessage(error.message);
     }, (PaginationData<UserMasterListingModelClass> success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<UserMasterListingModelClass> dataList = success.dataList ?? [];
-      userMasterList.addAll(_populateUserMasterList(dataList));
+      userMasterDataList = success.dataList ?? [];
+      userMasterList = _populateUserMasterList(userMasterDataList);
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     });
     emit(UserMasterListingLoadedState());
@@ -193,7 +199,7 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
         B2BCustomListingDataModel(
           id: staffUser.id,
           strName: staffUser.customerUser?.fullName,
-          strNameImageUrl: staffUser.customerUser?.profilePicUrl,
+          strNameImageUrl: staffUser.customerUser?.profilePicUrl?.setMediaUrl,
           strBusinessType: staffUser.businessType,
 
           ///TODO: Need to discuss with backend team
@@ -226,5 +232,29 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     userMasterList.clear();
     await _fetchUserMasterList(context, emit, isLoadMore: false);
     emit(UserMasterListingLoadedState());
+  }
+
+  Future<void> _onUserMasterChangeStatus(UserMasterChangeStatusEvent event, Emitter<UserMasterListingState> emit) async {
+    emit(UserMasterListReloadState());
+    if (userMasterDataList.isNotEmpty) {
+      bool status = userMasterDataList[event.index].status;
+      String id = userMasterDataList[event.index].id ?? '';
+      if (id.isNotNullNorEmpty) {
+        Map<String, dynamic> body = {ApiKey.status: !status};
+        Either<ErrorResponse, CommonResponse>? response = await AppRepository(event.context).updateUserStatus(id, body: body);
+        await response?.fold(
+          (error) {
+            Utils.showMessage(error.message);
+          },
+          (success) async {
+            emit(UserMasterLoadingState());
+            paginationScrollController.pullToRefresh();
+            userMasterList.clear();
+            await _fetchUserMasterList(event.context, emit, isLoadMore: false);
+            emit(UserMasterListingLoadedState());
+          },
+        );
+      }
+    }
   }
 }
