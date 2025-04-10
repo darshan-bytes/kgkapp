@@ -15,7 +15,8 @@ class ApiClient {
       '$apiBaseUrl/users/phone-code/$code/phone/$phoneNumber/lookup';
 
   //orionDetails
-  static String orionDetails(String discountPrice, String caratWeight) => '$apiBaseUrl/commodity/diamond/orion/detail?discount_price=$discountPrice&carat_weight=$caratWeight';
+  static String orionDetails(String discountPrice, String caratWeight) =>
+      '$apiBaseUrl/commodity/diamond/orion/detail?discount_price=$discountPrice&carat_weight=$caratWeight';
 
   static const String businessTypes = '$apiBaseUrl/business-types';
   static const String officeLocations = '$apiBaseUrl/subarea-masters';
@@ -252,6 +253,8 @@ class ApiClient {
   static const String conceptList = '$apiBaseUrl/concepts/filters';
 
   static const String staffUserFilters = '$apiBaseUrl/users/staff-user/filters';
+
+  static String updateUserStatus(String id) => '$apiBaseUrl/users/update-user-status/$id';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

@@ -859,6 +859,9 @@
   "mob_select_contact": "选择联系人",
   "mob_edit_review": "编辑评论",
   "mob_complete": "完成",
-  "mob_choose" : "选择",
-  "mob_price": "价格"
+  "mob_choose": "选择",
+  "mob_price": "价格",
+  "mob_mark_as_in_active": "标记为不活动",
+  "mob_mark_as_active": "标记为活动",
+  "mob_user_status_change_msg": "您要更改此用户的状态吗？"
 }

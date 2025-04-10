@@ -88,49 +88,127 @@ class UserMasterListingScreen extends StatelessWidget {
   }
 
   Widget _buildUserMasterList(UserMasterListingBloc bloc) {
-    return Expanded(
-      child: BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-        buildWhen: (previous, current) =>
-            current is UserMasterListLoadedMoreState ||
-            current is UserMasterListLoadingMoreState ||
-            current is UserMasterListingLoadedState,
-        builder: (context, state) {
-          if (bloc.userMasterList.isEmpty) {
-            return NoDataFoundWidget(text: APPStrings.noUserFound.tr);
-          }
-          return RefreshIndicator.adaptive(
-            onRefresh: () async {
-              bloc.add(UserMasterListingPullToRefreshEvent(context: context));
-            },
-            child: ListView.builder(
-                shrinkWrap: true,
-                controller: bloc.paginationScrollController.scrollController,
-                itemCount: bloc.userMasterList.length,
-                itemBuilder: (context, index) {
-                  B2BCustomListingDataModel userItem = bloc.userMasterList[index];
-                  return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-                    buildWhen: (previous, current) => current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState,
-                    builder: (context, state) {
-                      return Column(
-                        children: [
-                          B2BListingItem(
-                            margin: EdgeInsetsDirectional.only(
-                                bottom: index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState ? 0 : 16.0.h),
-                            type: B2BListingType.userListingType,
-                            listingItemModel: userItem,
-                            gridSpacing: 0.w,
-                            onTapMenuButton: () {},
-                            onTap: () {},
-                          ),
-                          if (index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState)
-                            const SmartCircularProgressIndicator(),
-                        ],
-                      );
+    return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
+      buildWhen: (previous, current) =>
+          current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState || current is UserMasterListingLoadedState,
+      builder: (context, state) {
+        if (bloc.userMasterList.isEmpty) {
+          return NoDataFoundWidget(text: APPStrings.noUserFound.tr);
+        }
+        return RefreshIndicator.adaptive(
+          onRefresh: () async {
+            bloc.add(UserMasterListingPullToRefreshEvent(context: context));
+          },
+          child: ListView.builder(
+              shrinkWrap: true,
+              controller: bloc.paginationScrollController.scrollController,
+              itemCount: bloc.userMasterList.length,
+              itemBuilder: (context, index) {
+                B2BCustomListingDataModel userItem = bloc.userMasterList[index];
+                return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
+                  buildWhen: (previous, current) => current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState,
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        B2BListingItem(
+                          margin: EdgeInsetsDirectional.only(
+                              bottom: index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState ? 0 : 16.0.h),
+                          type: B2BListingType.userListingType,
+                          listingItemModel: userItem,
+                          gridSpacing: 0.w,
+                          onTapMenuButton: () {
+                            _showUserMasterBottomSheet(context, bloc, index: index);
+                          },
+                          // onTap: () {},
+                        ),
+                        if (index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState)
+                          const SmartCircularProgressIndicator(),
+                      ],
+                    );
+                  },
+                );
+              }),
+        );
+      },
+    );
+  }
+
+  void _showUserMasterBottomSheet(BuildContext screenContext, UserMasterListingBloc bloc, {required int index}) {
+    OrderPopupStyle orderPopupStyle = AppTheme.of(screenContext).orderPopupStyle;
+    Utils.showSmartModalBottomSheet(
+        context: screenContext,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+        ),
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadiusDirectional.only(
+                topStart: Radius.circular(16.r),
+                topEnd: Radius.circular(16.r),
+              ),
+              color: orderPopupStyle.whiteColor,
+            ),
+            child: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildPopupOption(
+                    context,
+                    text: bloc.userMasterDataList[index].status ? APPStrings.markAsInActive.tr : APPStrings.markAsActive.tr,
+                    style: bloc.userMasterDataList[index].status ? orderPopupStyle.cancelTextStyle : orderPopupStyle.optionTextStyle,
+                    onTap: () {
+                      context.pop();
+                      _buildChangeStatusConfirmPopup(screenContext, bloc, index);
                     },
-                  );
-                }),
+                  ),
+                ],
+              ),
+            ),
           );
+        });
+  }
+
+  void _buildChangeStatusConfirmPopup(BuildContext screenContext, UserMasterListingBloc bloc, int index) {
+    Utils.showSmartModalBottomSheet(
+      context: screenContext,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      builder: (context) => ConfirmationDialog(
+        title: APPStrings.areYouSure.tr,
+        message: APPStrings.userStatusChangeMsg.tr,
+        onApproved: () {
+          context.pop();
+          bloc.add(UserMasterChangeStatusEvent(
+            context: screenContext,
+            index: index,
+          ));
         },
+        onDenied: () => context.pop(),
+        onApprovedText: APPStrings.yes.tr,
+        onDeniedText: APPStrings.cancel.tr,
+      ),
+    );
+  }
+
+  /// Build popup option
+  Widget _buildPopupOption(
+    BuildContext context, {
+    required String text,
+    required TextStyle style,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 56.h,
+        width: context.width,
+        alignment: AlignmentDirectional.centerStart,
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
+        child: SmartText(text, style: style),
       ),
     );
   }
@@ -161,31 +239,6 @@ class UserMasterListingScreen extends StatelessWidget {
             selectedItem: bloc.selectedUserLocationType,
           ),
         );
-      },
-    );
-  }
-
-  Widget _buildBottomNavigationBar(UserMasterListingBloc bloc, BuildContext context) {
-    return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-      buildWhen: (previous, current) => current is UserMasterListingLoadedState,
-      builder: (context, state) {
-        if (state is UserMasterListingLoadedState) {
-          return SafeArea(
-            child: FilterBottomActionBar(
-              controller: bloc.paginationScrollController.controller,
-              onFilterTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
-                );
-              },
-            ),
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
       },
     );
   }

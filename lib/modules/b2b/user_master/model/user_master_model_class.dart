@@ -6,7 +6,7 @@ class UserMasterListingModelClass {
   String? id;
   String? email;
   String? userType;
-  bool? status;
+  bool status = false;
   String? createdBy;
   CustomerUser? customerUser;
   UserIdDetails? createdByDetails;
@@ -17,7 +17,7 @@ class UserMasterListingModelClass {
       this.id,
       this.email,
       this.userType,
-      this.status,
+      this.status = false,
       this.createdBy,
       this.customerUser,
       this.createdByDetails});
@@ -28,7 +28,7 @@ class UserMasterListingModelClass {
     id = json['id'];
     email = json['email'];
     userType = json['user_type'];
-    status = json['status'];
+    status = json['status'] ?? false;
     createdBy = json['created_by'];
     customerUser = json['customerUser'] != null ? CustomerUser.fromJson(json['customerUser']) : null;
     createdByDetails = json['created_by_details'] != null ? UserIdDetails.fromJson(json['created_by_details']) : null;

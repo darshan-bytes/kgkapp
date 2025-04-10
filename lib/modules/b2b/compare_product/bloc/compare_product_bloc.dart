@@ -130,7 +130,9 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         },
         (r) {
           compareResult = r;
+          print("compareResult::  ${compareResult.length}");
           for (int i = 0; i < compareResult.length; i++) {
+            print("i::   $i");
             productList.add(_convertToProductDetailModel(compareResult[i]));
           }
           emit(CompareProductsLoadedState());
@@ -146,73 +148,14 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
 
     if (commodity == Commodity.jewellery) {
       JewelleryDataModel jewelleryData = JewelleryDataModel.fromJson(sourceModel);
-      bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
-      productDetails = ProductDetailsModel(
-        productId: jewelleryData.suid,
-        suid: jewelleryData.suid,
-        name: jewelleryData.productDescription ?? '',
-        jewelleryType: jewelleryData.jewelleryType,
-        originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
-        finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
-        discountPercentageString:
-            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
-        productSku: jewelleryData.contractNoSkuNo,
-        reviewCount: jewelleryData.reviewCount,
-        rating: jewelleryData.rating?.toDouble(),
-        brandName: jewelleryData.brandName,
-        imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
-        commodity: Commodity.jewellery,
-        isFavourite: jewelleryData.isFavorite,
-        wishlistId: jewelleryData.wishlistID,
-        components: jewelleryData.components,
-      );
+      productDetails = Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: jewelleryData);
     } else if (commodity == Commodity.diamond) {
       DiamondDataModel diamondData = DiamondDataModel.fromJson(sourceModel);
-      bool isDiscounted = diamondData.discountPercentage != null && diamondData.discountPercentage! > 0;
-      productDetails = ProductDetailsModel(
-        productId: diamondData.suid,
-        suid: diamondData.suid,
-        name: diamondData.rmDescription ?? '',
-        originalPrice: diamondData.finalPrice?.toString().setCurrency,
-        finalPrice: diamondData.discountPrice?.toString().setCurrency,
-        discountPercentageString:
-            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData.discountPercentage]) : null,
-        productSku: diamondData.lotCode,
-        reviewCount: diamondData.reviewCount,
-        rating: diamondData.rating,
-        commodity: Commodity.diamond,
-        isFavourite: diamondData.isFavorite,
-        wishlistId: diamondData.wishlistID,
-        stoneElements: diamondData.components,
-        auctionId: diamondData.auctionId,
-        isAddedToCart: diamondData.isAddedToCart,
-      );
+      productDetails = Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamondData);
     } else if (commodity == Commodity.gemstone) {
       GemstoneDatum gemstoneData = GemstoneDatum.fromJson(sourceModel);
-      bool isDiscounted = gemstoneData.discountPercentage != null && (gemstoneData.discountPercentage ?? 0) > 0;
 
-      productDetails = ProductDetailsModel(
-        productId: gemstoneData.suid,
-        suid: gemstoneData.suid,
-        name: gemstoneData.rmDescription ?? '',
-        originalPrice: gemstoneData.finalPrice?.toString().setCurrency,
-        discountPrice: gemstoneData.discountPrice?.toString().setCurrency,
-        finalPrice: gemstoneData.discountPrice?.toString().setCurrency,
-        discountPercentageString:
-            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData.discountPercentage]) : null,
-        productSku: gemstoneData.lotCode,
-        reviewCount: gemstoneData.reviewCount,
-        rating: gemstoneData.rating?.toDouble(),
-        shape: gemstoneData.shape,
-        productQuality: CartProductQuality(name: gemstoneData.quality),
-        color: gemstoneData.color,
-        clarity: gemstoneData.clarity,
-        commodity: Commodity.gemstone,
-        isFavourite: gemstoneData.isFavorite,
-        wishlistId: gemstoneData.wishlistID,
-        stoneElements: gemstoneData.components,
-        isAddedToCart: gemstoneData.isAddedToCart,
-      );
+      productDetails = Utils.convertGemstoneDatumToProductDetailsModel(gemstone: gemstoneData);
     }
 
     return productDetails;
