@@ -130,9 +130,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         },
         (r) {
           compareResult = r;
-          print("compareResult::  ${compareResult.length}");
           for (int i = 0; i < compareResult.length; i++) {
-            print("i::   $i");
             productList.add(_convertToProductDetailModel(compareResult[i]));
           }
           emit(CompareProductsLoadedState());

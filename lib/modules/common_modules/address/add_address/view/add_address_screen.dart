@@ -405,7 +405,7 @@ class AddAddressScreen extends StatelessWidget {
         BlocBuilder<AddAddressBloc, AddAddressState>(
           buildWhen: (previous, current) => current is AddAddressChangeAddressTypeState,
           builder: (context, state) {
-            return Row(
+            return Wrap(
               spacing: 24.w,
               children: AddressTypeEnum.values
                   .map((e) => SmartRadioButton<AddressTypeEnum>(
@@ -415,7 +415,7 @@ class AddAddressScreen extends StatelessWidget {
                             bloc.add(AddAddressChangeAddressTypeEvent(value));
                           }
                         },
-                        label: APPStrings.shippingAddress.tr,
+                        label: e.label.tr,
                         groupValue: bloc.isShippingAddress,
                       ))
                   .toList(),

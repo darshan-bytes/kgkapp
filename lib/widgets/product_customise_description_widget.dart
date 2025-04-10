@@ -36,6 +36,7 @@ class ProductCustomiseDescriptionWidget extends StatelessWidget {
                 },
                 icon: const SmartImage(
                   path: AppImages.icArrowRight,
+                  matchTextDirection: true,
                 ))
           ],
         ),

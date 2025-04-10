@@ -471,7 +471,12 @@ class ProductDetailsScreen extends StatelessWidget {
                         style: style.settingSelectionTitleStyle,
                       ),
                     ),
-                    SmartImage(path: AppImages.icRight, height: 20.w, width: 20.w),
+                    SmartImage(
+                      path: AppImages.icRight,
+                      height: 20.w,
+                      width: 20.w,
+                      matchTextDirection: true,
+                    ),
                   ],
                 ),
               ),
@@ -609,6 +614,7 @@ class ProductDetailsScreen extends StatelessWidget {
               imageHeight: 20.w,
               fit: BoxFit.contain,
               image: AppImages.icInquiries,
+              matchTextDirection: true,
             )
           ],
         );

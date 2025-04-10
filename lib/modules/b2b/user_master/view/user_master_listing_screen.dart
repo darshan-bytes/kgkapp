@@ -119,7 +119,6 @@ class UserMasterListingScreen extends StatelessWidget {
                           onTapMenuButton: () {
                             _showUserMasterBottomSheet(context, bloc, index: index);
                           },
-                          // onTap: () {},
                         ),
                         if (index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState)
                           const SmartCircularProgressIndicator(),
