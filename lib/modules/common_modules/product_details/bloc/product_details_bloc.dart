@@ -612,6 +612,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         if (isClosed) return;
         userReviewSubmitted = data.userReviewSubmitted;
         myReview = data.myReview;
+        if (myReview != null) {
+          data.dataList?.removeWhere((element) => element.id == myReview?.id);
+          data.dataList?.insert(0, myReview!);
+        }
         reviewList = (data.dataList)?.map((e) {
               return ReviewDataModel(
                 id: e.id,
@@ -626,6 +630,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               );
             }).toList() ??
             [];
+
         if (!isClosed) {
           add(const ProductDetailsReviewsLoadedEvent());
         }
@@ -778,7 +783,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       RoutesData.commodity: productDetails?.commodity,
       RoutesData.myReview: myReview,
     }).then((val) async {
-      await productReviewsFilter(context, productId, emit, isLoadMore: true);
+      if (val != null && val[RoutesData.isEdited] == true) {
+        await productReviewsFilter(context, productId, emit, isLoadMore: true);
+      }
     });
   }
 
@@ -874,16 +881,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       product.wishlistId = state.wishlistId;
       product.isFavourite = state.wishlistId.isNotEmpty;
     }
-  }
-
-  // Copy link
-  Future<void> onTapCopyLink({required BuildContext context}) async {
-    context.pop();
-    await Clipboard.setData(const ClipboardData(text: "https://dev.kgk.magnetoinfotech.com")).then(
-      (value) {
-        Utils.showMessage(APPStrings.textCopied.tr);
-      },
-    );
   }
 
   // Share link
