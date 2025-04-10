@@ -859,6 +859,9 @@
   "mob_select_contact": "தொடர்பு தேர்ந்தெடுக்கவும்",
   "mob_edit_review": "மதிப்பீட்டைத் திருத்து",
   "mob_complete": "முடிவு",
-  "mob_choose" : "தேர்ந்தெடுக்கவும்",
-  "mob_price": "விலை"
+  "mob_choose": "தேர்ந்தெடுக்கவும்",
+  "mob_price": "விலை",
+  "mob_mark_as_in_active": "செயலற்றதாகக் குறிக்கவும்",
+  "mob_mark_as_active": "செயல்படுத்தவும்",
+  "mob_user_status_change_msg": "பயனர் நிலை மாற்றப்பட்டது"
 }

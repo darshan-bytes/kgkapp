@@ -858,6 +858,9 @@
   "mob_select_contact": "حدد جهة الاتصال",
   "mob_edit_review": "تحرير المراجعة",
   "mob_complete": "اكتمل",
-  "mob_choose" : "اختر",
-  "mob_price": "سعر"
+  "mob_choose": "اختر",
+  "mob_price": "سعر",
+  "mob_mark_as_in_active": "علامة كغير نشط",
+  "mob_mark_as_active": "علامة كتنشيط",
+  "mob_user_status_change_msg": "هل أنت متأكد أنك تريد تغيير حالة المستخدم؟"
 }

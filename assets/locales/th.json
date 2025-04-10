@@ -859,6 +859,9 @@
   "mob_select_contact": "เลือกติดต่อ",
   "mob_edit_review": "แก้ไขรีวิว",
   "mob_complete": "เสร็จสิ้น",
-  "mob_choose" : "เลือก",
-  "mob_price": "ราคา"
+  "mob_choose": "เลือก",
+  "mob_price": "ราคา",
+  "mob_mark_as_in_active": "ทำเครื่องหมายว่าไม่ใช้งาน",
+  "mob_mark_as_active": "ทำเครื่องหมายว่าใช้งาน",
+  "mob_user_status_change_msg": "คุณต้องการเปลี่ยนสถานะสำหรับผู้ใช้นี้หรือไม่ ?"
 }

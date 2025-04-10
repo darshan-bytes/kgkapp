@@ -858,7 +858,10 @@
   "mob_product_no": "उत्पाद संख्या",
   "mob_select_contact": "संपर्क चुनें",
   "mob_edit_review": "एडिट रिव्यु",
-   "mob_complete": "पूरा",
-  "mob_choose" : "चुनें",
-  "mob_price": "कीमत"
+  "mob_complete": "पूरा",
+  "mob_choose": "चुनें",
+  "mob_price": "कीमत",
+  "mob_mark_as_in_active": "निष्क्रिय के रूप में चिह्नित करें",
+  "mob_mark_as_active": "सक्रिय के रूप में चिह्नित करें",
+  "mob_user_status_change_msg": "क्या आप इस उपयोगकर्ता की स्थिति बदलना चाहते हैं ?"
 }

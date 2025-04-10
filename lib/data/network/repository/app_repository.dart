@@ -168,7 +168,8 @@ class AppRepository extends ApiService {
   }
 
   //fetchOrionDetails
-  Future<Either<ErrorResponse, CommonResponse<OrionDetailModel>>?> fetchOrionDetails({required String discountPrice,required String caratWeight}) async {
+  Future<Either<ErrorResponse, CommonResponse<OrionDetailModel>>?> fetchOrionDetails(
+      {required String discountPrice, required String caratWeight}) async {
     var response = await getMethod<OrionDetailModel>(ApiClient.orionDetails(discountPrice, caratWeight), withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -1407,6 +1408,16 @@ class AppRepository extends ApiService {
     var response =
         await postMethod<PaginationData<UserMasterListingModelClass>>(ApiClient.staffUserFilters, body, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> updateUserStatus(
+    String id, {
+    required Map<String, dynamic> body,
+  }) async {
+    context.setAppLoading(true);
+    var response = await updateMethod<Map<String, dynamic>>(ApiClient.updateUserStatus(id), body, withFullResponse: true);
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

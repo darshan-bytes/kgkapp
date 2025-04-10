@@ -57,3 +57,13 @@ final class UserMasterListingApplyFilterEvent extends UserMasterListingEvent {
   @override
   List<Object> get props => [context, filterData];
 }
+
+final class UserMasterChangeStatusEvent extends UserMasterListingEvent {
+  final BuildContext context;
+  final int index;
+
+  const UserMasterChangeStatusEvent({required this.context, required this.index});
+
+  @override
+  List<Object> get props => [context, index];
+}

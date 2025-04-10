@@ -505,6 +505,7 @@ class Utils {
       ],
       reviewCount: jewellery.reviewCount,
       rating: jewellery.rating?.toDouble(),
+      components: jewellery.components,
     );
   }
 
@@ -555,6 +556,7 @@ class Utils {
       suid: gemstone.suid,
       productId: gemstone.suid,
       imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
+      productSku: gemstone.lotCode,
       name: gemstone.rmDescription ?? "",
       ctsOrGms: gemstone.ctsOrGms,
       rappaportPrice: gemstone.rappaportPrice,

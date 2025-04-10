@@ -480,7 +480,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final String title = productDetails.name ?? '';
     // FOr now description and destination are empty. It will be updated later
     final String description = productDetails.kgkCollectionName ?? '';
-    final String destination = '';
 
     BranchLinkDataModel branchLinkDataModel = BranchLinkDataModel(
       branchLinkType: BranchLinkTypeType.productShare,
@@ -492,7 +491,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final BranchResponse response = await BranchService().createDeepLink(
       title: title,
       description: description,
-      destination: destination,
       extraData: branchLinkDataModel,
       imageUrl: productDetails.imageUrl ?? productDetails.shapeImage ?? '',
     );
