@@ -164,9 +164,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   String? _buildTitleOfProduct({required WishlistDatum element}) {
     switch (element.displayCommodity) {
       case Commodity.jewellery:
-        return (element.productData?.multipleFinishedViewImage)?.isNotNullNorEmpty ?? false
-            ? element.productData!.multipleFinishedViewImage.first.contractNo ?? ""
-            : null;
+        return element.productData?.contractNoSkuNo;
       case Commodity.gemstone:
       case Commodity.diamond:
         return element.productData?.lotCode;

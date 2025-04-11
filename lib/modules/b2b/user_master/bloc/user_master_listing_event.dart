@@ -67,3 +67,29 @@ final class UserMasterChangeStatusEvent extends UserMasterListingEvent {
   @override
   List<Object> get props => [context, index];
 }
+
+final class UserMasterChangePasswordFieldChangeEvent extends UserMasterListingEvent {
+  final FieldTypeValidationEnum fieldType;
+
+  const UserMasterChangePasswordFieldChangeEvent({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}
+
+final class UserMasterChangePasswordEvent extends UserMasterListingEvent {
+  final BuildContext context;
+  final int index;
+
+  const UserMasterChangePasswordEvent({required this.index, required this.context});
+
+  @override
+  List<Object> get props => [index, context];
+}
+
+final class UserMasterChangePasswordInitialEvent extends UserMasterListingEvent {
+  const UserMasterChangePasswordInitialEvent();
+
+  @override
+  List<Object> get props => [];
+}

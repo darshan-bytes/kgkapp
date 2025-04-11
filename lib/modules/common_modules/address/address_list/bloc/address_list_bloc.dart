@@ -46,8 +46,9 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     userType = appBloc.userType;
     await appBloc.fetchAddressList(event.context, isForceFetch: true);
     _addressList = appBloc.savedAddressList;
-    selectedShippingAddress = _addressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? _addressList.firstOrNull;
-    selectedBillingAddress = _addressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? _addressList.firstOrNull;
+    selectedShippingAddress =
+        shippingAddressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? shippingAddressList.firstOrNull;
+    selectedBillingAddress = billingAddressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? billingAddressList.firstOrNull;
     isBillingAndShippingSame = selectedShippingAddress == selectedBillingAddress;
     bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
     emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
