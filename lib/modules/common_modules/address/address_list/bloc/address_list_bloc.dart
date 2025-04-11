@@ -49,7 +49,8 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     selectedShippingAddress =
         shippingAddressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? shippingAddressList.firstOrNull;
     selectedBillingAddress = billingAddressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? billingAddressList.firstOrNull;
-    isBillingAndShippingSame = selectedShippingAddress == selectedBillingAddress;
+    isBillingAndShippingSame =
+        (selectedShippingAddress != null && selectedBillingAddress != null && selectedShippingAddress == selectedBillingAddress);
     bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
     emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
     if (selectedShippingAddress != null) {

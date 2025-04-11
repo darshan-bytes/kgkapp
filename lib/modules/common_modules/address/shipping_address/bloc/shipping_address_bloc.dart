@@ -75,6 +75,9 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
       addressList.removeAt(event.index);
       appBloc.savedAddressList.remove(address);
       emit(const ShippingAddressLoadedState());
+      if (addressList.isEmpty) {
+        event.context.pop(arguments: {RoutesData.isEdited: isEdit});
+      }
     });
   }
 
@@ -96,6 +99,7 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
       (value) {
         if (value != null && value[RoutesData.addressDetails] is AddressDetails) {
           appBloc.savedAddressList.add(value[RoutesData.addressDetails]);
+          isEdit = true;
           emit(const ShippingAddressLoadedState());
         }
       },
