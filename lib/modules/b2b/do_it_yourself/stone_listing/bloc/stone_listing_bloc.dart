@@ -563,7 +563,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   void _getStoneListName() {
     if (appbarTitle.isEmpty) {
-      appbarTitle = APPStrings.diamonds.tr;
       if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
         appbarTitle = APPStrings.youMayAlsoLike.tr;
         return;
