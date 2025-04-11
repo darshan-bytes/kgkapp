@@ -163,6 +163,16 @@ class UserMasterListingScreen extends StatelessWidget {
                       _buildChangeStatusConfirmPopup(screenContext, bloc, index);
                     },
                   ),
+                  // Change Password
+                  _buildPopupOption(
+                    context,
+                    text: APPStrings.changePassword.tr,
+                    style: orderPopupStyle.optionTextStyle,
+                    onTap: () {
+                      context.pop();
+                      _buildChangePasswordBottomSheet(screenContext, bloc, index);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -238,6 +248,23 @@ class UserMasterListingScreen extends StatelessWidget {
             selectedItem: bloc.selectedUserLocationType,
           ),
         );
+      },
+    );
+  }
+
+  void _buildChangePasswordBottomSheet(BuildContext screenContext, UserMasterListingBloc bloc, int index) {
+    Widget bottomSheet = ChangePasswordBottomSheetForUserMaster(
+      index: index,
+      bloc: bloc..add(UserMasterChangePasswordInitialEvent()),
+    );
+
+    Utils.showSmartModalBottomSheet(
+      context: screenContext,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return bottomSheet;
       },
     );
   }

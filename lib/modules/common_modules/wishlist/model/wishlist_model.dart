@@ -120,6 +120,7 @@ class ProductData {
     required this.lotCode,
     required this.productImages,
     this.isAuction = false,
+    this.contractNoSkuNo,
   });
 
   String? exclusive;
@@ -153,6 +154,7 @@ class ProductData {
   String? lotCode;
   List<ProductImages>? productImages;
   bool isAuction;
+  String? contractNoSkuNo;
 
   factory ProductData.fromJson(Map<String, dynamic> json) {
     return ProductData(
@@ -192,6 +194,7 @@ class ProductData {
       rmDescription: json["rm_description"],
       productImages: json["image"] == null ? [] : List<ProductImages>.from(json["image"]!.map((x) => ProductImages.fromJson(x))),
       isAuction: json["is_auction"] ?? false,
+      contractNoSkuNo: json["contract_no_sku_no"],
     );
   }
 
