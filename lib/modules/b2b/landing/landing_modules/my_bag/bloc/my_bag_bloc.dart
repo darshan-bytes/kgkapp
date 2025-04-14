@@ -136,7 +136,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               color: item.color,
               lotCode: item.lotCode,
               discountPercentageString: item.discountPercentage != null && item.discountPercentage != 0
-                  ? "-${item.discountPercentage == item.discountPercentage?.toInt() ? item.discountPercentage?.toInt() : item.discountPercentage?.toStringAsFixed(2)}"
+                  ? APPStrings.percentageOffInterpolating.tr.interpolate([
+                      item.discountPercentage == item.discountPercentage?.toInt()
+                          ? item.discountPercentage?.toInt()
+                          : item.discountPercentage?.toStringAsFixed(2)
+                    ])
                   : "",
               cut: item.cut,
               clarity: item.clarity,
@@ -149,7 +153,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               table: item.table,
               depth: item.depth,
               totalPrice: item.totalPrice,
-              discountPrice: item.discountPrice?.toStringAsFixed(2),
               perCaratPrice: item.rate,
               openDnaUrl: item.openDnaUrl,
               certificateFile: item.certificateFile,
@@ -166,9 +169,13 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               originalYourAmount: item.originalYourAmount,
               originalTotalPrice: item.originalTotalPrice,
               originalFinalPrice: item.originalFinalPrice,
-              finalPrice: item.finalPrice?.setCurrency,
-              originalPrice: item.totalPrice?.setCurrency,
+              originalPrice: item.finalPrice?.toString().setCurrency,
+              finalPrice: item.yourAmount?.toString().setCurrency,
               video: item.video,
+
+              /// Below code is commented as backend API is changing the keys
+              // finalPrice: item.finalPrice?.setCurrency,
+              // originalPrice: item.totalPrice?.setCurrency,
             );
           });
         } else {

@@ -60,7 +60,9 @@ class ProductDetailsComponentsView extends StatelessWidget {
     final widgets = <Widget>[];
     for (final subComponentList in subComponents) {
       for (final valueElement in subComponentList) {
-        widgets.add(_settingWidget(valueElement.title ?? '', valueElement.value ?? '', context));
+        bool isUrl = valueElement.value?.isURL ?? false;
+        widgets.add(_settingWidget(valueElement.title ?? '', isUrl ? APPStrings.clickHeretoView : valueElement.value ?? '', context,
+            url: isUrl ? valueElement.value : null));
       }
       if (subComponents.last != subComponentList) {
         widgets.add(Divider(height: 32.h));
@@ -70,10 +72,14 @@ class ProductDetailsComponentsView extends StatelessWidget {
   }
 
   List<Widget> _buildStoneElementWidgets(List<StoneElement> stoneElements, BuildContext context) {
-    return stoneElements.map((element) => _settingWidget(element.title ?? '', element.value ?? '', context)).toList();
+    return stoneElements.map((element) {
+      bool isUrl = element.value?.isURL ?? false;
+      return _settingWidget(element.title ?? '', isUrl ? APPStrings.clickHeretoView : element.value ?? '', context,
+          url: isUrl ? element.value : null);
+    }).toList();
   }
 
-  Widget _settingWidget(String type, String value, BuildContext context) {
+  Widget _settingWidget(String type, String value, BuildContext context, {String? url}) {
     final style = AppTheme.of(context).settingDetailScreenStyle;
     return Padding(
       padding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
@@ -81,7 +87,17 @@ class ProductDetailsComponentsView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SmartText(type, style: style.settingTypeStyle),
-          SmartText(value.isNotNullNorEmpty ? value : APPStrings.dash.tr, style: style.settingValueStyle),
+          SmartText(
+            value.isNotNullNorEmpty ? value : APPStrings.dash.tr,
+            style: url.isNotNullNorEmpty
+                ? style.settingValueStyle.copyWith(color: AppTheme.of(context).colors.primary, decoration: TextDecoration.underline)
+                : style.settingValueStyle,
+            onTap: url.isNotNullNorEmpty
+                ? () {
+                    Utils.launchUrlFromString(url!);
+                  }
+                : null,
+          ),
         ],
       ),
     );

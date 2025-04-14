@@ -392,11 +392,10 @@ class MyBagScreen extends StatelessWidget {
                     bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
                   },
                   quantityOptionsList: List.generate(
-                      product.stockQty ?? 0, (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
+                      ((product.stockQty ?? 0) < (product.quantity ?? 0) ? product.quantity : product.stockQty) ?? 0,
+                      (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
                   selectedQuantity: product.quantity != null
-                      ? CartProductQuantity(
-                          name: (product.quantity!).toString(),
-                          quantity: (product.stockQty ?? 0) < (product.quantity ?? 0) ? product.stockQty : product.quantity)
+                      ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
                       : null,
                   qualityOptionsList: [],
                 );

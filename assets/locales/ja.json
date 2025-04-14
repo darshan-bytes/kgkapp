@@ -863,5 +863,6 @@
   "mob_price": "価格",
   "mob_mark_as_in_active": "非アクティブとしてマーク",
   "mob_mark_as_active": "アクティブとしてマーク",
-  "mob_user_status_change_msg": "このユーザーのステータスを変更しますか？"
+  "mob_user_status_change_msg": "このユーザーのステータスを変更しますか？",
+  "mob_click_here_to_view": "表示するにはここをクリックしてください"
 }

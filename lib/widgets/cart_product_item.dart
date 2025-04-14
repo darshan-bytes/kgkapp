@@ -236,7 +236,7 @@ class CartProductItem extends StatelessWidget {
             if (productDetails.discountPercentageString.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
               SmartText(
-                "${productDetails.discountPercentageString}%",
+                "${productDetails.discountPercentageString}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
