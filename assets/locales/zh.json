@@ -863,5 +863,6 @@
   "mob_price": "价格",
   "mob_mark_as_in_active": "标记为不活动",
   "mob_mark_as_active": "标记为活动",
-  "mob_user_status_change_msg": "您要更改此用户的状态吗？"
+  "mob_user_status_change_msg": "您要更改此用户的状态吗？",
+  "mob_click_here_to_view": "单击此处查看"
 }

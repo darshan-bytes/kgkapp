@@ -60,7 +60,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                     const Divider(),
                     SizedBox(height: 16.h),
                   ],
-                  _buildBasicInfo(productInfoModel, style, bloc),
+                  _buildBasicInfo(productInfoModel, style, bloc, context),
                   SizedBox(height: 8.h),
 
                   /// Below code is commented as of now, because for noe there is only one section's data available
@@ -159,7 +159,8 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBasicInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style, DiamondInfoPopupBloc bloc) {
+  Widget _buildBasicInfo(
+      ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style, DiamondInfoPopupBloc bloc, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,94 +168,39 @@ class DiamondInfoPopupScreen extends StatelessWidget {
         SizedBox(height: 12.h),
         ...List.generate(bloc.diamondDatum?.components.length ?? 0, (index) {
           StoneElement stoneElement = bloc.diamondDatum!.components[index];
-          return _buildProductInfoItem(stoneElement.title ?? '', stoneElement.value, style);
+          bool isUrl = stoneElement.value?.isURL ?? false;
+          return _buildProductInfoItem(
+            stoneElement.title ?? '',
+            isUrl ? APPStrings.clickHeretoView.tr : stoneElement.value ?? '',
+            style,
+            context,
+            url: isUrl ? stoneElement.value : null,
+          );
         }),
       ],
     );
   }
 
-  Widget _buildMeasurementsInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(APPStrings.measurements.tr, style: style.labelStyle),
-        SizedBox(height: 12.h),
-        _buildProductInfoItem(APPStrings.tablePercentage.tr, productInfoModel.tablePercentage, style),
-        _buildProductInfoItem(APPStrings.depthPercentage.tr, productInfoModel.depthPercentage, style),
-        _buildProductInfoItem(APPStrings.length.tr, productInfoModel.length, style),
-        _buildProductInfoItem(APPStrings.width.tr, productInfoModel.width, style),
-        _buildProductInfoItem(APPStrings.depth.tr, productInfoModel.depth, style),
-        _buildProductInfoItem(APPStrings.crownAngle.tr, productInfoModel.crownAngle, style),
-        _buildProductInfoItem(APPStrings.crownHeight.tr, productInfoModel.crownHeight, style),
-        _buildProductInfoItem(APPStrings.pavilionAngle.tr, productInfoModel.pavilionAngle, style),
-        _buildProductInfoItem(APPStrings.pavilionDepth.tr, productInfoModel.pavilionDepth, style),
-        _buildProductInfoItem(APPStrings.girdle.tr, productInfoModel.girdle, style),
-        _buildProductInfoItem(APPStrings.culetSize.tr, productInfoModel.culetSize, style),
-        _buildProductInfoItem(APPStrings.girdleCondition.tr, productInfoModel.girdleCondition, style),
-        _buildProductInfoItem(APPStrings.laserInclusion.tr, productInfoModel.laserInclusion, style),
-        _buildProductInfoItem(APPStrings.lowerHalf.tr, productInfoModel.lowerHalf, style),
-        _buildProductInfoItem(APPStrings.starLength.tr, productInfoModel.starLength, style),
-      ],
-    );
-  }
-
-  Widget _buildInclusionInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(APPStrings.inclusionInfo.tr, style: style.labelStyle),
-        SizedBox(height: 12.h),
-        _buildProductInfoItem(APPStrings.girdlePercentage.tr, productInfoModel.girdlePercentage, style),
-        _buildProductInfoItem(APPStrings.colorGrading.tr, productInfoModel.colorGrading, style),
-        _buildProductInfoItem(APPStrings.clarityGrading.tr, productInfoModel.clarityGrading, style),
-        _buildProductInfoItem(APPStrings.blackTable.tr, productInfoModel.blackTable, style),
-        _buildProductInfoItem(APPStrings.blackCrown.tr, productInfoModel.blackCrown, style),
-        _buildProductInfoItem(APPStrings.crownOpen.tr, productInfoModel.crownOpen, style),
-        _buildProductInfoItem(APPStrings.tableOpen.tr, productInfoModel.tableOpen, style),
-        _buildProductInfoItem(APPStrings.pavOpen.tr, productInfoModel.pavOpen, style),
-        _buildProductInfoItem(APPStrings.milkey.tr, productInfoModel.milkey, style),
-        _buildProductInfoItem(APPStrings.heartAndArrow.tr, productInfoModel.heartAndArrow, style),
-        _buildProductInfoItem(APPStrings.noBGM.tr, productInfoModel.noBGM, style),
-        _buildProductInfoItem(APPStrings.girdleInclusion.tr, productInfoModel.girdleInclusion, style),
-        _buildProductInfoItem(APPStrings.whiteInCenter.tr, productInfoModel.whiteInCenter, style),
-        _buildProductInfoItem(APPStrings.whiteInCrown.tr, productInfoModel.whiteInCrown, style),
-        _buildProductInfoItem(APPStrings.countryOfOrigin.tr, productInfoModel.countryOfOrigin, style),
-      ],
-    );
-  }
-
-  Widget _buildOtherInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(APPStrings.other.tr, style: style.labelStyle),
-        SizedBox(height: 12.h),
-        _buildProductInfoItem(APPStrings.keyToSymbol.tr, productInfoModel.keyToSymbol, style),
-        _buildProductInfoItem(APPStrings.reportComments.tr, productInfoModel.reportComments, style),
-      ],
-    );
-  }
-
-  Widget _buildPriceDetailsInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(APPStrings.priceDetails.tr, style: style.labelStyle),
-        SizedBox(height: 12.h),
-        _buildProductInfoItem(APPStrings.rap.tr, productInfoModel.rap, style),
-        _buildProductInfoItem(APPStrings.disc.tr, productInfoModel.discount, style),
-        _buildProductInfoItem(APPStrings.pricePerCrt.tr, productInfoModel.pricePerCrt, style),
-        _buildProductInfoItem(APPStrings.amount.tr, productInfoModel.amount, style),
-      ],
-    );
-  }
-
-  Widget _buildProductInfoItem(String title, String? value, DiamondInfoPopupScreenStyle style) {
+  Widget _buildProductInfoItem(String title, String? value, DiamondInfoPopupScreenStyle style, BuildContext context, {String? url}) {
     return Padding(
       padding: EdgeInsetsDirectional.only(bottom: 8.0.h),
       child: Row(children: [
         Expanded(child: SmartText(title, style: style.itemTitleStyle)),
-        Expanded(child: SmartText(value.isNotNullNorEmpty ? value : APPStrings.dash.tr, style: style.itemValueStyle)),
+        Expanded(
+            child: SmartText(
+          value.isNotNullNorEmpty ? value : APPStrings.dash.tr,
+          style: url.isNotNullNorEmpty
+              ? style.itemValueStyle.copyWith(
+                  color: AppTheme.of(context).colors.primary,
+                  decoration: TextDecoration.underline,
+                )
+              : style.itemValueStyle,
+          onTap: url.isNotNullNorEmpty
+              ? () {
+                  Utils.launchUrlFromString(url!);
+                }
+              : null,
+        )),
       ]),
     );
   }

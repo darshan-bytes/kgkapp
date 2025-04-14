@@ -862,5 +862,6 @@
   "mob_price": "سعر",
   "mob_mark_as_in_active": "علامة كغير نشط",
   "mob_mark_as_active": "علامة كتنشيط",
-  "mob_user_status_change_msg": "هل أنت متأكد أنك تريد تغيير حالة المستخدم؟"
+  "mob_user_status_change_msg": "هل أنت متأكد أنك تريد تغيير حالة المستخدم؟",
+  "mob_click_here_to_view": "انقر هنا لعرض"
 }

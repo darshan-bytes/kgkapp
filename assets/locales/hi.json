@@ -863,5 +863,6 @@
   "mob_price": "कीमत",
   "mob_mark_as_in_active": "निष्क्रिय के रूप में चिह्नित करें",
   "mob_mark_as_active": "सक्रिय के रूप में चिह्नित करें",
-  "mob_user_status_change_msg": "क्या आप इस उपयोगकर्ता की स्थिति बदलना चाहते हैं ?"
+  "mob_user_status_change_msg": "क्या आप इस उपयोगकर्ता की स्थिति बदलना चाहते हैं ?",
+  "mob_click_here_to_view": "देखने के लिए यहां क्लिक करें"
 }

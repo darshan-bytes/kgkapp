@@ -142,4 +142,13 @@ extension StringExtensions on String {
       return null;
     }
   }
+
+  bool get isURL {
+    try {
+      final uri = Uri.parse(this);
+      return uri.hasAbsolutePath && (uri.isScheme('http') || uri.isScheme('https'));
+    } catch (e) {
+      return false;
+    }
+  }
 }

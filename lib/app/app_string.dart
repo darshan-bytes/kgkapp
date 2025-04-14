@@ -1059,4 +1059,5 @@ class APPStrings {
   static const String markAsInActive = 'mob_mark_as_in_active';
   static const String markAsActive = 'mob_mark_as_active';
   static const String userStatusChangeMsg = 'mob_user_status_change_msg';
+  static const String clickHeretoView = 'mob_click_here_to_view';
 }
