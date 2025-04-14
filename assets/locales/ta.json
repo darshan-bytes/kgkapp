@@ -863,5 +863,6 @@
   "mob_price": "விலை",
   "mob_mark_as_in_active": "செயலற்றதாகக் குறிக்கவும்",
   "mob_mark_as_active": "செயல்படுத்தவும்",
-  "mob_user_status_change_msg": "பயனர் நிலை மாற்றப்பட்டது"
+  "mob_user_status_change_msg": "பயனர் நிலை மாற்றப்பட்டது",
+  "mob_click_here_to_view": "காண கிளிக் செய்யவும்"
 }
