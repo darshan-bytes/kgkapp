@@ -45,6 +45,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   DiamondDataModel? diamondDataForDIY;
   DiyStyleListModel? diyStyleForDIY;
 
+  static String outputDirPath = '';
+
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
@@ -66,7 +68,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           result.contains(ConnectivityResult.ethernet);
       add(ConnectivityChangedEvent(isConnected));
     });
+    setThemeData(emit);
+  }
 
+  void setThemeData(Emitter<AppState> emit) async {
     final String theme = StorageManager().getThemeData();
     debugPrint("theme $theme");
     if (theme == 'dark') {

@@ -73,8 +73,8 @@ class SmartImage extends StatelessWidget {
               borderRadius: imageBorderRadius,
               border: border,
             ),
-            child: SvgPicture.asset(
-              path,
+            child: SvgPicture.file(
+              path.svgToFile,
               width: width,
               height: height,
               fit: fit ?? BoxFit.contain,

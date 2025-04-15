@@ -29,6 +29,8 @@ void main() async {
   // Timer.periodic(Duration(seconds: 1), (timer) {
   //logMemoryUsage();
   // });
+  await AppRepository.fetchStrapiThemeData();
+  await Utils.replaceAllSvgColorsS(AppThemes().appColor.primary);
 
   /// Initializing app
   runApp(const MyApp());
@@ -101,7 +103,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "14 April",
+        message: "16 April",
         location: BannerLocation.topEnd,
       ),
     );

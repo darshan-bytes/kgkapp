@@ -35,7 +35,7 @@ class FAQ {
   factory FAQ.fromJson(Map<String, dynamic> json) {
     return FAQ(
       question: json['question'] ?? '',
-      answer: json['answer'] ?? '',
+      answer: json['answer']?.trim() ?? '',
     );
   }
 

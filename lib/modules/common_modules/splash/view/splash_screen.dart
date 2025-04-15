@@ -23,9 +23,9 @@ class SplashScreen extends StatelessWidget {
                     width: context.width,
                     child: Center(
                       child: SmartImage(
-                        path: AppImages.icSplashLogoWithSvg,
+                        path: AppImages.icSplashLogoGet,
                         height: 112.w,
-                        width: 112.w,
+                        // width: 112.w,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -51,7 +51,7 @@ class SplashScreen extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                )
+                ),
               ],
             );
           },

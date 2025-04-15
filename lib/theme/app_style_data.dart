@@ -166,7 +166,7 @@ class LightModeTheme extends AppTheme {
       labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
       primaryColor: colors.primary,
-      colorD5E7F1: colors.colorD5E7F1,
+      colorD5E7F1: colors.colorC5DEEB,
       whiteColor: colors.white);
 
   @override

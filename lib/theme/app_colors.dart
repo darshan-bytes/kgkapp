@@ -4,8 +4,27 @@ AppColor colors(BuildContext context) => Theme.of(context).colors;
 
 /// To get Light and dark mode.[AppThemes]
 class AppThemes {
+  AppThemes() {
+    String companyTheme = StorageManager().getCompanyTheme();
+    switch (companyTheme) {
+      case 'entice':
+        appColor = AppColor.enticeTheme();
+        break;
+      case 'martin':
+        appColor = AppColor.martinTheme();
+        break;
+      case 'kgk':
+      default:
+        appColor = AppColor.kgkTheme();
+        break;
+    }
+  }
+
   late ThemeData selectedColor;
-  AppColor appColor = const AppColor(
+
+  late AppColor appColor;
+
+  /*AppColor appColor = const AppColor(
     primary: Color(0xFF083458),
     white: Color(0xFFFFFFFF),
     transparent: Color(0x00000000),
@@ -49,7 +68,7 @@ class AppThemes {
     colorD5E7F1: Color(0xFFD5E7F1),
     colorEEC200: Color(0xFFEEC200),
     colorFCF7E0: Color(0xFFFCF7E0),
-  );
+  );*/
 
   ThemeData light({MaterialColor? theme}) {
     return ThemeData(
@@ -176,6 +195,150 @@ class AppColor {
     required this.colorEEC200,
     required this.colorFCF7E0,
   });
+
+  factory AppColor.kgkTheme() {
+    return const AppColor(
+      primary: Color(0xFF083458),
+      white: Color(0xFFFFFFFF),
+      transparent: Color(0x00000000),
+      colorF65D3C: Color(0xFFF65D3C),
+      color303538: Color(0xFF303538),
+      colorD3DAE0: Color(0xFFD3DAE0),
+      colorF7F9FA: Color(0xFFF7F9FA),
+      color8C8C8C: Color(0xFF8C8C8C),
+      color083458: Color(0xFF083458),
+      colorECF4F9: Color(0xFFECF4F9),
+      color111620: Color(0xFF111620),
+      colorC5DEEB: Color(0xFFC5DEEB),
+      color50B83C: Color(0xFF50B83C),
+      colorFAFAFA: Color(0xFFFAFAFA),
+      color424445: Color(0xFF424445),
+      color8C98A8: Color(0xFF8C98A8),
+      colorF8F8F8: Color(0xFFF8F8F8),
+      color4885A3: Color(0xFF4885A3),
+      colorDDECF4: Color(0xFFDDECF4),
+      color64636D: Color(0xFF64636D),
+      color9DCAE0: Color(0xFF9DCAE0),
+      black: Color(0xFF000000),
+      colorF49342: Color(0xFFF49342),
+      colorFFF2E7: Color(0xFFFFF2E7),
+      colorEBFFE7: Color(0xFFEBFFE7),
+      colorE83535: Color(0xFFE83535),
+      colorFCE1E1: Color(0xFFFCE1E1),
+      color34415F: Color(0xFF34415F),
+      colorFFF6EE: Color(0xFFFFF6EE),
+      color383230: Color(0xFF383230),
+      color006FBB: Color(0xFF006FBB),
+      colorDFF2FF: Color(0xFFDFF2FF),
+      colorF1F7F9: Color(0xFFF1F7F9),
+      colorEAE0D6: Color(0xFFEAE0D6),
+      colorE2E2F0: Color(0xFFE2E2F0),
+      colorF2E6E0: Color(0xFFF2E6E0),
+      colorECECEA: Color(0xFFECECEA),
+      colorF2F2F6: Color(0xFFF2F2F6),
+      colorF7EEE9: Color(0xFFF7EEE9),
+      colorFF0000: Color(0xFFFF0000),
+      colorD5E7F1: Color(0xFFD5E7F1),
+      colorEEC200: Color(0xFFEEC200),
+      colorFCF7E0: Color(0xFFFCF7E0),
+    );
+  }
+
+  factory AppColor.martinTheme() {
+    return const AppColor(
+      primary: Color(0xFF473427),
+      white: Color(0xFFFFFFFF),
+      transparent: Color(0x00000000),
+      colorF65D3C: Color(0xFFF65D3C),
+      color303538: Color(0xFF303538),
+      colorD3DAE0: Color(0xFFD3DAE0),
+      colorF7F9FA: Color(0xFFFAF8F7),
+      color8C8C8C: Color(0xFF8C8C8C),
+      color083458: Color(0xFF473427),
+      colorECF4F9: Color(0xFFECF4F9),
+      color111620: Color(0xFF111620),
+      colorC5DEEB: Color(0xFFEBD4C5),
+      color50B83C: Color(0xFF50B83C),
+      colorFAFAFA: Color(0xFFFAFAFA),
+      color424445: Color(0xFF424445),
+      color8C98A8: Color(0xFF8C98A8),
+      colorF8F8F8: Color(0xFFF8F8F8),
+      color4885A3: Color(0xFFA36C48),
+      colorDDECF4: Color(0xFFDDECF4),
+      color64636D: Color(0xFF64636D),
+      color9DCAE0: Color(0xFFE0B89D),
+      black: Color(0xFF000000),
+      colorF49342: Color(0xFFF49342),
+      colorFFF2E7: Color(0xFFFFF2E7),
+      colorEBFFE7: Color(0xFFEBFFE7),
+      colorE83535: Color(0xFFE83535),
+      colorFCE1E1: Color(0xFFFCE1E1),
+      color34415F: Color(0xFF34415F),
+      colorFFF6EE: Color(0xFFFFF6EE),
+      color383230: Color(0xFF383230),
+      color006FBB: Color(0xFF006FBB),
+      colorDFF2FF: Color(0xFFDFF2FF),
+      colorF1F7F9: Color(0xFFF1F7F9),
+      colorEAE0D6: Color(0xFFEAE0D6),
+      colorE2E2F0: Color(0xFFE2E2F0),
+      colorF2E6E0: Color(0xFFF2E6E0),
+      colorECECEA: Color(0xFFECECEA),
+      colorF2F2F6: Color(0xFFF2F2F6),
+      colorF7EEE9: Color(0xFFF7EEE9),
+      colorFF0000: Color(0xFFFF0000),
+      colorD5E7F1: Color(0xFFD5E7F1),
+      colorEEC200: Color(0xFFEEC200),
+      colorFCF7E0: Color(0xFFFCF7E0),
+    );
+  }
+
+  factory AppColor.enticeTheme() {
+    return const AppColor(
+      primary: Color(0xFF7C2349),
+      white: Color(0xFFFFFFFF),
+      transparent: Color(0x00000000),
+      colorF65D3C: Color(0xFFF65D3C),
+      color303538: Color(0xFF303538),
+      colorD3DAE0: Color(0xFFD3DAE0),
+      colorF7F9FA: Color(0xFFFAF7F9),
+      color8C8C8C: Color(0xFF8C8C8C),
+      color083458: Color(0xFF7C2349),
+      colorECF4F9: Color(0xFFECF4F9),
+      color111620: Color(0xFF111620),
+      colorC5DEEB: Color(0xFFEBC5D5),
+      color50B83C: Color(0xFF50B83C),
+      colorFAFAFA: Color(0xFFFAFAFA),
+      color424445: Color(0xFF424445),
+      color8C98A8: Color(0xFF8C98A8),
+      colorF8F8F8: Color(0xFFF8F8F8),
+      color4885A3: Color(0xFFA3486F),
+      colorDDECF4: Color(0xFFDDECF4),
+      color64636D: Color(0xFF64636D),
+      color9DCAE0: Color(0xFFE09DBA),
+      black: Color(0xFF000000),
+      colorF49342: Color(0xFFF49342),
+      colorFFF2E7: Color(0xFFFFF2E7),
+      colorEBFFE7: Color(0xFFEBFFE7),
+      colorE83535: Color(0xFFE83535),
+      colorFCE1E1: Color(0xFFFCE1E1),
+      color34415F: Color(0xFF34415F),
+      colorFFF6EE: Color(0xFFFFF6EE),
+      color383230: Color(0xFF383230),
+      color006FBB: Color(0xFF006FBB),
+      colorDFF2FF: Color(0xFFDFF2FF),
+      colorF1F7F9: Color(0xFFF1F7F9),
+      colorEAE0D6: Color(0xFFEAE0D6),
+      colorE2E2F0: Color(0xFFE2E2F0),
+      colorF2E6E0: Color(0xFFF2E6E0),
+      colorECECEA: Color(0xFFECECEA),
+      colorF2F2F6: Color(0xFFF2F2F6),
+      colorF7EEE9: Color(0xFFF7EEE9),
+      colorFF0000: Color(0xFFFF0000),
+      colorD5E7F1: Color(0xFFD5E7F1),
+      colorEEC200: Color(0xFFEEC200),
+      colorFCF7E0: Color(0xFFFCF7E0),
+    );
+  }
 }
 
 extension ThemeDataExtensions on ThemeData {

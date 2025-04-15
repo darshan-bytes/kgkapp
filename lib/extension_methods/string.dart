@@ -151,4 +151,11 @@ extension StringExtensions on String {
       return false;
     }
   }
+
+  File get svgToFile {
+    String fileName = split('/').lastOrNull ?? '';
+    String prefixPath = AppBloc.outputDirPath;
+    String filePath = "$prefixPath/$fileName";
+    return File(filePath);
+  }
 }
