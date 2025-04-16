@@ -35,7 +35,7 @@ class DigitalCatalogueDetails {
   final bool? isPublic;
   final int? createdBy;
   final int? updatedBy;
-  final bool? status;
+  final String? status;
   final String? templateId;
   final List<CatalogueProduct> products;
   final bool? deleted;
@@ -48,56 +48,6 @@ class DigitalCatalogueDetails {
   final bool? isEditable;
   final UserIdDetails? createdByDetails;
   final UserIdDetails? updatedByDetails;
-
-  DigitalCatalogueDetails copyWith({
-    String? id,
-    String? name,
-    String? catalogueType,
-    String? cscCode,
-    DateTime? validFrom,
-    DateTime? validTo,
-    bool? isPublic,
-    int? createdBy,
-    int? updatedBy,
-    bool? status,
-    String? templateId,
-    List<CatalogueProduct>? products,
-    bool? deleted,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    List<dynamic>? sharedWith,
-    int? v,
-    String? catalogueCoverImage,
-    bool? isViewer,
-    bool? isEditable,
-    UserIdDetails? createdByDetails,
-    UserIdDetails? updatedByDetails,
-  }) {
-    return DigitalCatalogueDetails(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      catalogueType: catalogueType ?? this.catalogueType,
-      cscCode: cscCode ?? this.cscCode,
-      validFrom: validFrom ?? this.validFrom,
-      validTo: validTo ?? this.validTo,
-      isPublic: isPublic ?? this.isPublic,
-      createdBy: createdBy ?? this.createdBy,
-      updatedBy: updatedBy ?? this.updatedBy,
-      status: status ?? this.status,
-      templateId: templateId ?? this.templateId,
-      products: products ?? this.products,
-      deleted: deleted ?? this.deleted,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      sharedWith: sharedWith ?? this.sharedWith,
-      v: v ?? this.v,
-      catalogueCoverImage: catalogueCoverImage ?? this.catalogueCoverImage,
-      isViewer: isViewer ?? this.isViewer,
-      isEditable: isEditable ?? this.isEditable,
-      createdByDetails: createdByDetails ?? this.createdByDetails,
-      updatedByDetails: updatedByDetails ?? this.updatedByDetails,
-    );
-  }
 
   factory DigitalCatalogueDetails.fromJson(Map<String, dynamic> json) {
     return DigitalCatalogueDetails(

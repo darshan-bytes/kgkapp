@@ -36,7 +36,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
         if (state is PreviewCatalogueLoadedState) {
           return Column(
             children: [
-              _buildCommentAndShareRow(bloc, style, context),
+              if (bloc.previewCatalogueDataModel?.isPublic == true) _buildCommentAndShareRow(bloc, style, context),
               Expanded(
                 child: bloc.isWebView ? WebViewWidget(controller: bloc.webViewController) : _buildCustomCatalogueView(bloc, style, context),
               ),

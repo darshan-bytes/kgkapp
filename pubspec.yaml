@@ -84,7 +84,7 @@ dependencies:
   image_picker: ^1.1.2
 
   #For Permission Handle
-  permission_handler: ^12.0.0
+  permission_handler: ^12.0.0+1
 
   #For Date Time Conversion
   intl: ^0.19.0
@@ -100,12 +100,12 @@ dependencies:
   google_maps_flutter: ^2.12.1
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^29.1.37
+  syncfusion_flutter_sliders: ^29.1.38
 
   #For Calendar
-  syncfusion_flutter_calendar: ^29.1.37
+  syncfusion_flutter_calendar: ^29.1.38
 
-  syncfusion_flutter_charts: ^29.1.37+1
+  syncfusion_flutter_charts: ^29.1.38
 
   #For QR Code
   qr_flutter: ^4.1.0
