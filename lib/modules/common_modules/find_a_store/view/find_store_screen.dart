@@ -99,27 +99,25 @@ class FindStoreScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: IntrinsicWidth(
-                    child: Container(
-                      padding: EdgeInsetsDirectional.symmetric(vertical: 12.w),
-                      color: Colors.transparent,
-                      child: Row(
-                        children: [
-                          SmartImage(
-                            path: AppImages.icFindStorePin,
-                            color: style.primaryColor,
-                            height: 24.w,
-                            width: 24.w,
-                          ),
-                          SizedBox(
-                            width: 6.w,
-                          ),
-                          SmartText(
-                            APPStrings.useCurrentLocation.tr,
-                            style: style.useCurrentLocationStyle,
-                          )
-                        ],
-                      ),
+                  child: Container(
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 12.w),
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        SmartImage(
+                          path: AppImages.icFindStorePin,
+                          color: style.primaryColor,
+                          height: 24.w,
+                          width: 24.w,
+                        ),
+                        SizedBox(
+                          width: 6.w,
+                        ),
+                        SmartText(
+                          APPStrings.useCurrentLocation.tr,
+                          style: style.useCurrentLocationStyle,
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -245,20 +243,22 @@ class FindStoreScreen extends StatelessWidget {
                                                         SizedBox(
                                                           height: 16.h,
                                                         ),
-                                                        Align(
-                                                          alignment: AlignmentDirectional.centerEnd,
-                                                          child: IntrinsicWidth(
-                                                            child: SmartButton(
-                                                              onTap: () {
-                                                                bloc.add(GetDirectionEvent(
-                                                                    latitude: bloc.addressList[index].latitude.toDouble ?? 0.0,
-                                                                    longitude: bloc.addressList[index].longitude.toDouble ?? 0.0));
-                                                              },
-                                                              title: APPStrings.getDirections.tr,
-                                                              prefixImage: AppImages.icTurnRight,
-                                                              imageSize: 16.w,
+                                                        Row(
+                                                          children: [
+                                                            Spacer(),
+                                                            Flexible(
+                                                              child: SmartButton(
+                                                                onTap: () {
+                                                                  bloc.add(GetDirectionEvent(
+                                                                      latitude: bloc.addressList[index].latitude.toDouble ?? 0.0,
+                                                                      longitude: bloc.addressList[index].longitude.toDouble ?? 0.0));
+                                                                },
+                                                                title: APPStrings.getDirections.tr,
+                                                                prefixImage: AppImages.icTurnRight,
+                                                                imageSize: 16.w,
+                                                              ),
                                                             ),
-                                                          ),
+                                                          ],
                                                         ),
                                                         SizedBox(
                                                           height: 16.h,

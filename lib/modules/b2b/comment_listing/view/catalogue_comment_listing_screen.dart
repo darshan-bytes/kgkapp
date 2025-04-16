@@ -95,6 +95,7 @@ class CatalogueCommentListingScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: BlocBuilder<CommentListingBloc, CommentListingState>(
+        bloc: bloc,
         buildWhen: (previous, current) => current is CatalogueCommentState || current is CommentListingLoadedState,
         builder: (context, state) {
           PreviewCatalogueStyle style = AppTheme.of(context).previewCatalogueStyle;

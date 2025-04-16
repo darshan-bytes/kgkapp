@@ -715,7 +715,7 @@ class AppRoutes {
 
       case commentListingPage:
         builder = (context) {
-          return BlocProvider(
+          return BlocProvider<CommentListingBloc>(
             create: (context) => CommentListingBloc()..add(InitialCommentListingEvent(context: context)),
             child: CatalogueCommentListingScreen(),
           );
