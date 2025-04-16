@@ -116,6 +116,7 @@ class SmartButton extends StatelessWidget {
               child: prefixImage.isNotNullNorEmpty || suffixImage.isNotNullNorEmpty
                   ? Center(
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           if (prefixImage.isNotNullNorEmpty) ...[

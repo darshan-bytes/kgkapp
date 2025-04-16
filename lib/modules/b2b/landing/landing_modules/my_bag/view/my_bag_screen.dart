@@ -262,7 +262,7 @@ class MyBagScreen extends StatelessWidget {
                           depthPercentage: product.depth,
                           rap: product.rappaportPrice,
                           discount: product.discountPercentageString,
-                          perCts: product.perCaratPrice?.setCurrency,
+                          perCts: product.yourRate?.setCurrency,
                           amount: product.totalPrice?.setCurrency,
                           your: product.yourDiscount?.toString(),
                           yourRate: product.yourRate?.setCurrency,
