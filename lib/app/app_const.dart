@@ -20,13 +20,13 @@ class AppConst {
   // static const String strapiDevApiToken = "1803904f25958ca5095ba35907a66391b6ab0c890e0d5b0a0f73d350100696267b9da56a03980d89e1d086ef5c3901d7de559e3926d4ab77c2663c58ac88300aa474f478b39736adf8e3a793ff6aa9c44c5019a81af15d79ffe68ab3e9fdbbbe1bd7a90ec1f09055ea0d351cd1c0d27d7bfde695620536f62de761dad1b108bd";
   static const String presentationPreviewWebViewURL = 'https://www.kgkgroup.com/';
   static String? acceptLanguage = StorageManager().getLocale()?.code ?? 'en';
-  static final String profileDiamondWebViewURL = '$frontendLink/$acceptLanguage/education/diamonds';
-  static String profileLabCreatedDiamondsWebViewURL = '$frontendLink/$acceptLanguage/education/lab-grown-diamonds';
-  static String profileGemstoneWebViewURL = '$frontendLink/$acceptLanguage/education/gemstone';
-  static String profileMetalsWebViewURL = '$frontendLink/$acceptLanguage/education/metals';
-  static String profileRingSizerWebViewURL = '$frontendLink/$acceptLanguage/education/ring-sizer';
-  static String profileAboutUsWebViewURL = '$frontendLink/$acceptLanguage/about-us';
-  static String profilePrivacyPolicyWebViewURL = '$frontendLink/$acceptLanguage/policies/privacy-policy';
+  static final String profileDiamondWebViewURL = '$frontendLink/$acceptLanguage/education/diamonds?is_mobile=true';
+  static String profileLabCreatedDiamondsWebViewURL = '$frontendLink/$acceptLanguage/education/lab-grown-diamonds?is_mobile=true';
+  static String profileGemstoneWebViewURL = '$frontendLink/$acceptLanguage/education/gemstone?is_mobile=true';
+  static String profileMetalsWebViewURL = '$frontendLink/$acceptLanguage/education/metals?is_mobile=true';
+  static String profileRingSizerWebViewURL = '$frontendLink/$acceptLanguage/education/ring-sizer?is_mobile=true';
+  static String profileAboutUsWebViewURL = '$frontendLink/$acceptLanguage/about-us?is_mobile=true';
+  static String profilePrivacyPolicyWebViewURL = '$frontendLink/$acceptLanguage/policies/privacy-policy?is_mobile=true';
 
   static String splashScreenVideoUrl = Platform.isAndroid ? 'assets/images/splash_video_url.mp4' : 'assets/images/splash_video_url_ios.mp4';
   static String strapiImgBaseUrl = "https://strapi-cms.kgk.magnetoinfotech.com";
