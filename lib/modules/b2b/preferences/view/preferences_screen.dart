@@ -22,13 +22,9 @@ class PreferencesScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SmartText(
-                          APPStrings.country.tr,
-                          style: style.titleStyle,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
+                        /// Below code is commented as there is no use-case of the country dropdown
+                        /*SmartText(APPStrings.country.tr, style: style.titleStyle),
+                        SizedBox(height: 8.h),
                         BlocBuilder<PreferencesBloc, PreferencesState>(
                           buildWhen: (previous, current) => current is PreferencesChangeCountryState,
                           builder: (context, state) {
@@ -43,9 +39,7 @@ class PreferencesScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                        SizedBox(height: 20.h),*/
                         SmartText(
                           APPStrings.language.tr,
                           style: style.titleStyle,

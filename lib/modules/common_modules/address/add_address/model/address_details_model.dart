@@ -191,7 +191,7 @@ extension AddressDetailsExtension on AddressDetails {
 
   /// Returns the full formatted address, handling null values gracefully.
   String get fullAddress {
-    final addressParts = [apartment, streetAddress, city, state, country, zipCode].where((e) => e?.isNotEmpty ?? false).join(", ");
+    final addressParts = [streetAddress, apartment, city, state, country, zipCode].where((e) => e?.isNotEmpty ?? false).join(", ");
 
     return addressParts;
   }
