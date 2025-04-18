@@ -246,7 +246,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           break;
       }
     }
-
     return filters;
   }
 
@@ -333,7 +332,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
         /// Need to discuss for Image
         orderImages: [data.createdByDetails?.profilePic ?? ''],
-        orderedBy: data.createdByDetails?.organisationName ?? '',
+        orderedBy: data.createdByDetails?.fullName ?? '',
         commodity: data.commodity ?? '',
       );
     }).toList();

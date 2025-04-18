@@ -166,7 +166,7 @@ class FindStoreScreen extends StatelessWidget {
                             child: SizedBox(
                               height: 452.h,
                               child: GoogleMap(
-                                mapType: MapType.hybrid,
+                                mapType: MapType.normal,
                                 initialCameraPosition: bloc.myCameraPosition ?? CameraPosition(target: LatLng(0.0, 0.0)),
                                 onMapCreated: (GoogleMapController controller) {
                                   bloc.mapController.complete(controller);

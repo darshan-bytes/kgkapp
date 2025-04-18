@@ -95,7 +95,7 @@ class _OrderDetailBody extends StatelessWidget {
           itemCount: bloc.userType == UserType.b2cUser ? bloc.orderProductList.length : bloc.orderProductDetailsList.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w).copyWith(bottom: 24.h),
           itemBuilder: (context, index) {
             if (bloc.userType == UserType.b2cUser) {
               final ProductDetailsModel product = bloc.orderProductList[index];
@@ -106,9 +106,8 @@ class _OrderDetailBody extends StatelessWidget {
                 isDropDownEnable: false,
                 isCheckboxShow: false,
                 isEnableAddToWishList: false,
-                onRemoveTap: () {
-                  /// TODO :: To be implemented
-                },
+                // TODO :: To be implemented
+                // onRemoveTap: () {},
                 onMoveToWishListTap: null,
                 productDetails: product,
                 qualityOptionsList: product.cartProductQuality ?? [],
@@ -120,9 +119,8 @@ class _OrderDetailBody extends StatelessWidget {
               return OrderDetailsProductItem(
                 productDetails: productDetails,
                 onTap: () {},
-                onTapRemoveButton: () {
-                  /// TODO :: To be implemented
-                },
+                // TODO :: To be implemented
+                // onTapRemoveButton: () {},
               );
             }
           },

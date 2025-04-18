@@ -13,7 +13,6 @@ class QrScannerScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: SmartAppBar(
-          title: APPStrings.makeAnInquiry.tr,
           onBack: () {
             qrCodeScanLoginBloc.add(QrCodeScanLoginStopEvent(context: context));
             context.pop();

@@ -8,12 +8,15 @@ final class CompareProductAddProductEvent extends CompareProductEvent {
   final ProductDetailsModel product;
   final BuildContext context;
 
-  const CompareProductAddProductEvent({required this.context, required this.product});
+  final VoidCallback? onProductAdded;
+
+  const CompareProductAddProductEvent({required this.context, required this.product, this.onProductAdded});
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         context,
         product,
+        onProductAdded,
       ];
 }
 
