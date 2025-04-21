@@ -932,7 +932,7 @@ class AppRepository extends ApiService {
   //apiCallForPresentationStatus
   Future<Either<ErrorResponse, CommonResponse>?> apiCallForPresentationStatus({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    var response = await postMethod<Map<String, dynamic>>(ApiClient.presentationStatus, body);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.presentationStatus, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
