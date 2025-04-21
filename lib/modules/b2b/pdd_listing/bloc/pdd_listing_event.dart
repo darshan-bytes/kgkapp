@@ -54,6 +54,7 @@ final class PddListLoadMoreEvent extends PddListingEvent {
 
 final class PddListPullToRefreshEvent extends PddListingEvent {
   final BuildContext context;
+
   const PddListPullToRefreshEvent(this.context);
 
   @override
@@ -62,6 +63,7 @@ final class PddListPullToRefreshEvent extends PddListingEvent {
 
 final class PddListSearchEvent extends PddListingEvent {
   final BuildContext context;
+
   const PddListSearchEvent(this.context);
 
   @override
@@ -77,4 +79,14 @@ final class PddListReviewStateEvent extends PddListingEvent {
 
   @override
   List<Object> get props => [context, isApproved, presentationNumber];
+}
+
+final class PddListDeleteEvent extends PddListingEvent {
+  final String presentationNumber;
+  final BuildContext context;
+
+  const PddListDeleteEvent({required this.context, required this.presentationNumber});
+
+  @override
+  List<Object> get props => [context, presentationNumber];
 }

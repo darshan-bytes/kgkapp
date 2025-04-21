@@ -864,5 +864,9 @@
   "mob_mark_as_in_active": "ทำเครื่องหมายว่าไม่ใช้งาน",
   "mob_mark_as_active": "ทำเครื่องหมายว่าใช้งาน",
   "mob_user_status_change_msg": "คุณต้องการเปลี่ยนสถานะสำหรับผู้ใช้นี้หรือไม่ ?",
-  "mob_click_here_to_view": "คลิกที่นี่เพื่อดู"
+  "mob_click_here_to_view": "คลิกที่นี่เพื่อดู",
+  "mob_view_all_presentation": "ดูการนำเสนอทั้งหมด",
+  "mob_remove_selected_presentation": "ลบการนำเสนอที่เลือก",
+  "mob_remove_selected_presentation_msg": "การนำเสนอที่เลือกจะถูกลบออกจากแนวคิดด้วย",
+  "mob_delete_presentation": "ลบการนำเสนอ"
 }

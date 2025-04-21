@@ -52,13 +52,20 @@ class ConceptListScreen extends StatelessWidget {
                                     return Column(
                                       children: [
                                         B2BListingItem(
-                                          onTap: () {
-                                            showConceptDetailBottomSheet(
-                                                context: context, concept: conceptListBloc.conceptList[index]);
-                                          },
+                                          onTapMenuButton: conceptListBloc.conceptList[index].presentationList.isNotNullNorEmpty
+                                              ? () {
+                                                  _showConceptMoreDetailsPopup(conceptListBloc, context, index);
+                                                }
+                                              : null,
+
+                                          /// No need to display concept detail bottom sheet as per the discussion with Sivaraj for now
+                                          // onTap: () {
+                                          //   showConceptDetailBottomSheet(context: context, concept: conceptListBloc.conceptList[index]);
+                                          // },
                                           onTapCircleWithText: () {
-                                            context.pushNamed(AppRoutes.presentationPage,
-                                                arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList});
+                                            context.pushNamed(AppRoutes.presentationPage, arguments: {
+                                              RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList
+                                            });
                                           },
                                           type: B2BListingType.conceptListingType,
                                           listingItemModel: conceptListBloc.conceptList[index],
@@ -111,7 +118,6 @@ class ConceptListScreen extends StatelessWidget {
           return const SizedBox.shrink();
         },
       ),
-
       floatingActionButton: ScrollToTopFAB(
         canScrollToTop: conceptListBloc.paginationScrollController.canScrollToTop,
         onTap: conceptListBloc.paginationScrollController.scrollToTop,
@@ -119,9 +125,58 @@ class ConceptListScreen extends StatelessWidget {
     );
   }
 
+  void _showConceptMoreDetailsPopup(ConceptListBloc conceptListBloc, BuildContext context, int index) {
+    OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      backgroundColor: orderPopupStyle.whiteColor,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+            color: orderPopupStyle.whiteColor,
+          ),
+          padding: EdgeInsetsDirectional.all(16.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildPopupOption(context, text: APPStrings.viewAllPresentation.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                context.pushNamed(AppRoutes.presentationPage,
+                    arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList});
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPopupOption(
+    BuildContext context, {
+    required String text,
+    required TextStyle style,
+    EdgeInsetsGeometry? padding,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 56.h,
+        width: context.width,
+        alignment: AlignmentDirectional.centerStart,
+        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 20.w),
+        child: SmartText(text, style: style),
+      ),
+    );
+  }
+
   void showConceptDetailBottomSheet({required BuildContext context, required B2BCustomListingDataModel concept}) {
     List<String> dummy = [];
-    if(concept.descriptionImageList.isNotNullNorEmpty){
+    if (concept.descriptionImageList.isNotNullNorEmpty) {
       for (int i = 0; i < concept.descriptionImageList!.length; i++) {
         dummy.add(concept.descriptionImageList![i]);
       }

@@ -11,6 +11,7 @@ class PresentationGridItem extends StatelessWidget {
   final double? imageHeight;
   final double? statusBadgeHeight;
   final void Function()? onTap;
+  final VoidCallback? onTapMenuButton;
 
   const PresentationGridItem({
     super.key,
@@ -24,6 +25,7 @@ class PresentationGridItem extends StatelessWidget {
     this.imageHeight,
     this.statusBadgeHeight,
     this.onTap,
+    this.onTapMenuButton,
   });
 
   @override
@@ -55,6 +57,19 @@ class PresentationGridItem extends StatelessWidget {
                 child: SmartStatusBadge(
                   currentStatus: b2bCustomListingDataModel.status!,
                   height: statusBadgeHeight ?? 32.h,
+                ),
+              ),
+            if (onTapMenuButton != null)
+              PositionedDirectional(
+                top: 14.h,
+                end: 14.w,
+                child: SmartImage(
+                  path: AppImages.icMoreHorizontal,
+                  onTap: onTapMenuButton,
+                  padding: EdgeInsetsDirectional.all(4.w),
+                  inkwellBorderRadius: BorderRadius.circular(4.0.r),
+                  imageBorderRadius: BorderRadiusDirectional.circular(50.r),
+                  bgColor: style.backgroundColor,
                 ),
               ),
           ],

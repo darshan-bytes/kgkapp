@@ -864,5 +864,9 @@
   "mob_mark_as_in_active": "निष्क्रिय के रूप में चिह्नित करें",
   "mob_mark_as_active": "सक्रिय के रूप में चिह्नित करें",
   "mob_user_status_change_msg": "क्या आप इस उपयोगकर्ता की स्थिति बदलना चाहते हैं ?",
-  "mob_click_here_to_view": "देखने के लिए यहां क्लिक करें"
+  "mob_click_here_to_view": "देखने के लिए यहां क्लिक करें",
+  "mob_view_all_presentation": "सभी प्रस्तुतियाँ देखें",
+  "mob_remove_selected_presentation": "चयनित प्रस्तुति हटाएँ",
+  "mob_remove_selected_presentation_msg": "चयनित प्रस्तुतिकरण को अवधारणा से भी हटा दिया जाएगा",
+  "mob_delete_presentation": "प्रस्तुतिकरण हटाएँ"
 }
