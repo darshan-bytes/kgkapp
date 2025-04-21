@@ -61,7 +61,7 @@ class QrScannerScreen extends StatelessWidget {
                   onDetect: (barcode) {
                     qrCodeScanLoginBloc.add(QrCodeScanLoginStopEvent(barcode: barcode, context: context));
                   },
-                  errorBuilder: (context, error) {
+                  errorBuilder: (context, error, child) {
                     return Container(
                       padding: EdgeInsetsDirectional.all(16.w),
                       alignment: AlignmentDirectional.center,
