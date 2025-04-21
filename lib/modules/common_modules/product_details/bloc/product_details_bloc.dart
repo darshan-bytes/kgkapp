@@ -695,17 +695,23 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     filterDataMap = data?[RoutesData.filterData] ?? {};
   }
 
-  void _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) {
+  Future<void> _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) async {
+    if (isClosed) return;
+    Completer<bool>? completer;
     try {
       if (productDetails == null) return;
       if (event.context != null) {
         if (!isCompare) {
-          isCompare = true;
+          completer = Completer<bool>();
           BlocProvider.of<CompareProductBloc>(event.context!).add(
             CompareProductAddProductEvent(
-              context: event.context!,
-              product: productDetails!,
-            ),
+                context: event.context!,
+                product: productDetails!,
+                onProductAdded: () {
+                  isCompare = true;
+                  emit(ProductCompareToggleState(isCompare));
+                  completer?.complete(true);
+                }),
           );
         } else {
           isCompare = false;
@@ -720,6 +726,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       } else if (event.isCompare != null) {
         isCompare = event.isCompare!;
         emit(ProductCompareToggleState(isCompare));
+      }
+      if (completer != null) {
+        await completer.future;
       }
     } catch (e) {
       printWrapped("Error in _onToggleCompareProduct: $e");

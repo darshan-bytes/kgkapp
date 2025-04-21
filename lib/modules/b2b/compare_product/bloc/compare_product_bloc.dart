@@ -66,6 +66,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
 
     // Add the product if not already present
     if (event.product.productId.isNotNullNorEmpty && !productIdList.contains(event.product.productId)) {
+      event.onProductAdded?.call();
       productIdList.add(event.product.productId!); // Add product explicitly
       productList.add(event.product); // Add product to the list
       emit(CompareProductReloadState());

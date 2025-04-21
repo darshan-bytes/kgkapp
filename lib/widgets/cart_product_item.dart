@@ -96,41 +96,43 @@ class CartProductItem extends StatelessWidget {
                 productDetailsSection(style, context),
               ],
             ),
-            SizedBox(height: 10.h),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.symmetric(horizontal: BorderSide(color: style.borderColor)),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: SmartButton(
-                    activeBackgroundColor: style.backgroundColor,
-                    title: APPStrings.remove.tr,
-                    titleStyle: style.removeBagTextStyle,
-                    borderRadius: const BorderRadius.all(Radius.zero),
-                    onTap: () {
-                      if (onRemoveTap != null) {
-                        onRemoveTap!();
-                      }
-                    },
-                  )),
-                  Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
-                  if (isEnableAddToWishList)
+            if (onRemoveTap != null || (isEnableAddToWishList && onMoveToWishListTap != null)) ...[
+              SizedBox(height: 10.h),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.symmetric(horizontal: BorderSide(color: style.borderColor)),
+                ),
+                child: Row(
+                  children: [
                     Expanded(
                         child: SmartButton(
-                            activeBackgroundColor: style.backgroundColor,
-                            title: APPStrings.moveToWishlist.tr,
-                            titleStyle: style.removeBagTextStyle,
-                            borderRadius: const BorderRadius.all(Radius.zero),
-                            onTap: () {
-                              if (onMoveToWishListTap != null) {
-                                onMoveToWishListTap!();
-                              }
-                            })),
-                ],
+                      activeBackgroundColor: style.backgroundColor,
+                      title: APPStrings.remove.tr,
+                      titleStyle: style.removeBagTextStyle,
+                      borderRadius: const BorderRadius.all(Radius.zero),
+                      onTap: () {
+                        if (onRemoveTap != null) {
+                          onRemoveTap!();
+                        }
+                      },
+                    )),
+                    Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
+                    if (isEnableAddToWishList)
+                      Expanded(
+                          child: SmartButton(
+                              activeBackgroundColor: style.backgroundColor,
+                              title: APPStrings.moveToWishlist.tr,
+                              titleStyle: style.removeBagTextStyle,
+                              borderRadius: const BorderRadius.all(Radius.zero),
+                              onTap: () {
+                                if (onMoveToWishListTap != null) {
+                                  onMoveToWishListTap!();
+                                }
+                              })),
+                  ],
+                ),
               ),
-            ),
+            ],
             SizedBox(height: 16.h),
           ],
         ),
