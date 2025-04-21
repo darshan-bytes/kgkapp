@@ -868,5 +868,6 @@
   "mob_view_all_presentation": "View all presentations",
   "mob_remove_selected_presentation": "Remove Selected Presentation",
   "mob_remove_selected_presentation_msg": "Selected Presentation will be removed form the concept also",
-  "mob_delete_presentation": "Delete Presentation"
+  "mob_delete_presentation": "Delete Presentation",
+  "mob_approve_presentation": "Approve Presentation"
 }

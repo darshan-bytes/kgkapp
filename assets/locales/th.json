@@ -868,5 +868,6 @@
   "mob_view_all_presentation": "ดูการนำเสนอทั้งหมด",
   "mob_remove_selected_presentation": "ลบการนำเสนอที่เลือก",
   "mob_remove_selected_presentation_msg": "การนำเสนอที่เลือกจะถูกลบออกจากแนวคิดด้วย",
-  "mob_delete_presentation": "ลบการนำเสนอ"
+  "mob_delete_presentation": "ลบการนำเสนอ",
+  "mob_approve_presentation": "อนุมัติการนำเสนอ"
 }

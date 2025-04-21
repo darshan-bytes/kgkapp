@@ -868,5 +868,6 @@
   "mob_view_all_presentation": "すべてのプレゼンテーションを表示します",
   "mob_remove_selected_presentation": "選択したプレゼンテーションを削除",
   "mob_remove_selected_presentation_msg": "選択したプレゼンテーションはコンセプトからも削除されます",
-  "mob_delete_presentation": "プレゼンテーションの削除"
+  "mob_delete_presentation": "プレゼンテーションの削除",
+  "mob_approve_presentation": "プレゼンテーションの承認"
 }

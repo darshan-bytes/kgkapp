@@ -868,5 +868,6 @@
   "mob_view_all_presentation": "عرض جميع العروض التقديمية",
   "mob_remove_selected_presentation": "إزالة العرض التقديمي المحدد",
   "mob_remove_selected_presentation_msg": "ستتم إزالة العرض التقديمي المحدد من المفهوم أيضًا",
-  "mob_delete_presentation": "حذف العرض التقديمي"
+  "mob_delete_presentation": "حذف العرض التقديمي",
+  "mob_approve_presentation": "الموافقة على العرض التقديمي"
 }

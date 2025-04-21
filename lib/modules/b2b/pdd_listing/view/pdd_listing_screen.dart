@@ -155,10 +155,6 @@ class PddListingScreen extends StatelessWidget {
                                 bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
                             onTapMenuButton: () {
                               _showMenuButtonTap(context, bloc, index);
-
-                              /// Below line is commented because it is not used in the current implementation and it will be utilised in
-                              /// the presentation aprove/reject functionality
-                              // handleMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
                             },
                             type: B2BListingType.presentationListingType,
                             listingItemModel: bloc.presentationList[index],
@@ -197,6 +193,11 @@ class PddListingScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (bloc.presentationList[index].status == ProjectStatus.pending)
+                _buildPopupOption(mainContext, text: APPStrings.approvePresentation.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                  context.pop();
+                  handleApproveMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
+                }),
               _buildPopupOption(context, text: APPStrings.deletePresentation.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
                 context.pop();
                 Utils.showSmartModalBottomSheet(
@@ -242,20 +243,23 @@ class PddListingScreen extends StatelessWidget {
     );
   }
 
-  void handleMenuButtonTap(BuildContext mainContext, PddListingBloc bloc, strPresentationNumber) {
+  void handleApproveMenuButtonTap(BuildContext mainContext, PddListingBloc bloc, strPresentationNumber) {
     Utils.showSmartModalBottomSheet(
       context: mainContext,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => ConfirmationDialog(
+      builder: (bottomSheetContext) => ConfirmationDialog(
         title: APPStrings.presentationDialogTitle.tr,
         message: APPStrings.presentationDialogMsg.tr,
+        onDenied: () {
+          bottomSheetContext.pop();
+        },
         onApproved: () {
-          bloc.add(PddListReviewStateEvent(context: mainContext, isApproved: true, presentationNumber: strPresentationNumber));
+          bloc.add(PddListReviewStateEvent(context: bottomSheetContext, isApproved: true, presentationNumber: strPresentationNumber));
         },
         onApprovedText: APPStrings.approve.tr,
-        onDeniedText: APPStrings.reject.tr,
+        onDeniedText: APPStrings.cancel.tr,
       ),
     );
   }

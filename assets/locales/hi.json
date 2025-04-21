@@ -868,5 +868,6 @@
   "mob_view_all_presentation": "सभी प्रस्तुतियाँ देखें",
   "mob_remove_selected_presentation": "चयनित प्रस्तुति हटाएँ",
   "mob_remove_selected_presentation_msg": "चयनित प्रस्तुतिकरण को अवधारणा से भी हटा दिया जाएगा",
-  "mob_delete_presentation": "प्रस्तुतिकरण हटाएँ"
+  "mob_delete_presentation": "प्रस्तुतिकरण हटाएँ",
+  "mob_approve_presentation": "प्रस्तुति को मंजूरी दें"
 }
