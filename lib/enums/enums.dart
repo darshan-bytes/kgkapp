@@ -45,7 +45,8 @@ enum ProjectStatus {
   open('open'),
   close('close'),
   progress('progress'),
-  newStatus('new');
+  newStatus('new'),
+  expired('expired');
 
   final String value;
 
