@@ -864,5 +864,9 @@
   "mob_mark_as_in_active": "非アクティブとしてマーク",
   "mob_mark_as_active": "アクティブとしてマーク",
   "mob_user_status_change_msg": "このユーザーのステータスを変更しますか？",
-  "mob_click_here_to_view": "表示するにはここをクリックしてください"
+  "mob_click_here_to_view": "表示するにはここをクリックしてください",
+  "mob_view_all_presentation": "すべてのプレゼンテーションを表示します",
+  "mob_remove_selected_presentation": "選択したプレゼンテーションを削除",
+  "mob_remove_selected_presentation_msg": "選択したプレゼンテーションはコンセプトからも削除されます",
+  "mob_delete_presentation": "プレゼンテーションの削除"
 }

@@ -8,6 +8,7 @@ class SmartImage extends StatelessWidget {
   final BoxFit? fit;
   final BorderRadiusGeometry? imageBorderRadius;
   final Color? color;
+  final Color? bgColor;
   final GestureTapCallback? onTap;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -24,6 +25,7 @@ class SmartImage extends StatelessWidget {
     this.width,
     this.imageBorderRadius,
     this.color,
+    this.bgColor,
     this.onTap,
     this.padding,
     this.margin,
@@ -72,6 +74,7 @@ class SmartImage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
               border: border,
+              color: bgColor,
             ),
             child: SvgPicture.asset(
               path,
@@ -93,6 +96,7 @@ class SmartImage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
               border: border,
+              color: bgColor,
             ),
             child: Image.asset(
               path,
@@ -113,6 +117,7 @@ class SmartImage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
               border: border,
+              color: bgColor,
             ),
             child: Image.file(
               File(path),
@@ -133,6 +138,7 @@ class SmartImage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
               border: border,
+              color: bgColor,
             ),
             child: path.isSvgUrl
                 ? SvgPicture.network(path, width: width, height: height)

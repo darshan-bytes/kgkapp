@@ -864,5 +864,9 @@
   "mob_mark_as_in_active": "Mark as Inactive",
   "mob_mark_as_active": "Mark as Active",
   "mob_user_status_change_msg": "You want to change status for this user?",
-  "mob_click_here_to_view": "Click here to view"
+  "mob_click_here_to_view": "Click here to view",
+  "mob_view_all_presentation": "View all presentations",
+  "mob_remove_selected_presentation": "Remove Selected Presentation",
+  "mob_remove_selected_presentation_msg": "Selected Presentation will be removed form the concept also",
+  "mob_delete_presentation": "Delete Presentation"
 }

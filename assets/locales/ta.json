@@ -864,5 +864,9 @@
   "mob_mark_as_in_active": "செயலற்றதாகக் குறிக்கவும்",
   "mob_mark_as_active": "செயல்படுத்தவும்",
   "mob_user_status_change_msg": "பயனர் நிலை மாற்றப்பட்டது",
-  "mob_click_here_to_view": "காண கிளிக் செய்யவும்"
+  "mob_click_here_to_view": "காண கிளிக் செய்யவும்",
+  "mob_view_all_presentation": "அனைத்து மதிப்பீடுகளையும் காண்க",
+  "mob_remove_selected_presentation": "தேர்ந்தெடுக்கப்பட்ட விளக்கக்காட்சியை அகற்று",
+  "mob_remove_selected_presentation_msg": "தேர்ந்தெடுக்கப்பட்ட விளக்கக்காட்சி கருத்தாக்கத்திலிருந்தும் அகற்றப்படும்",
+  "mob_delete_presentation": "விளக்கக்காட்சியை நீக்கு"
 }

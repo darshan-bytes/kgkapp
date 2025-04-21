@@ -13,7 +13,7 @@ class PddListingScreen extends StatelessWidget {
       floatingActionButton: _buildFloatingActionButton(pddListingBloc),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
           child: BlocBuilder<PddListingBloc, PddListingState>(
             buildWhen: (previous, current) => current is PddListingLoadedState || current is PddListingChangeListingTypeState,
             builder: (context, state) {
@@ -25,7 +25,6 @@ class PddListingScreen extends StatelessWidget {
                     _buildSearchTextField(context, pddListingBloc, diamondListingStyle),
                     SizedBox(height: 24.h),
                     _buildPddList(pddListingBloc, state),
-                    SizedBox(height: 16.h),
                   ],
                 );
               }
@@ -133,6 +132,7 @@ class PddListingScreen extends StatelessWidget {
           key: bloc.isGrid ? bloc.gridPaginationScrollController.gridKey : bloc.gridPaginationScrollController.listKey,
           controller: bloc.gridPaginationScrollController.controller,
           itemCount: bloc.presentationList.length,
+          padding: EdgeInsetsDirectional.only(bottom: 20.h),
           itemBuilder: (context, index) {
             return BlocBuilder<PddListingBloc, PddListingState>(
               buildWhen: (previous, current) => current is PddListLoadingMoreState || current is PddListLoadedMoreState,
@@ -141,6 +141,9 @@ class PddListingScreen extends StatelessWidget {
                   children: [
                     bloc.isGrid
                         ? PresentationGridItem(
+                            onTapMenuButton: () {
+                              _showMenuButtonTap(context, bloc, index);
+                            },
                             margin: EdgeInsetsDirectional.only(
                                 bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
                             onTap: () {
@@ -150,11 +153,13 @@ class PddListingScreen extends StatelessWidget {
                         : B2BListingItem(
                             margin: EdgeInsetsDirectional.only(
                                 bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
-                            onTapMenuButton: bloc.userType == UserType.internal
-                                ? () {
-                                    handleMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
-                                  }
-                                : null,
+                            onTapMenuButton: () {
+                              _showMenuButtonTap(context, bloc, index);
+
+                              /// Below line is commented because it is not used in the current implementation and it will be utilised in
+                              /// the presentation aprove/reject functionality
+                              // handleMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
+                            },
                             type: B2BListingType.presentationListingType,
                             listingItemModel: bloc.presentationList[index],
                             onTap: () {
@@ -169,6 +174,70 @@ class PddListingScreen extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  void _showMenuButtonTap(BuildContext mainContext, PddListingBloc bloc, int index) {
+    OrderPopupStyle orderPopupStyle = AppTheme.of(mainContext).orderPopupStyle;
+    Utils.showSmartModalBottomSheet(
+      context: mainContext,
+      enableDrag: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      backgroundColor: orderPopupStyle.whiteColor,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+            color: orderPopupStyle.whiteColor,
+          ),
+          padding: EdgeInsetsDirectional.all(16.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildPopupOption(context, text: APPStrings.deletePresentation.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
+                context.pop();
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (bottomSheetContext) => ConfirmationDialog(
+                    title: APPStrings.removeSelectedPresentation.tr,
+                    message: APPStrings.removeSelectedPresentationMsg.tr,
+                    onApproved: () {
+                      bloc.add(PddListDeleteEvent(
+                          context: bottomSheetContext, presentationNumber: bloc.presentationList[index].strPresentationNumber ?? ''));
+                    },
+                    onDenied: () {
+                      bottomSheetContext.pop();
+                    },
+                    onApprovedText: APPStrings.delete.tr,
+                    onDeniedText: APPStrings.cancel.tr,
+                  ),
+                );
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPopupOption(
+    BuildContext context, {
+    required String text,
+    required TextStyle style,
+    EdgeInsetsGeometry? padding,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 56.h,
+        width: context.width,
+        alignment: AlignmentDirectional.centerStart,
+        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 20.w),
+        child: SmartText(text, style: style),
       ),
     );
   }
