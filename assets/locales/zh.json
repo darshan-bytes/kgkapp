@@ -868,5 +868,6 @@
   "mob_view_all_presentation": "查看所有演示文稿",
   "mob_remove_selected_presentation": "删除选定的演示文稿",
   "mob_remove_selected_presentation_msg": "选定的演示也将从概念中删除",
-  "mob_delete_presentation": "删除演示文稿"
+  "mob_delete_presentation": "删除演示文稿",
+  "mob_approve_presentation": "批准演示文稿"
 }

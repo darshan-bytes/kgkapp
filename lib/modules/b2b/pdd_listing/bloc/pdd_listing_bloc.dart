@@ -70,24 +70,28 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
   Future<void> _onPddListReviewStateEvent(PddListReviewStateEvent event, Emitter<PddListingState> emit) async {
     emit(PddListingReloadState());
-    await apiCallForPresentationStatus(context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
+    await apiCallForPresentationStatus(emit,
+        context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
     emit(PddListingLoadedState());
   }
 
-  Future<void> apiCallForPresentationStatus(
+  Future<void> apiCallForPresentationStatus(Emitter<PddListingState> emit,
       {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
+    emit(PddListingReloadState());
+
     Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
-    await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
-          if (l.code == 403) {
-            Utils.showMessage(l.message);
-          }
-        }, (r) {
-          /// Todo : Integration pending here
-          // ignore: unused_local_variable
-          Presentation presentation = Presentation.fromJson(r.responseData);
-          // presentationList[presentationList.indexWhere((element) => element.presentationNumber == presentation.presentationNumber)] = presentation;
-          // emit(PddListingReloadState());
-        }));
+    Either<ErrorResponse, CommonResponse>? response = await AppRepository(context).apiCallForPresentationStatus(body: body);
+    response?.fold((l) {
+      if (l.code == 403) {
+        Utils.showMessage(l.message);
+      }
+    }, (r) {
+      Presentation presentation = Presentation.fromJson(r.responseData);
+      presentationList[presentationList.indexWhere((element) => element.strPresentationNumber == presentation.presentationNumber)].status =
+          getOrderStatus(orderStatus: presentation.status!);
+      Utils.showMessage(r.message);
+      emit(PddListingLoadedState());
+    });
     context.pop();
   }
 

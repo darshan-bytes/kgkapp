@@ -868,5 +868,6 @@
   "mob_view_all_presentation": "அனைத்து மதிப்பீடுகளையும் காண்க",
   "mob_remove_selected_presentation": "தேர்ந்தெடுக்கப்பட்ட விளக்கக்காட்சியை அகற்று",
   "mob_remove_selected_presentation_msg": "தேர்ந்தெடுக்கப்பட்ட விளக்கக்காட்சி கருத்தாக்கத்திலிருந்தும் அகற்றப்படும்",
-  "mob_delete_presentation": "விளக்கக்காட்சியை நீக்கு"
+  "mob_delete_presentation": "விளக்கக்காட்சியை நீக்கு",
+  "mob_approve_presentation": "விளக்கக்காட்சியை அங்கீகரிக்கவும்"
 }
