@@ -241,6 +241,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         date: data.updatedAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
         isWebView: false,
         webUrl: null,
+        status: ProjectStatus.values.firstWhereOrNull((e) => e.value == data.status?.toLowerCase()),
       );
     }).toList();
   }

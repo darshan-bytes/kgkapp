@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class DigitalCatalogueListingModel {
   String? id;
   String? name;
@@ -7,6 +9,7 @@ class DigitalCatalogueListingModel {
   String? date;
   bool isWebView;
   String? webUrl;
+  ProjectStatus? status;
 
   DigitalCatalogueListingModel({
     this.id,
@@ -17,6 +20,7 @@ class DigitalCatalogueListingModel {
     this.date,
     this.isWebView = false,
     this.webUrl,
+    this.status,
   });
 
   @override
@@ -31,7 +35,8 @@ class DigitalCatalogueListingModel {
         other.productCount == productCount &&
         other.date == date &&
         other.isWebView == isWebView &&
-        other.webUrl == webUrl;
+        other.webUrl == webUrl &&
+        other.status == status;
   }
 
   @override
@@ -43,6 +48,7 @@ class DigitalCatalogueListingModel {
         productCount.hashCode ^
         date.hashCode ^
         isWebView.hashCode ^
-        webUrl.hashCode;
+        webUrl.hashCode ^
+        status.hashCode;
   }
 }

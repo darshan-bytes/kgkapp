@@ -160,7 +160,15 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                )
+                                ),
+                                PositionedDirectional(
+                                  start: 16.w,
+                                  top: 16.w,
+                                  child: SmartStatusBadge(
+                                    currentStatus: item.status!,
+                                    height: 32.h,
+                                  ),
+                                ),
                               ],
                             ),
                             Padding(
