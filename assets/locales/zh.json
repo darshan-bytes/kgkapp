@@ -864,5 +864,9 @@
   "mob_mark_as_in_active": "标记为不活动",
   "mob_mark_as_active": "标记为活动",
   "mob_user_status_change_msg": "您要更改此用户的状态吗？",
-  "mob_click_here_to_view": "单击此处查看"
+  "mob_click_here_to_view": "单击此处查看",
+  "mob_view_all_presentation": "查看所有演示文稿",
+  "mob_remove_selected_presentation": "删除选定的演示文稿",
+  "mob_remove_selected_presentation_msg": "选定的演示也将从概念中删除",
+  "mob_delete_presentation": "删除演示文稿"
 }

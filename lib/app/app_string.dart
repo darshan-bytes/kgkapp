@@ -1060,4 +1060,9 @@ class APPStrings {
   static const String markAsActive = 'mob_mark_as_active';
   static const String userStatusChangeMsg = 'mob_user_status_change_msg';
   static const String clickHeretoView = 'mob_click_here_to_view';
+  static const String viewAllPresentation = 'mob_view_all_presentation';
+
+  static const String removeSelectedPresentation = 'mob_remove_selected_presentation';
+  static const String removeSelectedPresentationMsg = 'mob_remove_selected_presentation_msg';
+  static const String deletePresentation = 'mob_delete_presentation';
 }

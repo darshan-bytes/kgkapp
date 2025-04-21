@@ -814,6 +814,7 @@
   "mob_auction": "مزاد",
   "mob_crt": "CRT",
   "mob_grms": "غرام",
+  "mob_compare_product_minimum": "الرجاء تحديد منتجين على الأقل للمقارنة",
   "mob_list_view": " عرض القائمة",
   "mob_map_view": "عرض الخريطة",
   "mob_remove_catalogue": "إزالة الكتالوج",
@@ -863,5 +864,9 @@
   "mob_mark_as_in_active": "علامة كغير نشط",
   "mob_mark_as_active": "علامة كتنشيط",
   "mob_user_status_change_msg": "هل أنت متأكد أنك تريد تغيير حالة المستخدم؟",
-  "mob_click_here_to_view": "انقر هنا لعرض"
+  "mob_click_here_to_view": "انقر هنا لعرض",
+  "mob_view_all_presentation": "عرض جميع العروض التقديمية",
+  "mob_remove_selected_presentation": "إزالة العرض التقديمي المحدد",
+  "mob_remove_selected_presentation_msg": "ستتم إزالة العرض التقديمي المحدد من المفهوم أيضًا",
+  "mob_delete_presentation": "حذف العرض التقديمي"
 }

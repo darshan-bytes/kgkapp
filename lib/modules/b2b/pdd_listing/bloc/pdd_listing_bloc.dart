@@ -9,8 +9,6 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   final TextEditingController presentationSearchController = TextEditingController();
   List<B2BCustomListingDataModel> presentationList = [];
 
-  UserType userType = UserType.b2cUser;
-
   //Pagination controller
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
 
@@ -34,6 +32,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     on<PddListPullToRefreshEvent>(_onPddListPullToRefresh);
     on<PddListReviewStateEvent>(_onPddListReviewStateEvent);
     on<PddListSearchEvent>(_onPddListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
+    on<PddListDeleteEvent>(_onPddListDeleteEvent);
   }
 
   Future<void> _onInitialPresentationListEvent(InitialPddListingEvent event, Emitter<PddListingState> emit) async {
@@ -43,7 +42,6 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<PddListingState> emit) async {
     emit(PddListLoadingState());
-    userType = BlocProvider.of<AppBloc>(context).userType;
     _initializePagination(context);
     _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || gridPaginationScrollController.currentPage <= totalNumberOfPages!) {
@@ -328,5 +326,19 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
       await fetchPresentationList(context, emit, isLoadMore: false);
       emit(PddListLoadedMoreState(currentPage));
     }
+  }
+
+  Future<void> _onPddListDeleteEvent(PddListDeleteEvent event, Emitter<PddListingState> emit) async {
+    emit(PddListingReloadState());
+    Either<ErrorResponse, CommonResponse>? response =
+        await AppRepository(event.context).deletePresentationByPresentationNumber(presentationNumber: event.presentationNumber);
+    response?.fold((l) {
+      Utils.showMessage(l.message);
+    }, (r) {
+      presentationList.removeWhere((element) => element.strPresentationNumber == event.presentationNumber);
+      event.context.pop();
+      Utils.showMessage(r.message);
+      emit(PddListingLoadedState());
+    });
   }
 }

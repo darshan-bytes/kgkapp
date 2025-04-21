@@ -255,6 +255,8 @@ class ApiClient {
   static const String staffUserFilters = '$apiBaseUrl/users/staff-user/filters';
 
   static String updateUserStatus(String id) => '$apiBaseUrl/users/update-user-status/$id';
+
+  static String presentationByPresentationNumber(String presentationNumber) => '$apiBaseUrl/presentations/$presentationNumber';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
