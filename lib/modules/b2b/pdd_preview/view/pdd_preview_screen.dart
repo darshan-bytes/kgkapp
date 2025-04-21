@@ -33,7 +33,7 @@ class PddPreviewScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return SmartAppBar(
-            title: pddPreviewBloc.appbarTitle,
+            title: pddPreviewBloc.presentationId,
           );
         },
       ),

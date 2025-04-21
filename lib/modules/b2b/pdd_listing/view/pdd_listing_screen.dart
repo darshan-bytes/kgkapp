@@ -132,7 +132,7 @@ class PddListingScreen extends StatelessWidget {
           key: bloc.isGrid ? bloc.gridPaginationScrollController.gridKey : bloc.gridPaginationScrollController.listKey,
           controller: bloc.gridPaginationScrollController.controller,
           itemCount: bloc.presentationList.length,
-          padding: EdgeInsetsDirectional.only(bottom: 20.h),
+          padding: EdgeInsetsDirectional.only(bottom: 30.h),
           itemBuilder: (context, index) {
             return BlocBuilder<PddListingBloc, PddListingState>(
               buildWhen: (previous, current) => current is PddListLoadingMoreState || current is PddListLoadedMoreState,

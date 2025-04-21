@@ -257,6 +257,8 @@ class ApiClient {
   static String updateUserStatus(String id) => '$apiBaseUrl/users/update-user-status/$id';
 
   static String presentationByPresentationNumber(String presentationNumber) => '$apiBaseUrl/presentations/$presentationNumber';
+
+  static String presentationDetailsById(String id) => '$apiBaseUrl/presentations/$id/details';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

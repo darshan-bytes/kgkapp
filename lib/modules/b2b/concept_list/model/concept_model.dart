@@ -154,6 +154,7 @@ class Presentation {
     required this.status,
     required this.presentationFile,
     required this.coverImage,
+    required this.data,
     required this.deleted,
     required this.createdAt,
     required this.updatedAt,
@@ -181,6 +182,7 @@ class Presentation {
   final String? status;
   final dynamic presentationFile;
   final dynamic coverImage;
+  final Map<String, dynamic>? data;
   final bool? deleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -209,6 +211,7 @@ class Presentation {
       status: json["status"],
       presentationFile: json["presentation_file"],
       coverImage: json["cover_image"],
+      data: json["data"],
       deleted: json["deleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
@@ -240,6 +243,7 @@ class Presentation {
         "status": status,
         "presentation_file": presentationFile,
         "cover_image": coverImage,
+        "data": data,
         "deleted": deleted,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
