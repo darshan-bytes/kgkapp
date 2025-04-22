@@ -1428,6 +1428,13 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, Presentation>?> presentationDetailsById({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<Presentation>(ApiClient.presentationDetailsById(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
