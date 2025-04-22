@@ -240,7 +240,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   ProjectStatus getOrderStatus({required String orderStatus}) {
     switch (orderStatus) {
       case "approved":
-        return ProjectStatus.approval;
+        return ProjectStatus.approved;
       case "pending":
         return ProjectStatus.pending;
       case "completed":
