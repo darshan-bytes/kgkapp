@@ -41,18 +41,19 @@ class _OrderDetailBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _OrderDetailsInfoCard(
-                style: style,
-                placeOrderResponse: bloc.placeOrderResponse,
-                onTapMenu: () {
-                  _showOrderDetailPopup(bloc, context);
-                }),
+              style: style,
+              placeOrderResponse: bloc.placeOrderResponse,
+              onTapMenu: () {
+                _showOrderDetailPopup(bloc, context);
+              },
+            ),
             _OrderCreatorDetailsCard(style: style, bloc: bloc, placeOrderResponse: bloc.placeOrderResponse),
 
             /// TODO: The search field is not available on the web, so it is currently hidden.
             // SizedBox(height: 24.h),
             // _buildSearchTextField(bloc),
             // SizedBox(height: 12.h),
-            _buildOrderList(bloc, style)
+            _buildOrderList(bloc, style),
           ],
         ),
       ),
@@ -64,13 +65,7 @@ class _OrderDetailBody extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
       child: Row(
         children: [
-          Expanded(
-            child: SmartTextField.search(
-              height: 48.h,
-              hintText: APPStrings.searchOrder.tr,
-              controller: bloc.orderSearchController,
-            ),
-          ),
+          Expanded(child: SmartTextField.search(height: 48.h, hintText: APPStrings.searchOrder.tr, controller: bloc.orderSearchController)),
 
           /// TODO: three dot button is currently not in use as discussed with JD.
           // SizedBox(width: 16.0.w),
@@ -149,34 +144,50 @@ class _OrderDetailBody extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                _showTrackOrderBottomSheet(bloc, context, APPStrings.trackOrder.tr);
-              }),
-              _buildPopupOption(context, text: APPStrings.manufacturingStatus.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                _showTrackOrderBottomSheet(bloc, context, APPStrings.manufacturingStatus.tr);
-              }),
+              _buildPopupOption(
+                context,
+                text: APPStrings.trackOrder.tr,
+                style: orderPopupStyle.optionTextStyle,
+                onTap: () {
+                  _showTrackOrderBottomSheet(bloc, context, APPStrings.trackOrder.tr);
+                },
+              ),
+              _buildPopupOption(
+                context,
+                text: APPStrings.manufacturingStatus.tr,
+                style: orderPopupStyle.optionTextStyle,
+                onTap: () {
+                  _showTrackOrderBottomSheet(bloc, context, APPStrings.manufacturingStatus.tr);
+                },
+              ),
               if (bloc.userType == UserType.b2bUser) ...{
                 /// TODO :: Currently individual order product return functionality is not needed for B2B user so we are hiding it.
                 // _buildPopupOption(context, text: APPStrings.returnProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
                 //   _showReturnProductBottomSheet(bloc, context);
                 // }),
               } else ...{
-                _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                  context.popAndPushNamed(AppRoutes.orderTimelinePage);
-                }),
+                /// TODO :: Currently order timeline functionality is not needed so we are hiding it.
+                // _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                //   context.popAndPushNamed(AppRoutes.orderTimelinePage);
+                // }),
               },
               if (bloc.placeOrderResponse?.orderStatus != AppConst.cancelled)
-                _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
-                  context.pop();
-                  Widget view = OrderCancelBottomSheet(orderDetailBloc: bloc..add(OrderDetailsCancelInitialEvent()));
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-                    ),
-                    builder: (context) => view,
-                  );
-                }),
+                _buildPopupOption(
+                  context,
+                  text: APPStrings.cancelOrder.tr,
+                  style: orderPopupStyle.cancelTextStyle,
+                  onTap: () {
+                    context.pop();
+                    Widget view = OrderCancelBottomSheet(orderDetailBloc: bloc..add(OrderDetailsCancelInitialEvent()));
+                    Utils.showSmartModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+                      ),
+                      builder: (context) => view,
+                    );
+                  },
+                ),
             ],
           ),
         );
@@ -191,10 +202,9 @@ class _OrderDetailBody extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => BlocProvider<OrderDetailBloc>(
-        create: (context) => OrderDetailBloc(),
-        child: TrackOrderBottomSheet(appBarTitle: appBarTitle),
-      ),
+      builder:
+          (context) =>
+              BlocProvider<OrderDetailBloc>(create: (context) => OrderDetailBloc(), child: TrackOrderBottomSheet(appBarTitle: appBarTitle)),
     );
   }
 
@@ -269,10 +279,7 @@ class _OrderDetailsInfoCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if ((placeOrderResponse?.uniqueId).isNotNullNorEmpty) ...[
-                      SmartText(
-                        "#${placeOrderResponse?.uniqueId}",
-                        style: style.orderIdStyle,
-                      ),
+                      SmartText("#${placeOrderResponse?.uniqueId}", style: style.orderIdStyle),
                       SizedBox(height: 4.h),
                     ],
                     SmartRichText(
@@ -307,16 +314,8 @@ class _OrderDetailsInfoCard extends StatelessWidget {
                     style: style,
                     isOrderStatus: true,
                   ),
-                  DetailColumn(
-                    title: APPStrings.items.tr,
-                    value: placeOrderResponse?.items?.toString(),
-                    style: style,
-                  ),
-                  DetailColumn(
-                    title: APPStrings.qty.tr,
-                    value: placeOrderResponse?.totalQuantity?.toString(),
-                    style: style,
-                  ),
+                  DetailColumn(title: APPStrings.items.tr, value: placeOrderResponse?.items?.toString(), style: style),
+                  DetailColumn(title: APPStrings.qty.tr, value: placeOrderResponse?.totalQuantity?.toString(), style: style),
                   DetailColumn(
                     title: APPStrings.totalAmount.tr,
                     value: placeOrderResponse?.totalPrice?.setCurrency,
@@ -410,25 +409,18 @@ class DetailColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget widget = Column(
       children: [
-        SmartText(
-          title,
-          style: style.orderItemLabelStyle,
-        ),
+        SmartText(title, style: style.orderItemLabelStyle),
         SizedBox(height: 4.h),
         isOrderStatus
-            ? SmartStatusBadge(
-                currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value),
-              )
+            ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
             : SmartText(
-                value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
-              ),
+              value.isNullOrEmpty ? APPStrings.dash.tr : value,
+              style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
+            ),
       ],
     );
     if (isExpanded) {
-      return Flexible(
-        child: widget,
-      );
+      return Flexible(child: widget);
     }
     return widget;
   }
@@ -447,13 +439,7 @@ class _CreatorDetailItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 120.w,
-          child: SmartText(
-            title,
-            style: style.orderItemLabelStyle,
-          ),
-        ),
+        SizedBox(width: 120.w, child: SmartText(title, style: style.orderItemLabelStyle)),
         SizedBox(width: 16.w),
         Expanded(
           child: Row(
@@ -463,21 +449,11 @@ class _CreatorDetailItem extends StatelessWidget {
                   padding: EdgeInsetsDirectional.only(end: 4.w),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50.r),
-                    child: SmartImage(
-                      path: iconImage ?? '',
-                      fit: BoxFit.fill,
-                      height: 24.w,
-                      width: 24.w,
-                    ),
+                    child: SmartImage(path: iconImage ?? '', fit: BoxFit.fill, height: 24.w, width: 24.w),
                   ),
                 ),
               if (value != null)
-                Flexible(
-                  child: SmartText(
-                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                    style: style.orderItemValueStyle,
-                  ),
-                ),
+                Flexible(child: SmartText(value.isNullOrEmpty ? APPStrings.dash.tr : value, style: style.orderItemValueStyle)),
             ],
           ),
         ),

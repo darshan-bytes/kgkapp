@@ -21,16 +21,10 @@ class AppRepository extends ApiService {
         List<Home> homeStrapiList = homeStrapiModel.data.firstOrNull?.attributes?.home ?? [];
         return Right(homeStrapiList);
       } else {
-        return Left(ErrorResponse(
-          code: response.statusCode,
-          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
-        ));
+        return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? APPStrings.unknownError.tr));
       }
     } catch (e) {
-      return Left(ErrorResponse(
-        code: 500,
-        message: APPStrings.errorOccurred.tr,
-      ));
+      return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
     }
   }
 
@@ -38,22 +32,18 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, List<ContactUs>?>> fetchStrapiContactUsData() async {
     String url = await buildUrl(endpoint: StrapiEndPoints.contactUsPage, attribute: Attributes.contactUsPage);
     try {
-      final response =
-          await http.get(Uri.parse(url), headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'});
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'},
+      );
       if (response.statusCode == 200) {
         final contactUsStrapiModel = ContactUsModel.fromJson(jsonDecode(response.body));
         return Right(contactUsStrapiModel.data.first.attributes?.contactUs);
       } else {
-        return Left(ErrorResponse(
-          code: response.statusCode,
-          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
-        ));
+        return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? APPStrings.unknownError.tr));
       }
     } catch (e) {
-      return Left(ErrorResponse(
-        code: 500,
-        message: APPStrings.errorOccurred.tr,
-      ));
+      return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
     }
   }
 
@@ -62,26 +52,18 @@ class AppRepository extends ApiService {
     String acceptLanguage = StorageManager().getLocale()?.code ?? 'en';
     String url = '${StrapiEndPoints.faqPage}$acceptLanguage';
     try {
-      final response =
-          await http.get(Uri.parse(url), headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'});
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'},
+      );
       if (response.statusCode == 200) {
         final faqStrapiModel = FaqStrapiModel.fromJson(jsonDecode(response.body));
         return Right(faqStrapiModel.data.first.attributes);
       } else {
-        return Left(
-          ErrorResponse(
-            code: response.statusCode,
-            message: response.reasonPhrase ?? APPStrings.unknownError.tr,
-          ),
-        );
+        return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? APPStrings.unknownError.tr));
       }
     } catch (e) {
-      return Left(
-        ErrorResponse(
-          code: 500,
-          message: APPStrings.errorOccurred.tr,
-        ),
-      );
+      return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
     }
   }
 
@@ -95,20 +77,10 @@ class AppRepository extends ApiService {
         List<DiamondData> diamondStrapiList = diamondsStrapiModel.data.first.attributes?.diamonds ?? [];
         return Right(diamondStrapiList);
       } else {
-        return Left(
-          ErrorResponse(
-            code: response.statusCode,
-            message: response.reasonPhrase ?? APPStrings.unknownError.tr,
-          ),
-        );
+        return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? APPStrings.unknownError.tr));
       }
     } catch (e) {
-      return Left(
-        ErrorResponse(
-          code: 500,
-          message: APPStrings.errorOccurred.tr,
-        ),
-      );
+      return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
     }
   }
 
@@ -123,16 +95,10 @@ class AppRepository extends ApiService {
         List<Gemstone> gemstoneStrapiList = gemstonesStrapiModel.data.first.attributes?.gemstones ?? [];
         return Right(gemstoneStrapiList);
       } else {
-        return Left(ErrorResponse(
-          code: response.statusCode,
-          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
-        ));
+        return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? APPStrings.unknownError.tr));
       }
     } catch (e) {
-      return Left(ErrorResponse(
-        code: 500,
-        message: APPStrings.errorOccurred.tr,
-      ));
+      return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
     }
   }
 
@@ -147,16 +113,10 @@ class AppRepository extends ApiService {
         List<Jewellery> jewelleryStrapiList = jewelleryStrapiModel.data.first.attributes?.jewelleries ?? [];
         return Right(jewelleryStrapiList);
       } else {
-        return Left(ErrorResponse(
-          code: response.statusCode,
-          message: response.reasonPhrase ?? 'Unknown error',
-        ));
+        return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? 'Unknown error'));
       }
     } catch (e) {
-      return Left(ErrorResponse(
-        code: 500,
-        message: APPStrings.errorOccurred.tr,
-      ));
+      return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
     }
   }
 
@@ -168,21 +128,24 @@ class AppRepository extends ApiService {
   }
 
   //fetchOrionDetails
-  Future<Either<ErrorResponse, CommonResponse<OrionDetailModel>>?> fetchOrionDetails(
-      {required String discountPrice, required String caratWeight}) async {
+  Future<Either<ErrorResponse, CommonResponse<OrionDetailModel>>?> fetchOrionDetails({
+    required String discountPrice,
+    required String caratWeight,
+  }) async {
     var response = await getMethod<OrionDetailModel>(ApiClient.orionDetails(discountPrice, caratWeight), withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   /// Fetches diamond list
-  Future<Either<ErrorResponse, DiamondListingModel>?> fetchDiamondList(
-      {required String limit,
-      required String page,
-      String? sortKey,
-      String? sortValue,
-      bool isLoadMore = false,
-      Map<String, String>? query,
-      String? type}) async {
+  Future<Either<ErrorResponse, DiamondListingModel>?> fetchDiamondList({
+    required String limit,
+    required String page,
+    String? sortKey,
+    String? sortValue,
+    bool isLoadMore = false,
+    Map<String, String>? query,
+    String? type,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -191,7 +154,7 @@ class AppRepository extends ApiService {
       ApiKey.limit: limit,
       if (sortKey != null) ApiKey.sortKey: sortKey,
       if (sortValue != null) ApiKey.sortValue: sortValue,
-      if (type != null) ApiKey.type: type
+      if (type != null) ApiKey.type: type,
     };
     if (query != null) {
       queryParams.addAll(query);
@@ -227,9 +190,7 @@ class AppRepository extends ApiService {
 
     // Ensure query is not null or empty before processing
     if (query?.isNotEmpty ?? false) {
-      queryParams.addAll(
-        query!.map((key, value) => MapEntry(key.toString(), value ?? '')),
-      );
+      queryParams.addAll(query!.map((key, value) => MapEntry(key.toString(), value ?? '')));
     }
 
     var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing, query: queryParams, withCurrencyHeader: true);
@@ -240,14 +201,15 @@ class AppRepository extends ApiService {
   }
 
   /// Fetches jewellery list
-  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchJewelleryList(
-      {required String limit,
-      required String page,
-      String? sortKey,
-      String? sortValue,
-      bool isLoadMore = false,
-      String? type,
-      Map<String, String>? query}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchJewelleryList({
+    required String limit,
+    required String page,
+    String? sortKey,
+    String? sortValue,
+    bool isLoadMore = false,
+    String? type,
+    Map<String, String>? query,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -269,8 +231,12 @@ class AppRepository extends ApiService {
     return response?.fold((error) => Left(error), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, WishlistModel>?> fetchWishList(
-      {required String limit, required String page, bool isLoadMore = false, Map<String, String>? query}) async {
+  Future<Either<ErrorResponse, WishlistModel>?> fetchWishList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+    Map<String, String>? query,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -312,11 +278,7 @@ class AppRepository extends ApiService {
         query[ApiKey.quote] = bagId!;
       }
     }
-    var response = await getMethod<DiamondDataModel>(
-      ApiClient.diamondDetails(id),
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<DiamondDataModel>(ApiClient.diamondDetails(id), query: query, withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -332,18 +294,18 @@ class AppRepository extends ApiService {
         query[ApiKey.quote] = bagId!;
       }
     }
-    var response = await getMethod<GemstoneDatum>(
-      ApiClient.gemstoneDetails(id),
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<GemstoneDatum>(ApiClient.gemstoneDetails(id), query: query, withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   ///For Getting Diamond You May Like by ID
-  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondYouMayLike(String id,
-      {required String limit, required String page, bool isShowLoader = true}) async {
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondYouMayLike(
+    String id, {
+    required String limit,
+    required String page,
+    bool isShowLoader = true,
+  }) async {
     if (isShowLoader) {
       context.setAppLoading(true);
     }
@@ -355,11 +317,7 @@ class AppRepository extends ApiService {
         query[ApiKey.quote] = bagId!;
       }
     }
-    var response = await getMethod<DiamondListingModel>(
-      ApiClient.diamondYouMayLike(id),
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<DiamondListingModel>(ApiClient.diamondYouMayLike(id), query: query, withCurrencyHeader: true);
     if (isShowLoader) {
       context.setAppLoading(false);
     }
@@ -373,26 +331,28 @@ class AppRepository extends ApiService {
   }
 
   /// For Getting Watchlist Data
-  Future<Either<ErrorResponse, PaginationData<WatchlistData>>?> getWatchList(
-      {required String limit,
-      required String page,
-      bool isLoadMore = false,
-      String searchQuery = '',
-      bool isFullList = false,
-      Map<String, dynamic>? filterQuery}) async {
+  Future<Either<ErrorResponse, PaginationData<WatchlistData>>?> getWatchList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+    String searchQuery = '',
+    bool isFullList = false,
+    Map<String, dynamic>? filterQuery,
+  }) async {
     if (!isLoadMore) {
       context.setAppLoading(true);
     }
     var response = await getMethod<PaginationData<WatchlistData>>(
       ApiClient.watchList,
-      query: isFullList
-          ? null
-          : {
-              ApiKey.page: page,
-              ApiKey.limit: limit,
-              if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
-              if (filterQuery != null) ...filterQuery
-            },
+      query:
+          isFullList
+              ? null
+              : {
+                ApiKey.page: page,
+                ApiKey.limit: limit,
+                if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
+                if (filterQuery != null) ...filterQuery,
+              },
       withCurrencyHeader: true,
     );
     if (!isLoadMore) {
@@ -412,8 +372,11 @@ class AppRepository extends ApiService {
   // For Submit Contact
   Future<Either<ErrorResponse, CommonResponse>?> submitContactUs({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    Either<ErrorResponse, dynamic>? response =
-        await postMethod<Map<String, dynamic>>(ApiClient.submitContactUs, body, withFullResponse: true);
+    Either<ErrorResponse, dynamic>? response = await postMethod<Map<String, dynamic>>(
+      ApiClient.submitContactUs,
+      body,
+      withFullResponse: true,
+    );
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -427,8 +390,12 @@ class AppRepository extends ApiService {
   }
 
   ///For Getting Gemstone You May Like by ID
-  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneYouMayLike(String id,
-      {required String limit, required String page, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneYouMayLike(
+    String id, {
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
     final Map<String, dynamic> query = {ApiKey.page: page, ApiKey.limit: limit};
 
@@ -438,18 +405,18 @@ class AppRepository extends ApiService {
         query[ApiKey.quote] = bagId!;
       }
     }
-    var response = await getMethod<GemstoneListingModel>(
-      ApiClient.gemstoneYouMayAlsoLike(id),
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneYouMayAlsoLike(id), query: query, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   ///For Getting Jewellery You May Like by ID
-  Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryYouMayLike(String id,
-      {required String limit, required String page, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryYouMayLike(
+    String id, {
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -461,11 +428,7 @@ class AppRepository extends ApiService {
         query[ApiKey.quote] = bagId!;
       }
     }
-    var response = await getMethod<JewelleryListingModel>(
-      ApiClient.jewelleryYouMayAlsoLike(id),
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryYouMayAlsoLike(id), query: query, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -490,10 +453,16 @@ class AppRepository extends ApiService {
 
   // For Update Product in Watchlist
   Future<Either<ErrorResponse, CommonResponse>?> watchListUpdateProduct(
-      String watchlistId, String productId, Map<String, dynamic> body) async {
+    String watchlistId,
+    String productId,
+    Map<String, dynamic> body,
+  ) async {
     context.setAppLoading(true);
-    var response =
-        await putMethod<Map<String, dynamic>>(ApiClient.watchListUpdateProduct(watchlistId, productId), body, withFullResponse: true);
+    var response = await putMethod<Map<String, dynamic>>(
+      ApiClient.watchListUpdateProduct(watchlistId, productId),
+      body,
+      withFullResponse: true,
+    );
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -513,8 +482,10 @@ class AppRepository extends ApiService {
   // For Remove Product from Watchlist by ID
   Future<Either<ErrorResponse, CommonResponse>?> watchListRemoveProduct(String watchlistId, String productId) async {
     context.setAppLoading(true);
-    var response =
-        await deleteMethod<Map<String, dynamic>>(ApiClient.watchListRemoveProduct(watchlistId, productId), withFullResponse: true);
+    var response = await deleteMethod<Map<String, dynamic>>(
+      ApiClient.watchListRemoveProduct(watchlistId, productId),
+      withFullResponse: true,
+    );
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -532,28 +503,43 @@ class AppRepository extends ApiService {
   }
 
   // For Add Product review
-  Future<Either<ErrorResponse, CommonResponse<ProductReviewModel>>?> addProductReview(Map<String, dynamic> body,
-      {required List<String> images}) async {
+  Future<Either<ErrorResponse, CommonResponse<ProductReviewModel>>?> addProductReview(
+    Map<String, dynamic> body, {
+    required List<String> images,
+  }) async {
     context.setAppLoading(true);
-    var response = await postMultipartMethod<ProductReviewModel>(ApiClient.productReviews, body,
-        withFullResponse: true, files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList());
+    var response = await postMultipartMethod<ProductReviewModel>(
+      ApiClient.productReviews,
+      body,
+      withFullResponse: true,
+      files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList(),
+    );
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   // Edit Review productReviewsById ProductReviewModel patch
-  Future<Either<ErrorResponse, CommonResponse<ProductReviewModel>>?> editProductReview(String id, Map<String, dynamic> body,
-      {required List<String> images}) async {
+  Future<Either<ErrorResponse, CommonResponse<ProductReviewModel>>?> editProductReview(
+    String id,
+    Map<String, dynamic> body, {
+    required List<String> images,
+  }) async {
     context.setAppLoading(true);
-    var response = await patchMultipartMethod<ProductReviewModel>(ApiClient.productReviewsById(id), body,
-        withFullResponse: true, files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList());
+    var response = await patchMultipartMethod<ProductReviewModel>(
+      ApiClient.productReviewsById(id),
+      body,
+      withFullResponse: true,
+      files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList(),
+    );
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   // For Get Product Reviews
-  Future<Either<ErrorResponse, ProductReviewWrapperModel>?> productReviewsFilter(
-      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+  Future<Either<ErrorResponse, ProductReviewWrapperModel>?> productReviewsFilter({
+    Map<String, dynamic>? query,
+    bool isLoadMore = true,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -580,8 +566,11 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -596,11 +585,7 @@ class AppRepository extends ApiService {
     } else {
       query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"};
     }
-    var response = await getMethod<JewelleryListingModel>(
-      ApiClient.jewelleryListing,
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryListing, query: query, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -620,11 +605,7 @@ class AppRepository extends ApiService {
     if (isLoadingShow) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<JewelleryDataModel>(
-      ApiClient.productDetails(id),
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<JewelleryDataModel>(ApiClient.productDetails(id), query: query, withCurrencyHeader: true);
     if (isLoadingShow) {
       context.setAppLoading(false);
     }
@@ -632,8 +613,11 @@ class AppRepository extends ApiService {
   }
 
   // For Get Recently Viewed Product List for Diamond
-  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondRecentlyViewedProductList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -647,11 +631,7 @@ class AppRepository extends ApiService {
     } else {
       query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"};
     }
-    var response = await getMethod<DiamondListingModel>(
-      ApiClient.diamondListing,
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing, query: query, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -659,8 +639,11 @@ class AppRepository extends ApiService {
   }
 
   // For Get Recently Viewed Product List for Gemstone
-  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneRecentlyViewedProductList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -674,11 +657,7 @@ class AppRepository extends ApiService {
     } else {
       query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"};
     }
-    var response = await getMethod<GemstoneListingModel>(
-      ApiClient.gemstoneListing,
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing, query: query, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -694,8 +673,10 @@ class AppRepository extends ApiService {
   }
 
   // For Collections listing
-  Future<Either<ErrorResponse, PaginationData<CollectionDataItemsModel>>?> collectionMasterList(
-      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, PaginationData<CollectionDataItemsModel>>?> collectionMasterList({
+    required Map<String, dynamic> body,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
     var response = await getMethod<PaginationData<CollectionDataItemsModel>>(ApiClient.collectionMaster, query: body);
     if (isLoadMore) context.setAppLoading(false);
@@ -703,8 +684,10 @@ class AppRepository extends ApiService {
   }
 
   //fetchOrionList
-  Future<Either<ErrorResponse, PaginationData<OrionDataModel>>?> fetchOrionList(bool isLoadMore,
-      {required Map<String, dynamic> body}) async {
+  Future<Either<ErrorResponse, PaginationData<OrionDataModel>>?> fetchOrionList(
+    bool isLoadMore, {
+    required Map<String, dynamic> body,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -716,8 +699,10 @@ class AppRepository extends ApiService {
   }
 
   //fetchMyInquiries
-  Future<Either<ErrorResponse, PaginationData<MyInquiriesModel>>?> fetchMyInquiries(
-      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, PaginationData<MyInquiriesModel>>?> fetchMyInquiries({
+    required Map<String, dynamic> body,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
     var response = await postMethod<PaginationData<MyInquiriesModel>>(ApiClient.myInquiries, body, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
@@ -733,8 +718,11 @@ class AppRepository extends ApiService {
   }
 
   // For Gemstone Filter Option
-  Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList(
-      {required String listType, String? type, String? subTypeCode}) async {
+  Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList({
+    required String listType,
+    String? type,
+    String? subTypeCode,
+  }) async {
     Map<String, String>? query;
     if (type != null && type.isNotEmpty) {
       query = {ApiKey.type: type};
@@ -743,11 +731,7 @@ class AppRepository extends ApiService {
       query = {ApiKey.subTypeCode: subTypeCode};
     }
 
-    var response = await getMethod<FilterOptionModel>(
-      ApiClient.filterOptions(listType),
-      query: query,
-      withCurrencyHeader: true,
-    );
+    var response = await getMethod<FilterOptionModel>(ApiClient.filterOptions(listType), query: query, withCurrencyHeader: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -782,8 +766,10 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, List<CountryStateModel>>?> fetchStateByCountry(
-      {required String countryCode, bool isShowLoader = true}) async {
+  Future<Either<ErrorResponse, List<CountryStateModel>>?> fetchStateByCountry({
+    required String countryCode,
+    bool isShowLoader = true,
+  }) async {
     if (isShowLoader) context.setAppLoading(true);
     var response = await getMethod<CountryStateModel>(ApiClient.stateMasters(countryCode));
     if (isShowLoader) context.setAppLoading(false);
@@ -822,26 +808,38 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>?> getCadLibraryList(
-      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+  Future<Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>?> getCadLibraryList({
+    Map<String, dynamic>? query,
+    bool isLoadMore = true,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
-    var response =
-        await getMethod<PaginationData<CadLibraryListItemDataModel>>(ApiClient.cadLibraryListing, query: query, withCurrencyHeader: true);
+    var response = await getMethod<PaginationData<CadLibraryListItemDataModel>>(
+      ApiClient.cadLibraryListing,
+      query: query,
+      withCurrencyHeader: true,
+    );
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>?> getStyleLibraryList(
-      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+  Future<Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>?> getStyleLibraryList({
+    Map<String, dynamic>? query,
+    bool isLoadMore = true,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
-    var response =
-        await getMethod<PaginationData<CadLibraryListItemDataModel>>(ApiClient.styleLibraryListing, query: query, withCurrencyHeader: true);
+    var response = await getMethod<PaginationData<CadLibraryListItemDataModel>>(
+      ApiClient.styleLibraryListing,
+      query: query,
+      withCurrencyHeader: true,
+    );
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>?> digitalCatalogueFilters(
-      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>?> digitalCatalogueFilters({
+    required Map<String, dynamic> body,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -868,14 +866,20 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, PaginationData<DesignLibraryListItemDataModel>>?> getDesignLibraryList({Map<String, dynamic>? query}) async {
-    var response = await getMethod<PaginationData<DesignLibraryListItemDataModel>>(ApiClient.designLibraryListing,
-        query: query, withCurrencyHeader: true);
+    var response = await getMethod<PaginationData<DesignLibraryListItemDataModel>>(
+      ApiClient.designLibraryListing,
+      query: query,
+      withCurrencyHeader: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   Future<Either<ErrorResponse, PaginationData<SkuLibraryListItemDataModel>>?> getSkuLibraryList({Map<String, dynamic>? query}) async {
-    var response =
-        await getMethod<PaginationData<SkuLibraryListItemDataModel>>(ApiClient.skuLibraryListing, query: query, withCurrencyHeader: true);
+    var response = await getMethod<PaginationData<SkuLibraryListItemDataModel>>(
+      ApiClient.skuLibraryListing,
+      query: query,
+      withCurrencyHeader: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -898,8 +902,10 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<ShapeMasterDetails>>?> shapeMasterFilters(
-      {Map<String, dynamic>? body, bool isShowLoader = false}) async {
+  Future<Either<ErrorResponse, PaginationData<ShapeMasterDetails>>?> shapeMasterFilters({
+    Map<String, dynamic>? body,
+    bool isShowLoader = false,
+  }) async {
     if (isShowLoader) {
       context.setAppLoading(true);
     }
@@ -911,8 +917,10 @@ class AppRepository extends ApiService {
   }
 
   // For Get Concept List
-  Future<Either<ErrorResponse, PaginationData<ConceptModel>>?> getConceptList(
-      {Map<String, dynamic>? body, bool isShowLoader = false}) async {
+  Future<Either<ErrorResponse, PaginationData<ConceptModel>>?> getConceptList({
+    Map<String, dynamic>? body,
+    bool isShowLoader = false,
+  }) async {
     if (isShowLoader) {
       context.setAppLoading(true);
     }
@@ -938,15 +946,19 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>?> homePageNewlyLaunches({bool isLoadMore = false}) async {
-    var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches,
-        query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
+    var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(
+      ApiClient.homePageNewlyLaunches,
+      query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1},
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   ///fetchMetalShapeData
   Future<Either<ErrorResponse, PaginationData<MetalShapeModel>>?> fetchMetalShapeData() async {
-    var response = await getMethod<PaginationData<MetalShapeModel>>(ApiClient.homePageShopByMetals,
-        query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
+    var response = await getMethod<PaginationData<MetalShapeModel>>(
+      ApiClient.homePageShopByMetals,
+      query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1},
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -963,8 +975,10 @@ class AppRepository extends ApiService {
   //   return response?.fold((l) => Left(l), (r) => Right(r));
   // }
 
-  Future<Either<ErrorResponse, PaginationData<HomeGemstonesModel>>?> homePageShopGemstones(
-      {Map<String, dynamic>? body, bool isShowLoader = false}) async {
+  Future<Either<ErrorResponse, PaginationData<HomeGemstonesModel>>?> homePageShopGemstones({
+    Map<String, dynamic>? body,
+    bool isShowLoader = false,
+  }) async {
     if (isShowLoader) {
       context.setAppLoading(true);
     }
@@ -1012,36 +1026,39 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, CommonResponse>?> removePromoCode({required String bagId}) async {
-    var response = await deleteMethod<Map<String, dynamic>>(
-      ApiClient.removePromoCode(bagId),
-      withFullResponse: true,
-    );
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removePromoCode(bagId), withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryDealOfTheDayProductList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryDealOfTheDayProductList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryDealOfTheDay,
-        query: {ApiKey.page: page, ApiKey.limit: limit}, withCurrencyHeader: true);
+    var response = await getMethod<JewelleryListingModel>(
+      ApiClient.jewelleryDealOfTheDay,
+      query: {ApiKey.page: page, ApiKey.limit: limit},
+      withCurrencyHeader: true,
+    );
     if (isLoadMore) {
       context.setAppLoading(false);
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, JewelleryListingModel>?> homePageKgkCoutureCollectionsForJewelleryListing(
-      {required String limit, required String page, bool isLoadMore = false, String? kgkCollection}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> homePageKgkCoutureCollectionsForJewelleryListing({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+    String? kgkCollection,
+  }) async {
     if (!isLoadMore) context.setAppLoading(true);
     var response = await getMethod<JewelleryListingModel>(
       ApiClient.homePageKgkCoutureCollections,
-      query: {
-        ApiKey.limit: limit,
-        ApiKey.page: page,
-        if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection,
-      },
+      query: {ApiKey.limit: limit, ApiKey.page: page, if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection},
       withCurrencyHeader: true,
     );
     if (!isLoadMore) context.setAppLoading(false);
@@ -1059,11 +1076,7 @@ class AppRepository extends ApiService {
     }
     var response = await getMethod<PaginationData<KgkCoutureDetails>>(
       ApiClient.homePageKgkCoutureCollections,
-      query: {
-        ApiKey.limit: limit,
-        ApiKey.page: page,
-        if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection,
-      },
+      query: {ApiKey.limit: limit, ApiKey.page: page, if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection},
       withCurrencyHeader: true,
     );
     if (!isLoadMore) {
@@ -1072,16 +1085,20 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondDealOfTheDayProductList(
-      {Map<String, String>? query, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondDealOfTheDayProductList({
+    Map<String, String>? query,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
     var response = await getMethod<DiamondListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((error) => Left(error), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneDealOfTheDayProductList(
-      {Map<String, String>? query, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneDealOfTheDayProductList({
+    Map<String, String>? query,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
     var response = await getMethod<GemstoneListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
@@ -1253,17 +1270,29 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderCancelApiCall(
-      {required String id, Map<String, dynamic>? body}) async {
-    var response =
-        await updateMethod<PlaceOrderResponse>(ApiClient.orderDetails(id), body, withCurrencyHeader: true, withFullResponse: true);
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderCancelApiCall({
+    required String id,
+    Map<String, dynamic>? body,
+  }) async {
+    var response = await updateMethod<PlaceOrderResponse>(
+      ApiClient.orderDetails(id),
+      body,
+      withCurrencyHeader: true,
+      withFullResponse: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> cancelProductFromOrderDetailsApiCall(
-      {required String id, Map<String, dynamic>? body}) async {
-    var response = await deleteMethod<PlaceOrderResponse>(ApiClient.cancelProductFromOrder(id),
-        query: body, withCurrencyHeader: true, withFullResponse: true);
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> cancelProductFromOrderDetailsApiCall({
+    required String id,
+    Map<String, dynamic>? body,
+  }) async {
+    var response = await deleteMethod<PlaceOrderResponse>(
+      ApiClient.cancelProductFromOrder(id),
+      query: body,
+      withCurrencyHeader: true,
+      withFullResponse: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -1275,10 +1304,7 @@ class AppRepository extends ApiService {
     bool isLoadMore = false,
     Map<String, String>? query,
   }) async {
-    Map<String, String> queryParams = {
-      ApiKey.limit: limit,
-      ApiKey.page: page,
-    };
+    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page};
     if (query != null) {
       queryParams.addAll(query);
     }
@@ -1286,8 +1312,11 @@ class AppRepository extends ApiService {
     if (!isLoadMore) {
       context.setAppLoading(true);
     }
-    var response =
-        await getMethod<PaginationData<DiyStyleListModel>>(ApiClient.diyStyleFilters, query: queryParams, withCurrencyHeader: true);
+    var response = await getMethod<PaginationData<DiyStyleListModel>>(
+      ApiClient.diyStyleFilters,
+      query: queryParams,
+      withCurrencyHeader: true,
+    );
     if (!isLoadMore) {
       context.setAppLoading(false);
     }
@@ -1307,11 +1336,12 @@ class AppRepository extends ApiService {
   }
 
   /// For Exhibition Product Details page
-  Future<Either<ErrorResponse, ExhibitionProductDetailsDataModel>?> fetchExhibitionProductDetails({
-    required String id,
-  }) async {
-    var response = await getMethod<ExhibitionProductDetailsDataModel>(ApiClient.getExhibitionProductsDetails,
-        query: {ApiKey.orderContextId: id}, withCurrencyHeader: true);
+  Future<Either<ErrorResponse, ExhibitionProductDetailsDataModel>?> fetchExhibitionProductDetails({required String id}) async {
+    var response = await getMethod<ExhibitionProductDetailsDataModel>(
+      ApiClient.getExhibitionProductsDetails,
+      query: {ApiKey.orderContextId: id},
+      withCurrencyHeader: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -1320,8 +1350,10 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<PddDataModel>>?> getPresentationFilters(
-      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, PaginationData<PddDataModel>>?> getPresentationFilters({
+    required Map<String, dynamic> body,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
@@ -1355,11 +1387,16 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse<CommentsAddedResponseModel>>?> editDigitalCatalogueComments(
-      {required Map<String, dynamic> body, required String commentId}) async {
+  Future<Either<ErrorResponse, CommonResponse<CommentsAddedResponseModel>>?> editDigitalCatalogueComments({
+    required Map<String, dynamic> body,
+    required String commentId,
+  }) async {
     context.setAppLoading(true);
-    var response =
-        await updateMethod<CommentsAddedResponseModel>(ApiClient.digitalCatalogueCommentsById(commentId), body, withFullResponse: true);
+    var response = await updateMethod<CommentsAddedResponseModel>(
+      ApiClient.digitalCatalogueCommentsById(commentId),
+      body,
+      withFullResponse: true,
+    );
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -1402,19 +1439,21 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<UserMasterListingModelClass>>?> staffUserMasterListApiCall(
-      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, PaginationData<UserMasterListingModelClass>>?> staffUserMasterListApiCall({
+    required Map<String, dynamic> body,
+    bool isLoadMore = false,
+  }) async {
     if (isLoadMore) context.setAppLoading(true);
-    var response =
-        await postMethod<PaginationData<UserMasterListingModelClass>>(ApiClient.staffUserFilters, body, withCurrencyHeader: true);
+    var response = await postMethod<PaginationData<UserMasterListingModelClass>>(
+      ApiClient.staffUserFilters,
+      body,
+      withCurrencyHeader: true,
+    );
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse>?> updateUserStatus(
-    String id, {
-    required Map<String, dynamic> body,
-  }) async {
+  Future<Either<ErrorResponse, CommonResponse>?> updateUserStatus(String id, {required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
     var response = await updateMethod<Map<String, dynamic>>(ApiClient.updateUserStatus(id), body, withFullResponse: true);
     context.setAppLoading(false);
@@ -1423,16 +1462,18 @@ class AppRepository extends ApiService {
 
   Future<Either<ErrorResponse, CommonResponse>?> deletePresentationByPresentationNumber({required String presentationNumber}) async {
     context.setAppLoading(true);
-    var response =
-        await deleteMethod<Map<String, dynamic>>(ApiClient.presentationByPresentationNumber(presentationNumber), withFullResponse: true);
+    var response = await deleteMethod<Map<String, dynamic>>(
+      ApiClient.presentationByPresentationNumber(presentationNumber),
+      withFullResponse: true,
+    );
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   Future<Either<ErrorResponse, Presentation>?> presentationDetailsById({required String id}) async {
-    context.setAppLoading(true);
+    // context.setAppLoading(true);
     var response = await getMethod<Presentation>(ApiClient.presentationDetailsById(id), withCurrencyHeader: true);
-    context.setAppLoading(false);
+    // context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

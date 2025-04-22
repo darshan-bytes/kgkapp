@@ -552,7 +552,7 @@
   "mob_enter_address_or_pincode": "Enter address or pincode",
   "mob_use_current_location": "Use current location",
   "mob_get_directions": "Get directions",
-  "mob_from_your_location_x": "{#} from your location",
+  "mob_from_your_location_x": "{#} km from your location",
   "mob_version_history": "Version history",
   "mob_catalogue": "Catalogue",
   "mob_search_digital_catalogue": "Search catalogue",
