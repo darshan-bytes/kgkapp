@@ -92,45 +92,46 @@ class ConceptModel {
       conceptNumberNumeric: json["concept_number_numeric"],
       conceptCustomerIdDetails:
           json["concept_customer_id_details"] == null ? null : UserIdDetails.fromJson(json["concept_customer_id_details"]),
-      assignedToDetails: json["assigned_to_details"] == null
-          ? []
-          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
+      assignedToDetails:
+          json["assigned_to_details"] == null
+              ? []
+              : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
       createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
       updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "concept_number": conceptNumber,
-        "concept_name": conceptName,
-        "concept_by": conceptBy,
-        "collection_name": collectionName,
-        "business_category": businessCategory,
-        "country": country,
-        "concept_by_id": conceptById,
-        "csc_code": cscCode,
-        "received_at": receivedAt?.toIso8601String(),
-        "imported_from": importedFrom,
-        "status": status,
-        "assigned_to": assignedTo.map((x) => x).toList(),
-        "description": description,
-        "is_private": isPrivate,
-        "created_by": createdBy,
-        "updated_by": updatedBy,
-        "deleted": deleted,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "files": files.map((x) => x).toList(),
-        "__v": v,
-        "presentation": presentation.map((x) => x.toJson()).toList(),
-        "presentation_count": presentationCount,
-        "concept_number_numeric": conceptNumberNumeric,
-        "concept_customer_id_details": conceptCustomerIdDetails?.toJson(),
-        "assigned_to_details": assignedToDetails?.map((x) => x.toJson()).toList(),
-        "created_by_details": createdByDetails?.toJson(),
-        "updated_by_details": updatedByDetails?.toJson(),
-      };
+    "_id": id,
+    "concept_number": conceptNumber,
+    "concept_name": conceptName,
+    "concept_by": conceptBy,
+    "collection_name": collectionName,
+    "business_category": businessCategory,
+    "country": country,
+    "concept_by_id": conceptById,
+    "csc_code": cscCode,
+    "received_at": receivedAt?.toIso8601String(),
+    "imported_from": importedFrom,
+    "status": status,
+    "assigned_to": assignedTo.map((x) => x).toList(),
+    "description": description,
+    "is_private": isPrivate,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "deleted": deleted,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "files": files.map((x) => x).toList(),
+    "__v": v,
+    "presentation": presentation.map((x) => x.toJson()).toList(),
+    "presentation_count": presentationCount,
+    "concept_number_numeric": conceptNumberNumeric,
+    "concept_customer_id_details": conceptCustomerIdDetails?.toJson(),
+    "assigned_to_details": assignedToDetails?.map((x) => x.toJson()).toList(),
+    "created_by_details": createdByDetails?.toJson(),
+    "updated_by_details": updatedByDetails?.toJson(),
+  };
 
   @override
   String toString() {
@@ -179,7 +180,7 @@ class Presentation {
   final List<String> assignedTo;
   final DateTime? approvedAt;
   final String? cscCode;
-  final String? status;
+  String? status;
   final dynamic presentationFile;
   final dynamic coverImage;
   final Map<String, dynamic>? data;
@@ -222,40 +223,41 @@ class Presentation {
       createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
       updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
       approvedByDetails: json["approved_by_details"] == null ? null : UserIdDetails.fromJson(json["approved_by_details"]),
-      assignedToDetails: json["assigned_to_details"] == null
-          ? []
-          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
+      assignedToDetails:
+          json["assigned_to_details"] == null
+              ? []
+              : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "presentation_template_id": presentationTemplateId,
-        "concept_number": conceptNumber,
-        "concept_by": conceptBy,
-        "concept_by_id": conceptById,
-        "presentation_number": presentationNumber,
-        "created_by": createdBy,
-        "approved_by": approvedBy,
-        "assigned_to": assignedTo.map((x) => x).toList(),
-        "approved_at": approvedAt?.toIso8601String(),
-        "csc_code": cscCode,
-        "status": status,
-        "presentation_file": presentationFile,
-        "cover_image": coverImage,
-        "data": data,
-        "deleted": deleted,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "share_with": shareWith.map((x) => x).toList(),
-        "__v": v,
-        "updated_by": updatedBy,
-        "concept_name": conceptName,
-        "created_by_details": createdByDetails?.toJson(),
-        "updated_by_details": updatedByDetails?.toJson(),
-        "approved_by_details": approvedByDetails?.toJson(),
-        "assigned_to_details": assignedToDetails?.map((x) => x.toJson()).toList()
-      };
+    "_id": id,
+    "presentation_template_id": presentationTemplateId,
+    "concept_number": conceptNumber,
+    "concept_by": conceptBy,
+    "concept_by_id": conceptById,
+    "presentation_number": presentationNumber,
+    "created_by": createdBy,
+    "approved_by": approvedBy,
+    "assigned_to": assignedTo.map((x) => x).toList(),
+    "approved_at": approvedAt?.toIso8601String(),
+    "csc_code": cscCode,
+    "status": status,
+    "presentation_file": presentationFile,
+    "cover_image": coverImage,
+    "data": data,
+    "deleted": deleted,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "share_with": shareWith.map((x) => x).toList(),
+    "__v": v,
+    "updated_by": updatedBy,
+    "concept_name": conceptName,
+    "created_by_details": createdByDetails?.toJson(),
+    "updated_by_details": updatedByDetails?.toJson(),
+    "approved_by_details": approvedByDetails?.toJson(),
+    "assigned_to_details": assignedToDetails?.map((x) => x.toJson()).toList(),
+  };
 
   @override
   String toString() {

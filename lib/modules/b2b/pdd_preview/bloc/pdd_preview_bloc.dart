@@ -25,6 +25,7 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
     on<InitialPddPreviewEvent>(_onInitialPddListingEvent);
     on<VersionHistoryChangeEvent>(_onVersionHistoryChangeEvent);
     on<NavigateToPddVersionHistoryEvent>(_onNavigateToPddVersionHistoryEvent);
+    on<PresentationApproveEvent>(_onPresentationApproveEvent);
   }
 
   void getRouteData(BuildContext context) async {
@@ -236,5 +237,21 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
 
     // Return the complete HTML string for the component.
     return '<$tag class="$classes" style="$styleString" $attrString>$childrenHtml</$tag>';
+  }
+
+  Future<void> _onPresentationApproveEvent(PresentationApproveEvent event, Emitter<PddPreviewState> emit) async {
+    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationId, ApiKey.status: ApiKey.approved};
+    Either<ErrorResponse, CommonResponse>? result = await AppRepository(event.context).apiCallForPresentationStatus(body: body);
+    emit(PddPreviewReloadState());
+    return result?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        presentation?.status = ApiKey.approved;
+        Utils.showMessage(r.message);
+        emit(PddPreviewLoadedState());
+      },
+    );
   }
 }
