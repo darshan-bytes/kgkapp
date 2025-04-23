@@ -22,8 +22,11 @@ class NewsletterSubscriberTabView extends StatelessWidget {
           ),
           Expanded(
             child: BlocBuilder<NewsletterBloc, NewsletterState>(
-              buildWhen: (previous, current) =>
-                  current is NewsletterListLoadedState || current is NewsletterListLoadedMoreState || current is NewsletterLoadingMoreState,
+              buildWhen:
+                  (previous, current) =>
+                      current is NewsletterListLoadedState ||
+                      current is NewsletterListLoadedMoreState ||
+                      current is NewsletterLoadingMoreState,
               builder: (context, state) {
                 if (bloc.subscribersList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
@@ -43,14 +46,15 @@ class NewsletterSubscriberTabView extends StatelessWidget {
                           return Column(
                             children: [
                               B2BListingItem(
-                                  columns: 1,
-                                  listingItemModel: item,
-                                  type: B2BListingType.newsletterSubscribersType,
-                                  onTapMenuButton: () {},
-                                  onTap: () {},
-                                  margin: EdgeInsetsDirectional.only(
-                                      bottom:
-                                          (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1) ? 0 : 16.h)),
+                                columns: 1,
+                                listingItemModel: item,
+                                type: B2BListingType.newsletterSubscribersType,
+                                onTapMenuButton: () {},
+                                onTap: () {},
+                                margin: EdgeInsetsDirectional.only(
+                                  bottom: (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1) ? 0 : 16.h,
+                                ),
+                              ),
                               if (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1)
                                 const SmartCircularProgressIndicator(),
                             ],

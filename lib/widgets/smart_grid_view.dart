@@ -38,16 +38,19 @@ class SmartGridView extends StatelessWidget {
                   alignment: WrapAlignment.start,
                   spacing: spacing ?? 12.w,
                   runSpacing: runSpacing ?? 12.h,
-                  children: List.generate(
-                    items.length,
-                    (index) {
-                      return SizedBox(
-                        height: height,
-                        width: isLastFullWidthRequired ? index == items.length - 1 ? totalWidth : itemWidth : itemWidth,
-                        child: items[index],
-                      );
-                    },
-                  ).toList(),
+                  children:
+                      List.generate(items.length, (index) {
+                        return SizedBox(
+                          height: height,
+                          width:
+                              isLastFullWidthRequired
+                                  ? index == items.length - 1
+                                      ? totalWidth
+                                      : itemWidth
+                                  : itemWidth,
+                          child: items[index],
+                        );
+                      }).toList(),
                 ),
               ),
               if (isLoadingMore) const SmartCircularProgressIndicator(),
@@ -76,13 +79,7 @@ class SmartGridView extends StatelessWidget {
               List<Widget> subItems = items.sublist(previousAdditionalIndex, additionalIndex);
               return Column(
                 children: [
-                  SmartGridView(
-                    items: subItems,
-                    height: height,
-                    columns: columns,
-                    runSpacing: runSpacing,
-                    spacing: spacing,
-                  ),
+                  SmartGridView(items: subItems, height: height, columns: columns, runSpacing: runSpacing, spacing: spacing),
                   additionalWidgets![index].child,
                   if (isLast)
                     SmartGridView(

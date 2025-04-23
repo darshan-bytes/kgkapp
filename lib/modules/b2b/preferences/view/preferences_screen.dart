@@ -8,22 +8,21 @@ class PreferencesScreen extends StatelessWidget {
     final style = AppTheme.of(context).preferencesStyle;
     final bloc = BlocProvider.of<PreferencesBloc>(context);
     return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.preferences.tr,
-      ),
+      appBar: SmartAppBar(title: APPStrings.preferences.tr),
       body: BlocBuilder<PreferencesBloc, PreferencesState>(
         buildWhen: (previous, current) => current is PreferencesLoadingState || current is PreferencesDataFetchedState,
         builder: (context, state) {
           return SafeArea(
-            child: state is PreferencesLoadingState
-                ? const SmartCircularProgressIndicator()
-                : Padding(
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 20.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        /// Below code is commented as there is no use-case of the country dropdown
-                        /*SmartText(APPStrings.country.tr, style: style.titleStyle),
+            child:
+                state is PreferencesLoadingState
+                    ? const SmartCircularProgressIndicator()
+                    : Padding(
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 20.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// Below code is commented as there is no use-case of the country dropdown
+                          /*SmartText(APPStrings.country.tr, style: style.titleStyle),
                         SizedBox(height: 8.h),
                         BlocBuilder<PreferencesBloc, PreferencesState>(
                           buildWhen: (previous, current) => current is PreferencesChangeCountryState,
@@ -40,63 +39,53 @@ class PreferencesScreen extends StatelessWidget {
                           },
                         ),
                         SizedBox(height: 20.h),*/
-                        SmartText(
-                          APPStrings.language.tr,
-                          style: style.titleStyle,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        BlocBuilder<PreferencesBloc, PreferencesState>(
-                          buildWhen: (previous, current) => current is PreferencesChangeLanguageState,
-                          builder: (context, state) {
-                            return SmartDropDown<LanguageDatum>(
-                              selectedItem: bloc.selectedLanguage,
-                              items: bloc.languageList.map((e) => SmartDropDownItem<LanguageDatum>(value: e, title: e.name ?? '')).toList(),
-                              hintText: APPStrings.language.tr,
-                              onChanged: (newValue) {
-                                if (newValue == null) return;
-                                bloc.add(PreferencesChangeLanguageEvent(newValue));
-                              },
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        SmartText(
-                          APPStrings.currency.tr,
-                          style: style.titleStyle,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        BlocBuilder<PreferencesBloc, PreferencesState>(
-                          buildWhen: (previous, current) => current is PreferencesChangeCurrencyState,
-                          builder: (context, state) {
-                            return SmartDropDown<CurrencyListModel>(
-                              selectedItem: bloc.selectedCurrency,
-                              items: bloc.currencyList
-                                  .map((e) => SmartDropDownItem<CurrencyListModel>(value: e, title: "${e.name} (${e.symbol})"))
-                                  .toList(),
-                              hintText: APPStrings.currency.tr,
-                              onChanged: (newValue) {
-                                if (newValue == null) return;
-                                bloc.add(PreferencesChangeCurrencyEvent(newValue));
-                              },
-                            );
-                          },
-                        ),
-                        const Spacer(),
-                        SmartButton(
-                          title: APPStrings.save.tr,
-                          onTap: () {
-                            bloc.add(PreferencesSaveEvent(context));
-                          },
-                        ),
-                      ],
+                          SmartText(APPStrings.language.tr, style: style.titleStyle),
+                          SizedBox(height: 8.h),
+                          BlocBuilder<PreferencesBloc, PreferencesState>(
+                            buildWhen: (previous, current) => current is PreferencesChangeLanguageState,
+                            builder: (context, state) {
+                              return SmartDropDown<LanguageDatum>(
+                                selectedItem: bloc.selectedLanguage,
+                                items:
+                                    bloc.languageList.map((e) => SmartDropDownItem<LanguageDatum>(value: e, title: e.name ?? '')).toList(),
+                                hintText: APPStrings.language.tr,
+                                onChanged: (newValue) {
+                                  if (newValue == null) return;
+                                  bloc.add(PreferencesChangeLanguageEvent(newValue));
+                                },
+                              );
+                            },
+                          ),
+                          SizedBox(height: 20.h),
+                          SmartText(APPStrings.currency.tr, style: style.titleStyle),
+                          SizedBox(height: 8.h),
+                          BlocBuilder<PreferencesBloc, PreferencesState>(
+                            buildWhen: (previous, current) => current is PreferencesChangeCurrencyState,
+                            builder: (context, state) {
+                              return SmartDropDown<CurrencyListModel>(
+                                selectedItem: bloc.selectedCurrency,
+                                items:
+                                    bloc.currencyList
+                                        .map((e) => SmartDropDownItem<CurrencyListModel>(value: e, title: "${e.name} (${e.symbol})"))
+                                        .toList(),
+                                hintText: APPStrings.currency.tr,
+                                onChanged: (newValue) {
+                                  if (newValue == null) return;
+                                  bloc.add(PreferencesChangeCurrencyEvent(newValue));
+                                },
+                              );
+                            },
+                          ),
+                          const Spacer(),
+                          SmartButton(
+                            title: APPStrings.save.tr,
+                            onTap: () {
+                              bloc.add(PreferencesSaveEvent(context));
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
           );
         },
       ),

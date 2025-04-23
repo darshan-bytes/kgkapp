@@ -38,10 +38,7 @@ final class WatchlistDetailsDeleteEvent extends WatchlistDetailsEvent {
   final BuildContext context;
   final BuildContext screenContext;
 
-  const WatchlistDetailsDeleteEvent({
-    required this.context,
-    required this.screenContext,
-  });
+  const WatchlistDetailsDeleteEvent({required this.context, required this.screenContext});
 
   @override
   List<Object> get props => [context, screenContext];

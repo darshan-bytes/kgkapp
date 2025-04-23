@@ -283,18 +283,18 @@ class APPStrings {
   static const String qty = 'mob_qty';
   static const String removeLot = 'mob_remove_lot';
 
-// my order details screen
+  // my order details screen
   static const String createdBy = 'mob_created_by';
   static const String contactInfo = 'mob_contact_info';
   static const String billingAddress = 'mob_billing_address';
   static const String shippingAddress = 'mob_shipping_address';
 
-// order details popup
+  // order details popup
   static const String trackOrder = 'mob_track_order';
   static const String viewTimeline = 'mob_view_timeline';
   static const String cancelOrder = 'mob_cancel_order';
 
-// order cancel popup
+  // order cancel popup
   static const String areYouSure = 'mob_are_you_sure';
   static const String orderWillBeCancelledX = 'mob_order_will_be_cancelled_x';
   static const String cancelOrderDesc = 'mob_cancel_order_desc';
@@ -447,7 +447,7 @@ class APPStrings {
   static const String deleteAccountDesc = 'mob_delete_account_desc';
   static const String delete = 'mob_delete';
 
-//Make an inquiry
+  //Make an inquiry
   static const String makeAnInquiry = 'mob_make_an_inquiry';
   static const String toLogInToSiteWithQr = 'mob_to_log_in_to_site_with_qr';
   static const String popularSearches = 'mob_popular_searches';
@@ -477,7 +477,7 @@ class APPStrings {
   static const String getLogOnTheAccount = 'mob_get_log_on_the_account';
   static const String enterProductSku = 'mob_enter_product_sku';
 
-//Support screen
+  //Support screen
   static const String repliesWithin24Hours = 'mob_replies_within_24_hours';
   static const String call = 'mob_call';
   static const String frequentlyAskedQuestion = 'mob_frequently_asked_questions';
@@ -530,7 +530,7 @@ class APPStrings {
   static const String approvedBy = 'mob_approved_by';
   static const String project = 'mob_project';
 
-//Project Listing type
+  //Project Listing type
   static const String projectNumber = 'mob_project_number';
   static const String projectName = 'mob_project_name';
   static const String design = 'mob_design';

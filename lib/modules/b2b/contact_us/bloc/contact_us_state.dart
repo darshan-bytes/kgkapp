@@ -54,11 +54,7 @@ final class ContactUsAddRemoveContactState extends ContactUsState {
   const ContactUsAddRemoveContactState({this.isRemove = false, required this.index, required this.country});
 
   @override
-  List<Object> get props => [
-    isRemove,
-    index,
-    country,
-  ];
+  List<Object> get props => [isRemove, index, country];
 }
 
 final class ContactUsChangeCountryCodeState extends ContactUsState {
@@ -75,11 +71,7 @@ final class ContactUsPhoneNumberValidationState extends ContactUsState {
   final bool isError;
   final String? errorMessage;
 
-  const ContactUsPhoneNumberValidationState({
-    required this.phoneNumberValidationFieldType,
-    required this.isError,
-    this.errorMessage,
-  });
+  const ContactUsPhoneNumberValidationState({required this.phoneNumberValidationFieldType, required this.isError, this.errorMessage});
 
   @override
   List<Object?> get props => [phoneNumberValidationFieldType, isError, errorMessage];

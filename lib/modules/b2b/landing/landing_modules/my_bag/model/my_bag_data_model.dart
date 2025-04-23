@@ -10,16 +10,7 @@ class MyBagDataModel {
   String? sId;
   int? iV;
 
-  MyBagDataModel({
-    this.createdAt,
-    this.updatedAt,
-    this.commodity,
-    this.userId,
-    this.status,
-    this.products,
-    this.sId,
-    this.iV,
-  });
+  MyBagDataModel({this.createdAt, this.updatedAt, this.commodity, this.userId, this.status, this.products, this.sId, this.iV});
 
   MyBagDataModel.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];

@@ -25,11 +25,7 @@ final class LandingLoadedState extends LandingState {
   final List<Widget> pages;
   final List<Bloc> blocList;
 
-  const LandingLoadedState({
-    required this.userType,
-    required this.pages,
-    required this.blocList,
-  });
+  const LandingLoadedState({required this.userType, required this.pages, required this.blocList});
 
   @override
   List<Object> get props => [userType, pages, blocList];

@@ -25,13 +25,14 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (_) => AdvanceFilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        digitalCatalogueBloc.add(DigitalCatalogueFilterEvent(filterData: value, context: context));
-                      }
-                    },
-                  ),
+                  builder:
+                      (_) => AdvanceFilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            digitalCatalogueBloc.add(DigitalCatalogueFilterEvent(filterData: value, context: context));
+                          }
+                        },
+                      ),
                 );
               },
             );
@@ -103,20 +104,13 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                         context.pushNamed(AppRoutes.previewCataloguePage, arguments: {RoutesData.catalogueData: item});
                       },
                       child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: style.borderColor, width: 1.w),
-                        ),
+                        decoration: BoxDecoration(border: Border.all(color: style.borderColor, width: 1.w)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Stack(
                               children: [
-                                SmartImage(
-                                  path: item.image ?? "",
-                                  height: 200.h,
-                                  width: context.width,
-                                  fit: BoxFit.fill,
-                                ),
+                                SmartImage(path: item.image ?? "", height: 200.h, width: context.width, fit: BoxFit.fill),
                                 PositionedDirectional(
                                   top: 10.w,
                                   end: 10.w,
@@ -142,32 +136,25 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                             okButtonText: APPStrings.remove.tr,
                                             cancelButtonText: APPStrings.cancel.tr,
                                             onOkPressed: () {
-                                              digitalCatalogueBloc
-                                                  .add(DeleteDigitalCatalogueEvent(context: context, catalogueId: item.id ?? ""));
+                                              digitalCatalogueBloc.add(
+                                                DeleteDigitalCatalogueEvent(context: context, catalogueId: item.id ?? ""),
+                                              );
                                             },
                                           );
                                           break;
                                       }
                                     },
-                                    itemBuilder: (BuildContext context) => [
-                                      PopupMenuItem(
-                                        value: PopupMenuOption.share,
-                                        child: SmartText(APPStrings.share.tr),
-                                      ),
-                                      PopupMenuItem(
-                                        value: PopupMenuOption.remove,
-                                        child: SmartText(APPStrings.remove.tr),
-                                      ),
-                                    ],
+                                    itemBuilder:
+                                        (BuildContext context) => [
+                                          PopupMenuItem(value: PopupMenuOption.share, child: SmartText(APPStrings.share.tr)),
+                                          PopupMenuItem(value: PopupMenuOption.remove, child: SmartText(APPStrings.remove.tr)),
+                                        ],
                                   ),
                                 ),
                                 PositionedDirectional(
                                   start: 16.w,
                                   top: 16.w,
-                                  child: SmartStatusBadge(
-                                    currentStatus: item.status!,
-                                    height: 32.h,
-                                  ),
+                                  child: SmartStatusBadge(currentStatus: item.status!, height: 32.h),
                                 ),
                               ],
                             ),
@@ -176,32 +163,24 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SmartText(
-                                    item.name,
-                                    style: style.titleStyle,
-                                  ),
+                                  SmartText(item.name, style: style.titleStyle),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SmartText(
-                                        APPStrings.xProducts.tr.interpolate([item.productCount]),
-                                        style: style.subTitleStyle,
-                                      ),
+                                      SmartText(APPStrings.xProducts.tr.interpolate([item.productCount]), style: style.subTitleStyle),
                                       SizedBox(width: 16.w),
-                                      Flexible(child: SmartText(item.date, style: style.subTitleStyle, maxLines: 2))
+                                      Flexible(child: SmartText(item.date, style: style.subTitleStyle, maxLines: 2)),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
                     );
                     if (state is DigitalCatalogueLoadingMoreState && index == digitalCatalogueBloc.digitalCatalogueList.length - 1) {
-                      return Column(
-                        children: [child, const SmartCircularProgressIndicator()],
-                      );
+                      return Column(children: [child, const SmartCircularProgressIndicator()]);
                     }
                     return child;
                   },

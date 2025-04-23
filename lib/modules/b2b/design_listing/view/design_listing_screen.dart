@@ -111,8 +111,9 @@ class DesignListingScreen extends StatelessWidget {
 
   Widget _buildDesignList(DesignListingBloc bloc, BuildContext context) {
     return BlocBuilder<DesignListingBloc, DesignListingState>(
-      buildWhen: (previous, current) =>
-          current is DesignChangeListingTypeState || current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
+      buildWhen:
+          (previous, current) =>
+              current is DesignChangeListingTypeState || current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
       builder: (context, state) {
         if (bloc.designList.isEmpty || bloc.designListForGrid.isEmpty) {
           return _buildEmptyState();
@@ -127,9 +128,7 @@ class DesignListingScreen extends StatelessWidget {
   }
 
   Widget _buildListOrGridView(DesignListingBloc bloc, DesignListingState state, BuildContext context) {
-    return Expanded(
-      child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state),
-    );
+    return Expanded(child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state));
   }
 
   Widget _buildGridView(DesignListingBloc bloc, DesignListingState state, BuildContext context) {
@@ -142,12 +141,14 @@ class DesignListingScreen extends StatelessWidget {
       child: SmartGridView(
         isLoadingMore: state is DesignListLoadingMoreState,
         items: List.generate(
-            bloc.designListForGrid.length,
-            (index) => DesignListingGridItem.designGridItem(
-                designModel: bloc.designListForGrid[index],
-                onTap: () {
-                  context.pushNamed(AppRoutes.designLibraryFeedbackPage);
-                })),
+          bloc.designListForGrid.length,
+          (index) => DesignListingGridItem.designGridItem(
+            designModel: bloc.designListForGrid[index],
+            onTap: () {
+              context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+            },
+          ),
+        ),
       ),
     );
   }
@@ -181,17 +182,13 @@ class DesignListingScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is DesignListingLoadedState || state is DesignChangeListingTypeState) {
           return SafeArea(
-              child: FilterBottomActionBar(
-            controller: bloc.paginationScrollController.controller,
-            onFilterTap: () {
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => FilterScreen(
-                  onApply: () {},
-                ),
-              );
-            },
-          ));
+            child: FilterBottomActionBar(
+              controller: bloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
+              },
+            ),
+          );
         } else {
           return const SizedBox.shrink();
         }

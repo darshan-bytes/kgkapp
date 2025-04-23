@@ -3,10 +3,7 @@ import 'package:kgk/kgk.dart';
 class ProductDetailsCustomizations extends StatelessWidget {
   final int index;
 
-  const ProductDetailsCustomizations({
-    super.key,
-    required this.index,
-  });
+  const ProductDetailsCustomizations({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +21,11 @@ class ProductDetailsCustomizations extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(productCustomization.values?.length ?? 0, (childIndex) {
               return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-                buildWhen: (previous, current) =>
-                    current is ProductCustomizationChangeState &&
-                    current.index == index &&
-                    (current.childIndex == childIndex || current.oldChildIndex == childIndex),
+                buildWhen:
+                    (previous, current) =>
+                        current is ProductCustomizationChangeState &&
+                        current.index == index &&
+                        (current.childIndex == childIndex || current.oldChildIndex == childIndex),
                 builder: (context, state) {
                   ProductCustomizationOptionValues value = productCustomization.values![childIndex];
                   bool isSelected = productCustomization.selectedValue == value;
@@ -79,20 +77,18 @@ class ProductDetailsCustomizations extends StatelessWidget {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
                           child: ConstrainedBox(
-                              constraints: BoxConstraints(minWidth: 40.w),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: style.settingSelectionButtonColor,
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  border: isSelected ? Border.all(color: style.selectedSettingBorderColor, width: 1.w) : null,
-                                ),
-                                padding: EdgeInsetsDirectional.all(8.w),
-                                alignment: AlignmentDirectional.center,
-                                child: SmartText(
-                                  value.value,
-                                  style: isSelected ? style.settingSelectionTitleStyle : style.productTypeStyle,
-                                ),
-                              )),
+                            constraints: BoxConstraints(minWidth: 40.w),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: style.settingSelectionButtonColor,
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: isSelected ? Border.all(color: style.selectedSettingBorderColor, width: 1.w) : null,
+                              ),
+                              padding: EdgeInsetsDirectional.all(8.w),
+                              alignment: AlignmentDirectional.center,
+                              child: SmartText(value.value, style: isSelected ? style.settingSelectionTitleStyle : style.productTypeStyle),
+                            ),
+                          ),
                         ),
                       );
 
@@ -132,13 +128,17 @@ class ProductDetailsCustomizations extends StatelessWidget {
               );
             }),
           ),
-        )
+        ),
       ],
     );
   }
 
-  Widget _buildCustomizationType(bool isSelected, ProductCustomizationOptionValues value, ProductDetailsStyle style,
-      ProductCustomizationType productCustomizationType) {
+  Widget _buildCustomizationType(
+    bool isSelected,
+    ProductCustomizationOptionValues value,
+    ProductDetailsStyle style,
+    ProductCustomizationType productCustomizationType,
+  ) {
     switch (productCustomizationType) {
       case ProductCustomizationType.image:
       case ProductCustomizationType.head:
@@ -164,10 +164,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
             shape: BoxShape.circle,
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
           ),
-          child: SmartImage(
-            path: value.image ?? '',
-            color: isSelected ? style.selectedSettingBorderColor : null,
-          ),
+          child: SmartImage(path: value.image ?? '', color: isSelected ? style.selectedSettingBorderColor : null),
         );
 
       case ProductCustomizationType.diamondQuality:
@@ -179,10 +176,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
             shape: BoxShape.circle,
           ),
-          child: SmartImage(
-            path: value.image ?? '',
-            color: isSelected ? style.selectedSettingBorderColor : null,
-          ),
+          child: SmartImage(path: value.image ?? '', color: isSelected ? style.selectedSettingBorderColor : null),
         );
       case ProductCustomizationType.other:
       default:

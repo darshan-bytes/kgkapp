@@ -18,10 +18,7 @@ class PresentationsTabviewListTile extends StatelessWidget {
               hintText: APPStrings.searchX.tr.interpolate([APPStrings.presentation.tr.toLowerCase()]),
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
               onTapOutside: (p) {},
-              suffixIcon: SmartImage(
-                path: AppImages.icSearchThin,
-                padding: EdgeInsetsDirectional.all(14.w),
-              ),
+              suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(14.w)),
             ),
             SizedBox(height: 24.h),
             monitoringBloc.buildListView(context, MonitoringTab.presentations),
@@ -36,12 +33,7 @@ class PresentationsTabviewListTile extends StatelessWidget {
               child: FilterBottomActionBar(
                 controller: monitoringBloc.currentController.controller,
                 onFilterTap: () {
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    builder: (context) => FilterScreen(
-                      onApply: () {},
-                    ),
-                  );
+                  Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
                 },
               ),
             );

@@ -31,14 +31,15 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
 
   Widget _buildProductDisplay(ExhibitionDetailsBloc bloc, ExhibitionDetailsItemStyle style) {
     return B2BListingItem(
-        listingItemModel: B2BCustomListingDataModel(
-          strItemSold: bloc.exhibitionProductDetailsData.itemsSold.toString(),
-          strOrdersReceived: bloc.exhibitionProductDetailsData.totalOrders.toString(),
-          strTotalSell: bloc.exhibitionProductDetailsData.totalSales?.setCurrency,
-          strAverageOrderValue: bloc.exhibitionProductDetailsData.avgOrder?.setCurrency,
-          strLeads: bloc.exhibitionProductDetailsData.leads.toString(),
-        ),
-        type: B2BListingType.exhibitionDetailPageProductsType);
+      listingItemModel: B2BCustomListingDataModel(
+        strItemSold: bloc.exhibitionProductDetailsData.itemsSold.toString(),
+        strOrdersReceived: bloc.exhibitionProductDetailsData.totalOrders.toString(),
+        strTotalSell: bloc.exhibitionProductDetailsData.totalSales?.setCurrency,
+        strAverageOrderValue: bloc.exhibitionProductDetailsData.avgOrder?.setCurrency,
+        strLeads: bloc.exhibitionProductDetailsData.leads.toString(),
+      ),
+      type: B2BListingType.exhibitionDetailPageProductsType,
+    );
   }
 
   Widget _buildExhibitionFilterCount(ExhibitionDetailsBloc bloc, BuildContext context) {
@@ -51,8 +52,10 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
-                  style: diamondListingStyle.filterProductCountTextStyle),
+              SmartText(
+                APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
+                style: diamondListingStyle.filterProductCountTextStyle,
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -89,7 +92,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -99,10 +102,11 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
 
   Widget _buildExhibitionList(ExhibitionDetailsBloc bloc) {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-      buildWhen: (previous, current) =>
-          current is ExhibitionChangeListingTypeState ||
-          current is ExhibitionListingLoadedMoreState ||
-          current is ExhibitionListingLoadingMoreState,
+      buildWhen:
+          (previous, current) =>
+              current is ExhibitionChangeListingTypeState ||
+              current is ExhibitionListingLoadedMoreState ||
+              current is ExhibitionListingLoadingMoreState,
       builder: (context, state) {
         if (bloc.productList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noDataFound.tr, height: context.height * 0.5);
@@ -118,17 +122,18 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
 
   Widget _buildGridView(ExhibitionDetailsBloc bloc, ExhibitionDetailsState state, BuildContext context) {
     return SmartGridView(
-      items: bloc.productList.map((ProductDetailsModel productDetails) {
-        return ProductGridItem(
-          key: ValueKey(productDetails.suid),
-          productDetails: productDetails,
-          isOutOfStock: false,
-          isBadgeVisible: false,
-          isCrtAndGramVisible: false,
-          isHidePriceView: _isHidePriceView(productDetails.commodity!),
-          isCommentSelected: productDetails.isCommentVisible,
-        );
-      }).toList(),
+      items:
+          bloc.productList.map((ProductDetailsModel productDetails) {
+            return ProductGridItem(
+              key: ValueKey(productDetails.suid),
+              productDetails: productDetails,
+              isOutOfStock: false,
+              isBadgeVisible: false,
+              isCrtAndGramVisible: false,
+              isHidePriceView: _isHidePriceView(productDetails.commodity!),
+              isCommentSelected: productDetails.isCommentVisible,
+            );
+          }).toList(),
       isLoadingMore: state is ExhibitionListingLoadingMoreState,
     );
   }
@@ -142,10 +147,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
       itemBuilder: (context, index) {
         return Column(
           children: [
-            ProductListItem(
-              onTap: () {},
-              productDetails: bloc.productList[index],
-            ),
+            ProductListItem(onTap: () {}, productDetails: bloc.productList[index]),
             if (state is ExhibitionListingLoadingMoreState && index == bloc.productList.length - 1) const SmartCircularProgressIndicator(),
           ],
         );
@@ -155,11 +157,6 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   }
 
   bool _isHidePriceView(Commodity commodity) {
-    return ![
-      Commodity.jewellery,
-      Commodity.gemstone,
-      Commodity.diamond,
-      Commodity.skuLibrary,
-    ].contains(commodity);
+    return ![Commodity.jewellery, Commodity.gemstone, Commodity.diamond, Commodity.skuLibrary].contains(commodity);
   }
 }

@@ -97,7 +97,10 @@ class B2BListingFieldFactory {
           ),
           B2BItemField(label: APPStrings.exclusive.tr, value: model.strExclusive),
           B2BItemField(
-              label: APPStrings.exclusiveCustomer.tr, value: model.strExclusiveCustomer, imageUrl: model.strExclusiveCustomerImageUrl),
+            label: APPStrings.exclusiveCustomer.tr,
+            value: model.strExclusiveCustomer,
+            imageUrl: model.strExclusiveCustomerImageUrl,
+          ),
         ];
 
       case B2BListingType.monitoringPresentationListingType:
@@ -211,9 +214,10 @@ class B2BListingFieldFactory {
         return [
           B2BItemField(label: APPStrings.name.tr, value: model.strName, imageUrl: model.strNameImageUrl),
           B2BItemField(
-              label: APPStrings.businessType.tr.toLowerCase().capitalizeFirst,
-              value: model.strBusinessType,
-              imageUrl: model.strBusinessTypeImageUrl),
+            label: APPStrings.businessType.tr.toLowerCase().capitalizeFirst,
+            value: model.strBusinessType,
+            imageUrl: model.strBusinessTypeImageUrl,
+          ),
           B2BItemField(label: APPStrings.companyRepresentative.tr, value: model.strCompanyRepresentative),
           B2BItemField(label: APPStrings.market.tr, value: model.strMarket, imageUrl: model.strMarketFlagImageUrl, isCircleImage: false),
           B2BItemField(label: APPStrings.email.tr, value: model.strEmail),

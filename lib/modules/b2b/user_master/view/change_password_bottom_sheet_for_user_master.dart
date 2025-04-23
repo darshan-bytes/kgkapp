@@ -15,10 +15,7 @@ class ChangePasswordBottomSheetForUserMaster extends StatelessWidget {
         padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w, vertical: 16.h),
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(12.r),
-            topEnd: Radius.circular(12.r),
-          ),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
         ),
         child: SafeArea(
           child: Column(
@@ -40,10 +37,7 @@ class ChangePasswordBottomSheetForUserMaster extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SmartText(
-          APPStrings.changePassword.tr,
-          style: style.bottomTitleStyle,
-        ),
+        SmartText(APPStrings.changePassword.tr, style: style.bottomTitleStyle),
         SmartImage(
           path: AppImages.icCross,
           height: 24.w,
@@ -58,18 +52,15 @@ class ChangePasswordBottomSheetForUserMaster extends StatelessWidget {
   }
 
   List<Widget> generateChangePasswordForm() {
-    return <Widget>[
-      _buildPasswordField(),
-      SizedBox(height: 24.h),
-      _buildConfirmPasswordField(),
-    ];
+    return <Widget>[_buildPasswordField(), SizedBox(height: 24.h), _buildConfirmPasswordField()];
   }
 
   Widget _buildPasswordField() {
     return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
       bloc: bloc,
-      buildWhen: (previous, current) =>
-          current is UserMasterChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.password,
+      buildWhen:
+          (previous, current) =>
+              current is UserMasterChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.password,
       builder: (context, state) {
         return SmartTextField(
           obscured: true,
@@ -93,8 +84,9 @@ class ChangePasswordBottomSheetForUserMaster extends StatelessWidget {
   Widget _buildConfirmPasswordField() {
     return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
       bloc: bloc,
-      buildWhen: (previous, current) =>
-          current is UserMasterChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.confirmPassword,
+      buildWhen:
+          (previous, current) =>
+              current is UserMasterChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.confirmPassword,
       builder: (context, state) {
         return SmartTextField(
           errorText: bloc.confirmPasswordError,

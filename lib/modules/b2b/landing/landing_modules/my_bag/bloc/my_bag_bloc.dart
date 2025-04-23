@@ -99,105 +99,106 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     if (id.isNullOrEmpty) return;
     Either<ErrorResponse, BagListDataModel>? response;
     response = await AppRepository(context).getBagListData(id: id, isShowLoader: true);
-    await response?.fold((l) {
-      if (isRetry) {
-        Utils.showMessage(l.message);
-      }
-    }, (r) async {
-      if (r.isExpired == true) {
-        await StorageManager().setBagId(r.bagId ?? '');
-        await StorageManager().clearBagData();
-        bagListDataModel = null;
-        commodity = null;
-        myBagProductList.clear();
-        bagOrderSummaryData = null;
-        await fetchListOfBag(context, emit, isRetry: true);
-      } else {
-        String? bagId = StorageManager().getBagId();
-        myBagProductList.clear();
-        bagListDataModel = r;
-        BlocProvider.of<LandingBloc>(context.mounted ? context : getNavigatorKeyContext).add(LandingChangeMyBagCountEvent(r.result.length));
-        if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
-          commodity = r.result.first.displayCommodity;
-          MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result.first.commodity, sId: bagId);
-          await StorageManager().storeBagData(myBagDataModel);
-          myBagProductList = List.generate(r.result.length, (index) {
-            final item = r.result[index];
-
-            return ProductDetailsModel(
-              stockQty: item.stockQty,
-              productId: item.productId,
-              suid: item.suid,
-              quantity: item.quantity,
-              name: item.jewelleryName,
-              commodity: item.displayCommodity,
-              imageUrl: item.image,
-              shape: item.shape,
-              color: item.color,
-              lotCode: item.lotCode,
-              discountPercentageString: item.discountPercentage != null && item.discountPercentage != 0
-                  ? APPStrings.percentageOffInterpolating.tr.interpolate([
-                      item.discountPercentage == item.discountPercentage?.toInt()
-                          ? item.discountPercentage?.toInt()
-                          : item.discountPercentage?.toStringAsFixed(2)
-                    ])
-                  : "",
-              cut: item.cut,
-              clarity: item.clarity,
-              ctsOrGms: item.ctsOrGms,
-              cts: item.crtEXT,
-              gms: item.gms,
-              rappaportPrice: item.rappaportPrice,
-              polish: item.polish,
-              measurements: item.measurements,
-              table: item.table,
-              depth: item.depth,
-              totalPrice: item.totalPrice,
-              perCaratPrice: item.rate,
-              openDnaUrl: item.openDnaUrl,
-              certificateFile: item.certificateFile,
-              fluorescence: item.fluorescence,
-              shapeImage: item.shapeImage?.setMediaUrl,
-              isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
-              labs: item.labs,
-              location: item.location,
-              yourRate: item.yourRate,
-              yourAmount: item.yourAmount,
-              yourDiscount: item.yourDiscount,
-              discountPercentage: item.discountPercentage,
-              originalYourRate: item.originalYourRate,
-              originalYourAmount: item.originalYourAmount,
-              originalTotalPrice: item.originalTotalPrice,
-              originalFinalPrice: item.originalFinalPrice,
-              originalPrice: item.finalPrice?.toString().setCurrency,
-              finalPrice: item.yourAmount?.toString().setCurrency,
-              video: item.video,
-
-              /// Below code is commented as backend API is changing the keys
-              // finalPrice: item.finalPrice?.setCurrency,
-              // originalPrice: item.totalPrice?.setCurrency,
-            );
-          });
-        } else {
-          await clearData();
+    await response?.fold(
+      (l) {
+        if (isRetry) {
+          Utils.showMessage(l.message);
         }
-      }
-    });
+      },
+      (r) async {
+        if (r.isExpired == true) {
+          await StorageManager().setBagId(r.bagId ?? '');
+          await StorageManager().clearBagData();
+          bagListDataModel = null;
+          commodity = null;
+          myBagProductList.clear();
+          bagOrderSummaryData = null;
+          await fetchListOfBag(context, emit, isRetry: true);
+        } else {
+          String? bagId = StorageManager().getBagId();
+          myBagProductList.clear();
+          bagListDataModel = r;
+          BlocProvider.of<LandingBloc>(
+            context.mounted ? context : getNavigatorKeyContext,
+          ).add(LandingChangeMyBagCountEvent(r.result.length));
+          if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
+            commodity = r.result.first.displayCommodity;
+            MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result.first.commodity, sId: bagId);
+            await StorageManager().storeBagData(myBagDataModel);
+            myBagProductList = List.generate(r.result.length, (index) {
+              final item = r.result[index];
+
+              return ProductDetailsModel(
+                stockQty: item.stockQty,
+                productId: item.productId,
+                suid: item.suid,
+                quantity: item.quantity,
+                name: item.jewelleryName,
+                commodity: item.displayCommodity,
+                imageUrl: item.image,
+                shape: item.shape,
+                color: item.color,
+                lotCode: item.lotCode,
+                discountPercentageString:
+                    item.discountPercentage != null && item.discountPercentage != 0
+                        ? APPStrings.percentageOffInterpolating.tr.interpolate([
+                          item.discountPercentage == item.discountPercentage?.toInt()
+                              ? item.discountPercentage?.toInt()
+                              : item.discountPercentage?.toStringAsFixed(2),
+                        ])
+                        : "",
+                cut: item.cut,
+                clarity: item.clarity,
+                ctsOrGms: item.ctsOrGms,
+                cts: item.crtEXT,
+                gms: item.gms,
+                rappaportPrice: item.rappaportPrice,
+                polish: item.polish,
+                measurements: item.measurements,
+                table: item.table,
+                depth: item.depth,
+                totalPrice: item.totalPrice,
+                perCaratPrice: item.rate,
+                openDnaUrl: item.openDnaUrl,
+                certificateFile: item.certificateFile,
+                fluorescence: item.fluorescence,
+                shapeImage: item.shapeImage?.setMediaUrl,
+                isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
+                labs: item.labs,
+                location: item.location,
+                yourRate: item.yourRate,
+                yourAmount: item.yourAmount,
+                yourDiscount: item.yourDiscount,
+                discountPercentage: item.discountPercentage,
+                originalYourRate: item.originalYourRate,
+                originalYourAmount: item.originalYourAmount,
+                originalTotalPrice: item.originalTotalPrice,
+                originalFinalPrice: item.originalFinalPrice,
+                originalPrice: item.finalPrice?.toString().setCurrency,
+                finalPrice: item.yourAmount?.toString().setCurrency,
+                video: item.video,
+
+                /// Below code is commented as backend API is changing the keys
+                // finalPrice: item.finalPrice?.setCurrency,
+                // originalPrice: item.totalPrice?.setCurrency,
+              );
+            });
+          } else {
+            await clearData();
+          }
+        }
+      },
+    );
   }
 
   //getPaymentTermsFilter
   Future<void> getPaymentTermsFilter(BuildContext context, Emitter<MyBagState> emit) async {
     if (userType != UserType.b2bUser) return;
     final Map<String, dynamic> body = {
-      ApiKey.filters: {
-        ApiKey.dynamicObject: {},
-      },
+      ApiKey.filters: {ApiKey.dynamicObject: {}},
       ApiKey.pagination: {},
       ApiKey.search: "",
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     };
     Either<ErrorResponse, PaginationData<PaymentCondition>>? response = await AppRepository(context).getPaymentTermsFilter(body: body);
     response?.fold(
@@ -290,10 +291,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     String bagId = StorageManager().getBagId() ?? "";
     String suid = myBagProductList[event.index].suid ?? "";
     if (bagId.isEmpty || suid.isEmpty) return;
-    final Map<String, dynamic> body = {
-      ApiKey.id: bagId,
-      ApiKey.suid: suid,
-    };
+    final Map<String, dynamic> body = {ApiKey.id: bagId, ApiKey.suid: suid};
     final result = await AppRepository(event.context).deleteBag(body: body);
     await result?.fold(
       (l) {
@@ -388,10 +386,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       String id = StorageManager().getBagId() ?? "";
       if (id.isEmpty) return;
       event.context.setAppLoading(true);
-      final Map<String, dynamic> body = {
-        ApiKey.promoCode_: event.promoCode,
-        ApiKey.cartId_: id,
-      };
+      final Map<String, dynamic> body = {ApiKey.promoCode_: event.promoCode, ApiKey.cartId_: id};
       final response = await AppRepository(event.context).applyPromoCode(body);
       await response?.fold(
         (l) {
@@ -570,9 +565,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     String bagId = StorageManager().getBagId() ?? "";
 
     if (bagId.isEmpty) return;
-    final Map<String, dynamic> body = {
-      ApiKey.id: bagId,
-    };
+    final Map<String, dynamic> body = {ApiKey.id: bagId};
     final result = await AppRepository(event.context).deleteBag(body: body);
     await result?.fold(
       (l) {

@@ -61,7 +61,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 24.h),
-                      _buildProductGrid(context, bloc)
+                      _buildProductGrid(context, bloc),
                     ],
                   ),
                 ),
@@ -85,9 +85,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: SmartText(bloc.watchlistName, style: style.watchlistNameStyle),
-              ),
+              Expanded(child: SmartText(bloc.watchlistName, style: style.watchlistNameStyle)),
               SizedBox(width: 16.w),
               SmartStatusBadge(
                 borderRadius: 22.r,
@@ -121,11 +119,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
                       titleStyle: style.noOfProductsStyle,
                     ),
                     SizedBox(height: 19.h),
-                    _buildDetailColumn(
-                      APPStrings.from.tr,
-                      bloc.watchlistDetailsModel.displayFromDate,
-                      style,
-                    ),
+                    _buildDetailColumn(APPStrings.from.tr, bloc.watchlistDetailsModel.displayFromDate, style),
                   ],
                 ),
               ),
@@ -146,11 +140,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 16.h),
-                    _buildDetailColumn(
-                      APPStrings.to.tr,
-                      bloc.watchlistDetailsModel.displayToDate,
-                      style,
-                    ),
+                    _buildDetailColumn(APPStrings.to.tr, bloc.watchlistDetailsModel.displayToDate, style),
                   ],
                 ),
               ),
@@ -161,19 +151,22 @@ class WatchlistDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailColumn(String title, String? value, WatchlistDetailsStyle style,
-      {bool isExpanded = false, TextStyle? titleStyle, TextStyle? valueStyle, int flex = 1}) {
+  Widget _buildDetailColumn(
+    String title,
+    String? value,
+    WatchlistDetailsStyle style, {
+    bool isExpanded = false,
+    TextStyle? titleStyle,
+    TextStyle? valueStyle,
+    int flex = 1,
+  }) {
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         SmartText(title, style: titleStyle ?? style.watchlistTitleStyle),
         SizedBox(height: 4.h),
-        SmartText(
-          value ?? '-',
-          style: valueStyle ?? style.watchlistSubTitleStyle,
-          maxLines: 1,
-        ),
+        SmartText(value ?? '-', style: valueStyle ?? style.watchlistSubTitleStyle, maxLines: 1),
       ],
     );
     return isExpanded ? Expanded(flex: flex, child: child) : child;
@@ -187,27 +180,24 @@ class WatchlistDetailsScreen extends StatelessWidget {
           return NoDataFoundWidget(text: APPStrings.noProductsAddedInWatchlist.tr);
         }
         return SmartGridView(
-          items: List.generate(
-            bloc.productList.length,
-            (index) {
-              ProductDetailsModel productDetails = bloc.productList[index];
-              return ProductGridItem(
-                isOutOfStock: productDetails.isOutOfStock,
-                productDetails: productDetails,
-                onCancelTap: () {
-                  bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context, actionType: WatchlistActionType.remove));
-                },
-                onFavTap: () {},
-                onAddToBagTap: () {
-                  bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context));
-                },
-                onTap: () {
-                  _onProductTap(context, productDetails);
-                },
-                buttonText: APPStrings.edit.tr,
-              );
-            },
-          ),
+          items: List.generate(bloc.productList.length, (index) {
+            ProductDetailsModel productDetails = bloc.productList[index];
+            return ProductGridItem(
+              isOutOfStock: productDetails.isOutOfStock,
+              productDetails: productDetails,
+              onCancelTap: () {
+                bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context, actionType: WatchlistActionType.remove));
+              },
+              onFavTap: () {},
+              onAddToBagTap: () {
+                bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context));
+              },
+              onTap: () {
+                _onProductTap(context, productDetails);
+              },
+              buttonText: APPStrings.edit.tr,
+            );
+          }),
         );
       },
     );
@@ -217,27 +207,32 @@ class WatchlistDetailsScreen extends StatelessWidget {
   void _showWatchlistBottomSheet(BuildContext screenContext, WatchlistDetailsBloc bloc) {
     OrderPopupStyle orderPopupStyle = AppTheme.of(screenContext).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
-        context: screenContext,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-        ),
-        builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-              color: orderPopupStyle.whiteColor,
-            ),
-            height: 170.h,
-            child: SafeArea(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildPopupOption(context, text: APPStrings.editWatchlist.tr, style: orderPopupStyle.optionTextStyle, onTap: () async {
+      context: screenContext,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+            color: orderPopupStyle.whiteColor,
+          ),
+          height: 170.h,
+          child: SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildPopupOption(
+                    context,
+                    text: APPStrings.editWatchlist.tr,
+                    style: orderPopupStyle.optionTextStyle,
+                    onTap: () async {
                       context.pop();
-                      BlocProvider.of<EditWatchlistBloc>(context)
-                          .add(EditWatchlistInitialEvent(isEdit: true, watchlistData: bloc.watchlistDetailsModel));
+                      BlocProvider.of<EditWatchlistBloc>(
+                        context,
+                      ).add(EditWatchlistInitialEvent(isEdit: true, watchlistData: bloc.watchlistDetailsModel));
 
                       final result = await Utils.showSmartModalBottomSheet(
                         context: context,
@@ -250,18 +245,25 @@ class WatchlistDetailsScreen extends StatelessWidget {
                         bloc.isWatchlistUpdated = true;
                         bloc.add(WatchlistDetailsInitialEvent(screenContext, isInBackground: false));
                       }
-                    }),
-                    _buildPopupOption(context, text: APPStrings.removeWatchlist.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
+                    },
+                  ),
+                  _buildPopupOption(
+                    context,
+                    text: APPStrings.removeWatchlist.tr,
+                    style: orderPopupStyle.cancelTextStyle,
+                    onTap: () {
                       context.pop();
                       WatchlistData watchlistData = WatchlistData.fromJson(bloc.watchlistDetailsModel.toJson());
                       _buildRemoveWatchlistPopup(screenContext, bloc, watchlistData: watchlistData);
-                    }),
-                  ],
-                ),
+                    },
+                  ),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   /// Remove Watchlist Popup
@@ -271,26 +273,22 @@ class WatchlistDetailsScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => ConfirmationDialog(
-        title: APPStrings.removeWatchlistName.tr,
-        message: APPStrings.addedXProductsWillBeRemoved.tr.interpolate([watchlistData.products?.length ?? 0]),
-        onApproved: () {
-          bloc.add(WatchlistDetailsDeleteEvent(context: context, screenContext: screenContext));
-        },
-        onDenied: () => context.pop(),
-        onApprovedText: APPStrings.remove.tr,
-        onDeniedText: APPStrings.cancel.tr,
-      ),
+      builder:
+          (context) => ConfirmationDialog(
+            title: APPStrings.removeWatchlistName.tr,
+            message: APPStrings.addedXProductsWillBeRemoved.tr.interpolate([watchlistData.products?.length ?? 0]),
+            onApproved: () {
+              bloc.add(WatchlistDetailsDeleteEvent(context: context, screenContext: screenContext));
+            },
+            onDenied: () => context.pop(),
+            onApprovedText: APPStrings.remove.tr,
+            onDeniedText: APPStrings.cancel.tr,
+          ),
     );
   }
 
   /// Build popup option
-  Widget _buildPopupOption(
-    BuildContext context, {
-    required String text,
-    required TextStyle style,
-    required VoidCallback onTap,
-  }) {
+  Widget _buildPopupOption(BuildContext context, {required String text, required TextStyle style, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -307,9 +305,12 @@ class WatchlistDetailsScreen extends StatelessWidget {
     if (productDetails.commodity == null) {
       return;
     }
-    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-      RoutesData.productId: productDetails.suid ?? '',
-      RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!)
-    });
+    context.pushNamed(
+      AppRoutes.productDetailsPage,
+      arguments: {
+        RoutesData.productId: productDetails.suid ?? '',
+        RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!),
+      },
+    );
   }
 }

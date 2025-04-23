@@ -28,11 +28,12 @@ class UserMasterListingScreen extends StatelessWidget {
               _buildSearchTextField(bloc, context),
               Expanded(
                 child: BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-                  buildWhen: (previous, current) =>
-                      current is UserMasterListingLoadedState ||
-                      current is UserMasterLoadingState ||
-                      current is UserMasterListLoadedMoreState ||
-                      current is UserMasterListLoadingMoreState,
+                  buildWhen:
+                      (previous, current) =>
+                          current is UserMasterListingLoadedState ||
+                          current is UserMasterLoadingState ||
+                          current is UserMasterListLoadedMoreState ||
+                          current is UserMasterListLoadingMoreState,
                   builder: (context, state) {
                     if (state is UserMasterLoadingState) {
                       return Center(child: const SmartCircularProgressIndicator());
@@ -89,8 +90,11 @@ class UserMasterListingScreen extends StatelessWidget {
 
   Widget _buildUserMasterList(UserMasterListingBloc bloc) {
     return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-      buildWhen: (previous, current) =>
-          current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState || current is UserMasterListingLoadedState,
+      buildWhen:
+          (previous, current) =>
+              current is UserMasterListLoadedMoreState ||
+              current is UserMasterListLoadingMoreState ||
+              current is UserMasterListingLoadedState,
       builder: (context, state) {
         if (bloc.userMasterList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noUserFound.tr);
@@ -100,33 +104,35 @@ class UserMasterListingScreen extends StatelessWidget {
             bloc.add(UserMasterListingPullToRefreshEvent(context: context));
           },
           child: ListView.builder(
-              shrinkWrap: true,
-              controller: bloc.paginationScrollController.scrollController,
-              itemCount: bloc.userMasterList.length,
-              itemBuilder: (context, index) {
-                B2BCustomListingDataModel userItem = bloc.userMasterList[index];
-                return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-                  buildWhen: (previous, current) => current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState,
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        B2BListingItem(
-                          margin: EdgeInsetsDirectional.only(
-                              bottom: index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState ? 0 : 16.0.h),
-                          type: B2BListingType.userListingType,
-                          listingItemModel: userItem,
-                          gridSpacing: 0.w,
-                          onTapMenuButton: () {
-                            _showUserMasterBottomSheet(context, bloc, index: index);
-                          },
+            shrinkWrap: true,
+            controller: bloc.paginationScrollController.scrollController,
+            itemCount: bloc.userMasterList.length,
+            itemBuilder: (context, index) {
+              B2BCustomListingDataModel userItem = bloc.userMasterList[index];
+              return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
+                buildWhen: (previous, current) => current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState,
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      B2BListingItem(
+                        margin: EdgeInsetsDirectional.only(
+                          bottom: index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState ? 0 : 16.0.h,
                         ),
-                        if (index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState)
-                          const SmartCircularProgressIndicator(),
-                      ],
-                    );
-                  },
-                );
-              }),
+                        type: B2BListingType.userListingType,
+                        listingItemModel: userItem,
+                        gridSpacing: 0.w,
+                        onTapMenuButton: () {
+                          _showUserMasterBottomSheet(context, bloc, index: index);
+                        },
+                      ),
+                      if (index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState)
+                        const SmartCircularProgressIndicator(),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         );
       },
     );
@@ -135,49 +141,47 @@ class UserMasterListingScreen extends StatelessWidget {
   void _showUserMasterBottomSheet(BuildContext screenContext, UserMasterListingBloc bloc, {required int index}) {
     OrderPopupStyle orderPopupStyle = AppTheme.of(screenContext).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
-        context: screenContext,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-        ),
-        builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadiusDirectional.only(
-                topStart: Radius.circular(16.r),
-                topEnd: Radius.circular(16.r),
-              ),
-              color: orderPopupStyle.whiteColor,
+      context: screenContext,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+            color: orderPopupStyle.whiteColor,
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildPopupOption(
+                  context,
+                  text: bloc.userMasterDataList[index].status ? APPStrings.markAsInActive.tr : APPStrings.markAsActive.tr,
+                  style: bloc.userMasterDataList[index].status ? orderPopupStyle.cancelTextStyle : orderPopupStyle.optionTextStyle,
+                  onTap: () {
+                    context.pop();
+                    _buildChangeStatusConfirmPopup(screenContext, bloc, index);
+                  },
+                ),
+                // Change Password
+                _buildPopupOption(
+                  context,
+                  text: APPStrings.changePassword.tr,
+                  style: orderPopupStyle.optionTextStyle,
+                  onTap: () {
+                    context.pop();
+                    _buildChangePasswordBottomSheet(screenContext, bloc, index);
+                  },
+                ),
+              ],
             ),
-            child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildPopupOption(
-                    context,
-                    text: bloc.userMasterDataList[index].status ? APPStrings.markAsInActive.tr : APPStrings.markAsActive.tr,
-                    style: bloc.userMasterDataList[index].status ? orderPopupStyle.cancelTextStyle : orderPopupStyle.optionTextStyle,
-                    onTap: () {
-                      context.pop();
-                      _buildChangeStatusConfirmPopup(screenContext, bloc, index);
-                    },
-                  ),
-                  // Change Password
-                  _buildPopupOption(
-                    context,
-                    text: APPStrings.changePassword.tr,
-                    style: orderPopupStyle.optionTextStyle,
-                    onTap: () {
-                      context.pop();
-                      _buildChangePasswordBottomSheet(screenContext, bloc, index);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   void _buildChangeStatusConfirmPopup(BuildContext screenContext, UserMasterListingBloc bloc, int index) {
@@ -186,30 +190,23 @@ class UserMasterListingScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => ConfirmationDialog(
-        title: APPStrings.areYouSure.tr,
-        message: APPStrings.userStatusChangeMsg.tr,
-        onApproved: () {
-          context.pop();
-          bloc.add(UserMasterChangeStatusEvent(
-            context: screenContext,
-            index: index,
-          ));
-        },
-        onDenied: () => context.pop(),
-        onApprovedText: APPStrings.yes.tr,
-        onDeniedText: APPStrings.cancel.tr,
-      ),
+      builder:
+          (context) => ConfirmationDialog(
+            title: APPStrings.areYouSure.tr,
+            message: APPStrings.userStatusChangeMsg.tr,
+            onApproved: () {
+              context.pop();
+              bloc.add(UserMasterChangeStatusEvent(context: screenContext, index: index));
+            },
+            onDenied: () => context.pop(),
+            onApprovedText: APPStrings.yes.tr,
+            onDeniedText: APPStrings.cancel.tr,
+          ),
     );
   }
 
   /// Build popup option
-  Widget _buildPopupOption(
-    BuildContext context, {
-    required String text,
-    required TextStyle style,
-    required VoidCallback onTap,
-  }) {
+  Widget _buildPopupOption(BuildContext context, {required String text, required TextStyle style, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -230,16 +227,15 @@ class UserMasterListingScreen extends StatelessWidget {
           width: 120.w,
           child: SmartDropDown<UserLocationModel>(
             border: BorderDirectional(
-                end: BorderSide(color: style.dividerColor),
-                top: BorderSide(color: style.dividerColor),
-                bottom: BorderSide(color: style.dividerColor)),
+              end: BorderSide(color: style.dividerColor),
+              top: BorderSide(color: style.dividerColor),
+              bottom: BorderSide(color: style.dividerColor),
+            ),
             borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
-            items: bloc.userLocationTypeList.map((UserLocationModel type) {
-              return SmartDropDownItem<UserLocationModel>(
-                value: type,
-                title: type.name ?? APPStrings.select.tr,
-              );
-            }).toList(),
+            items:
+                bloc.userLocationTypeList.map((UserLocationModel type) {
+                  return SmartDropDownItem<UserLocationModel>(value: type, title: type.name ?? APPStrings.select.tr);
+                }).toList(),
             onChanged: (type) {
               if (type != null) {
                 bloc.add(UserMasterChangeLocationTypeEvent(type));
@@ -253,10 +249,7 @@ class UserMasterListingScreen extends StatelessWidget {
   }
 
   void _buildChangePasswordBottomSheet(BuildContext screenContext, UserMasterListingBloc bloc, int index) {
-    Widget bottomSheet = ChangePasswordBottomSheetForUserMaster(
-      index: index,
-      bloc: bloc..add(UserMasterChangePasswordInitialEvent()),
-    );
+    Widget bottomSheet = ChangePasswordBottomSheetForUserMaster(index: index, bloc: bloc..add(UserMasterChangePasswordInitialEvent()));
 
     Utils.showSmartModalBottomSheet(
       context: screenContext,

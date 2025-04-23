@@ -18,10 +18,7 @@ class ProductVideoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Create the VideoPlayerController directly in the build method
-    final controller = VideoPlayerController.networkUrl(
-      Uri.parse(path),
-      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false),
-    );
+    final controller = VideoPlayerController.networkUrl(Uri.parse(path), videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false));
 
     // Initialize the controller in the build method and handle the future
     return Center(
@@ -37,12 +34,10 @@ class ProductVideoWidget extends StatelessWidget {
             return AspectRatio(
               aspectRatio: 16 / 9,
               // Display the video player if the video is initialized, otherwise show a loading indicator
-              child: (snapshot.connectionState == ConnectionState.done)
-                  ? VideoPlayer(controller)
-                  : Container(
-                      color: Colors.white,
-                      child: const SmartCircularProgressIndicator(),
-                    ),
+              child:
+                  (snapshot.connectionState == ConnectionState.done)
+                      ? VideoPlayer(controller)
+                      : Container(color: Colors.white, child: const SmartCircularProgressIndicator()),
             );
           },
         ),

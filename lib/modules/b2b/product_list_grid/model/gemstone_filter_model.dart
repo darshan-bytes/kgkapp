@@ -32,14 +32,14 @@ class FilterOptionModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "slug": slug,
-        "default_value": defaultValue,
-        "input_type": inputType,
-        "data": data.map((x) => x).toList(),
-        "id": id,
-        "fromCommon": fromCommon,
-      };
+    "name": name,
+    "slug": slug,
+    "default_value": defaultValue,
+    "input_type": inputType,
+    "data": data.map((x) => x).toList(),
+    "id": id,
+    "fromCommon": fromCommon,
+  };
 
   @override
   String toString() {

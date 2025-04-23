@@ -140,11 +140,7 @@ class HomeScreen extends StatelessWidget {
         return _buildTopSellingCategories(homeBloc, style, context: context);
 
       case HomeSlug.mobileViewAllCollection:
-        return _buildViewAllCollectionsSection(
-          style,
-          context: context,
-          url: "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg",
-        );
+        return _buildViewAllCollectionsSection(style, context: context, url: "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg");
       case HomeSlug.mobileGetInspired:
         return _buildGetInspiredSection(homeBloc, style);
       case HomeSlug.mobileShopByStyle:
@@ -178,10 +174,7 @@ class HomeScreen extends StatelessWidget {
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsetsDirectional.only(
-            start: index == 0 ? 17.w : 0,
-            end: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
-          ),
+          margin: EdgeInsetsDirectional.only(start: index == 0 ? 17.w : 0, end: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0),
           titleMaxLines: 1,
           fit: BoxFit.fill,
           imageUrl: item.imageUrl ?? '',
@@ -223,16 +216,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShopBySpacificCategory(
-    HomeBloc homeBloc,
-    HomeScreenStyle style, {
-    required BuildContext context,
-  }) {
+  Widget _buildShopBySpacificCategory(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
     return Column(
       children: [
-        SizedBox(
-          height: 20.h,
-        ),
+        SizedBox(height: 20.h),
         SmartText(APPStrings.shopByCategory.tr, style: style.bannerTitleStyle),
         Padding(
           padding: const EdgeInsetsDirectional.all(8.0),
@@ -250,46 +237,45 @@ class HomeScreen extends StatelessWidget {
                   width = (screenWidth - spacing) / 2;
                 }
 
-                imageWidgets.add(SizedBox(
-                  width: width,
-                  height: 130.h,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      SmartImage(
-                        path: homeBloc.shopBySpacificCategory[i].imageUrl ?? '',
-                        fit: BoxFit.fill,
-                        imageBorderRadius: BorderRadius.circular(8.r),
-                      ),
-                      if (homeBloc.shopBySpacificCategory[i].name.isNotNullNorEmpty)
-                        PositionedDirectional(
-                          bottom: 4,
-                          start: 0,
-                          end: 0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 2.h),
-                                alignment: AlignmentDirectional.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4.r),
-                                  color: Colors.white,
+                imageWidgets.add(
+                  SizedBox(
+                    width: width,
+                    height: 130.h,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        SmartImage(
+                          path: homeBloc.shopBySpacificCategory[i].imageUrl ?? '',
+                          fit: BoxFit.fill,
+                          imageBorderRadius: BorderRadius.circular(8.r),
+                        ),
+                        if (homeBloc.shopBySpacificCategory[i].name.isNotNullNorEmpty)
+                          PositionedDirectional(
+                            bottom: 4,
+                            start: 0,
+                            end: 0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 2.h),
+                                  alignment: AlignmentDirectional.center,
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.r), color: Colors.white),
+                                  child: SmartText(
+                                    homeBloc.shopBySpacificCategory[i].name ?? '',
+                                    style: style.dropDownTextStyle.merge(TextStyle(fontSize: 12.sp)),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                                child: SmartText(
-                                  homeBloc.shopBySpacificCategory[i].name ?? '',
-                                  style: style.dropDownTextStyle.merge(TextStyle(fontSize: 12.sp)),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        )
-                    ],
+                      ],
+                    ),
                   ),
-                ));
+                );
               }
 
               return Wrap(
@@ -299,124 +285,130 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
-        )
+        ),
       ],
     );
   }
 
   Widget _buildTrendingView(HomeBloc homeBloc, HomeScreenStyle style) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(height: 20.h),
-      Padding(
-        padding: EdgeInsetsDirectional.only(start: 6.w),
-        child: SmartText(APPStrings.trendingNow.tr, style: style.bannerTitleStyle),
-      ),
-      SizedBox(height: 20.h),
-      SizedBox(
-        height: 170.h,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: homeBloc.trendingList.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 130.h,
-                width: 180.w,
-                margin: EdgeInsetsDirectional.only(start: 6.w, end: index == homeBloc.trendingList.length - 1 ? 6.w : 0),
-                child: SmartImage(
-                    path: homeBloc.trendingList[index].imageUrl ?? '', fit: BoxFit.cover, imageBorderRadius: BorderRadius.circular(8.r)),
-              ),
-              SizedBox(height: 8.h),
-              Padding(
-                padding: EdgeInsetsDirectional.only(start: 8.w),
-                child: SmartText(homeBloc.trendingList[index].name,
-                    style: style.dropDownTextStyle.merge(TextStyle(fontSize: 14.sp)), textAlign: TextAlign.center),
-              ),
-            ],
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20.h),
+        Padding(
+          padding: EdgeInsetsDirectional.only(start: 6.w),
+          child: SmartText(APPStrings.trendingNow.tr, style: style.bannerTitleStyle),
         ),
-      ),
-      SizedBox(height: 20.h),
-    ]);
-  }
-
-  Widget _buildPopularView(
-    HomeBloc homeBloc,
-    HomeScreenStyle style, {
-    required String title,
-    required List<AuctionListModel> popularList,
-  }) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(height: 20.h),
-      Padding(
-        padding: EdgeInsetsDirectional.only(start: 6.w),
-        child: SmartText(title, style: style.bannerTitleStyle),
-      ),
-      SizedBox(
-        height: 20.h,
-      ),
-      SizedBox(
-        height: 160.h,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: popularList.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 160.h,
-                width: 130.w,
-                margin: EdgeInsetsDirectional.only(start: 6.w, end: index == popularList.length - 1 ? 6.w : 0),
-                child: Stack(
+        SizedBox(height: 20.h),
+        SizedBox(
+          height: 170.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: homeBloc.trendingList.length,
+            shrinkWrap: true,
+            itemBuilder:
+                (context, index) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SmartImage(
-                        path: popularList[index].imageUrl ?? '',
+                    Container(
+                      height: 130.h,
+                      width: 180.w,
+                      margin: EdgeInsetsDirectional.only(start: 6.w, end: index == homeBloc.trendingList.length - 1 ? 6.w : 0),
+                      child: SmartImage(
+                        path: homeBloc.trendingList[index].imageUrl ?? '',
                         fit: BoxFit.cover,
-                        height: 160.h,
-                        imageBorderRadius: BorderRadius.circular(8.r)),
-                    if (popularList[index].name.isNotNullNorEmpty)
-                      Container(
-                          width: 100.w,
-                          height: 24.h,
-                          margin: EdgeInsetsDirectional.only(top: 6.h),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(8.r), bottomEnd: Radius.circular(8.r)),
-                            gradient: LinearGradient(
-                                colors: [
-                                  style.primaryColor.withValues(alpha: 0.6),
-                                  style.primaryColor.withValues(alpha: 0.9),
-                                ],
-                                begin: const FractionalOffset(0.0, 0.0),
-                                end: const FractionalOffset(1.0, 0.0),
-                                stops: const [0.0, 1.0],
-                                tileMode: TileMode.clamp),
-                          ),
-                          child: Center(
-                            child: SmartText(
-                              popularList[index].name,
-                              style: style.dropDownTextStyle.merge(TextStyle(fontSize: 12.sp, color: Colors.white)),
-                            ),
-                          )),
-                    if (popularList[index].percentageOff.isNotNullNorEmpty)
-                      PositionedDirectional(
-                        bottom: 6.h,
-                        start: 6.w,
-                        end: 6.w,
-                        child: SmartText(popularList[index].percentageOff,
-                            style: style.getInspiredTitleStyle.merge(TextStyle(fontSize: 20.sp))),
+                        imageBorderRadius: BorderRadius.circular(8.r),
                       ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(start: 8.w),
+                      child: SmartText(
+                        homeBloc.trendingList[index].name,
+                        style: style.dropDownTextStyle.merge(TextStyle(fontSize: 14.sp)),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ],
           ),
         ),
-      ),
-      SizedBox(height: 20.h),
-    ]);
+        SizedBox(height: 20.h),
+      ],
+    );
+  }
+
+  Widget _buildPopularView(HomeBloc homeBloc, HomeScreenStyle style, {required String title, required List<AuctionListModel> popularList}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20.h),
+        Padding(padding: EdgeInsetsDirectional.only(start: 6.w), child: SmartText(title, style: style.bannerTitleStyle)),
+        SizedBox(height: 20.h),
+        SizedBox(
+          height: 160.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: popularList.length,
+            shrinkWrap: true,
+            itemBuilder:
+                (context, index) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 160.h,
+                      width: 130.w,
+                      margin: EdgeInsetsDirectional.only(start: 6.w, end: index == popularList.length - 1 ? 6.w : 0),
+                      child: Stack(
+                        children: [
+                          SmartImage(
+                            path: popularList[index].imageUrl ?? '',
+                            fit: BoxFit.cover,
+                            height: 160.h,
+                            imageBorderRadius: BorderRadius.circular(8.r),
+                          ),
+                          if (popularList[index].name.isNotNullNorEmpty)
+                            Container(
+                              width: 100.w,
+                              height: 24.h,
+                              margin: EdgeInsetsDirectional.only(top: 6.h),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(8.r), bottomEnd: Radius.circular(8.r)),
+                                gradient: LinearGradient(
+                                  colors: [style.primaryColor.withValues(alpha: 0.6), style.primaryColor.withValues(alpha: 0.9)],
+                                  begin: const FractionalOffset(0.0, 0.0),
+                                  end: const FractionalOffset(1.0, 0.0),
+                                  stops: const [0.0, 1.0],
+                                  tileMode: TileMode.clamp,
+                                ),
+                              ),
+                              child: Center(
+                                child: SmartText(
+                                  popularList[index].name,
+                                  style: style.dropDownTextStyle.merge(TextStyle(fontSize: 12.sp, color: Colors.white)),
+                                ),
+                              ),
+                            ),
+                          if (popularList[index].percentageOff.isNotNullNorEmpty)
+                            PositionedDirectional(
+                              bottom: 6.h,
+                              start: 6.w,
+                              end: 6.w,
+                              child: SmartText(
+                                popularList[index].percentageOff,
+                                style: style.getInspiredTitleStyle.merge(TextStyle(fontSize: 20.sp)),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+          ),
+        ),
+        SizedBox(height: 20.h),
+      ],
+    );
   }
 }
 
@@ -424,31 +416,25 @@ Widget _buildHorizontalSlider(HomeBloc homeBloc, HomeScreenStyle style) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      SizedBox(
-        height: 20.h,
-      ),
+      SizedBox(height: 20.h),
       Padding(
         padding: EdgeInsetsDirectional.only(start: 6.w),
         child: SmartText(APPStrings.shopLatestCollection.tr, style: style.bannerTitleStyle),
       ),
-      SizedBox(
-        height: 20.h,
-      ),
+      SizedBox(height: 20.h),
       SizedBox(
         height: 250.h,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: homeBloc.latestCollectionList.length,
           shrinkWrap: true,
-          itemBuilder: (context, index) => Container(
-            padding: EdgeInsetsDirectional.only(start: 6.w, end: index == homeBloc.latestCollectionList.length - 1 ? 6.w : 0),
-            // Add horizontal padding
-            // width: context.width * 0.8,
-            child: SmartImage(
-              path: homeBloc.latestCollectionList[index].imageUrl ?? '',
-              fit: BoxFit.fitHeight,
-            ),
-          ),
+          itemBuilder:
+              (context, index) => Container(
+                padding: EdgeInsetsDirectional.only(start: 6.w, end: index == homeBloc.latestCollectionList.length - 1 ? 6.w : 0),
+                // Add horizontal padding
+                // width: context.width * 0.8,
+                child: SmartImage(path: homeBloc.latestCollectionList[index].imageUrl ?? '', fit: BoxFit.fitHeight),
+              ),
           separatorBuilder: (context, index) => const SizedBox.shrink(),
         ),
       ),
@@ -456,29 +442,29 @@ Widget _buildHorizontalSlider(HomeBloc homeBloc, HomeScreenStyle style) {
   );
 }
 
-Widget _buildImageIndicator(HomeBloc homeBloc,
-    {required List itemList,
-    CarouselSliderController? carouselController,
-    required int currentIndex,
-    required BuildContext context,
-    VoidCallback? onTap}) {
+Widget _buildImageIndicator(
+  HomeBloc homeBloc, {
+  required List itemList,
+  CarouselSliderController? carouselController,
+  required int currentIndex,
+  required BuildContext context,
+  VoidCallback? onTap,
+}) {
   final ImageCarouselStyle style = AppTheme.of(context).imageCarouselStyle;
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: itemList.asMap().entries.map((entry) {
-      return GestureDetector(
-        onTap: onTap ?? () => carouselController?.animateToPage(entry.key),
-        child: Container(
-          width: 8.0.w,
-          height: 8.0.w,
-          margin: EdgeInsetsDirectional.only(end: 6.0.w),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: currentIndex == entry.key ? style.selectedDotColor : style.dotColor,
-          ),
-        ),
-      );
-    }).toList(),
+    children:
+        itemList.asMap().entries.map((entry) {
+          return GestureDetector(
+            onTap: onTap ?? () => carouselController?.animateToPage(entry.key),
+            child: Container(
+              width: 8.0.w,
+              height: 8.0.w,
+              margin: EdgeInsetsDirectional.only(end: 6.0.w),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: currentIndex == entry.key ? style.selectedDotColor : style.dotColor),
+            ),
+          );
+        }).toList(),
   );
 }
 
@@ -495,67 +481,77 @@ Widget _buildTopSellingEligence(
   return Container(
     color: bgColor ?? style.topSellingEleganceColor,
     padding: EdgeInsetsDirectional.only(start: 17.w, end: 17.w, top: 32.h, bottom: 22.h),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      SmartText(title ?? APPStrings.eligance.tr, style: style.bannerTitleStyle),
-      SizedBox(height: 16.h),
-      SmartGridView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SmartText(title ?? APPStrings.eligance.tr, style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
           columns: 2,
           spacing: 12.w,
           runSpacing: 12.h,
-          items: imgList
-              .map((AuctionListModel field) => SmartImage(
-                    height: height,
-                    path: field.imageUrl ?? '',
-                    fit: fit ?? BoxFit.fill,
-                    onTap: () {
-                      context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-                    },
-                  ))
-              .toList())
-    ]),
+          items:
+              imgList
+                  .map(
+                    (AuctionListModel field) => SmartImage(
+                      height: height,
+                      path: field.imageUrl ?? '',
+                      fit: fit ?? BoxFit.fill,
+                      onTap: () {
+                        context.pushNamed(
+                          AppRoutes.productListGridPage,
+                          arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing},
+                        );
+                      },
+                    ),
+                  )
+                  .toList(),
+        ),
+      ],
+    ),
   );
 }
 
 Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   return Padding(
     padding: EdgeInsetsDirectional.only(start: 17.w, end: 17.w, top: 32.h, bottom: 22.h),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SmartText(APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
-      SizedBox(height: 16.h),
-      SmartGridView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SmartText(APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
           columns: 2,
           spacing: 12.w,
           runSpacing: 12.h,
-          items: homeBloc.topSellingCategoriesList
-              .map((AuctionListModel field) => SmartImage(
-                    height: 132.w,
-                    path: field.imageUrl ?? '',
-                    fit: BoxFit.contain,
-                    onTap: () {
-                      context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-                    },
-                  ))
-              .toList())
-    ]),
+          items:
+              homeBloc.topSellingCategoriesList
+                  .map(
+                    (AuctionListModel field) => SmartImage(
+                      height: 132.w,
+                      path: field.imageUrl ?? '',
+                      fit: BoxFit.contain,
+                      onTap: () {
+                        context.pushNamed(
+                          AppRoutes.productListGridPage,
+                          arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing},
+                        );
+                      },
+                    ),
+                  )
+                  .toList(),
+        ),
+      ],
+    ),
   );
 }
 
-Widget _buildViewAllCollectionsSection(
-  HomeScreenStyle style, {
-  required BuildContext context,
-  required String url,
-}) {
+Widget _buildViewAllCollectionsSection(HomeScreenStyle style, {required BuildContext context, required String url}) {
   return Padding(
     padding: EdgeInsetsDirectional.only(start: 0.w, end: 0.w, bottom: 0.h),
     child: Stack(
       children: [
-        SmartImage(
-          path: url,
-          height: 396.w,
-          width: double.infinity,
-          fit: BoxFit.fitWidth,
-          onTap: () {},
-        ),
+        SmartImage(path: url, height: 396.w, width: double.infinity, fit: BoxFit.fitWidth, onTap: () {}),
         PositionedDirectional(
           bottom: 0.w,
           start: 0.w,
@@ -568,10 +564,7 @@ Widget _buildViewAllCollectionsSection(
               height: 60.h,
               color: style.viewAllCollectionsBgColor,
               alignment: AlignmentDirectional.center,
-              child: SmartText(
-                APPStrings.viewAllCollections.tr,
-                style: style.viewAllCollectionsTextStyle,
-              ),
+              child: SmartText(APPStrings.viewAllCollections.tr, style: style.viewAllCollectionsTextStyle),
             ),
           ),
         ),
@@ -582,80 +575,83 @@ Widget _buildViewAllCollectionsSection(
 
 Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   return Padding(
-      padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SmartText(
-            APPStrings.kgkCouture.tr,
-            style: style.bannerTitleStyle,
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 16.h),
-          SmartHorizontalItemBuilder(
-            itemCount: homeBloc.kgkCoutureButtonsTitle.length,
-            itemBuilder: (context, index) {
-              return BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (previous, current) =>
-                    current is HomeKgkCoutureSelectionChangeState && (index == current.oldIndex || index == current.selectedIndex),
-                builder: (context, state) {
-                  bool isSelected = index == homeBloc.kgkCoutureSelectedIndex;
-                  return SelectionButton(
-                    constraints: BoxConstraints(minWidth: 50.w),
-                    margin: index == 0
-                        ? EdgeInsetsDirectional.only(start: 17.w)
-                        : (index == homeBloc.kgkCoutureButtonsTitle.length - 1)
-                            ? EdgeInsetsDirectional.only(end: 17.w)
-                            : null,
-                    borderRadius: BorderRadius.circular(50.r),
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w),
-                    isSelected: isSelected,
-                    onTap: () {
-                      homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index: index, context: context));
-                    },
-                    title: homeBloc.kgkCoutureButtonsTitle[index].tr,
-                  );
-                },
-              );
-            },
-          ),
-          SizedBox(height: 16.h),
-          SmartHorizontalItemBuilder(
-            itemCount: homeBloc.luminousProductViewList.length > 8 ? 8 : homeBloc.luminousProductViewList.length,
-            itemBuilder: (context, index) {
-              return ProductGridItem(
-                margin: index == 0
-                    ? EdgeInsetsDirectional.only(start: 17.w)
-                    : (index == (homeBloc.luminousProductViewList.length > 8 ? 8 : homeBloc.luminousProductViewList.length) - 1)
-                        ? EdgeInsetsDirectional.only(end: 17.w)
-                        : EdgeInsetsDirectional.zero,
-                productDetails: homeBloc.luminousProductViewList[index],
-                onEyeTap: () {},
-                onFavTap: () {},
-                onTap: () {
-                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+    padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SmartText(APPStrings.kgkCouture.tr, style: style.bannerTitleStyle, textAlign: TextAlign.center),
+        SizedBox(height: 16.h),
+        SmartHorizontalItemBuilder(
+          itemCount: homeBloc.kgkCoutureButtonsTitle.length,
+          itemBuilder: (context, index) {
+            return BlocBuilder<HomeBloc, HomeState>(
+              buildWhen:
+                  (previous, current) =>
+                      current is HomeKgkCoutureSelectionChangeState && (index == current.oldIndex || index == current.selectedIndex),
+              builder: (context, state) {
+                bool isSelected = index == homeBloc.kgkCoutureSelectedIndex;
+                return SelectionButton(
+                  constraints: BoxConstraints(minWidth: 50.w),
+                  margin:
+                      index == 0
+                          ? EdgeInsetsDirectional.only(start: 17.w)
+                          : (index == homeBloc.kgkCoutureButtonsTitle.length - 1)
+                          ? EdgeInsetsDirectional.only(end: 17.w)
+                          : null,
+                  borderRadius: BorderRadius.circular(50.r),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w),
+                  isSelected: isSelected,
+                  onTap: () {
+                    homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index: index, context: context));
+                  },
+                  title: homeBloc.kgkCoutureButtonsTitle[index].tr,
+                );
+              },
+            );
+          },
+        ),
+        SizedBox(height: 16.h),
+        SmartHorizontalItemBuilder(
+          itemCount: homeBloc.luminousProductViewList.length > 8 ? 8 : homeBloc.luminousProductViewList.length,
+          itemBuilder: (context, index) {
+            return ProductGridItem(
+              margin:
+                  index == 0
+                      ? EdgeInsetsDirectional.only(start: 17.w)
+                      : (index == (homeBloc.luminousProductViewList.length > 8 ? 8 : homeBloc.luminousProductViewList.length) - 1)
+                      ? EdgeInsetsDirectional.only(end: 17.w)
+                      : EdgeInsetsDirectional.zero,
+              productDetails: homeBloc.luminousProductViewList[index],
+              onEyeTap: () {},
+              onFavTap: () {},
+              onTap: () {
+                context.pushNamed(
+                  AppRoutes.productDetailsPage,
+                  arguments: {
                     RoutesData.productId: homeBloc.luminousProductViewList[index].productId ?? '',
-                    RoutesData.isPageFor: ScreenIdentifier.productForRing
-                  });
-                },
-              );
-            },
+                    RoutesData.isPageFor: ScreenIdentifier.productForRing,
+                  },
+                );
+              },
+            );
+          },
+        ),
+        if (homeBloc.luminousProductViewList.length > 8) ...[
+          SizedBox(height: 16.h),
+          SelectionButton(
+            height: 40.h,
+            width: 120.w,
+            unselectedButtonBorderColor: style.primaryColor,
+            borderRadius: BorderRadius.circular(10.r),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
+            isSelected: false,
+            onTap: () {},
+            title: APPStrings.viewAll.tr,
           ),
-          if (homeBloc.luminousProductViewList.length > 8) ...[
-            SizedBox(height: 16.h),
-            SelectionButton(
-              height: 40.h,
-              width: 120.w,
-              unselectedButtonBorderColor: style.primaryColor,
-              borderRadius: BorderRadius.circular(10.r),
-              padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
-              isSelected: false,
-              onTap: () {},
-              title: APPStrings.viewAll.tr,
-            ),
-          ],
         ],
-      ));
+      ],
+    ),
+  );
 }
 
 Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
@@ -670,19 +666,19 @@ Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, {req
           homeBloc.add(HomeCategoryPageChangeEvent(index));
         },
         controller: homeBloc.categoryPageController,
-        children: List.generate(
-          homeBloc.categoryPageLength,
-          (index) {
-            int start = index * HomeBloc.categoryPerPageLength;
-            int end = (index == homeBloc.categoryPageLength - 1) ? homeBloc.categoryList.length : (start + HomeBloc.categoryPerPageLength);
-            return Padding(
-              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
-              child: SmartGridView(
-                columns: 3,
-                runSpacing: 10.h,
-                items: homeBloc.categoryList
-                    .sublist(start, end)
-                    .map((AuctionListModel item) => SmartImageTitleColumn(
+        children: List.generate(homeBloc.categoryPageLength, (index) {
+          int start = index * HomeBloc.categoryPerPageLength;
+          int end = (index == homeBloc.categoryPageLength - 1) ? homeBloc.categoryList.length : (start + HomeBloc.categoryPerPageLength);
+          return Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
+            child: SmartGridView(
+              columns: 3,
+              runSpacing: 10.h,
+              items:
+                  homeBloc.categoryList
+                      .sublist(start, end)
+                      .map(
+                        (AuctionListModel item) => SmartImageTitleColumn(
                           imageUrl: item.imageUrl ?? '',
                           title: item.name ?? '',
                           imageWidth: imgWidth,
@@ -690,12 +686,12 @@ Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, {req
                           fit: BoxFit.fitWidth,
                           titleMaxLines: 1,
                           imageBorder: Border.all(color: style.borderColor, width: 1.w),
-                        ))
-                    .toList(),
-              ),
-            );
-          },
-        ),
+                        ),
+                      )
+                      .toList(),
+            ),
+          );
+        }),
       ),
       SizedBox(height: 16.h),
       BlocBuilder<HomeBloc, HomeState>(
@@ -703,19 +699,18 @@ Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, {req
         builder: (context, state) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              homeBloc.categoryPageLength,
-              (index) {
-                bool isCurrentPage = homeBloc.currentPageIndex == index;
-                return Container(
-                  width: 6.0.w,
-                  height: 6.0.w,
-                  margin: EdgeInsetsDirectional.symmetric(horizontal: 2.0.w),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: isCurrentPage ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
-                );
-              },
-            ),
+            children: List.generate(homeBloc.categoryPageLength, (index) {
+              bool isCurrentPage = homeBloc.currentPageIndex == index;
+              return Container(
+                width: 6.0.w,
+                height: 6.0.w,
+                margin: EdgeInsetsDirectional.symmetric(horizontal: 2.0.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isCurrentPage ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor,
+                ),
+              );
+            }),
           );
         },
       ),
@@ -731,9 +726,7 @@ Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle styl
     child: Stack(
       alignment: AlignmentDirectional.topEnd,
       children: [
-        const SmartImage(
-          path: AppImages.icPrimaryBgLine,
-        ),
+        const SmartImage(path: AppImages.icPrimaryBgLine),
         Padding(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
           child: Column(
@@ -747,44 +740,56 @@ Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle styl
               _buildOwnSignaturePieceSteps(AppImages.icHomeRing, APPStrings.stepX.tr.interpolate(["1"]), APPStrings.selectStone.tr, style),
               SizedBox(height: 24.h),
               _buildOwnSignaturePieceSteps(
-                  AppImages.icHomeDiamondRingThin, APPStrings.stepX.tr.interpolate(["2"]), APPStrings.selectJewellery.tr, style),
+                AppImages.icHomeDiamondRingThin,
+                APPStrings.stepX.tr.interpolate(["2"]),
+                APPStrings.selectJewellery.tr,
+                style,
+              ),
               SizedBox(height: 24.h),
               _buildOwnSignaturePieceSteps(
-                  AppImages.icCustomizeThin, APPStrings.stepX.tr.interpolate(["3"]), APPStrings.customiseViewPrice.tr, style),
+                AppImages.icCustomizeThin,
+                APPStrings.stepX.tr.interpolate(["3"]),
+                APPStrings.customiseViewPrice.tr,
+                style,
+              ),
               SizedBox(height: 24.h),
               Container(
                 color: style.whiteColor,
                 padding: EdgeInsetsDirectional.all(24.w),
                 child: BlocBuilder<HomeBloc, HomeState>(
-                  buildWhen: (previous, current) =>
-                      current is HomeSelectStoneTypeChangeState || current is HomeSelectJewelleryTypeChangeState,
+                  buildWhen:
+                      (previous, current) => current is HomeSelectStoneTypeChangeState || current is HomeSelectJewelleryTypeChangeState,
                   builder: (context, state) {
                     return Column(
                       children: [
                         Row(
                           children: [
-                            SmartText(APPStrings.stepX.tr.interpolate(["1"]),
-                                style: style.stepTextStyle.copyWith(color: style.textStyleColor)),
+                            SmartText(
+                              APPStrings.stepX.tr.interpolate(["1"]),
+                              style: style.stepTextStyle.copyWith(color: style.textStyleColor),
+                            ),
                             SizedBox(width: 19.w),
-                            Flexible(child: _buildStep1DropDownField(homeBloc, style))
+                            Flexible(child: _buildStep1DropDownField(homeBloc, style)),
                           ],
                         ),
                         Padding(padding: EdgeInsetsDirectional.symmetric(vertical: 12.h), child: const Divider()),
                         Row(
                           children: [
-                            SmartText(APPStrings.stepX.tr.interpolate(["2"]),
-                                style: style.stepTextStyle.copyWith(color: style.textStyleColor)),
+                            SmartText(
+                              APPStrings.stepX.tr.interpolate(["2"]),
+                              style: style.stepTextStyle.copyWith(color: style.textStyleColor),
+                            ),
                             SizedBox(width: 19.w),
-                            Expanded(child: _buildStep2DropDownField(homeBloc, style))
+                            Expanded(child: _buildStep2DropDownField(homeBloc, style)),
                           ],
                         ),
                         SizedBox(height: 12.h),
-                        SmartButton(onTap: () {}, title: APPStrings.getStarted.tr)
+                        SmartButton(onTap: () {}, title: APPStrings.getStarted.tr),
                       ],
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -800,12 +805,10 @@ Widget _buildStep1DropDownField(HomeBloc homeBloc, HomeScreenStyle style) {
     textStyle: style.dropDownTextStyle,
     border: const Border.symmetric(vertical: BorderSide.none, horizontal: BorderSide.none),
     borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
-    items: homeBloc.arrStoneType.map((OrderStoneTypeModel type) {
-      return SmartDropDownItem<OrderStoneTypeModel>(
-        value: type,
-        title: type.name,
-      );
-    }).toList(),
+    items:
+        homeBloc.arrStoneType.map((OrderStoneTypeModel type) {
+          return SmartDropDownItem<OrderStoneTypeModel>(value: type, title: type.name);
+        }).toList(),
     onChanged: (type) {
       if (type != null) {
         homeBloc.add(HomeSelectStoneChangeTypeEvent(selectedStep1StoneType: type));
@@ -822,12 +825,10 @@ Widget _buildStep2DropDownField(HomeBloc homeBloc, HomeScreenStyle style) {
     textStyle: style.dropDownTextStyle,
     border: const Border.symmetric(vertical: BorderSide.none, horizontal: BorderSide.none),
     borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
-    items: homeBloc.arrRingType.map((OrderStoneTypeModel type) {
-      return SmartDropDownItem<OrderStoneTypeModel>(
-        value: type,
-        title: type.name,
-      );
-    }).toList(),
+    items:
+        homeBloc.arrRingType.map((OrderStoneTypeModel type) {
+          return SmartDropDownItem<OrderStoneTypeModel>(value: type, title: type.name);
+        }).toList(),
     onChanged: (type) {
       if (type != null) {
         homeBloc.add(HomeSelectJewelleryChangeTypeEvent(selectedStep2RingType: type));
@@ -875,45 +876,57 @@ Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
   return Container(
     color: style.getInspiredSectionColor,
     padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
-      SizedBox(height: 16.h),
-      SmartGridView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
           columns: 2,
           spacing: 12.w,
           runSpacing: 12.h,
-          items: homeBloc.getInspiredList
-              .map((AuctionListModel field) => SmartImageTitleColumn(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    topWidget: SmartImage(
-                      path: field.imageUrl ?? '',
+          items:
+              homeBloc.getInspiredList
+                  .map(
+                    (AuctionListModel field) => SmartImageTitleColumn(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      topWidget: SmartImage(path: field.imageUrl ?? ''),
+                      title: '',
+                      titleStyle: style.getInspiredTitleStyle,
                     ),
-                    title: '',
-                    titleStyle: style.getInspiredTitleStyle,
-                  ))
-              .toList())
-    ]),
+                  )
+                  .toList(),
+        ),
+      ],
+    ),
   );
 }
 
 Widget _buildShopByStyleSection(HomeBloc homeBloc, HomeScreenStyle style) {
   return Padding(
     padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SmartText(APPStrings.shopByStyle.tr, style: style.bannerTitleStyle),
-      SizedBox(height: 16.h),
-      SmartGridView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SmartText(APPStrings.shopByStyle.tr, style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
           columns: 2,
           spacing: 12.w,
           runSpacing: 24.h,
-          items: homeBloc.shopByStyleList
-              .map((AuctionListModel field) => SmartImageTitleColumn(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
-                    title: field.name ?? '',
-                    titleStyle: style.getInspiredTitleStyle,
-                  ))
-              .toList())
-    ]),
+          items:
+              homeBloc.shopByStyleList
+                  .map(
+                    (AuctionListModel field) => SmartImageTitleColumn(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+                      title: field.name ?? '',
+                      titleStyle: style.getInspiredTitleStyle,
+                    ),
+                  )
+                  .toList(),
+        ),
+      ],
+    ),
   );
 }

@@ -47,10 +47,7 @@ final class LandingProfilePictureUpdateEvent extends LandingEvent {
   final bool isForce;
   final String? profilePicture;
 
-  const LandingProfilePictureUpdateEvent({
-    this.profilePicture,
-    this.isForce = false,
-  });
+  const LandingProfilePictureUpdateEvent({this.profilePicture, this.isForce = false});
 
   @override
   List<Object?> get props => [profilePicture, isForce];

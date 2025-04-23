@@ -26,9 +26,7 @@ class DashboardScreen extends StatelessWidget {
                       children: [
                         _buildDateRangeDropDown(context, dashboardBloc),
                         SizedBox(height: 16.h),
-                        SmartText(
-                          APPStrings.comparedToX.tr.interpolate(['Jan 1 - Dec 31, 2022']),
-                        ),
+                        SmartText(APPStrings.comparedToX.tr.interpolate(['Jan 1 - Dec 31, 2022'])),
                       ],
                     ),
                   ),
@@ -49,9 +47,10 @@ class DashboardScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is DashboardDateRangeChangeState,
       builder: (context, state) {
         return SmartDropDown<DashboardDateRangeDataModel>(
-          items: dashboardBloc.dateRangeList
-              .map((e) => SmartDropDownItem<DashboardDateRangeDataModel>(value: e, title: e.title ?? ''))
-              .toList(),
+          items:
+              dashboardBloc.dateRangeList
+                  .map((e) => SmartDropDownItem<DashboardDateRangeDataModel>(value: e, title: e.title ?? ''))
+                  .toList(),
           selectedItem: dashboardBloc.selectedDateRange,
           onChanged: (value) {
             if (value == null) return;
@@ -77,24 +76,15 @@ class DashboardScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SmartText(
-                    item.title,
-                    style: style.titleStyle,
-                  ),
+                  SmartText(item.title, style: style.titleStyle),
                   const Spacer(),
-                  SmartText(
-                    item.value,
-                    style: item.isNegative ? style.negativeAmountStyle : style.positiveAmountStyle,
-                  ),
+                  SmartText(item.value, style: item.isNegative ? style.negativeAmountStyle : style.positiveAmountStyle),
                 ],
               ),
               SizedBox(height: 4.h),
               Row(
                 children: [
-                  SmartText(
-                    item.subTitle,
-                    style: style.subTitleStyle,
-                  ),
+                  SmartText(item.subTitle, style: style.subTitleStyle),
                   const Spacer(),
                   Row(
                     mainAxisSize: MainAxisSize.min,

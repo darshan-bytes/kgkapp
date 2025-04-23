@@ -10,11 +10,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
     final List<String> parts = APPStrings.emailHasBeenSendSuccessfully.tr.split('{#}');
     final ForgotPasswordBloc forgotPasswordBloc = BlocProvider.of<ForgotPasswordBloc>(context);
     return Scaffold(
-      appBar: SmartAppBar(
-        appBarHeight: 52.h,
-        isBorder: false,
-        backgroundColor: signInStyle.backgroundColor,
-      ),
+      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: signInStyle.backgroundColor),
       body: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
         builder: (context, state) {
           return SmartSingleChildScrollView(
@@ -26,10 +22,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                 children: [
                   Container(
                     alignment: AlignmentDirectional.topStart,
-                    child: SmartText(
-                      APPStrings.forgotPassword.tr,
-                      style: signInStyle.titleTextStyle,
-                    ),
+                    child: SmartText(APPStrings.forgotPassword.tr, style: signInStyle.titleTextStyle),
                   ),
                   SizedBox(height: 24.h),
                   RichText(
@@ -37,27 +30,19 @@ class ForgotEmailSentScreen extends StatelessWidget {
                       text: parts[0],
                       style: style.didNotGetEmailTextStyle.copyWith(height: 1.5.h),
                       children: [
-                        TextSpan(
-                          text: forgotPasswordBloc.emailController.text,
-                          style: style.richSubTextStyle,
-                        ),
+                        TextSpan(text: forgotPasswordBloc.emailController.text, style: style.richSubTextStyle),
                         TextSpan(text: parts[1], style: style.didNotGetEmailTextStyle),
                       ],
                     ),
                   ),
                   SizedBox(height: 48.h),
-                  SmartText(
-                    APPStrings.didNotReceivedEmail.tr,
-                    style: style.didNotGetEmailTextStyle,
-                  ),
+                  SmartText(APPStrings.didNotReceivedEmail.tr, style: style.didNotGetEmailTextStyle),
                   TextButton(
-                      onPressed: () {
-                        forgotPasswordBloc.add(ForgotPasswordSubmitEvent(context: context, isFromResend: true));
-                      },
-                      child: SmartText(
-                        APPStrings.resend.tr,
-                        style: style.resendTextStyle,
-                      )),
+                    onPressed: () {
+                      forgotPasswordBloc.add(ForgotPasswordSubmitEvent(context: context, isFromResend: true));
+                    },
+                    child: SmartText(APPStrings.resend.tr, style: style.resendTextStyle),
+                  ),
                 ],
               ),
             ),

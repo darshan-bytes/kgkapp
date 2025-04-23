@@ -4,10 +4,7 @@ class TemplateListModel {
   String? title;
   List<B2BCustomListingDataModel>? templateSubList = [];
 
-  TemplateListModel({
-    this.title,
-    this.templateSubList,
-  });
+  TemplateListModel({this.title, this.templateSubList});
 
   @override
   bool operator ==(Object other) {

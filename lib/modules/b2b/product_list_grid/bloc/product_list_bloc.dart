@@ -268,29 +268,33 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   /// Builds the filter query
   Map<String, String> buildFilterQuery(Map<String, String> query, List<FilterData> filterData) {
-    filterData.where((element) {
-      return (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
-          (element.filterType == FilterType.range && element.rangeValues != null);
-    }).forEach(
-      (element) {
-        if (element.filterType == FilterType.range) {
-          query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
-          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
-        } else if (element.filterType == FilterType.boolean &&
-            (element.secondaryFilterData ?? []).isNotEmpty &&
-            element.secondaryFilterData!.any((e) => e.isSelected)) {
-          query[element.code ?? ''] = AppConst.filterBoolYesValue;
-        } else {
-          query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
-        }
-      },
-    );
+    filterData
+        .where((element) {
+          return (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+              (element.filterType == FilterType.range && element.rangeValues != null);
+        })
+        .forEach((element) {
+          if (element.filterType == FilterType.range) {
+            query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+            query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+          } else if (element.filterType == FilterType.boolean &&
+              (element.secondaryFilterData ?? []).isNotEmpty &&
+              element.secondaryFilterData!.any((e) => e.isSelected)) {
+            query[element.code ?? ''] = AppConst.filterBoolYesValue;
+          } else {
+            query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+          }
+        });
     return query;
   }
 
   /// Fetches jewellery product list
-  Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore,
-      {Map<String, String>? query}) async {
+  Future<void> fetchJewelleriesList(
+    BuildContext context,
+    Emitter<ProductListState> emit,
+    bool isLoadMore, {
+    Map<String, String>? query,
+  }) async {
     emit(ReloadProductState());
 
     /// Determine the scenario for fetching data
@@ -307,13 +311,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     });
 
     /// Build the query based on filters
-    buildFilterQuery(query, filterData).forEach(
-      (key, value) {
-        if (query?.containsKey(key) == false) {
-          query?[key] = value;
-        }
-      },
-    );
+    buildFilterQuery(query, filterData).forEach((key, value) {
+      if (query?.containsKey(key) == false) {
+        query?[key] = value;
+      }
+    });
 
     if (StorageManager.instance.getIsSkipLogin()) {
       String? bagId = StorageManager.instance.getBagId();
@@ -352,12 +354,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
 
     /// Handle the response and update the state
-    await response?.fold(
-      (error) => Utils.showMessage(error.message),
-      (success) async {
-        await handleSuccessResponse(success, emit);
-      },
-    );
+    await response?.fold((error) => Utils.showMessage(error.message), (success) async {
+      await handleSuccessResponse(success, emit);
+    });
 
     /// Update the state
     emit(ProductListLoadedState());
@@ -416,8 +415,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   /// Fetch products by collection name
-  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchByCollectionName(
-      {required BuildContext context, bool isLoadMore = false, Map<String, String>? query}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchByCollectionName({
+    required BuildContext context,
+    bool isLoadMore = false,
+    Map<String, String>? query,
+  }) async {
     return AppRepository(context).fetchJewelleryList(
       page: paginationScrollController.currentPage.toString(),
       isLoadMore: isLoadMore,
@@ -430,8 +432,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   /// Fetch the regular list of products
-  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRegularList(
-      {required BuildContext context, bool isLoadMore = false, required Map<String, String> query}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRegularList({
+    required BuildContext context,
+    bool isLoadMore = false,
+    required Map<String, String> query,
+  }) async {
     return AppRepository(context).fetchJewelleryList(
       page: paginationScrollController.currentPage.toString(),
       isLoadMore: isLoadMore,
@@ -444,8 +449,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   /// Fetch recently viewed products
-  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRecentlyViewed(
-      {required BuildContext context, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRecentlyViewed({
+    required BuildContext context,
+    bool isLoadMore = false,
+  }) async {
     return AppRepository(context).getRecentlyViewedProductList(
       limit: AppConst.pageLimit.toString(),
       page: paginationScrollController.currentPage.toString(),
@@ -454,8 +461,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   /// Fetch recently viewed jewellery products
-  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRecentlyViewedJewellery(
-      {required BuildContext context, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRecentlyViewedJewellery({
+    required BuildContext context,
+    bool isLoadMore = false,
+  }) async {
     return AppRepository(context).getRecentlyViewedProductList(
       limit: AppConst.pageLimit.toString(),
       page: paginationScrollController.currentPage.toString(),
@@ -474,8 +483,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   /// fetchKgkCoutureData
   Future<Either<ErrorResponse, JewelleryListingModel>?> fetchKgkCoutureData(
-      BuildContext context, Emitter<ProductListState> emit, bool isLoadMore,
-      {Map<String, String>? query}) async {
+    BuildContext context,
+    Emitter<ProductListState> emit,
+    bool isLoadMore, {
+    Map<String, String>? query,
+  }) async {
     return AppRepository(context).homePageKgkCoutureCollectionsForJewelleryListing(
       page: paginationScrollController.currentPage.toString(),
       limit: AppConst.pageLimit.toString(),

@@ -53,16 +53,10 @@ class ProductListItem extends StatelessWidget {
         child: Container(
           padding: padding,
           margin: margin,
-          decoration: BoxDecoration(
-            color: style.backgroundColor,
-          ),
+          decoration: BoxDecoration(color: style.backgroundColor),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              productImageSection(style, context),
-              SizedBox(width: 16.w),
-              productDetailsSection(style, context),
-            ],
+            children: [productImageSection(style, context), SizedBox(width: 16.w), productDetailsSection(style, context)],
           ),
         ),
       ),
@@ -81,12 +75,7 @@ class ProductListItem extends StatelessWidget {
             width: boxWidth ?? 144.w,
             alignment: AlignmentDirectional.topCenter,
             color: style.whiteColor,
-            child: SmartImage(
-              path: productDetails.imageUrl ?? '',
-              height: imageHeight,
-              width: imageWidth,
-              fit: fit,
-            ),
+            child: SmartImage(path: productDetails.imageUrl ?? '', height: imageHeight, width: imageWidth, fit: fit),
           ),
           if (isOutOfStock)
             PositionedDirectional(
@@ -102,9 +91,7 @@ class ProductListItem extends StatelessWidget {
             top: 8.h,
             end: 8.w,
             child: Row(
-              children: [
-                if (isCustomisable) buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
-              ],
+              children: [if (isCustomisable) buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor)],
             ),
           ),
           PositionedDirectional(
@@ -114,22 +101,24 @@ class ProductListItem extends StatelessWidget {
               children: [
                 if (onEyeTap != null)
                   buildIcon(
-                      path: AppImages.icAddEye,
-                      onTap: () {
-                        BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
-                      },
-                      style: style),
+                    path: AppImages.icAddEye,
+                    onTap: () {
+                      BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
+                    },
+                    style: style,
+                  ),
                 SizedBox(width: 8.w),
                 if (onFavTap != null)
                   BlocBuilder<AppBloc, AppState>(
                     buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
                     builder: (context, state) {
                       return buildIcon(
-                          path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
-                          onTap: () {
-                            BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
-                          },
-                          style: style);
+                        path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
+                        onTap: () {
+                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                        },
+                        style: style,
+                      );
                     },
                   ),
               ],
@@ -146,20 +135,14 @@ class ProductListItem extends StatelessWidget {
       scaleFactor: 0.6,
       child: Container(
         decoration: BoxDecoration(
-            color: backgroundColor ?? style.backgroundColor,
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(
-              color: borderColor ?? style.transparentColor,
-            )),
+          color: backgroundColor ?? style.backgroundColor,
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: borderColor ?? style.transparentColor),
+        ),
         height: 30.w,
         width: 30.w,
         alignment: AlignmentDirectional.center,
-        child: SmartImage(
-          path: path,
-          height: 20.w,
-          width: 20.w,
-          fit: BoxFit.contain,
-        ),
+        child: SmartImage(path: path, height: 20.w, width: 20.w, fit: BoxFit.contain),
       ),
     );
   }
@@ -207,10 +190,7 @@ class ProductListItem extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            if (productDetails.originalPrice.isNotNullNorEmpty) ...[
-              SizedBox(height: 8.h),
-              priceSection(style),
-            ],
+            if (productDetails.originalPrice.isNotNullNorEmpty) ...[SizedBox(height: 8.h), priceSection(style)],
 
             /// Below Lines are commented as they are not required in the current implementation as discussed in the client call
             /*Row(
@@ -254,9 +234,10 @@ class ProductListItem extends StatelessWidget {
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32.w,
-                margin: productDetails.discountPercentageString.isNullOrEmpty
-                    ? EdgeInsetsDirectional.only(top: 8.h)
-                    : EdgeInsetsDirectional.zero,
+                margin:
+                    productDetails.discountPercentageString.isNullOrEmpty
+                        ? EdgeInsetsDirectional.only(top: 8.h)
+                        : EdgeInsetsDirectional.zero,
                 padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: () {
@@ -291,12 +272,7 @@ class ProductListItem extends StatelessWidget {
         if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
           SizedBox(width: 10.w),
           Flexible(
-            child: SmartText(
-              productDetails.originalPrice,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: style.checkedPriceStyle,
-            ),
+            child: SmartText(productDetails.originalPrice, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.checkedPriceStyle),
           ),
         ],
       ],
@@ -310,10 +286,7 @@ class ProductListItem extends StatelessWidget {
         Container(
           height: 14.w,
           width: 14.w,
-          decoration: BoxDecoration(
-            color: productDetails.getCatalogueBadgeColor,
-            borderRadius: BorderRadius.circular(32.r),
-          ),
+          decoration: BoxDecoration(color: productDetails.getCatalogueBadgeColor, borderRadius: BorderRadius.circular(32.r)),
         ),
         SizedBox(width: 8.w),
         Flexible(
@@ -327,12 +300,7 @@ class ProductListItem extends StatelessWidget {
                       SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
                       SizedBox(width: 4.w),
                       Flexible(
-                        child: SmartText(
-                          productDetails.cts,
-                          style: style.diamondTextStyle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: SmartText(productDetails.cts, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
                       ),
                     ],
                   ),
@@ -347,12 +315,7 @@ class ProductListItem extends StatelessWidget {
                       SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
                       SizedBox(width: 4.w),
                       Flexible(
-                        child: SmartText(
-                          productDetails.gms,
-                          style: style.diamondTextStyle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: SmartText(productDetails.gms, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
                       ),
                     ],
                   ),

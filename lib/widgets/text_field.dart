@@ -103,8 +103,8 @@ class SmartTextField extends StatefulWidget {
     this.prefixIconSize,
     this.cursorHeight,
     this.textAlign,
-  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
-        isSearch = false;
+  }) : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
+       isSearch = false;
 
   const SmartTextField.search({
     super.key,
@@ -157,8 +157,8 @@ class SmartTextField extends StatefulWidget {
     this.prefixIconSize,
     this.cursorHeight,
     this.textAlign,
-  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
-        isSearch = true;
+  }) : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
+       isSearch = true;
 
   @override
   State<SmartTextField> createState() => SmartTextFieldState();
@@ -183,10 +183,7 @@ class SmartTextFieldState extends State<SmartTextField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.labelText != null) ...[
-            SmartText(
-              widget.labelText!,
-              style: style.labelStyle.merge(widget.labelStyle),
-            ),
+            SmartText(widget.labelText!, style: style.labelStyle.merge(widget.labelStyle)),
             SizedBox(height: 8.h),
           ],
           SizedBox(
@@ -213,49 +210,51 @@ class SmartTextFieldState extends State<SmartTextField> {
               controller: widget.controller,
               cursorHeight: widget.cursorHeight,
               decoration: InputDecoration(
-                  suffixText: widget.suffixText,
-                  prefixText: widget.prefixText,
-                  prefixStyle: style.textStyle.merge(widget.style),
-                  suffixStyle: style.textStyle.merge(widget.style),
-                  errorMaxLines: 6,
-                  counterText: '',
-                  filled: true,
-                  errorStyle: style.errorStyle.merge(widget.errorStyle),
-                  fillColor: widget.color ?? style.textFillColor,
-                  contentPadding: widget.contentPadding ?? EdgeInsetsDirectional.all(widget.isSearch ? 10.w : 16.w),
-                  disabledBorder: widget.customDisabledBorder ??
-                      OutlineInputBorder(
-                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
-                        borderSide: BorderSide(color: widget.disabledBorderColor ?? style.disabledTextFieldBorderColor),
-                      ),
-                  enabledBorder: widget.customEnabledBorder ??
-                      OutlineInputBorder(
-                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 4.r)),
-                        borderSide: BorderSide(
-                          color: widget.enabledBorderColor ?? style.enabledTextFieldBorderColor,
-                        ),
-                      ),
-                  focusedBorder: widget.customFocusedBorder ??
-                      OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: style.focusedTextFieldBorderColor,
-                        ),
-                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
-                      ),
-                  errorBorder: widget.customErrorBorder ??
-                      OutlineInputBorder(
-                        borderSide: BorderSide(color: style.errorBorderColor),
-                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
-                      ),
-                  focusedErrorBorder: widget.customFocusedErrorBorder ??
-                      OutlineInputBorder(
-                        borderSide: BorderSide(color: style.errorBorderColor),
-                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
-                      ),
-                  hintText: widget.obscured ? '●●●●●●●●' : widget.hintText ?? '',
-                  hintStyle: style.hintStyle.merge(widget.hintStyle),
-                  prefixIcon: widget.isSearch
-                      ? FittedBox(
+                suffixText: widget.suffixText,
+                prefixText: widget.prefixText,
+                prefixStyle: style.textStyle.merge(widget.style),
+                suffixStyle: style.textStyle.merge(widget.style),
+                errorMaxLines: 6,
+                counterText: '',
+                filled: true,
+                errorStyle: style.errorStyle.merge(widget.errorStyle),
+                fillColor: widget.color ?? style.textFillColor,
+                contentPadding: widget.contentPadding ?? EdgeInsetsDirectional.all(widget.isSearch ? 10.w : 16.w),
+                disabledBorder:
+                    widget.customDisabledBorder ??
+                    OutlineInputBorder(
+                      borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
+                      borderSide: BorderSide(color: widget.disabledBorderColor ?? style.disabledTextFieldBorderColor),
+                    ),
+                enabledBorder:
+                    widget.customEnabledBorder ??
+                    OutlineInputBorder(
+                      borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 4.r)),
+                      borderSide: BorderSide(color: widget.enabledBorderColor ?? style.enabledTextFieldBorderColor),
+                    ),
+                focusedBorder:
+                    widget.customFocusedBorder ??
+                    OutlineInputBorder(
+                      borderSide: BorderSide(color: style.focusedTextFieldBorderColor),
+                      borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
+                    ),
+                errorBorder:
+                    widget.customErrorBorder ??
+                    OutlineInputBorder(
+                      borderSide: BorderSide(color: style.errorBorderColor),
+                      borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
+                    ),
+                focusedErrorBorder:
+                    widget.customFocusedErrorBorder ??
+                    OutlineInputBorder(
+                      borderSide: BorderSide(color: style.errorBorderColor),
+                      borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
+                    ),
+                hintText: widget.obscured ? '●●●●●●●●' : widget.hintText ?? '',
+                hintStyle: style.hintStyle.merge(widget.hintStyle),
+                prefixIcon:
+                    widget.isSearch
+                        ? FittedBox(
                           child: Container(
                             margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 0.w),
                             padding: EdgeInsetsDirectional.zero,
@@ -266,16 +265,16 @@ class SmartTextFieldState extends State<SmartTextField> {
                             ),
                           ),
                         )
-                      : widget.prefixIcon,
-                  suffixIcon: widget.suffixIcon ??
-                      (widget.obscured
-                          ? IconButton(
-                              icon: SmartImage(
-                                path: _passwordVisible ? AppImages.icEyeOpen : AppImages.icEyeClose,
-                              ),
-                              onPressed: _toggle,
-                            )
-                          : null)),
+                        : widget.prefixIcon,
+                suffixIcon:
+                    widget.suffixIcon ??
+                    (widget.obscured
+                        ? IconButton(
+                          icon: SmartImage(path: _passwordVisible ? AppImages.icEyeOpen : AppImages.icEyeClose),
+                          onPressed: _toggle,
+                        )
+                        : null),
+              ),
               obscureText: widget.obscured && _passwordVisible ? false : widget.obscured,
               obscuringCharacter: '●',
               keyboardType: widget.keyboardType,
@@ -300,17 +299,14 @@ class SmartTextFieldState extends State<SmartTextField> {
             ),
           ),
           AnimatedSize(
-              duration: Duration(milliseconds: 200),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: widget.errorText.isNotNullNorEmpty
-                    ? [
-                        SizedBox(height: 8.h),
-                        SmartText(widget.errorText!, style: style.errorStyle),
-                      ]
-                    : [],
-              )),
+            duration: Duration(milliseconds: 200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children:
+                  widget.errorText.isNotNullNorEmpty ? [SizedBox(height: 8.h), SmartText(widget.errorText!, style: style.errorStyle)] : [],
+            ),
+          ),
         ],
       ),
     );

@@ -5,11 +5,7 @@ class SmartTextSpan {
   final TextStyle? style;
   final VoidCallback? onTap;
 
-  SmartTextSpan({
-    required this.text,
-    this.style,
-    this.onTap,
-  });
+  SmartTextSpan({required this.text, this.style, this.onTap});
 }
 
 class SmartRichText extends StatelessWidget {
@@ -17,33 +13,23 @@ class SmartRichText extends StatelessWidget {
   final TextAlign textAlign;
   final EdgeInsetsGeometry? padding;
 
-  const SmartRichText({
-    super.key,
-    required this.spans,
-    this.textAlign = TextAlign.start,
-    this.padding,
-  });
+  const SmartRichText({super.key, required this.spans, this.textAlign = TextAlign.start, this.padding});
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).smartRichTextStyle;
-    List<TextSpan> textSpans = spans.map((span) {
-      return TextSpan(
-        text: span.text,
-        style: span.style ?? style.textStyle,
-        recognizer: span.onTap != null ? (TapGestureRecognizer()..onTap = span.onTap) : null,
-      );
-    }).toList();
+    List<TextSpan> textSpans =
+        spans.map((span) {
+          return TextSpan(
+            text: span.text,
+            style: span.style ?? style.textStyle,
+            recognizer: span.onTap != null ? (TapGestureRecognizer()..onTap = span.onTap) : null,
+          );
+        }).toList();
 
     return Padding(
       padding: padding ?? EdgeInsetsDirectional.zero,
-      child: RichText(
-        text: TextSpan(
-          style: style.textStyle,
-          children: textSpans,
-        ),
-        textAlign: textAlign,
-      ),
+      child: RichText(text: TextSpan(style: style.textStyle, children: textSpans), textAlign: textAlign),
     );
   }
 }

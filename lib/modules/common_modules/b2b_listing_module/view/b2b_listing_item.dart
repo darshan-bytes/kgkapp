@@ -76,29 +76,28 @@ class B2BListingItem extends StatelessWidget {
           Container(
             padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
             margin: margin,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0.r),
-              border: Border.all(color: style.borderColor),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0.r), border: Border.all(color: style.borderColor)),
             child: SmartGridView(
-              items: B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel).map((field) {
-                /// if the type is watchlistType, then we are displaying the remaining time of the listing item. that will be decremented by 1 second every second. so changed it to value notifier builder.
-                if (type == B2BListingType.watchlistType && field.label != null && field.isValueNotifier) {
-                  return ValueListenableBuilder(
-                    valueListenable: listingItemModel.strRemainingTime!,
-                    builder: (context, value, child) {
-                      field.value = listingItemModel.strRemainingTime?.value;
+              items:
+                  B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel).map((field) {
+                    /// if the type is watchlistType, then we are displaying the remaining time of the listing item. that will be decremented by 1 second every second. so changed it to value notifier builder.
+                    if (type == B2BListingType.watchlistType && field.label != null && field.isValueNotifier) {
+                      return ValueListenableBuilder(
+                        valueListenable: listingItemModel.strRemainingTime!,
+                        builder: (context, value, child) {
+                          field.value = listingItemModel.strRemainingTime?.value;
+                          return _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w);
+                        },
+                      );
+                    } else {
                       return _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w);
-                    },
-                  );
-                } else {
-                  return _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w);
-                }
-              }).toList(),
+                    }
+                  }).toList(),
               columns: columns,
               spacing: 0.0.w,
               runSpacing: gridRunSpacing ?? 16.0.h,
-              isLastFullWidthRequired: type == B2BListingType.conceptListingType || type == B2BListingType.myInquiryType || isLastFullWidthRequired,
+              isLastFullWidthRequired:
+                  type == B2BListingType.conceptListingType || type == B2BListingType.myInquiryType || isLastFullWidthRequired,
             ),
           ),
           if (onTapMenuButton != null)
@@ -120,11 +119,7 @@ class B2BListingItem extends StatelessWidget {
   Widget _buildDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style, double gridSpacing) {
     return isListingView && columns == 1
         ? _buildRowDetailItem(field, context, style)
-        : B2BColumnDetailItem(
-            field: field,
-            onTapCircleWithText: onTapCircleWithText,
-            gridSpacing: gridSpacing,
-          );
+        : B2BColumnDetailItem(field: field, onTapCircleWithText: onTapCircleWithText, gridSpacing: gridSpacing);
   }
 
   Widget _buildRowDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style) {
@@ -145,18 +140,16 @@ class B2BListingItem extends StatelessWidget {
           ),
         SizedBox(width: 8.w),
         Expanded(
-          child: field.orderStatus != null
-              ? SmartStatusBadge(
-                  height: 22.h,
-                  currentStatus: field.orderStatus!,
-                )
-              : SmartText(
-                  field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: auctionListItemStyle.valueStyle,
-                  isAutoSizeText: true,
-                ),
+          child:
+              field.orderStatus != null
+                  ? SmartStatusBadge(height: 22.h, currentStatus: field.orderStatus!)
+                  : SmartText(
+                    field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: auctionListItemStyle.valueStyle,
+                    isAutoSizeText: true,
+                  ),
         ),
       ],
     );
@@ -168,12 +161,7 @@ class B2BColumnDetailItem extends StatelessWidget {
   final Function()? onTapCircleWithText;
   final double? gridSpacing;
 
-  const B2BColumnDetailItem({
-    super.key,
-    required this.field,
-    this.onTapCircleWithText,
-    this.gridSpacing,
-  });
+  const B2BColumnDetailItem({super.key, required this.field, this.onTapCircleWithText, this.gridSpacing});
 
   @override
   Widget build(BuildContext context) {
@@ -195,17 +183,9 @@ class B2BColumnDetailItem extends StatelessWidget {
             SizedBox(height: 4.h),
           ],
           if (field.isOnlyImageView && field.imageUrl != null)
-            SmartImage(
-              path: field.imageUrl!,
-              height: 56.w,
-              width: 56.w,
-              fit: BoxFit.cover,
-              imageBorderRadius: BorderRadius.circular(4.r),
-            )
+            SmartImage(path: field.imageUrl!, height: 56.w, width: 56.w, fit: BoxFit.cover, imageBorderRadius: BorderRadius.circular(4.r))
           else if (field.orderStatus != null)
-            SmartStatusBadge(
-              currentStatus: ProjectStatus.values.firstWhere((element) => element == field.orderStatus),
-            )
+            SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((element) => element == field.orderStatus))
           else
             _buildValue(field, auctionListItemStyle, style),
         ],
@@ -216,33 +196,32 @@ class B2BColumnDetailItem extends StatelessWidget {
   Widget _buildValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
     if (field.subFields.isNotNullNorEmpty) {
       return SmartGridView(
-          isLastFullWidthRequired: true,
-          items: List.generate(
-            field.subFields!.length,
-            (index) {
-              B2BItemField subField = field.subFields![index];
-              return Row(
-                children: [
-                  if (subField.imageUrl != null)
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(end: 8.w),
-                      child: SmartImage(
-                        path: subField.imageUrl!,
-                        height: subField.imageSize ?? 24.w,
-                        width: subField.imageSize ?? 24.w,
-                        fit: BoxFit.contain,
-                        imageBorderRadius: subField.isCircleImage ? BorderRadius.circular(((subField.imageSize ?? 24.w) / 2).r) : null,
-                      ),
-                    ),
-                  Flexible(
-                    child: subField.isCircleWithValue
+        isLastFullWidthRequired: true,
+        items: List.generate(field.subFields!.length, (index) {
+          B2BItemField subField = field.subFields![index];
+          return Row(
+            children: [
+              if (subField.imageUrl != null)
+                Padding(
+                  padding: EdgeInsetsDirectional.only(end: 8.w),
+                  child: SmartImage(
+                    path: subField.imageUrl!,
+                    height: subField.imageSize ?? 24.w,
+                    width: subField.imageSize ?? 24.w,
+                    fit: BoxFit.contain,
+                    imageBorderRadius: subField.isCircleImage ? BorderRadius.circular(((subField.imageSize ?? 24.w) / 2).r) : null,
+                  ),
+                ),
+              Flexible(
+                child:
+                    subField.isCircleWithValue
                         ? _buildCircleWithValue(subField, auctionListItemStyle, style)
                         : _buildTextValue(subField, auctionListItemStyle),
-                  ),
-                ],
-              );
-            },
-          ));
+              ),
+            ],
+          );
+        }),
+      );
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -260,9 +239,10 @@ class B2BColumnDetailItem extends StatelessWidget {
             ),
           ),
         Flexible(
-          child: field.isCircleWithValue
-              ? _buildCircleWithValue(field, auctionListItemStyle, style)
-              : _buildTextValue(field, auctionListItemStyle),
+          child:
+              field.isCircleWithValue
+                  ? _buildCircleWithValue(field, auctionListItemStyle, style)
+                  : _buildTextValue(field, auctionListItemStyle),
         ),
       ],
     );
@@ -270,21 +250,19 @@ class B2BColumnDetailItem extends StatelessWidget {
 
   Widget _buildCircleWithValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
     return GestureDetector(
-        onTap: onTapCircleWithText,
-        child: Container(
-          width: 24.w,
-          height: 24.w,
-          alignment: AlignmentDirectional.center,
-          decoration: BoxDecoration(
-            border: Border.all(color: style.borderColor, width: 1.5.w),
-            shape: BoxShape.circle,
-          ),
-          child: SmartText(
-            field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
-            style: auctionListItemStyle.valueStyle.copyWith(fontSize: 12.0.sp),
-            isAutoSizeText: true,
-          ),
-        ));
+      onTap: onTapCircleWithText,
+      child: Container(
+        width: 24.w,
+        height: 24.w,
+        alignment: AlignmentDirectional.center,
+        decoration: BoxDecoration(border: Border.all(color: style.borderColor, width: 1.5.w), shape: BoxShape.circle),
+        child: SmartText(
+          field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
+          style: auctionListItemStyle.valueStyle.copyWith(fontSize: 12.0.sp),
+          isAutoSizeText: true,
+        ),
+      ),
+    );
   }
 
   Widget _buildTextValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle) {

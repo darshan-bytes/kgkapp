@@ -34,10 +34,5 @@ class ExhibitionSubListingModel {
   String? author;
   String? status;
 
-  ExhibitionSubListingModel({
-    this.id,
-    this.name,
-    this.author,
-    this.status,
-  });
+  ExhibitionSubListingModel({this.id, this.name, this.author, this.status});
 }

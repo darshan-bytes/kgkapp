@@ -11,23 +11,18 @@ class SettingDetailScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is SettingDetailLoadedState,
       builder: (context, state) {
         return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: context.appBarHeight,
-            child: SmartAppBar(
-              title: bloc.productName,
-              onFavorite: () {},
-            ),
-          ),
+          appBar: PreferredSize(preferredSize: context.appBarHeight, child: SmartAppBar(title: bloc.productName, onFavorite: () {})),
           body: SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DiyProgressWidget(
-                    selectedStep: bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY ? 1 : 2,
-                    screenIdentifier: bloc.screenIdentifier),
+                  selectedStep: bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY ? 1 : 2,
+                  screenIdentifier: bloc.screenIdentifier,
+                ),
                 SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
                 SizedBox(height: 40.h),
-                _productDetail(context, bloc)
+                _productDetail(context, bloc),
               ],
             ),
           ),
@@ -62,9 +57,7 @@ class SettingDetailScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
+                  SizedBox(width: 10.w),
                   Expanded(
                     flex: 5,
                     child: SmartButton(
@@ -109,9 +102,10 @@ class SettingDetailScreen extends StatelessWidget {
                       height: 4.w,
                       width: 4.w,
                       decoration: BoxDecoration(
-                          color: colors(context).color8C8C8C,
-                          border: Border.all(color: colors(context).color8C8C8C),
-                          borderRadius: BorderRadius.all(Radius.circular(50.r))),
+                        color: colors(context).color8C8C8C,
+                        border: Border.all(color: colors(context).color8C8C8C),
+                        borderRadius: BorderRadius.all(Radius.circular(50.r)),
+                      ),
                     ),
                     SizedBox(width: 8.w),
                   ],
@@ -120,10 +114,7 @@ class SettingDetailScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartText(
-                bloc.productName,
-                style: style.ringNameStyle,
-              ),
+              SmartText(bloc.productName, style: style.ringNameStyle),
 
               /// Below line is commented because it is not in the feature as per the web team
               /*SizedBox(height: 8.h),
@@ -141,34 +132,19 @@ class SettingDetailScreen extends StatelessWidget {
               Divider(height: 40.h),
               Row(
                 children: [
-                  SmartText(
-                    APPStrings.buyingInBulk.tr,
-                    style: style.buyInBulkStyle,
-                  ),
+                  SmartText(APPStrings.buyingInBulk.tr, style: style.buyInBulkStyle),
                   SizedBox(width: 12.w),
-                  InkWell(
-                    onTap: () {},
-                    child: SmartText(
-                      APPStrings.askForQuotation.tr,
-                      style: style.askQuestionStyle,
-                    ),
-                  ),
+                  InkWell(onTap: () {}, child: SmartText(APPStrings.askForQuotation.tr, style: style.askQuestionStyle)),
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartText(
-                APPStrings.approxPriceNote.tr,
-                style: style.approxPriceNoteStyle,
-              ),
+              SmartText(APPStrings.approxPriceNote.tr, style: style.approxPriceNoteStyle),
               SizedBox(height: 32.h),
               Row(
                 children: [
                   const SmartImage(path: AppImages.icDiamond),
                   SizedBox(width: 16.w),
-                  SmartText(
-                    APPStrings.diamondPurityYouCanTrust.tr,
-                    style: style.diamondPurityStyle,
-                  )
+                  SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle),
                 ],
               ),
               SizedBox(height: 16.h),
@@ -176,10 +152,7 @@ class SettingDetailScreen extends StatelessWidget {
                 children: [
                   const SmartImage(path: AppImages.icTruck),
                   SizedBox(width: 16.w),
-                  SmartText(
-                    APPStrings.shippingAcrossAllCountries.tr,
-                    style: style.shippingStyle,
-                  )
+                  SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.shippingStyle),
                 ],
               ),
               SizedBox(height: 32.h),
@@ -189,10 +162,7 @@ class SettingDetailScreen extends StatelessWidget {
               // _buildDiamondDetails(settingDetailBloc, style),
               // const Divider(),
               SizedBox(height: 28.h),
-              const InquiryWidget(
-                email: 'enquiry.diaind@kgkmail.com',
-                phone: '+91 - 1234567830',
-              ),
+              const InquiryWidget(email: 'enquiry.diaind@kgkmail.com', phone: '+91 - 1234567830'),
               SizedBox(height: 24.h),
             ],
           ),
@@ -279,20 +249,11 @@ class SettingDetailScreen extends StatelessWidget {
   Widget _settingWidget(String type, String value, SettingDetailScreenStyle style) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SmartText(
-          type,
-          style: style.settingTypeStyle,
-        ),
-        SmartText(
-          value,
-          style: style.settingValueStyle,
-        ),
-      ],
+      children: [SmartText(type, style: style.settingTypeStyle), SmartText(value, style: style.settingValueStyle)],
     );
   }
 
-/*Widget _buildSettingDetails(SettingDetailBloc settingDetailBloc, SettingDetailScreenStyle style) {
+  /*Widget _buildSettingDetails(SettingDetailBloc settingDetailBloc, SettingDetailScreenStyle style) {
     return BlocBuilder<SettingDetailBloc, SettingDetailState>(
       buildWhen: (_, current) => current is SettingToggleState,
       builder: (context, state) {

@@ -50,7 +50,7 @@ class SortAddressByLatLongEvent extends FindStoreEvent {
   final double longitude;
   final bool isCurrentLocation;
 
-  const SortAddressByLatLongEvent({required this.context,required this.latitude, required this.longitude, this.isCurrentLocation = false});
+  const SortAddressByLatLongEvent({required this.context, required this.latitude, required this.longitude, this.isCurrentLocation = false});
 
   @override
   List<Object> get props => [context, latitude, longitude, isCurrentLocation];

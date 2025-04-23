@@ -4,12 +4,7 @@ part 'messages_event.dart';
 
 part 'messages_state.dart';
 
-enum MessagesTab {
-  inbox,
-  sent,
-  favourite,
-  trash,
-}
+enum MessagesTab { inbox, sent, favourite, trash }
 
 class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
   late TabController tabController;
@@ -58,123 +53,139 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
       refreshCompleter = Completer<bool>();
     }
     inboxScrollController.init(
-        tag: "inboxScrollController",
-        loadAction: (int currentPage) {
-          add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.inbox));
-        });
+      tag: "inboxScrollController",
+      loadAction: (int currentPage) {
+        add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.inbox));
+      },
+    );
 
     sentScrollController.init(
-        tag: "sentScrollController",
-        loadAction: (int currentPage) {
-          add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.sent));
-        });
+      tag: "sentScrollController",
+      loadAction: (int currentPage) {
+        add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.sent));
+      },
+    );
 
     favouriteScrollController.init(
-        tag: "favouriteScrollController",
-        loadAction: (int currentPage) {
-          add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.favourite));
-        });
+      tag: "favouriteScrollController",
+      loadAction: (int currentPage) {
+        add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.favourite));
+      },
+    );
 
     trashScrollController.init(
-        tag: "trashScrollController",
-        loadAction: (int currentPage) {
-          add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.trash));
-        });
+      tag: "trashScrollController",
+      loadAction: (int currentPage) {
+        add(MessagesLoadMoreEvent(currentPage: currentPage, listType: MessagesTab.trash));
+      },
+    );
 
     String msg =
         "Lorem ipsum dolor sit amet consectetur. Mattis a faucibus quis nunc egestas ipsum. Lectus sem vitae orci lorem tristique amet. Nibh ut elementum nibh arcu adipiscing est. Dui nulla massa eu quis arcu lacus. Dolor dignissim non mi ornare. Ac in at amet blandit commodo velit lorem ornare. Molestie velit lorem aliquam nisi sed. Nulla consequat a aenean habitasse convallis vulputate. Pulvinar scelerisque tempor lectus commodo. \n\nLorem ipsum dolor sit amet consectetur. Id pharetra interdum ullamcorper condimentum. Accumsan ut mauris volutpat purus in. Viverra risus a sed tristique venenatis mi dolor accumsan malesuada. Sit elementum tortor commodo diam dignissim facilisis habitant eu.";
 
     inboxList = List.generate(
-        10,
-        (index) => MessagesModel(
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: index % 2 == 0,
+        message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "Alex Williams",
+        fullMessage: msg,
+        details: List.generate(
+          4,
+          (index) => MessagesDetailsModel(
             id: index.toString(),
-            isFavorite: index % 2 == 0,
-            message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
-            timeAgo: "2 days ago",
-            userImageUrl: "https://picsum.photos/200/300",
             userName: "Alex Williams",
+            userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
+            timeAgo: "2 days ago",
+            toMe: index % 2 != 0,
             fullMessage: msg,
-            details: List.generate(
-              4,
-              (index) => MessagesDetailsModel(
-                  id: index.toString(),
-                  userName: "Alex Williams",
-                  userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
-                  timeAgo: "2 days ago",
-                  toMe: index % 2 != 0,
-                  fullMessage: msg,
-                  toUserName: "Michael Lee",
-                  messageDetailsKey: GlobalKey<SmartExpansionTileState>()),
-            )));
+            toUserName: "Michael Lee",
+            messageDetailsKey: GlobalKey<SmartExpansionTileState>(),
+          ),
+        ),
+      ),
+    );
 
     sentList = List.generate(
-        10,
-        (index) => MessagesModel(
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: index % 2 == 0,
+        message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "Alex Williams",
+        fullMessage: msg,
+        details: List.generate(
+          4,
+          (index) => MessagesDetailsModel(
             id: index.toString(),
-            isFavorite: index % 2 == 0,
-            message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
-            timeAgo: "2 days ago",
-            userImageUrl: "https://picsum.photos/200/300",
             userName: "Alex Williams",
+            userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
+            timeAgo: "2 days ago",
+            toMe: index % 2 != 0,
             fullMessage: msg,
-            details: List.generate(
-              4,
-              (index) => MessagesDetailsModel(
-                  id: index.toString(),
-                  userName: "Alex Williams",
-                  userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
-                  timeAgo: "2 days ago",
-                  toMe: index % 2 != 0,
-                  fullMessage: msg,
-                  toUserName: "Michael Lee",
-                  messageDetailsKey: GlobalKey<SmartExpansionTileState>()),
-            )));
+            toUserName: "Michael Lee",
+            messageDetailsKey: GlobalKey<SmartExpansionTileState>(),
+          ),
+        ),
+      ),
+    );
 
     favouriteList = List.generate(
-        10,
-        (index) => MessagesModel(
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: true,
+        message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "Alex Williams",
+        fullMessage: msg,
+        details: List.generate(
+          4,
+          (index) => MessagesDetailsModel(
             id: index.toString(),
-            isFavorite: true,
-            message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
-            timeAgo: "2 days ago",
-            userImageUrl: "https://picsum.photos/200/300",
             userName: "Alex Williams",
+            userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
+            timeAgo: "2 days ago",
+            toMe: index % 2 != 0,
             fullMessage: msg,
-            details: List.generate(
-              4,
-              (index) => MessagesDetailsModel(
-                  id: index.toString(),
-                  userName: "Alex Williams",
-                  userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
-                  timeAgo: "2 days ago",
-                  toMe: index % 2 != 0,
-                  fullMessage: msg,
-                  toUserName: "Michael Lee",
-                  messageDetailsKey: GlobalKey<SmartExpansionTileState>()),
-            )));
+            toUserName: "Michael Lee",
+            messageDetailsKey: GlobalKey<SmartExpansionTileState>(),
+          ),
+        ),
+      ),
+    );
 
     trashList = List.generate(
-        10,
-        (index) => MessagesModel(
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: index % 2 == 0,
+        message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "Alex Williams",
+        fullMessage: msg,
+        details: List.generate(
+          4,
+          (index) => MessagesDetailsModel(
             id: index.toString(),
-            isFavorite: index % 2 == 0,
-            message: "Lorem ipsum dolor sit amet consecte. Massa fringilla elemen at maecenas enim sapien.",
-            timeAgo: "2 days ago",
-            userImageUrl: "https://picsum.photos/200/300",
             userName: "Alex Williams",
+            userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
+            timeAgo: "2 days ago",
+            toMe: index % 2 != 0,
             fullMessage: msg,
-            details: List.generate(
-              4,
-              (index) => MessagesDetailsModel(
-                  id: index.toString(),
-                  userName: "Alex Williams",
-                  userImageUrl: index % 2 == 0 ? "https://i.ibb.co/SJDj2Pj/Frame-3977.png" : "https://picsum.photos/200/300",
-                  timeAgo: "2 days ago",
-                  toMe: index % 2 != 0,
-                  fullMessage: msg,
-                  toUserName: "Michael Lee",
-                  messageDetailsKey: GlobalKey<SmartExpansionTileState>()),
-            )));
+            toUserName: "Michael Lee",
+            messageDetailsKey: GlobalKey<SmartExpansionTileState>(),
+          ),
+        ),
+      ),
+    );
     refreshCompleter.complete(true);
     emit(const MessagesLoadedState());
   }
@@ -315,8 +326,9 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
   Widget buildListView(BuildContext context, MessagesTab currentTab) {
     return Expanded(
       child: BlocBuilder<MessagesBloc, MessagesState>(
-        buildWhen: (previous, current) =>
-            current is MessagesLoadedState || current is MessagesLoadedMoreState || current is MessagesFavouriteToggleState,
+        buildWhen:
+            (previous, current) =>
+                current is MessagesLoadedState || current is MessagesLoadedMoreState || current is MessagesFavouriteToggleState,
         builder: (context, state) {
           if (currentList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noPresentationFound.tr); // Adjust text based on the selected tab if necessary
@@ -332,8 +344,11 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
               physics: const ClampingScrollPhysics(),
               itemBuilder: (context, index) {
                 return BlocBuilder<MessagesBloc, MessagesState>(
-                  buildWhen: (previous, current) =>
-                      current is MessagesLoadingMoreState || current is MessagesLoadedMoreState || current is MessagesFavouriteToggleState,
+                  buildWhen:
+                      (previous, current) =>
+                          current is MessagesLoadingMoreState ||
+                          current is MessagesLoadedMoreState ||
+                          current is MessagesFavouriteToggleState,
                   builder: (context, state) {
                     return Column(
                       children: [
@@ -344,12 +359,7 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
                   },
                 );
               },
-              separatorBuilder: (context, index) => SizedBox(
-                height: 32.h,
-                child: const Center(
-                  child: Divider(),
-                ),
-              ),
+              separatorBuilder: (context, index) => SizedBox(height: 32.h, child: const Center(child: Divider())),
             ),
           );
         },
@@ -365,48 +375,24 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartImage(
-            path: model.userImageUrl ?? '',
-            height: 32.w,
-            width: 32.w,
-            imageBorderRadius: BorderRadius.circular(50.r),
-          ),
-          SizedBox(
-            width: 12.w,
-          ),
+          SmartImage(path: model.userImageUrl ?? '', height: 32.w, width: 32.w, imageBorderRadius: BorderRadius.circular(50.r)),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               children: [
                 Row(
                   children: [
-                    Expanded(
-                      child: SmartText(
-                        model.userName,
-                        style: style.userNameStyle,
-                      ),
-                    ),
-                    SmartText(
-                      model.timeAgo,
-                      style: style.timeAgoStyle,
-                    ),
+                    Expanded(child: SmartText(model.userName, style: style.userNameStyle)),
+                    SmartText(model.timeAgo, style: style.timeAgoStyle),
                   ],
                 ),
-                SizedBox(
-                  height: 4.h,
-                ),
+                SizedBox(height: 4.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: SmartText(
-                        model.message,
-                        style: style.messagesStyle,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8.w,
-                    ),
+                    Expanded(child: SmartText(model.message, style: style.messagesStyle)),
+                    SizedBox(width: 8.w),
                     GestureDetector(
                       onTap: () {
                         add(MessagesFavouriteToggleEvent(id: model.id ?? "", index: index));
@@ -432,54 +418,58 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
 
   List<MessagesModel> generateIndexData() {
     return List.generate(
-        10,
-        (index) => MessagesModel(
-              id: index.toString(),
-              isFavorite: index % 2 == 0,
-              message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
-              timeAgo: "2 days ago",
-              userImageUrl: "https://picsum.photos/200/300",
-              userName: "John Doe",
-            ));
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: index % 2 == 0,
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "John Doe",
+      ),
+    );
   }
 
   List<MessagesModel> generateSentData() {
     return List.generate(
-        10,
-        (index) => MessagesModel(
-              id: index.toString(),
-              isFavorite: index % 2 == 0,
-              message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
-              timeAgo: "2 days ago",
-              userImageUrl: "https://picsum.photos/200/300",
-              userName: "John Doe",
-            ));
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: index % 2 == 0,
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "John Doe",
+      ),
+    );
   }
 
   List<MessagesModel> generateFavouriteData() {
     return List.generate(
-        10,
-        (index) => MessagesModel(
-              id: index.toString(),
-              isFavorite: index % 2 == 0,
-              message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
-              timeAgo: "2 days ago",
-              userImageUrl: "https://picsum.photos/200/300",
-              userName: "John Doe",
-            ));
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: index % 2 == 0,
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "John Doe",
+      ),
+    );
   }
 
   List<MessagesModel> generateTrashData() {
     return List.generate(
-        10,
-        (index) => MessagesModel(
-              id: index.toString(),
-              isFavorite: index % 2 == 0,
-              message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
-              timeAgo: "2 days ago",
-              userImageUrl: "https://picsum.photos/200/300",
-              userName: "John Doe",
-            ));
+      10,
+      (index) => MessagesModel(
+        id: index.toString(),
+        isFavorite: index % 2 == 0,
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut",
+        timeAgo: "2 days ago",
+        userImageUrl: "https://picsum.photos/200/300",
+        userName: "John Doe",
+      ),
+    );
   }
 
   List<Widget> buildTabBarView(MessagesBloc bloc) {

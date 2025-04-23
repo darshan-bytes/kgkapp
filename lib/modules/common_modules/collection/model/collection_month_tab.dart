@@ -5,9 +5,5 @@ class CollectionMonthTab {
   int year;
   Widget child;
 
-  CollectionMonthTab({
-    required this.month,
-    required this.year,
-    required this.child,
-  });
+  CollectionMonthTab({required this.month, required this.year, required this.child});
 }

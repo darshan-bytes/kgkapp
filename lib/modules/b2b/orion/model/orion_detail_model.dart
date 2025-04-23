@@ -1,15 +1,11 @@
 class OrionDetailModel {
-  OrionDetailModel({
-    required this.cuts,
-    required this.colors,
-    required this.clarity,
-  });
+  OrionDetailModel({required this.cuts, required this.colors, required this.clarity});
 
   final List<String> cuts;
   final List<String> colors;
   final List<String> clarity;
 
-  factory OrionDetailModel.fromJson(Map<String, dynamic> json){
+  factory OrionDetailModel.fromJson(Map<String, dynamic> json) {
     return OrionDetailModel(
       cuts: json["cuts"] == null ? [] : List<String>.from(json["cuts"]!.map((x) => x)),
       colors: json["colors"] == null ? [] : List<String>.from(json["colors"]!.map((x) => x)),
@@ -24,7 +20,7 @@ class OrionDetailModel {
   };
 
   @override
-  String toString(){
+  String toString() {
     return "$cuts, $colors, $clarity, ";
   }
 }

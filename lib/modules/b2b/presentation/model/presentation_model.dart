@@ -47,7 +47,7 @@ class PresentationModel {
   final CreatedByDetails? createdByDetails;
   final List<CreatedByDetails> assignedToDetails;
 
-  factory PresentationModel.fromJson(Map<String, dynamic> json){
+  factory PresentationModel.fromJson(Map<String, dynamic> json) {
     return PresentationModel(
       id: json["_id"],
       presentationTemplateId: json["presentation_template_id"],
@@ -70,7 +70,10 @@ class PresentationModel {
       v: json["__v"],
       conceptName: json["concept_name"],
       createdByDetails: json["created_by_details"] == null ? null : CreatedByDetails.fromJson(json["created_by_details"]),
-      assignedToDetails: json["assigned_to_details"] == null ? [] : List<CreatedByDetails>.from(json["assigned_to_details"]!.map((x) => CreatedByDetails.fromJson(x))),
+      assignedToDetails:
+          json["assigned_to_details"] == null
+              ? []
+              : List<CreatedByDetails>.from(json["assigned_to_details"]!.map((x) => CreatedByDetails.fromJson(x))),
     );
   }
 
@@ -100,7 +103,7 @@ class PresentationModel {
   };
 
   @override
-  String toString(){
+  String toString() {
     return "$id, $presentationTemplateId, $conceptNumber, $conceptBy, $conceptById, $presentationNumber, $createdBy, $approvedBy, $assignedTo, $approvedAt, $cscCode, $status, $presentationFile, $coverImage, $deleted, $createdAt, $updatedAt, $shareWith, $v, $conceptName, $createdByDetails, $assignedToDetails, ";
   }
 }
@@ -136,7 +139,7 @@ class CreatedByDetails {
   final String? customerCode;
   final String? profilePicUrl;
 
-  factory CreatedByDetails.fromJson(Map<String, dynamic> json){
+  factory CreatedByDetails.fromJson(Map<String, dynamic> json) {
     return CreatedByDetails(
       firstname: json["firstname"],
       lastname: json["lastname"],
@@ -171,7 +174,7 @@ class CreatedByDetails {
   };
 
   @override
-  String toString(){
+  String toString() {
     return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $accountType, $phoneCode, $phone, $orgName, $customerAliasName, $customerCode, $profilePicUrl, ";
   }
 }

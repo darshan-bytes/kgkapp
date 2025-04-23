@@ -1,22 +1,13 @@
 import 'package:kgk/kgk.dart';
 
 class CustomerSalesmanModel {
-  CustomerSalesmanModel({
-    required this.customerId,
-    required this.assignClient,
-  });
+  CustomerSalesmanModel({required this.customerId, required this.assignClient});
 
   final String? customerId;
   final AssignClient? assignClient;
 
-  CustomerSalesmanModel copyWith({
-    String? customerId,
-    AssignClient? assignClient,
-  }) {
-    return CustomerSalesmanModel(
-      customerId: customerId ?? this.customerId,
-      assignClient: assignClient ?? this.assignClient,
-    );
+  CustomerSalesmanModel copyWith({String? customerId, AssignClient? assignClient}) {
+    return CustomerSalesmanModel(customerId: customerId ?? this.customerId, assignClient: assignClient ?? this.assignClient);
   }
 
   factory CustomerSalesmanModel.fromJson(Map<String, dynamic> json) {
@@ -26,33 +17,18 @@ class CustomerSalesmanModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "customer_id": customerId,
-        "assignClient": assignClient?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"customer_id": customerId, "assignClient": assignClient?.toJson()};
 }
 
 class AssignClient {
-  AssignClient({
-    required this.id,
-    required this.email,
-    required this.internalUser,
-  });
+  AssignClient({required this.id, required this.email, required this.internalUser});
 
   final String? id;
   final String? email;
   final UserIdDetails? internalUser;
 
-  AssignClient copyWith({
-    String? id,
-    String? email,
-    UserIdDetails? internalUser,
-  }) {
-    return AssignClient(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      internalUser: internalUser ?? this.internalUser,
-    );
+  AssignClient copyWith({String? id, String? email, UserIdDetails? internalUser}) {
+    return AssignClient(id: id ?? this.id, email: email ?? this.email, internalUser: internalUser ?? this.internalUser);
   }
 
   factory AssignClient.fromJson(Map<String, dynamic> json) {
@@ -63,9 +39,5 @@ class AssignClient {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "email": email,
-        "internalUser": internalUser?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "email": email, "internalUser": internalUser?.toJson()};
 }

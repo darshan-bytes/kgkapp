@@ -24,11 +24,7 @@ class PaymentScreen extends StatelessWidget {
                     plusIconPath: AppImages.icPlus,
                     context: context,
                   ),
-                  Divider(
-                    height: 0.5.h,
-                    endIndent: 14.w,
-                    indent: 14.w,
-                  ),
+                  Divider(height: 0.5.h, endIndent: 14.w, indent: 14.w),
                   _paymentOption(
                     style: style,
                     onTap: () {},
@@ -44,15 +40,9 @@ class PaymentScreen extends StatelessWidget {
                     margin: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
                     child: Row(
                       children: [
-                        SmartText(
-                          APPStrings.total.tr,
-                          style: style.footerTotalStyle,
-                        ),
+                        SmartText(APPStrings.total.tr, style: style.footerTotalStyle),
                         SizedBox(width: 8.w),
-                        SmartText(
-                          '\$35,700.00',
-                          style: style.footerTotalAmountStyle,
-                        ),
+                        SmartText('\$35,700.00', style: style.footerTotalAmountStyle),
                         const Spacer(),
                         SmartButton(
                           onTap: () {
@@ -60,10 +50,10 @@ class PaymentScreen extends StatelessWidget {
                           },
                           title: APPStrings.placeOrder.tr,
                           width: 168.w,
-                        )
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -93,17 +83,10 @@ class PaymentScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SmartImage(path: imagePath, height: 24.w, width: 24.w),
-                SizedBox(
-                  width: 10.w,
-                ),
+                SizedBox(width: 10.w),
                 SmartText(text),
                 const Spacer(),
-                SmartImage(
-                  path: plusIconPath,
-                  height: 24.w,
-                  width: 24.w,
-                  color: style.filledDotColor,
-                ),
+                SmartImage(path: plusIconPath, height: 24.w, width: 24.w, color: style.filledDotColor),
               ],
             ),
           ),

@@ -17,17 +17,10 @@ class MessageDetailScreen extends StatelessWidget {
           builder: (context, state) {
             return Column(
               children: [
-                SmartText(
-                  bloc.messagesModel?.message,
-                  style: style.messageDetailTitleStyle,
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
+                SmartText(bloc.messagesModel?.message, style: style.messageDetailTitleStyle),
+                SizedBox(height: 16.h),
                 const Divider(),
-                SizedBox(
-                  height: 16.h,
-                ),
+                SizedBox(height: 16.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,9 +31,7 @@ class MessageDetailScreen extends StatelessWidget {
                       width: 40.w,
                       imageBorderRadius: BorderRadius.circular(50.r),
                     ),
-                    SizedBox(
-                      width: 12.w,
-                    ),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -48,29 +39,15 @@ class MessageDetailScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              SmartText(
-                                bloc.messagesModel?.userName ?? "",
-                                style: style.messageDetailFullMessageStyle,
-                              ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              SmartText(
-                                bloc.messagesModel?.timeAgo ?? "",
-                                style: style.timeAgoStyle,
-                              ),
+                              SmartText(bloc.messagesModel?.userName ?? "", style: style.messageDetailFullMessageStyle),
+                              SizedBox(width: 8.w),
+                              SmartText(bloc.messagesModel?.timeAgo ?? "", style: style.timeAgoStyle),
                             ],
                           ),
                           Row(
                             children: [
-                              SmartText(
-                                APPStrings.toX.tr.interpolate([APPStrings.me.tr]),
-                                style: style.messageDetailToUserNameStyle,
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 22.w,
-                              )
+                              SmartText(APPStrings.toX.tr.interpolate([APPStrings.me.tr]), style: style.messageDetailToUserNameStyle),
+                              Icon(Icons.keyboard_arrow_down, size: 22.w),
                             ],
                           ),
                         ],
@@ -78,16 +55,9 @@ class MessageDetailScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 24.h,
-                ),
-                SmartText(
-                  bloc.messagesModel?.fullMessage ?? "",
-                  style: style.messageDetailFullMessageStyle,
-                ),
-                SizedBox(
-                  height: 32.h,
-                ),
+                SizedBox(height: 24.h),
+                SmartText(bloc.messagesModel?.fullMessage ?? "", style: style.messageDetailFullMessageStyle),
+                SizedBox(height: 32.h),
                 if (bloc.messagesModel?.details != null || bloc.messagesModel?.details?.isEmpty != true) const Divider(),
                 ListView.separated(
                   itemCount: bloc.messagesModel?.details?.length ?? 0,
@@ -96,8 +66,9 @@ class MessageDetailScreen extends StatelessWidget {
                   itemBuilder: (context, msgIndex) {
                     MessagesDetailsModel detailsModel = bloc.messagesModel!.details![msgIndex];
                     return BlocBuilder<MessageDetailBloc, MessageDetailState>(
-                      buildWhen: (previous, current) =>
-                          current is MessageShowFullMessageState && (current.oldIndex == msgIndex || current.index == msgIndex),
+                      buildWhen:
+                          (previous, current) =>
+                              current is MessageShowFullMessageState && (current.oldIndex == msgIndex || current.index == msgIndex),
                       builder: (context, state) {
                         return SmartExpansionTile(
                           key: detailsModel.messageDetailsKey,
@@ -115,9 +86,7 @@ class MessageDetailScreen extends StatelessWidget {
                                   width: 40.w,
                                   imageBorderRadius: BorderRadius.circular(50.r),
                                 ),
-                                SizedBox(
-                                  width: 12.w,
-                                ),
+                                SizedBox(width: 12.w),
                                 Expanded(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -125,17 +94,9 @@ class MessageDetailScreen extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          SmartText(
-                                            detailsModel.userName ?? "",
-                                            style: style.messageDetailFullMessageStyle,
-                                          ),
-                                          SizedBox(
-                                            width: 8.w,
-                                          ),
-                                          SmartText(
-                                            detailsModel.timeAgo ?? "",
-                                            style: style.timeAgoStyle,
-                                          ),
+                                          SmartText(detailsModel.userName ?? "", style: style.messageDetailFullMessageStyle),
+                                          SizedBox(width: 8.w),
+                                          SmartText(detailsModel.timeAgo ?? "", style: style.timeAgoStyle),
                                         ],
                                       ),
                                       Row(
@@ -146,10 +107,7 @@ class MessageDetailScreen extends StatelessWidget {
                                                 : APPStrings.toX.tr.interpolate([detailsModel.toUserName ?? ""]),
                                             style: style.messageDetailToUserNameStyle,
                                           ),
-                                          Icon(
-                                            Icons.keyboard_arrow_down,
-                                            size: 22.w,
-                                          )
+                                          Icon(Icons.keyboard_arrow_down, size: 22.w),
                                         ],
                                       ),
                                     ],
@@ -159,16 +117,9 @@ class MessageDetailScreen extends StatelessWidget {
                             ),
                           ),
                           children: [
-                            SizedBox(
-                              height: 12.h,
-                            ),
-                            SmartText(
-                              detailsModel.fullMessage ?? "",
-                              style: style.messageDetailFullMessageStyle,
-                            ),
-                            SizedBox(
-                              height: 24.h,
-                            ),
+                            SizedBox(height: 12.h),
+                            SmartText(detailsModel.fullMessage ?? "", style: style.messageDetailFullMessageStyle),
+                            SizedBox(height: 24.h),
                           ],
                         );
                       },

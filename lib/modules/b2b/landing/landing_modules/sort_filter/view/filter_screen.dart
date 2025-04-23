@@ -18,10 +18,7 @@ class FilterScreen extends StatelessWidget {
           SmartText(
             APPStrings.clearAll.tr,
             onTap: () {
-              filterBloc.add(ClearAllFilterDataEvent(
-                context: context,
-                onApply: onApply,
-              ));
+              filterBloc.add(ClearAllFilterDataEvent(context: context, onApply: onApply));
             },
           ),
         ],
@@ -30,10 +27,7 @@ class FilterScreen extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              flex: 1,
-              child: _buildFilterList(context, filterBloc, style),
-            ),
+            Expanded(flex: 1, child: _buildFilterList(context, filterBloc, style)),
             Expanded(
               flex: 2,
               child: Container(
@@ -54,9 +48,7 @@ class FilterScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 4.h),
                         ],
-                        Expanded(
-                          child: _buildSubFilterList(context, filterBloc, style),
-                        ),
+                        Expanded(child: _buildSubFilterList(context, filterBloc, style)),
                       ],
                     );
                   },
@@ -69,12 +61,7 @@ class FilterScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
-          decoration: BoxDecoration(
-            color: style.backgroundColor,
-            border: BorderDirectional(
-              top: BorderSide(color: style.itemBorderColor),
-            ),
-          ),
+          decoration: BoxDecoration(color: style.backgroundColor, border: BorderDirectional(top: BorderSide(color: style.itemBorderColor))),
           child: SafeArea(
             child: Row(
               children: [
@@ -127,16 +114,9 @@ class FilterScreen extends StatelessWidget {
                   padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 16.w),
                   decoration: BoxDecoration(
                     color: isSelected ? style.selectedBackgroundColor : null,
-                    border: BorderDirectional(
-                      bottom: BorderSide(
-                        color: style.itemBorderColor,
-                      ),
-                    ),
+                    border: BorderDirectional(bottom: BorderSide(color: style.itemBorderColor)),
                   ),
-                  child: SmartText(
-                    filterData.name,
-                    style: isSelected ? style.selectedTitleStyle : style.titleStyle,
-                  ),
+                  child: SmartText(filterData.name, style: isSelected ? style.selectedTitleStyle : style.titleStyle),
                 ),
               );
             },
@@ -148,12 +128,13 @@ class FilterScreen extends StatelessWidget {
 
   Widget _buildSubFilterList(BuildContext context, SortFilterBloc filterBloc, FilterStyle style) {
     return BlocBuilder<SortFilterBloc, SortFilterState>(
-      buildWhen: (previous, current) =>
-          current is SearchFilterDataState ||
-          current is FilterDataSelectedState ||
-          current is SelectSecondaryDiamondSortFilterDataState ||
-          current is SelectSecondaryFilterDataState ||
-          current is SortAndFilterPriceRangeChangedState,
+      buildWhen:
+          (previous, current) =>
+              current is SearchFilterDataState ||
+              current is FilterDataSelectedState ||
+              current is SelectSecondaryDiamondSortFilterDataState ||
+              current is SelectSecondaryFilterDataState ||
+              current is SortAndFilterPriceRangeChangedState,
       builder: (context, state) {
         if (filterBloc.isLoading) {
           return SmartCircularProgressIndicator();
@@ -230,11 +211,7 @@ class FilterScreen extends StatelessWidget {
               },
               child: Container(
                 padding: EdgeInsetsDirectional.symmetric(vertical: 12.w, horizontal: 16.h),
-                decoration: BoxDecoration(
-                  border: BorderDirectional(
-                    bottom: BorderSide(color: style.itemBorderColor),
-                  ),
-                ),
+                decoration: BoxDecoration(border: BorderDirectional(bottom: BorderSide(color: style.itemBorderColor))),
 
                 /// Need to check this widget
                 child: Row(

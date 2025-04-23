@@ -25,10 +25,7 @@ class AboutOurStoneSection extends StatelessWidget {
         children: [
           SmartText(title, style: style.sectionLabelStyle),
           SizedBox(height: 8.h),
-          SmartText(
-            subTitle,
-            style: style.originSectionSubTitleStyle,
-          ),
+          SmartText(subTitle, style: style.originSectionSubTitleStyle),
           if (learnMore != null)
             GestureDetector(
               onTap: learnMore,

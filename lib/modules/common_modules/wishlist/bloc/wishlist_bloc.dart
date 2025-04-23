@@ -86,14 +86,16 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   }
 
   /// Fetch wishlist data
-  Future<void> fetchWishlistData(BuildContext context, Emitter<WishlistState> emit,
-      {bool isLoadMore = false, Map<String, String>? query}) async {
+  Future<void> fetchWishlistData(
+    BuildContext context,
+    Emitter<WishlistState> emit, {
+    bool isLoadMore = false,
+    Map<String, String>? query,
+  }) async {
     query ??= {};
-    filterData.where((element) => (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false)).forEach(
-      (element) {
-        query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
-      },
-    );
+    filterData.where((element) => (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false)).forEach((element) {
+      query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+    });
 
     Either<ErrorResponse, WishlistModel>? response = await AppRepository(context).fetchWishList(
       limit: AppConst.pageLimit.toString(),
@@ -101,14 +103,17 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       query: query,
       isLoadMore: isLoadMore,
     );
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      productList.addAll(populateProductList(success.data));
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(WishlistDataFetchedState());
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        productList.addAll(populateProductList(success.data));
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(WishlistDataFetchedState());
+      },
+    );
   }
 
   /// Handle load more
@@ -138,9 +143,10 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
         ProductDetailsModel product = ProductDetailsModel(
           suid: element.productData?.suid,
           productId: element.productData?.suid ?? '',
-          imageUrl: element.productData?.multipleFinishedViewImage.isNotNullNorEmpty == true
-              ? (element.productData?.multipleFinishedViewImage.firstOrNull?.imageUrl ?? '')
-              : (element.productData?.productImages)?.isNotNullNorEmpty ?? false
+          imageUrl:
+              element.productData?.multipleFinishedViewImage.isNotNullNorEmpty == true
+                  ? (element.productData?.multipleFinishedViewImage.firstOrNull?.imageUrl ?? '')
+                  : (element.productData?.productImages)?.isNotNullNorEmpty ?? false
                   ? element.productData!.productImages?.first.uRL
                   : "",
           title: _buildTitleOfProduct(element: element),
@@ -188,9 +194,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   List<String>? _buildColorsCode({required WishlistDatum element}) {
     switch (element.displayCommodity) {
       case Commodity.jewellery:
-        return [
-          element.productData?.metalColor1HexCode ?? "",
-        ];
+        return [element.productData?.metalColor1HexCode ?? ""];
       default:
         return null;
     }
@@ -199,24 +203,27 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchWishlistFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? []) {
-          List<SecondaryFilterData> secondaryData =
-              filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: FilterType.checkbox,
-            secondaryFilterData: secondaryData,
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? []) {
+            List<SecondaryFilterData> secondaryData =
+                filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: FilterType.checkbox,
+              secondaryFilterData: secondaryData,
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 }

@@ -11,16 +11,17 @@ class UserMasterListingModelClass {
   CustomerUser? customerUser;
   UserIdDetails? createdByDetails;
 
-  UserMasterListingModelClass(
-      {this.createdAt,
-      this.updatedAt,
-      this.id,
-      this.email,
-      this.userType,
-      this.status = false,
-      this.createdBy,
-      this.customerUser,
-      this.createdByDetails});
+  UserMasterListingModelClass({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.email,
+    this.userType,
+    this.status = false,
+    this.createdBy,
+    this.customerUser,
+    this.createdByDetails,
+  });
 
   UserMasterListingModelClass.fromJson(Map<String, dynamic> json) {
     createdAt = json['created_at'];
@@ -54,9 +55,10 @@ class UserMasterListingModelClass {
 }
 
 extension UserMasterListingModelClassExtension on UserMasterListingModelClass {
-  String? get businessType => customerUser?.customerOrg?.businessTypeDetails.isNotNullNorEmpty == true
-      ? customerUser?.customerOrg?.businessTypeDetails?.first.name
-      : null;
+  String? get businessType =>
+      customerUser?.customerOrg?.businessTypeDetails.isNotNullNorEmpty == true
+          ? customerUser?.customerOrg?.businessTypeDetails?.first.name
+          : null;
 }
 
 class CustomerUser {
@@ -72,18 +74,19 @@ class CustomerUser {
   Role? role;
   String? profilePicUrl;
 
-  CustomerUser(
-      {this.userAccountId,
-      this.firstname,
-      this.lastname,
-      this.phoneCode,
-      this.phone,
-      this.customerOrgId,
-      this.profilePic,
-      this.roleId,
-      this.customerOrg,
-      this.role,
-      this.profilePicUrl});
+  CustomerUser({
+    this.userAccountId,
+    this.firstname,
+    this.lastname,
+    this.phoneCode,
+    this.phone,
+    this.customerOrgId,
+    this.profilePic,
+    this.roleId,
+    this.customerOrg,
+    this.role,
+    this.profilePicUrl,
+  });
 
   CustomerUser.fromJson(Map<String, dynamic> json) {
     userAccountId = json['user_account_id'];

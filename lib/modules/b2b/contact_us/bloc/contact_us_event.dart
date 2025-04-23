@@ -43,9 +43,7 @@ class ContactUsSubmitEvent extends ContactUsEvent {
 final class ContactUsChangeCountryCodeEvent extends ContactUsEvent {
   final Country country;
 
-  const ContactUsChangeCountryCodeEvent({
-    required this.country,
-  });
+  const ContactUsChangeCountryCodeEvent({required this.country});
 
   @override
   List<Object> get props => [country];

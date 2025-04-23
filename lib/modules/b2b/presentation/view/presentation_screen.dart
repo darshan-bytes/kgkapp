@@ -76,17 +76,20 @@ class PresentationScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 B2BCustomListingDataModel presentationItem = bloc.presentationList[index];
                 return BlocBuilder<PresentationBloc, PresentationState>(
-                  buildWhen: (previous, current) =>
-                      current is PresentationListLoadedMoreState || current is PresentationListLoadingMoreState,
+                  buildWhen:
+                      (previous, current) => current is PresentationListLoadedMoreState || current is PresentationListLoadingMoreState,
                   builder: (context, state) {
                     return Column(
                       children: [
                         B2BListingItem(
                           type: B2BListingType.presentationType,
                           listingItemModel: presentationItem,
-                          onTapMenuButton: bloc.userType == UserType.internal ? () {
-                            handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
-                          } : null,
+                          onTapMenuButton:
+                              bloc.userType == UserType.internal
+                                  ? () {
+                                    handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
+                                  }
+                                  : null,
                           onTap: () {},
                         ),
                         if (index == bloc.presentationList.length - 1 && state is PresentationListLoadingMoreState)
@@ -110,15 +113,16 @@ class PresentationScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => ConfirmationDialog(
-        title: APPStrings.presentationDialogTitle.tr,
-        message: APPStrings.presentationDialogMsg.tr,
-        onApproved: () {
-          bloc.add(PresentationReviewStateEvent(context: mainContext, isApproved: true, presentationNumber: strPresentationNumber));
-        },
-        onApprovedText: APPStrings.approve.tr,
-        onDeniedText: APPStrings.reject.tr,
-      ),
+      builder:
+          (context) => ConfirmationDialog(
+            title: APPStrings.presentationDialogTitle.tr,
+            message: APPStrings.presentationDialogMsg.tr,
+            onApproved: () {
+              bloc.add(PresentationReviewStateEvent(context: mainContext, isApproved: true, presentationNumber: strPresentationNumber));
+            },
+            onApprovedText: APPStrings.approve.tr,
+            onDeniedText: APPStrings.reject.tr,
+          ),
     );
   }
 
@@ -127,16 +131,12 @@ class PresentationScreen extends StatelessWidget {
       return SizedBox.shrink();
     }
     return SafeArea(
-        child: FilterBottomActionBar(
-      controller: bloc.paginationScrollController.controller,
-      onFilterTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => FilterScreen(
-            onApply: () {},
-          ),
-        );
-      },
-    ));
+      child: FilterBottomActionBar(
+        controller: bloc.paginationScrollController.controller,
+        onFilterTap: () {
+          Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
+        },
+      ),
+    );
   }
 }

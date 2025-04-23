@@ -13,33 +13,26 @@ class CheckoutHeaderProgressbar extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 14.h),
       child: Row(
         children: [
-          Container(
-            height: 6.w,
-            width: 6.w,
-            decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
-          ),
+          Container(height: 6.w, width: 6.w, decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle)),
           SizedBox(width: 6.w),
-          Flexible(
-            child: SmartText(
-              APPStrings.shippingBillingAddress.tr,
-              style: style.shippingBillingAddressStyle,
-            ),
-          ),
+          Flexible(child: SmartText(APPStrings.shippingBillingAddress.tr, style: style.shippingBillingAddressStyle)),
           Padding(
             padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
-            child: DotIndicator(
-              dotColor: isShippingAndBillingAddressFilled ? style.fillLineColor : style.dotColor,
-            ),
+            child: DotIndicator(dotColor: isShippingAndBillingAddressFilled ? style.fillLineColor : style.dotColor),
           ),
           Container(
             height: 6.w,
             width: 6.w,
-            decoration:
-                BoxDecoration(color: isShippingAndBillingAddressFilled ? style.filledDotColor : style.dotColor, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: isShippingAndBillingAddressFilled ? style.filledDotColor : style.dotColor,
+              shape: BoxShape.circle,
+            ),
           ),
           SizedBox(width: 6.w),
-          SmartText(APPStrings.payment.tr,
-              style: isShippingAndBillingAddressFilled ? style.shippingBillingAddressStyle : style.paymentStyle),
+          SmartText(
+            APPStrings.payment.tr,
+            style: isShippingAndBillingAddressFilled ? style.shippingBillingAddressStyle : style.paymentStyle,
+          ),
         ],
       ),
     );

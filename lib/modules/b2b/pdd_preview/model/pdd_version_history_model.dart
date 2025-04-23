@@ -4,10 +4,7 @@ class PddVersionHistoryModel {
   String? id;
   String? historyDateTime;
 
-  PddVersionHistoryModel({
-    this.id,
-    this.historyDateTime,
-  });
+  PddVersionHistoryModel({this.id, this.historyDateTime});
 
   @override
   bool operator ==(Object other) {

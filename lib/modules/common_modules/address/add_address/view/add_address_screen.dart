@@ -16,9 +16,10 @@ class AddAddressScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is AddAddressReloadState,
           builder: (context, state) {
             return SmartAppBar(
-              title: bloc.isFromCheckout
-                  ? APPStrings.checkout.tr
-                  : bloc.isEditAddress
+              title:
+                  bloc.isFromCheckout
+                      ? APPStrings.checkout.tr
+                      : bloc.isEditAddress
                       ? APPStrings.editAddress.tr
                       : APPStrings.addAddress.tr,
             );
@@ -27,22 +28,23 @@ class AddAddressScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocBuilder<AddAddressBloc, AddAddressState>(
-            buildWhen: (previous, current) => current is AddAddressInitial,
-            builder: (context, state) {
-              return SmartSingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (bloc.isFromCheckout) ...[
-                      const CheckoutHeaderProgressbar(),
-                      //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
-                      // _buildIsBillingAddressSameAsSelected(bloc, style),
-                    ],
-                    generateAddressForm(bloc, countryPickerStyle, context, style),
+          buildWhen: (previous, current) => current is AddAddressInitial,
+          builder: (context, state) {
+            return SmartSingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (bloc.isFromCheckout) ...[
+                    const CheckoutHeaderProgressbar(),
+                    //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+                    // _buildIsBillingAddressSameAsSelected(bloc, style),
                   ],
-                ),
-              );
-            }),
+                  generateAddressForm(bloc, countryPickerStyle, context, style),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -71,12 +73,18 @@ class AddAddressScreen extends StatelessWidget {
   }
 
   Widget generateAddressForm(
-      AddAddressBloc bloc, CountryPickerStyle countryPickerStyle, BuildContext context, AddAddressScreenStyle style) {
+    AddAddressBloc bloc,
+    CountryPickerStyle countryPickerStyle,
+    BuildContext context,
+    AddAddressScreenStyle style,
+  ) {
     return Padding(
-        padding: bloc.isFromCheckout
-            ? EdgeInsetsDirectional.symmetric(horizontal: 17.w)
-            : EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 24.h),
-        child: Column(children: [
+      padding:
+          bloc.isFromCheckout
+              ? EdgeInsetsDirectional.symmetric(horizontal: 17.w)
+              : EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 24.h),
+      child: Column(
+        children: [
           _buildFirstNameField(bloc),
           SizedBox(height: 24.h),
           _buildLastNameField(bloc),
@@ -94,10 +102,7 @@ class AddAddressScreen extends StatelessWidget {
           _buildZipCodeField(bloc),
           SizedBox(height: 24.h),
           _buildPhoneField(bloc, context, countryPickerStyle),
-          if (!bloc.isEditAddress) ...[
-            SizedBox(height: 24.h),
-            _buildAddressTypeRadio(bloc, style),
-          ],
+          if (!bloc.isEditAddress) ...[SizedBox(height: 24.h), _buildAddressTypeRadio(bloc, style)],
           SizedBox(height: 24.h),
           SmartButton(
             onTap: () {
@@ -106,7 +111,9 @@ class AddAddressScreen extends StatelessWidget {
             title: APPStrings.save.tr,
           ),
           if (bloc.isFromCheckout) SizedBox(height: 24.h),
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget _buildFirstNameField(AddAddressBloc bloc) {
@@ -224,18 +231,20 @@ class AddAddressScreen extends StatelessWidget {
 
   Widget _buildStateField(AddAddressBloc bloc) {
     return BlocBuilder<AddAddressBloc, AddAddressState>(
-      buildWhen: (previous, current) =>
-          current is AddAddressChangeStateState ||
-          current is AddAddressChangeCountryState ||
-          (current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.state),
+      buildWhen:
+          (previous, current) =>
+              current is AddAddressChangeStateState ||
+              current is AddAddressChangeCountryState ||
+              (current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.state),
       builder: (context, state) {
         return SmartDropDown<CountryStateModel>(
           errorText: bloc.stateError,
           hintText: APPStrings.state.tr,
           labelText: APPStrings.state.tr,
-          items: bloc.arrState.map((CountryStateModel state) {
-            return SmartDropDownItem<CountryStateModel>(value: state, title: state.name ?? '');
-          }).toList(),
+          items:
+              bloc.arrState.map((CountryStateModel state) {
+                return SmartDropDownItem<CountryStateModel>(value: state, title: state.name ?? '');
+              }).toList(),
           onChanged: (state) {
             if (state != null) {
               bloc.add(AddAddressChangeStateEvent(context, state));
@@ -253,10 +262,7 @@ class AddAddressScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SmartText(
-          APPStrings.country.tr,
-          style: countryPickerStyle.inputLableStyle,
-        ),
+        SmartText(APPStrings.country.tr, style: countryPickerStyle.inputLableStyle),
         SizedBox(height: 4.h),
         BlocBuilder<AddAddressBloc, AddAddressState>(
           buildWhen: (previous, current) => current is AddAddressChangeCountryState,
@@ -276,9 +282,7 @@ class AddAddressScreen extends StatelessWidget {
                 height: 48.h,
                 padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 8.h),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: countryPickerStyle.inputBorderColor,
-                  ),
+                  border: Border.all(color: countryPickerStyle.inputBorderColor),
                   borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Row(
@@ -356,11 +360,7 @@ class AddAddressScreen extends StatelessWidget {
                 padding: EdgeInsetsDirectional.all(12.w),
                 margin: EdgeInsetsDirectional.only(end: 12.w),
                 decoration: BoxDecoration(
-                  border: BorderDirectional(
-                    end: BorderSide(
-                      color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
-                    ),
-                  ),
+                  border: BorderDirectional(end: BorderSide(color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -368,16 +368,10 @@ class AddAddressScreen extends StatelessWidget {
                     BlocBuilder<AddAddressBloc, AddAddressState>(
                       buildWhen: (previous, current) => current is AddAddressChangeCountryCodeState,
                       builder: (context, state) {
-                        return SmartText(
-                          '+${bloc.selectedCountryCodes.phoneCode}',
-                          style: AppTheme.of(context).textFieldStyle.textStyle,
-                        );
+                        return SmartText('+${bloc.selectedCountryCodes.phoneCode}', style: AppTheme.of(context).textFieldStyle.textStyle);
                       },
                     ),
-                    if (!bloc.isEditAddress) ...[
-                      SizedBox(width: 4.w),
-                      const SmartImage(path: AppImages.icArrowDropDown),
-                    ],
+                    if (!bloc.isEditAddress) ...[SizedBox(width: 4.w), const SmartImage(path: AppImages.icArrowDropDown)],
                   ],
                 ),
               ),
@@ -398,27 +392,27 @@ class AddAddressScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SmartText(
-          APPStrings.addressType.tr,
-          style: style.isSameAddressStyle,
-        ),
+        SmartText(APPStrings.addressType.tr, style: style.isSameAddressStyle),
         BlocBuilder<AddAddressBloc, AddAddressState>(
           buildWhen: (previous, current) => current is AddAddressChangeAddressTypeState,
           builder: (context, state) {
             return Wrap(
               spacing: 24.w,
-              children: AddressTypeEnum.values
-                  .map((e) => SmartRadioButton<AddressTypeEnum>(
-                        value: e,
-                        onChanged: (value) {
-                          if (value != null) {
-                            bloc.add(AddAddressChangeAddressTypeEvent(value));
-                          }
-                        },
-                        label: e.label.tr,
-                        groupValue: bloc.isShippingAddress,
-                      ))
-                  .toList(),
+              children:
+                  AddressTypeEnum.values
+                      .map(
+                        (e) => SmartRadioButton<AddressTypeEnum>(
+                          value: e,
+                          onChanged: (value) {
+                            if (value != null) {
+                              bloc.add(AddAddressChangeAddressTypeEvent(value));
+                            }
+                          },
+                          label: e.label.tr,
+                          groupValue: bloc.isShippingAddress,
+                        ),
+                      )
+                      .toList(),
             );
           },
         ),

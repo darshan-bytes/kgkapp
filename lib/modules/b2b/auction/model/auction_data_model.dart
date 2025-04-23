@@ -127,29 +127,29 @@ class AuctionDataModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "business_type": businessType,
-        "product_id": productId,
-        "product_sku": productSku,
-        "product_description": productDescription,
-        "product_image": productImage,
-        "start_date": startDate?.toIso8601String(),
-        "end_date": endDate?.toIso8601String(),
-        "starting_price": startingPrice,
-        "created_by": createdBy,
-        "status": status,
-        "currency": currency,
-        "csc_codes": cscCodes,
-        "id": id,
-        "last_bid_amount": lastBidAmount,
-        "updated_by": updatedBy,
-        "created_at": createdAt?.toIso8601String(),
-        "bids": bids.map((x) => x.toJson()).toList(),
-        "show_place_bid": showPlaceBid,
-        "my_bid_value": myBidValue,
-        "total_bid": totalBid,
-        "created_by_details": createdByDetails?.toJson(),
-        "updated_by_details": updatedByDetails?.toJson(),
-      };
+    "business_type": businessType,
+    "product_id": productId,
+    "product_sku": productSku,
+    "product_description": productDescription,
+    "product_image": productImage,
+    "start_date": startDate?.toIso8601String(),
+    "end_date": endDate?.toIso8601String(),
+    "starting_price": startingPrice,
+    "created_by": createdBy,
+    "status": status,
+    "currency": currency,
+    "csc_codes": cscCodes,
+    "id": id,
+    "last_bid_amount": lastBidAmount,
+    "updated_by": updatedBy,
+    "created_at": createdAt?.toIso8601String(),
+    "bids": bids.map((x) => x.toJson()).toList(),
+    "show_place_bid": showPlaceBid,
+    "my_bid_value": myBidValue,
+    "total_bid": totalBid,
+    "created_by_details": createdByDetails?.toJson(),
+    "updated_by_details": updatedByDetails?.toJson(),
+  };
 
   @override
   String toString() {
@@ -178,15 +178,7 @@ class Bid {
   final DateTime? createdAt;
   final bool? isMyBid;
 
-  Bid copyWith({
-    String? auctionId,
-    String? bidAmount,
-    String? country,
-    String? id,
-    bool? isWinner,
-    DateTime? createdAt,
-    bool? isMyBid,
-  }) {
+  Bid copyWith({String? auctionId, String? bidAmount, String? country, String? id, bool? isWinner, DateTime? createdAt, bool? isMyBid}) {
     return Bid(
       auctionId: auctionId ?? this.auctionId,
       bidAmount: bidAmount ?? this.bidAmount,
@@ -211,14 +203,14 @@ class Bid {
   }
 
   Map<String, dynamic> toJson() => {
-        "auction_id": auctionId,
-        "bid_amount": bidAmount,
-        "country": country,
-        "id": id,
-        "is_winner": isWinner,
-        "created_at": createdAt?.toIso8601String(),
-        "is_my_bid": isMyBid,
-      };
+    "auction_id": auctionId,
+    "bid_amount": bidAmount,
+    "country": country,
+    "id": id,
+    "is_winner": isWinner,
+    "created_at": createdAt?.toIso8601String(),
+    "is_my_bid": isMyBid,
+  };
 
   @override
   String toString() {

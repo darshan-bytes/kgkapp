@@ -40,8 +40,11 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   _buildProfileHeader(style: style, bloc: bloc, context: context),
                   Divider(color: style.dividerColor, thickness: 8.h),
-                  SmartText(APPStrings.myAccount.tr,
-                      style: style.subTitleStyle, optionalPadding: EdgeInsetsDirectional.only(start: 17.w, top: 16.h)),
+                  SmartText(
+                    APPStrings.myAccount.tr,
+                    style: style.subTitleStyle,
+                    optionalPadding: EdgeInsetsDirectional.only(start: 17.w, top: 16.h),
+                  ),
                   _buildAccountList(style, bloc),
                   if (bloc.userType == UserType.internal) ...[
                     Divider(color: style.dividerColor, thickness: 8.h),
@@ -76,9 +79,7 @@ class ProfileScreen extends StatelessWidget {
           itemCount: bloc.profileActionList.length,
           separatorBuilder: (context, index) => const Divider(),
           itemBuilder: (context, index) {
-            return SmartOptionTile(
-              profileListModel: bloc.profileActionList[index],
-            );
+            return SmartOptionTile(profileListModel: bloc.profileActionList[index]);
           },
         );
       },
@@ -96,10 +97,7 @@ class ProfileScreen extends StatelessWidget {
           itemCount: bloc.profileAdminList.length,
           separatorBuilder: (context, index) => const Divider(),
           itemBuilder: (context, index) {
-            return SmartOptionTile(
-              leadingImageColor: style.arrowRightColor,
-              profileListModel: bloc.profileAdminList[index],
-            );
+            return SmartOptionTile(leadingImageColor: style.arrowRightColor, profileListModel: bloc.profileAdminList[index]);
           },
         );
       },
@@ -107,82 +105,76 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildExpandList(ProfileScreenStyle style, ProfileBloc bloc) {
-    return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
-      return ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        primary: false,
-        padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
-        itemCount: bloc.profileCMSList.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              bloc.add(ToggleProfileListEvent(index: index, context: context));
-            },
-            child: Container(
-              color: style.transparentColor,
-              padding: EdgeInsetsDirectional.only(
-                start: 17.w,
-                top: index != 0 ? 16.h : 0,
-                end: 17.w,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SmartImage(
-                    path: bloc.profileCMSList[index].image ?? '',
-                    matchTextDirection: true,
-                  ),
-                  SizedBox(width: 12.h),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SmartText(
-                          bloc.profileCMSList[index].title,
-                          style: style.expandTitleStyle,
-                        ),
-                        if (bloc.profileCMSList[index].isSubListExpanded) SizedBox(height: 8.h),
-                        AnimatedSize(
-                          duration: const Duration(milliseconds: 200),
-                          child: bloc.profileCMSList[index].isSubListExpanded
-                              ? ListView.separated(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  primary: false,
-                                  itemCount: bloc.profileCMSList[index].profileSubList?.length ?? 0,
-                                  itemBuilder: (context, childIndex) {
-                                    return SmartText(
-                                      bloc.profileCMSList[index].profileSubList?[childIndex].title,
-                                      style: style.expandTitleStyle,
-                                      onTap: bloc.profileCMSList[index].profileSubList?[childIndex].onTap != null
-                                          ? () {
-                                              bloc.profileCMSList[index].profileSubList?[childIndex].onTap!(context);
-                                            }
-                                          : null,
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) => SizedBox(height: 8.h),
-                                )
-                              : const SizedBox(),
-                        ),
-                      ],
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          primary: false,
+          padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
+          itemCount: bloc.profileCMSList.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                bloc.add(ToggleProfileListEvent(index: index, context: context));
+              },
+              child: Container(
+                color: style.transparentColor,
+                padding: EdgeInsetsDirectional.only(start: 17.w, top: index != 0 ? 16.h : 0, end: 17.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SmartImage(path: bloc.profileCMSList[index].image ?? '', matchTextDirection: true),
+                    SizedBox(width: 12.h),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SmartText(bloc.profileCMSList[index].title, style: style.expandTitleStyle),
+                          if (bloc.profileCMSList[index].isSubListExpanded) SizedBox(height: 8.h),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 200),
+                            child:
+                                bloc.profileCMSList[index].isSubListExpanded
+                                    ? ListView.separated(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      primary: false,
+                                      itemCount: bloc.profileCMSList[index].profileSubList?.length ?? 0,
+                                      itemBuilder: (context, childIndex) {
+                                        return SmartText(
+                                          bloc.profileCMSList[index].profileSubList?[childIndex].title,
+                                          style: style.expandTitleStyle,
+                                          onTap:
+                                              bloc.profileCMSList[index].profileSubList?[childIndex].onTap != null
+                                                  ? () {
+                                                    bloc.profileCMSList[index].profileSubList?[childIndex].onTap!(context);
+                                                  }
+                                                  : null,
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) => SizedBox(height: 8.h),
+                                    )
+                                    : const SizedBox(),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  if (bloc.profileCMSList[index].profileSubList.isNotNullNorEmpty)
-                    SmartImage(
-                      color: style.arrowRightColor,
-                      path: bloc.profileCMSList[index].isSubListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
-                      matchTextDirection: true,
-                    )
-                ],
+                    if (bloc.profileCMSList[index].profileSubList.isNotNullNorEmpty)
+                      SmartImage(
+                        color: style.arrowRightColor,
+                        path: bloc.profileCMSList[index].isSubListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
+                        matchTextDirection: true,
+                      ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-      );
-    });
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildPopupList(BuildContext context, ProfileScreenStyle style, ProfileBloc bloc) {
@@ -192,21 +184,23 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         children: [
           _buildPopupItem(
-              title: APPStrings.logout.tr,
-              onTap: () {
-                _buildLogoutPopup(context, bloc);
-              },
-              image: AppImages.icLogout,
-              textStyle: style.logoutTextStyle),
+            title: APPStrings.logout.tr,
+            onTap: () {
+              _buildLogoutPopup(context, bloc);
+            },
+            image: AppImages.icLogout,
+            textStyle: style.logoutTextStyle,
+          ),
           const Divider(),
           _buildPopupItem(
-              title: APPStrings.deleteAccount.tr,
-              onTap: () {
-                _buildDeletePopup(context, bloc);
-              },
-              image: AppImages.icDeleteAccount,
-              textStyle: style.fontTextStyle),
-          SizedBox(height: 10.h)
+            title: APPStrings.deleteAccount.tr,
+            onTap: () {
+              _buildDeletePopup(context, bloc);
+            },
+            image: AppImages.icDeleteAccount,
+            textStyle: style.fontTextStyle,
+          ),
+          SizedBox(height: 10.h),
         ],
       ),
     );
@@ -220,14 +214,7 @@ class ProfileScreen extends StatelessWidget {
         alignment: AlignmentDirectional.center,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SmartImage(
-              path: image,
-              matchTextDirection: true,
-            ),
-            SizedBox(width: 12.h),
-            SmartText(title, style: textStyle),
-          ],
+          children: [SmartImage(path: image, matchTextDirection: true), SizedBox(width: 12.h), SmartText(title, style: textStyle)],
         ),
       ),
     );
@@ -239,16 +226,17 @@ class ProfileScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => ConfirmationDialog(
-        title: APPStrings.logoutAsk.tr,
-        message: APPStrings.logoutMsg.tr,
-        onApproved: () {
-          bloc.add(LogoutEvent(context: context));
-        },
-        onDenied: () => context.pop(),
-        onApprovedText: APPStrings.logout.tr,
-        onDeniedText: APPStrings.cancel.tr,
-      ),
+      builder:
+          (context) => ConfirmationDialog(
+            title: APPStrings.logoutAsk.tr,
+            message: APPStrings.logoutMsg.tr,
+            onApproved: () {
+              bloc.add(LogoutEvent(context: context));
+            },
+            onDenied: () => context.pop(),
+            onApprovedText: APPStrings.logout.tr,
+            onDeniedText: APPStrings.cancel.tr,
+          ),
     );
   }
 
@@ -258,16 +246,17 @@ class ProfileScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => ConfirmationDialog(
-        title: APPStrings.deleteAccountAsk.tr,
-        message: APPStrings.deleteAccountDesc.tr,
-        onApproved: () {
-          bloc.add(DeleteProfileEvent(context: context));
-        },
-        onDenied: () => context.pop(),
-        onApprovedText: APPStrings.delete.tr,
-        onDeniedText: APPStrings.cancel.tr,
-      ),
+      builder:
+          (context) => ConfirmationDialog(
+            title: APPStrings.deleteAccountAsk.tr,
+            message: APPStrings.deleteAccountDesc.tr,
+            onApproved: () {
+              bloc.add(DeleteProfileEvent(context: context));
+            },
+            onDenied: () => context.pop(),
+            onApprovedText: APPStrings.delete.tr,
+            onDeniedText: APPStrings.cancel.tr,
+          ),
     );
   }
 
@@ -275,17 +264,11 @@ class ProfileScreen extends StatelessWidget {
     if (bloc.isSkipUser) {
       return Container(
         padding: EdgeInsetsDirectional.all(16.w),
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-        ),
+        decoration: BoxDecoration(color: style.backgroundColor),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 40.r,
-              backgroundColor: style.primaryColor,
-              child: SmartImage(path: AppImages.icUser, height: 30.h),
-            ),
+            CircleAvatar(radius: 40.r, backgroundColor: style.primaryColor, child: SmartImage(path: AppImages.icUser, height: 30.h)),
             SizedBox(height: 12.h),
             SmartText(APPStrings.account.tr, style: style.titleStyle),
             SizedBox(height: 8.h),
@@ -328,11 +311,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          SmartImage(
-            path: AppImages.icEditProfile,
-            onTap: () => bloc.onTapEditProfileButton(context: context),
-            matchTextDirection: true,
-          )
+          SmartImage(path: AppImages.icEditProfile, onTap: () => bloc.onTapEditProfileButton(context: context), matchTextDirection: true),
         ],
       ),
     );

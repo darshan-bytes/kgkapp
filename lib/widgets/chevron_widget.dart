@@ -2,13 +2,7 @@ import 'package:kgk/kgk.dart';
 
 /// Chevron Progress Widget
 class ChevronProgress extends StatelessWidget {
-  const ChevronProgress({
-    super.key,
-    required this.child,
-    required this.clipper,
-    this.color = Colors.blue,
-    this.edge = Edge.end,
-  });
+  const ChevronProgress({super.key, required this.child, required this.clipper, this.color = Colors.blue, this.edge = Edge.end});
 
   ///The widget that is going to be clipped as chevron shape
   final Widget child;
@@ -34,13 +28,14 @@ class ChevronProgress extends StatelessWidget {
         child: Container(
           width: containerWidth,
           decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadiusDirectional.only(
-                bottomStart: startRadius,
-                topStart: startRadius,
-                topEnd: radiusValue,
-                bottomEnd: radiusValue,
-              )),
+            color: color,
+            borderRadius: BorderRadiusDirectional.only(
+              bottomStart: startRadius,
+              topStart: startRadius,
+              topEnd: radiusValue,
+              bottomEnd: radiusValue,
+            ),
+          ),
           child: child,
         ),
       ),

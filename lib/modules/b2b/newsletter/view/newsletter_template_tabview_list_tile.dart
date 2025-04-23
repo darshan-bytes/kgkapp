@@ -13,12 +13,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
         canScrollToTop: bloc.templateScrollController.canScrollToTop,
         onTap: bloc.templateScrollController.scrollToTop,
       ),
-      body: Column(
-        children: [
-          _buildSearchSection(),
-          _buildTemplateItemList(style: style),
-        ],
-      ),
+      body: Column(children: [_buildSearchSection(), _buildTemplateItemList(style: style)]),
     );
   }
 
@@ -36,11 +31,12 @@ class NewsletterTemplateTabView extends StatelessWidget {
   Widget _buildTemplateItemList({required NewsletterScreenStyle style}) {
     return Expanded(
       child: BlocBuilder<NewsletterBloc, NewsletterState>(
-        buildWhen: (previous, current) =>
-            current is NewsletterListLoadedState ||
-            current is NewsletterListLoadedMoreState ||
-            current is NewsletterLoadingMoreState ||
-            current is ChangeNewsletterTabsState,
+        buildWhen:
+            (previous, current) =>
+                current is NewsletterListLoadedState ||
+                current is NewsletterListLoadedMoreState ||
+                current is NewsletterLoadingMoreState ||
+                current is ChangeNewsletterTabsState,
         builder: (context, state) {
           if (state is NewsletterListLoadedState ||
               state is NewsletterListLoadedMoreState ||
@@ -79,12 +75,13 @@ class NewsletterTemplateTabView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplateSubItemList(
-      {required TemplateListModel templateListModel,
-      bool isLastItem = false,
-      required BuildContext context,
-      required EdgeInsetsGeometry padding,
-      required NewsletterScreenStyle style}) {
+  Widget _buildTemplateSubItemList({
+    required TemplateListModel templateListModel,
+    bool isLastItem = false,
+    required BuildContext context,
+    required EdgeInsetsGeometry padding,
+    required NewsletterScreenStyle style,
+  }) {
     return Padding(
       padding: padding,
       child: Column(
@@ -92,21 +89,16 @@ class NewsletterTemplateTabView extends StatelessWidget {
         children: [
           if (templateListModel.title.isNotNullNorEmpty) SmartText(templateListModel.title, style: style.labelStyle),
           SizedBox(height: 16.h),
-          ...List.generate(
-            templateListModel.templateSubList?.length ?? 0,
-            (subIndex) {
-              B2BCustomListingDataModel item = templateListModel.templateSubList?[subIndex] ?? B2BCustomListingDataModel();
-              return _buildTemplateItem(
-                context: context,
-                onTap: () {},
-                onTapMenuButton: () {},
-                listingItemModel: item,
-                margin: EdgeInsetsDirectional.only(
-                  bottom: subIndex == (templateListModel.templateSubList?.length ?? 0) - 1 ? 0 : 16.h,
-                ),
-              );
-            },
-          ),
+          ...List.generate(templateListModel.templateSubList?.length ?? 0, (subIndex) {
+            B2BCustomListingDataModel item = templateListModel.templateSubList?[subIndex] ?? B2BCustomListingDataModel();
+            return _buildTemplateItem(
+              context: context,
+              onTap: () {},
+              onTapMenuButton: () {},
+              listingItemModel: item,
+              margin: EdgeInsetsDirectional.only(bottom: subIndex == (templateListModel.templateSubList?.length ?? 0) - 1 ? 0 : 16.h),
+            );
+          }),
           if (isLastItem) const SmartCircularProgressIndicator(),
         ],
       ),
@@ -129,10 +121,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
           Container(
             margin: margin,
             padding: EdgeInsetsDirectional.all(16.0.w),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0.r),
-              border: Border.all(color: style.borderColor),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0.r), border: Border.all(color: style.borderColor)),
             child: Column(
               children: [
                 B2BColumnDetailItem(field: B2BItemField(label: APPStrings.name.tr, value: listingItemModel.strName)),
@@ -140,20 +129,16 @@ class NewsletterTemplateTabView extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: B2BColumnDetailItem(
-                        field: B2BItemField(
-                          label: APPStrings.status.tr,
-                          orderStatus: listingItemModel.status,
-                        ),
-                      ),
+                      child: B2BColumnDetailItem(field: B2BItemField(label: APPStrings.status.tr, orderStatus: listingItemModel.status)),
                     ),
                     Expanded(
                       child: B2BColumnDetailItem(
                         field: B2BItemField(
-                            label: APPStrings.country.tr,
-                            value: listingItemModel.strCountry,
-                            isCircleImage: false,
-                            imageUrl: listingItemModel.strCountryImageUrl),
+                          label: APPStrings.country.tr,
+                          value: listingItemModel.strCountry,
+                          isCircleImage: false,
+                          imageUrl: listingItemModel.strCountryImageUrl,
+                        ),
                       ),
                     ),
                   ],
@@ -162,19 +147,15 @@ class NewsletterTemplateTabView extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: B2BColumnDetailItem(
-                        field: B2BItemField(
-                          label: APPStrings.validity.tr,
-                          value: listingItemModel.strValidity,
-                        ),
-                      ),
+                      child: B2BColumnDetailItem(field: B2BItemField(label: APPStrings.validity.tr, value: listingItemModel.strValidity)),
                     ),
                     Expanded(
                       child: B2BColumnDetailItem(
                         field: B2BItemField(
-                            label: APPStrings.createdBy.tr,
-                            value: listingItemModel.strCreatedBy,
-                            imageUrl: listingItemModel.strCreatedByImageUrl),
+                          label: APPStrings.createdBy.tr,
+                          value: listingItemModel.strCreatedBy,
+                          imageUrl: listingItemModel.strCreatedByImageUrl,
+                        ),
                       ),
                     ),
                   ],

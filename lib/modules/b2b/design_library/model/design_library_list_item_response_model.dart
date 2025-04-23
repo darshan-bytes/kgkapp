@@ -187,8 +187,9 @@ class DesignLibraryListItemDataModel {
       components = List<Component>.from(json["components"]!.map((x) => Component.fromJson(x)));
     }
     if (json["multiple_finished_view_image"] != null) {
-      multipleFinishedViewImage =
-          List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x)));
+      multipleFinishedViewImage = List<MultipleFinishedViewImage>.from(
+        json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x)),
+      );
     }
   }
 

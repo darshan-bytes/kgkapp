@@ -52,8 +52,9 @@ class ShippingAddressScreen extends StatelessWidget {
           itemCount: shippingAddressBloc.addressList.length,
           itemBuilder: (context, index) {
             return BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
-              buildWhen: (previous, current) =>
-                  current is ChangeSelectedShippingAddressState && (current.newIndex == index || current.oldIndex == index),
+              buildWhen:
+                  (previous, current) =>
+                      current is ChangeSelectedShippingAddressState && (current.newIndex == index || current.oldIndex == index),
               builder: (context, state) {
                 final AddressDetails address = shippingAddressBloc.addressList[index];
                 return AddressSelectionWidget(
@@ -68,21 +69,23 @@ class ShippingAddressScreen extends StatelessWidget {
                   },
                   onDelete: () {
                     Utils.showSmartModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-                        ),
-                        builder: (builderContext) => ConfirmationDialog(
-                              title: APPStrings.deleteAddress.tr,
-                              message: APPStrings.deleteAddressMsg.tr,
-                              onApproved: () {
-                                builderContext.pop();
-                                shippingAddressBloc.add(DeleteShippingAddressEvent(context: context, index: index));
-                              },
-                              onDenied: () => builderContext.pop(),
-                              onApprovedText: APPStrings.delete.tr,
-                              onDeniedText: APPStrings.cancel.tr,
-                            ));
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+                      ),
+                      builder:
+                          (builderContext) => ConfirmationDialog(
+                            title: APPStrings.deleteAddress.tr,
+                            message: APPStrings.deleteAddressMsg.tr,
+                            onApproved: () {
+                              builderContext.pop();
+                              shippingAddressBloc.add(DeleteShippingAddressEvent(context: context, index: index));
+                            },
+                            onDenied: () => builderContext.pop(),
+                            onApprovedText: APPStrings.delete.tr,
+                            onDeniedText: APPStrings.cancel.tr,
+                          ),
+                    );
                   },
                 );
               },
@@ -98,10 +101,7 @@ class ShippingAddressScreen extends StatelessWidget {
     final SavedAddressStyle style = AppTheme.of(context).savedAddressStyle;
 
     return Container(
-      decoration: BoxDecoration(
-        color: style.whiteColor,
-        boxShadow: [style.boxShadow],
-      ),
+      decoration: BoxDecoration(color: style.whiteColor, boxShadow: [style.boxShadow]),
       padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
       child: SafeArea(
         child: Row(

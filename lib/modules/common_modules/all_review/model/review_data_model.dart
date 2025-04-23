@@ -9,15 +9,7 @@ class ReviewDataModel {
   String? date;
   List<String>? images;
 
-  ReviewDataModel({
-    this.id,
-    this.userName,
-    this.rating,
-    this.title,
-    this.review,
-    this.date,
-    this.images,
-  });
+  ReviewDataModel({this.id, this.userName, this.rating, this.title, this.review, this.date, this.images});
 
   ReviewDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

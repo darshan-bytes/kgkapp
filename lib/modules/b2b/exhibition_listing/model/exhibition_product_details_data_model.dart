@@ -1,11 +1,5 @@
 class ExhibitionProductDetailsDataModel {
-  ExhibitionProductDetailsDataModel({
-    this.itemsSold,
-    this.totalOrders,
-    this.totalSales,
-    this.avgOrder,
-    this.leads,
-  });
+  ExhibitionProductDetailsDataModel({this.itemsSold, this.totalOrders, this.totalSales, this.avgOrder, this.leads});
 
   final int? itemsSold;
   final int? totalOrders;
@@ -24,10 +18,10 @@ class ExhibitionProductDetailsDataModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "items_sold": itemsSold,
-        "total_orders": totalOrders,
-        "total_sales": totalSales,
-        "avg_order": avgOrder,
-        "leads": leads,
-      };
+    "items_sold": itemsSold,
+    "total_orders": totalOrders,
+    "total_sales": totalSales,
+    "avg_order": avgOrder,
+    "leads": leads,
+  };
 }

@@ -39,9 +39,11 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                     Comments commentModel = (bloc.commentsAddedResponseModel?.comments?[index] ?? Comments());
                     return CommentListItem(
                       id: commentModel.updatedIdDetails?.companyName ?? '',
-                      createdAt: commentModel.createdAt?.changeDateFormat(
-                              inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
-                              outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ??
+                      createdAt:
+                          commentModel.createdAt?.changeDateFormat(
+                            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
+                            outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2,
+                          ) ??
                           '',
                       message: commentModel.message ?? '',
                       userImage: commentModel.updatedIdDetails?.profilePic ?? '',
@@ -136,7 +138,7 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                             width: 24.w,
                             path: AppImages.icSendComment,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -176,23 +178,12 @@ class CommentListItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: style.whiteColor,
         borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 8,
-            spreadRadius: 2,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, spreadRadius: 2, offset: const Offset(0, 2))],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 20.r,
-            backgroundColor: Colors.grey.shade200,
-            child: SmartImage(path: userImage ?? ""),
-          ),
+          CircleAvatar(radius: 20.r, backgroundColor: Colors.grey.shade200, child: SmartImage(path: userImage ?? "")),
           SizedBox(width: 12.w),
           Expanded(
             child: Column(
@@ -220,17 +211,12 @@ class CommentListItem extends StatelessWidget {
                   break;
               }
             },
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                value: CommentListingPopupMenuOption.edit,
-                child: SmartText(APPStrings.edit.tr),
-              ),
-              PopupMenuItem(
-                value: CommentListingPopupMenuOption.remove,
-                child: SmartText(APPStrings.remove.tr),
-              ),
-            ],
-          )
+            itemBuilder:
+                (BuildContext context) => [
+                  PopupMenuItem(value: CommentListingPopupMenuOption.edit, child: SmartText(APPStrings.edit.tr)),
+                  PopupMenuItem(value: CommentListingPopupMenuOption.remove, child: SmartText(APPStrings.remove.tr)),
+                ],
+          ),
         ],
       ),
     );

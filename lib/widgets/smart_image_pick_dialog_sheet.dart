@@ -12,10 +12,7 @@ class SmartImagePickDialogSheet extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadiusDirectional.only(
-          topStart: Radius.circular(8.r),
-          topEnd: Radius.circular(8.r),
-        ),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(8.r), topEnd: Radius.circular(8.r)),
       ),
       child: SafeArea(
         child: Column(
@@ -33,17 +30,27 @@ class SmartImagePickDialogSheet extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
-                            child: pickOption(context, icon: AppImages.icCamera, label: APPStrings.camera.tr, onTap: () {
-                              context.pop();
-                              onTapSource(ImageSource.camera);
-                            }),
+                            child: pickOption(
+                              context,
+                              icon: AppImages.icCamera,
+                              label: APPStrings.camera.tr,
+                              onTap: () {
+                                context.pop();
+                                onTapSource(ImageSource.camera);
+                              },
+                            ),
                           ),
                           Expanded(
-                            child: pickOption(context, icon: AppImages.icImage, label: APPStrings.gallery.tr, onTap: () {
-                              context.pop();
-                              onTapSource(ImageSource.gallery);
-                            }),
-                          )
+                            child: pickOption(
+                              context,
+                              icon: AppImages.icImage,
+                              label: APPStrings.gallery.tr,
+                              onTap: () {
+                                context.pop();
+                                onTapSource(ImageSource.gallery);
+                              },
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 24.h),
@@ -65,18 +72,13 @@ class SmartImagePickDialogSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              height: 72.w,
-              width: 72.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              alignment: AlignmentDirectional.center,
-              child: SmartImage(
-                path: icon,
-              )),
-          SmartText(
-            label,
+            height: 72.w,
+            width: 72.w,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.r)),
+            alignment: AlignmentDirectional.center,
+            child: SmartImage(path: icon),
           ),
+          SmartText(label),
         ],
       ),
     );
@@ -93,10 +95,7 @@ class SmartImagePickDialogSheet extends StatelessWidget {
           onTap: () {
             context.pop();
           },
-          child: SmartImage(
-            path: AppImages.icCross,
-            color: style.primaryColor,
-          ),
+          child: SmartImage(path: AppImages.icCross, color: style.primaryColor),
         ),
       ],
     );

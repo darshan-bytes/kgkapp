@@ -8,11 +8,7 @@ class ForgotPasswordScreen extends StatelessWidget {
     final style = AppTheme.of(context).signInScreenStyle;
     final ForgotPasswordBloc bloc = BlocProvider.of<ForgotPasswordBloc>(context);
     return Scaffold(
-      appBar: SmartAppBar(
-        appBarHeight: 52.h,
-        isBorder: false,
-        backgroundColor: style.backgroundColor,
-      ),
+      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor),
       bottomNavigationBar: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -41,14 +37,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SmartText(
-                            APPStrings.forgotPassword.tr,
-                            style: style.titleTextStyle,
-                          ),
-                          SmartText(
-                            APPStrings.forgotPasswordDescription.tr,
-                            style: style.subTitleStyle,
-                          ),
+                          SmartText(APPStrings.forgotPassword.tr, style: style.titleTextStyle),
+                          SmartText(APPStrings.forgotPasswordDescription.tr, style: style.subTitleStyle),
                           SizedBox(height: 32.h),
                           SmartTextField(
                             controller: bloc.emailController,

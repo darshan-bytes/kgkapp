@@ -38,64 +38,62 @@ class StoneListingScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is StoneProductLoadedState) {
                 return SafeArea(
-                    child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
-                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
-                        SizedBox(height: 16.h),
-                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
-                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
-                        DiyProgressWidget(
-                          padding: EdgeInsetsDirectional.zero,
-                          selectedStep: bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ? 1 : 2,
-                          screenIdentifier: bloc.screenIdentifier,
-                        ),
-                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
-                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
-                        SizedBox(height: 6.h),
-                      if (bloc.displaySelection) ...[
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                            bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                          SizedBox(height: 16.h),
+                        if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                            bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                          DiyProgressWidget(
+                            padding: EdgeInsetsDirectional.zero,
+                            selectedStep: bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ? 1 : 2,
+                            screenIdentifier: bloc.screenIdentifier,
+                          ),
+                        if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                            bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                          SizedBox(height: 6.h),
+                        if (bloc.displaySelection) ...[SizedBox(height: 10.h), _buildSelectionDiamond(bloc)],
                         SizedBox(height: 10.h),
-                        _buildSelectionDiamond(bloc),
-                      ],
-                      SizedBox(height: 10.h),
-                      _buildProductFilterCount(style, bloc),
-                      SizedBox(height: 10.h),
-                      Expanded(
-                        child: BlocBuilder<StoneListingBloc, StoneListingState>(
-                          buildWhen: (previous, current) => current is StoneListLoadingState || current is StoneProductLoadedState,
-                          builder: (context, state) {
-                            return (state is StoneListLoadingState)
-                                ? SmartCircularProgressIndicator()
-                                : bloc.productList.isNullOrEmpty
-                                    ? NoDataFoundWidget(text: APPStrings.emptyProducts.tr)
-                                    : SmartSingleChildScrollView(
-                                        controller: bloc.paginationScrollController.controller,
-                                        onRefresh: () async {
-                                          bloc.add(StoneListPullToRefreshEvent(context));
-                                        },
-                                        child: Column(
-                                          children: [
-                                            BlocBuilder<StoneListingBloc, StoneListingState>(
-                                              builder: (context, state) {
-                                                if (state is StoneProductReloadState) {
-                                                  return const SizedBox.shrink();
-                                                } else {
-                                                  return _buildProductList(style, bloc);
-                                                }
-                                              },
-                                            ),
-                                          ],
+                        _buildProductFilterCount(style, bloc),
+                        SizedBox(height: 10.h),
+                        Expanded(
+                          child: BlocBuilder<StoneListingBloc, StoneListingState>(
+                            buildWhen: (previous, current) => current is StoneListLoadingState || current is StoneProductLoadedState,
+                            builder: (context, state) {
+                              return (state is StoneListLoadingState)
+                                  ? SmartCircularProgressIndicator()
+                                  : bloc.productList.isNullOrEmpty
+                                  ? NoDataFoundWidget(text: APPStrings.emptyProducts.tr)
+                                  : SmartSingleChildScrollView(
+                                    controller: bloc.paginationScrollController.controller,
+                                    onRefresh: () async {
+                                      bloc.add(StoneListPullToRefreshEvent(context));
+                                    },
+                                    child: Column(
+                                      children: [
+                                        BlocBuilder<StoneListingBloc, StoneListingState>(
+                                          builder: (context, state) {
+                                            if (state is StoneProductReloadState) {
+                                              return const SizedBox.shrink();
+                                            } else {
+                                              return _buildProductList(style, bloc);
+                                            }
+                                          },
                                         ),
-                                      );
-                          },
+                                      ],
+                                    ),
+                                  );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ));
+                );
               } else if (state is StoneListLoadingState) {
                 return const SmartCircularProgressIndicator();
               } else {
@@ -110,8 +108,8 @@ class StoneListingScreen extends StatelessWidget {
 
   Widget _buildSelectionDiamond(StoneListingBloc diamondListingBloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
-      buildWhen: (previous, current) =>
-          current is StoneChangeTypeState || current is StoneListLoadingState || current is StoneProductLoadedState,
+      buildWhen:
+          (previous, current) => current is StoneChangeTypeState || current is StoneListLoadingState || current is StoneProductLoadedState,
       builder: (context, state) {
         return Row(
           children: [
@@ -147,11 +145,12 @@ class StoneListingScreen extends StatelessWidget {
 
   Widget _buildProductFilterCount(DiamondListingStyle style, StoneListingBloc bloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
-      buildWhen: (previous, current) =>
-          current is StoneChangeListingTypeState ||
-          current is StoneProductLoadedState ||
-          current is StoneListLoadedMoreState ||
-          current is StoneListLoadingState,
+      buildWhen:
+          (previous, current) =>
+              current is StoneChangeListingTypeState ||
+              current is StoneProductLoadedState ||
+              current is StoneListLoadedMoreState ||
+              current is StoneListLoadingState,
       builder: (context, state) {
         if (state is StoneListLoadingState) return SizedBox.shrink();
         return SizedBox(
@@ -159,8 +158,10 @@ class StoneListingScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
-                  style: style.filterProductCountTextStyle),
+              SmartText(
+                APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
+                style: style.filterProductCountTextStyle,
+              ),
               Row(
                 children: [
                   SelectionButton(
@@ -211,7 +212,7 @@ class StoneListingScreen extends StatelessWidget {
                   //   onTap: () {},
                   // ),
                 ],
-              )
+              ),
             ],
           ),
         );
@@ -221,12 +222,13 @@ class StoneListingScreen extends StatelessWidget {
 
   Widget _buildProductList(DiamondListingStyle style, StoneListingBloc bloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
-      buildWhen: (previous, current) =>
-          current is StoneDiamondListLoadedState ||
-          current is StoneProductLoadedState ||
-          current is StoneChangeListingTypeState ||
-          current is StoneListLoadingMoreState ||
-          current is StoneListLoadedMoreState,
+      buildWhen:
+          (previous, current) =>
+              current is StoneDiamondListLoadedState ||
+              current is StoneProductLoadedState ||
+              current is StoneChangeListingTypeState ||
+              current is StoneListLoadingMoreState ||
+              current is StoneListLoadedMoreState,
       builder: (context, state) {
         if (bloc.productList.isEmpty &&
             (state is StoneDiamondListLoadedState || state is StoneProductLoadedState || state is StoneChangeListingTypeState)) {
@@ -236,41 +238,51 @@ class StoneListingScreen extends StatelessWidget {
             return Column(
               children: [
                 SmartGridView(
-                    items: bloc.productList.map((ProductDetailsModel productDetails) {
-                  return ProductGridItem(
-                    productDetails: productDetails,
-                    isCrtAndGramVisible: false,
-                    isForAuction: productDetails.isForAuction,
-                    onTap: () {
-                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
-                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-                        context.pushNamed(AppRoutes.stoneDetailPage,
-                            arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId});
-                      } else if (bloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
-                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                          RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
-                          RoutesData.productId: productDetails.productId
-                        });
-                        //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
-                        // context.pushNamed(AppRoutes.diamondInfoPopupPage,
-                        //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
-                      } else {
-                        context.pushNamed(AppRoutes.productDetailsPage,
-                            arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId});
-                      }
-                    },
-                    onEyeTap: bloc.isFavWatchListNotEnableForDIY ? () {} : null,
-                    isFavourite: productDetails.isFavourite,
-                    onFavTap: bloc.isFavWatchListNotEnableForDIY ? () {} : null,
-                    onAddToBagTap: (productDetails.isForAuction ||
-                            (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
-                                bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY))
-                        ? null
-                        : () {},
-                  );
-                }).toList()),
+                  items:
+                      bloc.productList.map((ProductDetailsModel productDetails) {
+                        return ProductGridItem(
+                          productDetails: productDetails,
+                          isCrtAndGramVisible: false,
+                          isForAuction: productDetails.isForAuction,
+                          onTap: () {
+                            if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                                bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+                              context.pushNamed(
+                                AppRoutes.stoneDetailPage,
+                                arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId},
+                              );
+                            } else if (bloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                              context.pushNamed(
+                                AppRoutes.productDetailsPage,
+                                arguments: {
+                                  RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
+                                  RoutesData.productId: productDetails.productId,
+                                },
+                              );
+                              //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+                              // context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                              //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                            } else {
+                              context.pushNamed(
+                                AppRoutes.productDetailsPage,
+                                arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId},
+                              );
+                            }
+                          },
+                          onEyeTap: bloc.isFavWatchListNotEnableForDIY ? () {} : null,
+                          isFavourite: productDetails.isFavourite,
+                          onFavTap: bloc.isFavWatchListNotEnableForDIY ? () {} : null,
+                          onAddToBagTap:
+                              (productDetails.isForAuction ||
+                                      (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY))
+                                  ? null
+                                  : () {},
+                        );
+                      }).toList(),
+                ),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
-                SizedBox(height: 17.h)
+                SizedBox(height: 17.h),
               ],
             );
           } else {
@@ -285,143 +297,152 @@ class StoneListingScreen extends StatelessWidget {
                     final product = bloc.productList[index];
 
                     /// Attributes list for stone info
-                    List<String> attributes = [
-                      product.color,
-                      product.clarity,
-                      product.cut,
-                    ].where((attr) => attr != null).map((attr) => attr!).toList();
+                    List<String> attributes =
+                        [product.color, product.clarity, product.cut].where((attr) => attr != null).map((attr) => attr!).toList();
 
                     return bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
                             bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY
                         ? ProductListItem(
-                            onTap: () {
-                              if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
-                                  bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-                                context.pushNamed(AppRoutes.stoneDetailPage,
-                                    arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId});
-                              }
-                            },
-                            // onEyeTap: () {},
-                            // onFavTap: () {},
-                            productDetails: product,
-                          )
+                          onTap: () {
+                            if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                                bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+                              context.pushNamed(
+                                AppRoutes.stoneDetailPage,
+                                arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId},
+                              );
+                            }
+                          },
+                          // onEyeTap: () {},
+                          // onFavTap: () {},
+                          productDetails: product,
+                        )
                         : ProductInfoItem(
-                            isFromBag: false,
-                            productFeaturesList: attributes,
-                            onTap360View: () {
-                              if (product.video.isNotNullNorEmpty) {
-                                Utils.launchUrlFromString(product.video!);
-                              } else {
-                                Utils.showMessage(APPStrings.no3DViewAvailable.tr);
-                              }
-                            },
-                            onTapDNA: () {
-                              if (product.openDnaUrl != null) {
-                                Utils.launchUrlFromString(product.openDnaUrl!);
-                              } else {
-                                Utils.showMessage(APPStrings.noDnaAvailable.tr);
-                              }
-                            },
-                            onTapCertificate: () {
-                              if (product.certificateFile != null) {
-                                Utils.launchUrlFromString(product.certificateFile!);
-                              } else {
-                                Utils.showMessage(APPStrings.noCertificateAvailable.tr);
-                              }
-                            },
-                            onTapImageViewer: () {
-                              if (product.imageUrl != null) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Dialog.fullscreen(
-                                      backgroundColor: Colors.transparent,
-                                      child: ProductPhotoViewGallery(imageUrls: [product.imageUrl ?? '']),
-                                    );
-                                  },
-                                );
-                              } else {
-                                Utils.showMessage(APPStrings.noImageAvailable.tr);
-                              }
-                            },
-                            onTapUSA: () => printWrapped("onTapUSA"),
-                            onTapMenuButton: product.isForAuction
-                                ? null
-                                : () async {
+                          isFromBag: false,
+                          productFeaturesList: attributes,
+                          onTap360View: () {
+                            if (product.video.isNotNullNorEmpty) {
+                              Utils.launchUrlFromString(product.video!);
+                            } else {
+                              Utils.showMessage(APPStrings.no3DViewAvailable.tr);
+                            }
+                          },
+                          onTapDNA: () {
+                            if (product.openDnaUrl != null) {
+                              Utils.launchUrlFromString(product.openDnaUrl!);
+                            } else {
+                              Utils.showMessage(APPStrings.noDnaAvailable.tr);
+                            }
+                          },
+                          onTapCertificate: () {
+                            if (product.certificateFile != null) {
+                              Utils.launchUrlFromString(product.certificateFile!);
+                            } else {
+                              Utils.showMessage(APPStrings.noCertificateAvailable.tr);
+                            }
+                          },
+                          onTapImageViewer: () {
+                            if (product.imageUrl != null) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Dialog.fullscreen(
+                                    backgroundColor: Colors.transparent,
+                                    child: ProductPhotoViewGallery(imageUrls: [product.imageUrl ?? '']),
+                                  );
+                                },
+                              );
+                            } else {
+                              Utils.showMessage(APPStrings.noImageAvailable.tr);
+                            }
+                          },
+                          onTapUSA: () => printWrapped("onTapUSA"),
+                          onTapMenuButton:
+                              product.isForAuction
+                                  ? null
+                                  : () async {
                                     final value = await Utils.showSmartModalBottomSheet(
                                       context: context,
-                                      builder: (_) => ProductMenuBottomSheet(
-                                        mainContext: context,
-                                        productDetails: product,
-                                        onAddToBag: () {
-                                          BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context));
-                                        },
-                                        onBuyNow: () {
-                                          BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context, isBuyNow: true));
-                                        },
-                                      ),
+                                      builder:
+                                          (_) => ProductMenuBottomSheet(
+                                            mainContext: context,
+                                            productDetails: product,
+                                            onAddToBag: () {
+                                              BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context));
+                                            },
+                                            onBuyNow: () {
+                                              BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context, isBuyNow: true));
+                                            },
+                                          ),
                                     );
                                     if (value != null && value is Map<RoutesData, dynamic> && value[RoutesData.isGoToBag] == true) {
                                       if (context.mounted) {
-                                        BlocProvider.of<LandingBloc>(context)
-                                            .add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                                        BlocProvider.of<LandingBloc>(
+                                          context,
+                                        ).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
                                         context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
                                       }
                                     }
                                   },
-                            isSelectedBackground: (index % 2 != 0),
-                            onTap: () {
-                              if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
-                                  bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-                                context.pushNamed(AppRoutes.stoneDetailPage,
-                                    arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId});
-                              } else if (bloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
-                                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                          isSelectedBackground: (index % 2 != 0),
+                          onTap: () {
+                            if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                                bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+                              context.pushNamed(
+                                AppRoutes.stoneDetailPage,
+                                arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId},
+                              );
+                            } else if (bloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                              context.pushNamed(
+                                AppRoutes.productDetailsPage,
+                                arguments: {
                                   RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
-                                  RoutesData.productId: product.productId
-                                });
-                                //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
-                                // context.pushNamed(AppRoutes.diamondInfoPopupPage,
-                                //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
-                              } else {
-                                context.pushNamed(AppRoutes.productDetailsPage,
-                                    arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId});
-                              }
-                            },
-                            productDetails: ProductDetailsModel(
-                              suid: product.suid,
-                              productInfoClarityChat: ProductInfoClarityChat(
-                                perCts: product.finalPrice?.setCurrency,
-                                stock: product.location,
-                                commodity: product.commodity?.value,
-                                rapRate: product.rappaportPrice?.setCurrency,
-                                productId: product.productId,
-                                productName: product.name,
-                                shape: product.shape,
-                                lotNumber: product.productSku,
-                                lab: product.labs,
-                                rap: product.lsp?.setCurrency,
-                                discount: product.discountPercentageString,
-                                amount: product.finalPrice?.setCurrency,
-                                fluorescence: product.fluorescence,
-                                carat: product.ctsOrGms?.toString(),
-                                ct: product.cut,
-                                colour: product.color,
-                                clarity: product.clarity,
-                                certificateNumber: product.certificateNumber,
-                                measurements: product.measurements,
-                                cut: product.cut,
-                                polish: product.polish,
-                                tablePercentage: product.table,
-                                depthPercentage: product.depth,
-                              ),
+                                  RoutesData.productId: product.productId,
+                                },
+                              );
+                              //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+                              // context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                              //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                            } else {
+                              context.pushNamed(
+                                AppRoutes.productDetailsPage,
+                                arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId},
+                              );
+                            }
+                          },
+                          productDetails: ProductDetailsModel(
+                            suid: product.suid,
+                            productInfoClarityChat: ProductInfoClarityChat(
+                              perCts: product.finalPrice?.setCurrency,
+                              stock: product.location,
+                              commodity: product.commodity?.value,
+                              rapRate: product.rappaportPrice?.setCurrency,
                               productId: product.productId,
-                              imageUrl: product.imageUrl,
-                              isForAuction: product.isForAuction,
+                              productName: product.name,
+                              shape: product.shape,
+                              lotNumber: product.productSku,
+                              lab: product.labs,
+                              rap: product.lsp?.setCurrency,
+                              discount: product.discountPercentageString,
+                              amount: product.finalPrice?.setCurrency,
+                              fluorescence: product.fluorescence,
+                              carat: product.ctsOrGms?.toString(),
+                              ct: product.cut,
+                              colour: product.color,
+                              clarity: product.clarity,
+                              certificateNumber: product.certificateNumber,
+                              measurements: product.measurements,
+                              cut: product.cut,
+                              polish: product.polish,
+                              tablePercentage: product.table,
+                              depthPercentage: product.depth,
                             ),
-                            isAutoSizeText: false,
-                            isDiamond: bloc.screenIdentifier != ScreenIdentifier.productForGemstones,
-                          );
+                            productId: product.productId,
+                            imageUrl: product.imageUrl,
+                            isForAuction: product.isForAuction,
+                          ),
+                          isAutoSizeText: false,
+                          isDiamond: bloc.screenIdentifier != ScreenIdentifier.productForGemstones,
+                        );
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 17.h),
                 ),
@@ -621,7 +642,7 @@ class StoneListingScreen extends StatelessWidget {
                 //   separatorBuilder: (context, index) => SizedBox(height: 17.h),
                 // ),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
-                SizedBox(height: 17.h)
+                SizedBox(height: 17.h),
               ],
             );
           }
@@ -641,20 +662,20 @@ class StoneListingScreen extends StatelessWidget {
               BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
               Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => FilterScreen(
-                  onApply: (value) {
-                    if (value != null && value is List<FilterData>) {
-                      bloc.add(StoneListingFilterEvent(context: context, filterData: value));
-                    }
-                  },
-                ),
+                builder:
+                    (context) => FilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          bloc.add(StoneListingFilterEvent(context: context, filterData: value));
+                        }
+                      },
+                    ),
               );
             },
             onSortTap: () {
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => SortScreen(sortData: bloc.sortOptions),
-              ).then((onValue) {
+              Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: bloc.sortOptions)).then((
+                onValue,
+              ) {
                 if (onValue != null) {
                   bloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
                 }

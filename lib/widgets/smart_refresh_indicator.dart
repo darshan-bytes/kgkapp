@@ -49,15 +49,16 @@ class SmartRefreshIndicatorState extends State<SmartRefreshIndicator> {
   }
 
   Widget buildRefreshIndicator(
-      BuildContext context,
-      RefreshIndicatorMode refreshState,
-      double pulledExtent,
-      double refreshTriggerPullDistance,
-      double refreshIndicatorExtent,
-      AxisDirection axisDirection,
-      bool float,
-      Duration completeDuration,
-      bool isDone) {
+    BuildContext context,
+    RefreshIndicatorMode refreshState,
+    double pulledExtent,
+    double refreshTriggerPullDistance,
+    double refreshIndicatorExtent,
+    AxisDirection axisDirection,
+    bool float,
+    Duration completeDuration,
+    bool isDone,
+  ) {
     return Stack(
       children: <Widget>[
         Align(
@@ -66,11 +67,10 @@ class SmartRefreshIndicatorState extends State<SmartRefreshIndicator> {
             color: Colors.transparent,
             child: Padding(
               padding: EdgeInsetsDirectional.only(top: _isIndicatorAtTop ? pulledExtent : 0.0),
-              child: refreshState == RefreshIndicatorMode.refresh
-                  ? const CircularProgressIndicator.adaptive()
-                  : Icon(
-                      refreshState == RefreshIndicatorMode.drag ? Icons.refresh : Icons.done,
-                    ),
+              child:
+                  refreshState == RefreshIndicatorMode.refresh
+                      ? const CircularProgressIndicator.adaptive()
+                      : Icon(refreshState == RefreshIndicatorMode.drag ? Icons.refresh : Icons.done),
             ),
           ),
         ),

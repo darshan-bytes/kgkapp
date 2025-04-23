@@ -47,11 +47,10 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
   }
 
   Future<void> getSettingDetails(BuildContext context, String? settingId) async {
-    final Map<String, String> query = {
-      ApiKey.diamondSuid: diamondDataForDIY?.suid ?? '',
-    };
-    Either<ErrorResponse, DiyFinalDetailsModel>? response =
-        await AppRepository(context).getDiySettingDetails(settingId ?? '', query: query);
+    final Map<String, String> query = {ApiKey.diamondSuid: diamondDataForDIY?.suid ?? ''};
+    Either<ErrorResponse, DiyFinalDetailsModel>? response = await AppRepository(
+      context,
+    ).getDiySettingDetails(settingId ?? '', query: query);
     response?.fold(
       (l) {
         Utils.showMessage(l.message);
@@ -126,8 +125,9 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
   Future<void> _onCompleteProductAddToBagEvent(CompleteProductAddToBagEvent event, Emitter<CompleteProductState> emit) async {
     if (productDetails != null) {
       if (productDetails!.isAddedToCart) {
-        BlocProvider.of<LandingBloc>(event.context)
-            .add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: event.context, isForce: true));
+        BlocProvider.of<LandingBloc>(
+          event.context,
+        ).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: event.context, isForce: true));
         event.context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
       } else {
         appBloc.add(ProductAddToBagEvent(productDetails!, event.context));

@@ -48,19 +48,17 @@ class RetailerOrderListingScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(RetailerOrderListingBloc retailerOrderListingBloc) {
     return BlocBuilder<RetailerOrderListingBloc, RetailerOrderListingState>(
-      buildWhen: (previous, current) =>
-          current is RetailerOrderListingListLoadedState ||
-          current is ChangeRetailerOrderTabsState ||
-          current is ChangeRetailerOrderStoneTypeState,
+      buildWhen:
+          (previous, current) =>
+              current is RetailerOrderListingListLoadedState ||
+              current is ChangeRetailerOrderTabsState ||
+              current is ChangeRetailerOrderStoneTypeState,
       builder: (context, state) {
         if (state is RetailerOrderListingListLoadedState ||
             state is ChangeRetailerOrderTabsState ||
             state is ChangeRetailerOrderStoneTypeState) {
           return SafeArea(
-            child: FilterBottomActionBar(
-              controller: retailerOrderListingBloc.currentScrollController.controller,
-              onFilterTap: () {},
-            ),
+            child: FilterBottomActionBar(controller: retailerOrderListingBloc.currentScrollController.controller, onFilterTap: () {}),
           );
         } else {
           return const SizedBox.shrink();

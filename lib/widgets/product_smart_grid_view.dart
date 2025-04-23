@@ -32,13 +32,10 @@ class ProductSmartGridView extends StatelessWidget {
             alignment: WrapAlignment.start,
             spacing: (spacing ?? 12.w),
             runSpacing: (runSpacing ?? 12.h),
-            children: items.map((item) {
-              return SizedBox(
-                height: height,
-                width: itemWidth,
-                child: item,
-              );
-            }).toList(),
+            children:
+                items.map((item) {
+                  return SizedBox(height: height, width: itemWidth, child: item);
+                }).toList(),
           ),
         );
       },

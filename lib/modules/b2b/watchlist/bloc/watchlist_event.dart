@@ -86,11 +86,7 @@ final class WatchListUpdateItemEvent extends WatchlistEvent {
   final bool? isWatchlistDeleted;
   final int index;
 
-  const WatchListUpdateItemEvent({
-    this.watchlistData,
-    this.isWatchlistDeleted,
-    required this.index,
-  });
+  const WatchListUpdateItemEvent({this.watchlistData, this.isWatchlistDeleted, required this.index});
 
   @override
   List<Object?> get props => [watchlistData, index, isWatchlistDeleted];

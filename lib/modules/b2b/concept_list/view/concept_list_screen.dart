@@ -23,10 +23,7 @@ class ConceptListScreen extends StatelessWidget {
                       controller: conceptListBloc.searchController,
                       hintText: APPStrings.searchConcept.tr,
                       onFieldSubmitted: (value) => conceptListBloc.add(const ConceptListSearchEvent()),
-                      suffixIcon: SmartImage(
-                        path: AppImages.icSearchThin,
-                        padding: EdgeInsetsDirectional.all(14.w),
-                      ),
+                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(14.w)),
                       onTapOutside: (event) {},
                     ),
                     SizedBox(height: 24.h),
@@ -46,26 +43,29 @@ class ConceptListScreen extends StatelessWidget {
                               itemCount: conceptListBloc.conceptList.length,
                               itemBuilder: (context, index) {
                                 return BlocBuilder<ConceptListBloc, ConceptListState>(
-                                  buildWhen: (previous, current) =>
-                                      current is ConceptListLoadingMoreState || current is ConceptListLoadedMoreState,
+                                  buildWhen:
+                                      (previous, current) =>
+                                          current is ConceptListLoadingMoreState || current is ConceptListLoadedMoreState,
                                   builder: (context, state) {
                                     return Column(
                                       children: [
                                         B2BListingItem(
-                                          onTapMenuButton: conceptListBloc.conceptList[index].presentationList.isNotNullNorEmpty
-                                              ? () {
-                                                  _showConceptMoreDetailsPopup(conceptListBloc, context, index);
-                                                }
-                                              : null,
+                                          onTapMenuButton:
+                                              conceptListBloc.conceptList[index].presentationList.isNotNullNorEmpty
+                                                  ? () {
+                                                    _showConceptMoreDetailsPopup(conceptListBloc, context, index);
+                                                  }
+                                                  : null,
 
                                           /// No need to display concept detail bottom sheet as per the discussion with Sivaraj for now
                                           // onTap: () {
                                           //   showConceptDetailBottomSheet(context: context, concept: conceptListBloc.conceptList[index]);
                                           // },
                                           onTapCircleWithText: () {
-                                            context.pushNamed(AppRoutes.presentationPage, arguments: {
-                                              RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList
-                                            });
+                                            context.pushNamed(
+                                              AppRoutes.presentationPage,
+                                              arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList},
+                                            );
                                           },
                                           type: B2BListingType.conceptListingType,
                                           listingItemModel: conceptListBloc.conceptList[index],
@@ -104,13 +104,14 @@ class ConceptListScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (_) => AdvanceFilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        conceptListBloc.add(ConceptListFilterEvent(filterData: value, context: context));
-                      }
-                    },
-                  ),
+                  builder:
+                      (_) => AdvanceFilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            conceptListBloc.add(ConceptListFilterEvent(filterData: value, context: context));
+                          }
+                        },
+                      ),
                 );
               },
             );
@@ -144,10 +145,17 @@ class ConceptListScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildPopupOption(context, text: APPStrings.viewAllPresentation.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                context.pushNamed(AppRoutes.presentationPage,
-                    arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList});
-              }),
+              _buildPopupOption(
+                context,
+                text: APPStrings.viewAllPresentation.tr,
+                style: orderPopupStyle.optionTextStyle,
+                onTap: () {
+                  context.pushNamed(
+                    AppRoutes.presentationPage,
+                    arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList},
+                  );
+                },
+              ),
             ],
           ),
         );
@@ -183,13 +191,14 @@ class ConceptListScreen extends StatelessWidget {
     }
 
     Utils.showSmartModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return ConceptInfoPopupScreen(
-            imageList: dummy,
-            conceptNo: concept.strConceptNumber ?? '',
-            conceptDesc: concept.strDescription ?? '',
-          );
-        });
+      context: context,
+      builder: (context) {
+        return ConceptInfoPopupScreen(
+          imageList: dummy,
+          conceptNo: concept.strConceptNumber ?? '',
+          conceptDesc: concept.strDescription ?? '',
+        );
+      },
+    );
   }
 }

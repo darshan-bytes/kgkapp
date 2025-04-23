@@ -29,7 +29,7 @@ class OrionDataModel {
   final dynamic lsp;
   final bool? isAddedToCart;
 
-  factory OrionDataModel.fromJson(Map<String, dynamic> json){
+  factory OrionDataModel.fromJson(Map<String, dynamic> json) {
     return OrionDataModel(
       id: json["id"],
       ctsOrGms: json["cts_or_gms"].toDouble(),
@@ -64,7 +64,7 @@ class OrionDataModel {
   };
 
   @override
-  String toString(){
+  String toString() {
     return "$id, $ctsOrGms, $finalPrice, $discountPercentage, $totalPrice, $discountPrice, $originalPrice, $originalDiscountPrice, $priceCts, $rappaportPrice, $lsp, $isAddedToCart, ";
   }
 }

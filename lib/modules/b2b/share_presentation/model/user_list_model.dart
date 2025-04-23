@@ -7,13 +7,7 @@ class UserListModel {
   UserRole? role;
   UserAccessType? userAccessType;
 
-  UserListModel({
-    this.image,
-    this.name,
-    this.email,
-    this.role,
-    this.userAccessType,
-  });
+  UserListModel({this.image, this.name, this.email, this.role, this.userAccessType});
 
   @override
   bool operator ==(Object other) {
@@ -33,10 +27,7 @@ class UserRole {
   String? roleName;
   bool isModifiable;
 
-  UserRole({
-    this.roleName,
-    this.isModifiable = true,
-  });
+  UserRole({this.roleName, this.isModifiable = true});
 
   @override
   bool operator ==(Object other) {
@@ -51,10 +42,7 @@ class UserAccessType {
   String? id;
   String? accessType;
 
-  UserAccessType({
-    this.id,
-    this.accessType,
-  });
+  UserAccessType({this.id, this.accessType});
 
   @override
   bool operator ==(Object other) {

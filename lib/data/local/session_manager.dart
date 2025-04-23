@@ -132,9 +132,7 @@ class StorageManager {
 
   /// Store sorting data in local storage
   Future<void> setSortingData(Map<String, List<SortOptions>> data) async {
-    final serializedData = data.map(
-      (key, value) => MapEntry(key, value.map((e) => e.toJson()).toList()),
-    );
+    final serializedData = data.map((key, value) => MapEntry(key, value.map((e) => e.toJson()).toList()));
     await _box.put(_sortingData, serializedData);
   }
 
@@ -219,8 +217,9 @@ class StorageManager {
     }
     if (getNavigatorKeyContext.mounted) {
       BlocProvider.of<LandingBloc>(getNavigatorKeyContext).add(const LandingLogoutEvent());
-      BlocProvider.of<LandingBloc>(getNavigatorKeyContext)
-          .add(LandingChangeTabEvent(LandingBloc.homeIndex, context: getNavigatorKeyContext));
+      BlocProvider.of<LandingBloc>(
+        getNavigatorKeyContext,
+      ).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: getNavigatorKeyContext));
     }
     if (isSkipLogin) {
       await setIsSkipLogin(isSkipLogin);

@@ -18,11 +18,7 @@ class ProductCustomerReviewWidget extends StatelessWidget {
             Container(
               height: 4.w,
               width: 4.w,
-              decoration: BoxDecoration(
-                color: style.dotColor,
-                border: Border.all(color: style.dotColor),
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: style.dotColor, border: Border.all(color: style.dotColor), shape: BoxShape.circle),
             ),
             SizedBox(width: 8.w),
             SmartText(reviewDataModel.date, style: style.createdDateStyle),
@@ -55,22 +51,23 @@ class ProductCustomerReviewWidget extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: reviewDataModel.images?.length ?? 0,
-              itemBuilder: (context, index) => SmartImage(
-                path: reviewDataModel.images![index],
-                width: 50.w,
-                height: 50.w,
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Dialog.fullscreen(
-                        backgroundColor: Colors.transparent,
-                        child: ProductPhotoViewGallery(imageUrls: reviewDataModel.images ?? [], initialIndex: index),
+              itemBuilder:
+                  (context, index) => SmartImage(
+                    path: reviewDataModel.images![index],
+                    width: 50.w,
+                    height: 50.w,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog.fullscreen(
+                            backgroundColor: Colors.transparent,
+                            child: ProductPhotoViewGallery(imageUrls: reviewDataModel.images ?? [], initialIndex: index),
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
+                  ),
               separatorBuilder: (_, __) => SizedBox(width: 12.w),
             ),
           ),

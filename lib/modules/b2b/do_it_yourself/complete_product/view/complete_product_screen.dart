@@ -11,13 +11,7 @@ class CompleteProductScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is CompleteProductLoadedState,
       builder: (context, state) {
         return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: context.appBarHeight,
-            child: SmartAppBar(
-              title: bloc.productName,
-              onFavorite: () {},
-            ),
-          ),
+          appBar: PreferredSize(preferredSize: context.appBarHeight, child: SmartAppBar(title: bloc.productName, onFavorite: () {})),
           body: BlocBuilder<CompleteProductBloc, CompleteProductState>(
             buildWhen: (previous, current) => current is CompleteProductLoadedState,
             builder: (context, state) {
@@ -29,12 +23,9 @@ class CompleteProductScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DiyProgressWidget(selectedStep: 3, screenIdentifier: bloc.screenIdentifier),
-                    SmartCarouselSlider(
-                      imgList: bloc.imgList,
-                      controller: bloc.controller,
-                    ),
+                    SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
                     SizedBox(height: 40.h),
-                    _productDetail(style, bloc, context)
+                    _productDetail(style, bloc, context),
                   ],
                 ),
               );
@@ -84,9 +75,7 @@ class CompleteProductScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 10.w,
-                ),
+                SizedBox(width: 10.w),
                 Expanded(
                   flex: 5,
                   child: SmartButton(
@@ -124,9 +113,10 @@ class CompleteProductScreen extends StatelessWidget {
                   height: 4.w,
                   width: 4.w,
                   decoration: BoxDecoration(
-                      color: colors(context).color8C8C8C,
-                      border: Border.all(color: colors(context).color8C8C8C),
-                      borderRadius: BorderRadius.all(Radius.circular(50.r))),
+                    color: colors(context).color8C8C8C,
+                    border: Border.all(color: colors(context).color8C8C8C),
+                    borderRadius: BorderRadius.all(Radius.circular(50.r)),
+                  ),
                 ),
                 SizedBox(width: 8.w),
               ],
@@ -176,11 +166,12 @@ class CompleteProductScreen extends StatelessWidget {
                 onTap: () {
                   Utils.showSmartModalBottomSheet(
                     context: context,
-                    builder: (context) => QuotationRequestConfirmation(
-                      onContinueShopping: () {
-                        context.pop();
-                      },
-                    ),
+                    builder:
+                        (context) => QuotationRequestConfirmation(
+                          onContinueShopping: () {
+                            context.pop();
+                          },
+                        ),
                   );
                 },
               ),
@@ -193,7 +184,7 @@ class CompleteProductScreen extends StatelessWidget {
             children: [
               SmartImage(path: AppImages.icDiamond, height: 24.w, width: 24.w),
               SizedBox(width: 16.w),
-              SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle)
+              SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle),
             ],
           ),
           SizedBox(height: 16.h),
@@ -201,7 +192,7 @@ class CompleteProductScreen extends StatelessWidget {
             children: [
               const SmartImage(path: AppImages.icTruck),
               SizedBox(width: 16.w),
-              SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.diamondPurityStyle)
+              SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.diamondPurityStyle),
             ],
           ),
           SizedBox(height: 32.h),
@@ -218,10 +209,7 @@ class CompleteProductScreen extends StatelessWidget {
     final style = AppTheme.of(context).settingDetailScreenStyle;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SmartText(type, style: style.settingTypeStyle),
-        SmartText(value, style: style.settingValueStyle),
-      ],
+      children: [SmartText(type, style: style.settingTypeStyle), SmartText(value, style: style.settingValueStyle)],
     );
   }
 }

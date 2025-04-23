@@ -29,7 +29,7 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   AddressDetails? get defaultBillingAddress =>
       billingAddressList.firstWhereOrNull((element) => element.isDefaultBilling == true) ?? billingAddressList.firstOrNull;
 
-//TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+  //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
   // bool get isBillingAddressSameAsShippingAddress => defaultBillingAddress == defaultShippingAddress;
 
   Future<void> _onSavedAddressInitialEvent(SavedAddressInitialEvent event, Emitter<SavedAddressState> emit) async {
@@ -41,7 +41,7 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
     _isInitialised = true;
   }
 
-//TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+  //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
   // Future<void> _onSavedAddressChangeBillingAddressSameEvent(
   //     SavedAddressChangeBillingAddressSameEvent event, Emitter<SavedAddressState> emit) async {
   //   //TODO: Handle on change billing address same as shipping address
@@ -54,18 +54,23 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   // }
 
   Future<void> _onSavedAddressChangeShippingAddressEvent(
-      SavedAddressChangeShippingAddressEvent event, Emitter<SavedAddressState> emit) async {
-    Map<RoutesData, dynamic>? result =
-        await event.context.pushNamed(AppRoutes.shippingAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping});
+    SavedAddressChangeShippingAddressEvent event,
+    Emitter<SavedAddressState> emit,
+  ) async {
+    Map<RoutesData, dynamic>? result = await event.context.pushNamed(
+      AppRoutes.shippingAddressPage,
+      arguments: {RoutesData.isShippingAddress: event.isShipping},
+    );
     if (result != null) {
       bool isEdited = result[RoutesData.isEdited] ?? false;
       AddressDetails? address = result[RoutesData.addressDetails] as AddressDetails?;
       if (address != null) {
         int index = _addressList.indexWhere((element) => element.id == address.id);
         if (index != -1) {
-          _addressList[index] = event.isShipping
-              ? _addressList[index].copyWith(isShippingDefault: true)
-              : _addressList[index].copyWith(isBillingDefault: true);
+          _addressList[index] =
+              event.isShipping
+                  ? _addressList[index].copyWith(isShippingDefault: true)
+                  : _addressList[index].copyWith(isBillingDefault: true);
           _isInitialised = false;
           add(SavedAddressInitialEvent(event.context));
         }
@@ -78,14 +83,12 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
 
   Future<void> _onSavedAddressAddNewAddressEvent(SavedAddressAddNewAddressEvent event, Emitter<SavedAddressState> emit) async {
     try {
-      await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping}).then(
-        (value) {
-          if (value != null && value[RoutesData.addressDetails] is AddressDetails) {
-            _isInitialised = false;
-            add(SavedAddressInitialEvent(event.context));
-          }
-        },
-      );
+      await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping}).then((value) {
+        if (value != null && value[RoutesData.addressDetails] is AddressDetails) {
+          _isInitialised = false;
+          add(SavedAddressInitialEvent(event.context));
+        }
+      });
     } catch (e) {
       Utils.showMessage(e.toString());
     }
@@ -99,12 +102,15 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
     };
 
     final response = await AppRepository(context).updateAddress(defaultShippingAddress?.id ?? '', body: body);
-    return response?.fold((l) {
-          Utils.showMessage(l.message);
-          return false;
-        }, (CommonResponse r) {
-          return true;
-        }) ??
+    return response?.fold(
+          (l) {
+            Utils.showMessage(l.message);
+            return false;
+          },
+          (CommonResponse r) {
+            return true;
+          },
+        ) ??
         false;
   }
 }

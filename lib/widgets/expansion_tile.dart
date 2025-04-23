@@ -105,9 +105,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
   Widget _buildChildren(BuildContext context, Widget? child) {
     final Color titleColor = _headerColor!.evaluate(_easeInAnimation!)!;
     return Container(
-      decoration: BoxDecoration(
-        color: _backgroundColor?.evaluate(_easeOutAnimation!) ?? Colors.transparent,
-      ),
+      decoration: BoxDecoration(color: _backgroundColor?.evaluate(_easeOutAnimation!) ?? Colors.transparent),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,20 +116,11 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
               onTap: widget.onExpansionChanged == null ? null : toggle,
               contentPadding: EdgeInsetsDirectional.zero,
               leading: widget.leading,
-              title: DefaultTextStyle(
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: titleColor),
-                child: widget.title,
-              ),
+              title: DefaultTextStyle(style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: titleColor), child: widget.title),
               trailing: _buildTrailing(),
             ),
           ),
-          ClipRect(
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              heightFactor: _easeInAnimation?.value,
-              child: child,
-            ),
-          ),
+          ClipRect(child: Align(alignment: AlignmentDirectional.centerStart, heightFactor: _easeInAnimation?.value, child: child)),
         ],
       ),
     );

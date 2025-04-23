@@ -9,19 +9,11 @@ class PddPreviewHistoryScreen extends StatelessWidget {
     final style = AppTheme.of(context).pddVersionHistoryStyle;
     return Scaffold(
       backgroundColor: style.backgroundColor,
-      appBar: SmartAppBar(
-        title: APPStrings.versionHistory.tr,
-      ),
+      appBar: SmartAppBar(title: APPStrings.versionHistory.tr),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsDirectional.all(16.0.w),
-          child: Column(
-            children: [
-              _versionHistoryDropdown(pddPreviewBloc, style),
-              SizedBox(height: 16.h),
-              _buildWebView(pddPreviewBloc),
-            ],
-          ),
+          child: Column(children: [_versionHistoryDropdown(pddPreviewBloc, style), SizedBox(height: 16.h), _buildWebView(pddPreviewBloc)]),
         ),
       ),
     );
@@ -34,12 +26,10 @@ class PddPreviewHistoryScreen extends StatelessWidget {
         return SmartDropDown<PddVersionHistoryModel>(
           selectedItem: pddPreviewBloc.selectedversion,
           backgroundColor: style.backgroundColor,
-          items: pddPreviewBloc.versionHistoryList.map((PddVersionHistoryModel versions) {
-            return SmartDropDownItem<PddVersionHistoryModel>(
-              value: versions,
-              title: versions.historyDateTime ?? '',
-            );
-          }).toList(),
+          items:
+              pddPreviewBloc.versionHistoryList.map((PddVersionHistoryModel versions) {
+                return SmartDropDownItem<PddVersionHistoryModel>(value: versions, title: versions.historyDateTime ?? '');
+              }).toList(),
           onChanged: (value) {
             if (value != null) {
               pddPreviewBloc.add(VersionHistoryChangeEvent(pddVersionHistoryModel: value));
@@ -57,9 +47,7 @@ class PddPreviewHistoryScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is PddPreviewLoadedState,
           builder: (context, state) {
             if (state is PddPreviewLoadedState) {
-              return WebViewWidget(
-                controller: pddPreviewBloc.webViewController,
-              );
+              return WebViewWidget(controller: pddPreviewBloc.webViewController);
             } else {
               return const SmartCircularProgressIndicator();
             }

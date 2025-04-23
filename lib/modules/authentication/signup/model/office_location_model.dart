@@ -2,10 +2,7 @@ class OfficeLocation {
   String? name;
   String? code;
 
-  OfficeLocation({
-    required this.name,
-    required this.code,
-  });
+  OfficeLocation({required this.name, required this.code});
 
   OfficeLocation.fromJson(Map<String, dynamic> json) {
     code = json['code'];

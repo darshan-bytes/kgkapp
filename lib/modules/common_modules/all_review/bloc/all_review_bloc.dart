@@ -57,17 +57,22 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
         List<ProductReviewModel> localList = data.dataList ?? [];
         productReviewListAPI.addAll(localList);
         for (ProductReviewModel e in localList) {
-          reviewList.add(ReviewDataModel(
-            id: e.id,
-            userName: e.userIdDetails?.fullName ?? '',
-            date: e.createdAt?.changeDateFormat(
-                    inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
-                '',
-            rating: e.rating ?? 0,
-            title: e.title ?? '',
-            review: e.description ?? '',
-            images: e.displayImage ?? [],
-          ));
+          reviewList.add(
+            ReviewDataModel(
+              id: e.id,
+              userName: e.userIdDetails?.fullName ?? '',
+              date:
+                  e.createdAt?.changeDateFormat(
+                    inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
+                    outputDateFormat: DateFormatter.dateFormatDDMMYYYY,
+                  ) ??
+                  '',
+              rating: e.rating ?? 0,
+              title: e.title ?? '',
+              review: e.description ?? '',
+              images: e.displayImage ?? [],
+            ),
+          );
         }
         paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       },

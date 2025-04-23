@@ -15,10 +15,7 @@ class TrackOrderBottomSheet extends StatelessWidget {
       constraints: BoxConstraints(minHeight: 580.h),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(16.r),
-            topEnd: Radius.circular(16.r),
-          ),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
           color: style.backgroundColor,
         ),
         child: SafeArea(
@@ -63,54 +60,30 @@ class TrackOrderBottomSheet extends StatelessWidget {
 
   Widget _buildOrderDetailsInfoCard(TrackOrderBottomSheetStyle style) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.r),
-        color: style.orderInfoBackgroundColor,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.r), color: style.orderInfoBackgroundColor),
       padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartText(
-            "Order #14567",
-            style: style.orderIdStyle,
-          ),
+          SmartText("Order #14567", style: style.orderIdStyle),
           SizedBox(height: 8.h),
           Material(
             child: ListTile(
-                contentPadding: EdgeInsetsDirectional.zero,
-                isThreeLine: true,
-                leading: SmartImage(
-                  path: "https://i.ibb.co/8xM4BxQ/image-7.png",
-                  height: 48.w,
-                  width: 48.w,
-                ),
-                dense: true,
-                horizontalTitleGap: 12.w,
-                title: SmartText(
-                  "Diamond Vine Ring in 18k Gold",
-                  style: style.imageTitleStyle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: Row(
-                  children: [
-                    Flexible(
-                      child: SmartText(
-                        'Martin Flyer',
-                        style: style.imageSubTitleStyle,
-                      ),
-                    ),
-                    SizedBox(width: 16.w),
-                    Flexible(
-                      child: SmartText(
-                        'DERS01XXSRR',
-                        style: style.imageSubTitleStyle,
-                      ),
-                    ),
-                  ],
-                ),
-                trailing: SmartText("x15", style: style.quantityStyle)),
+              contentPadding: EdgeInsetsDirectional.zero,
+              isThreeLine: true,
+              leading: SmartImage(path: "https://i.ibb.co/8xM4BxQ/image-7.png", height: 48.w, width: 48.w),
+              dense: true,
+              horizontalTitleGap: 12.w,
+              title: SmartText("Diamond Vine Ring in 18k Gold", style: style.imageTitleStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+              subtitle: Row(
+                children: [
+                  Flexible(child: SmartText('Martin Flyer', style: style.imageSubTitleStyle)),
+                  SizedBox(width: 16.w),
+                  Flexible(child: SmartText('DERS01XXSRR', style: style.imageSubTitleStyle)),
+                ],
+              ),
+              trailing: SmartText("x15", style: style.quantityStyle),
+            ),
           ),
         ],
       ),
@@ -123,14 +96,12 @@ class TrackOrderBottomSheet extends StatelessWidget {
       currentStep: orderDetailBloc.currentTrackOrderIndex,
       steps: [
         SmartStep(
-            title: 'Order placed',
-            content: SmartText("Order placed from customer\n23/03/2023", style: smartTileLineStepperStyle.subtitleStyle)),
+          title: 'Order placed',
+          content: SmartText("Order placed from customer\n23/03/2023", style: smartTileLineStepperStyle.subtitleStyle),
+        ),
         SmartStep(
           title: 'Product ready to dispatch',
-          content: SmartText(
-            "Shipped and ready for pickup\n24/03/2023",
-            style: smartTileLineStepperStyle.subtitleStyle,
-          ),
+          content: SmartText("Shipped and ready for pickup\n24/03/2023", style: smartTileLineStepperStyle.subtitleStyle),
         ),
         SmartStep(
           title: 'Arrived at Mumbai facility',

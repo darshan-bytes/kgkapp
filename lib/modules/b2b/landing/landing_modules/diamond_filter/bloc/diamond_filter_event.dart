@@ -67,6 +67,7 @@ final class FilterPriceRangeChangedEvent extends DiamondFilterEvent {
   final SfRangeValues values;
   final bool isFromTextField;
   final bool isMin;
+
   const FilterPriceRangeChangedEvent(this.values, {this.isFromTextField = false, this.isMin = true});
 
   @override

@@ -9,14 +9,15 @@ class AddressModel {
   bool isExpanded;
   GlobalKey<SmartExpansionTileState> addressDetailsKey;
 
-  AddressModel(
-      {this.storeName,
-      this.storeDistance,
-      this.storeAddress,
-      this.isExpanded = false,
-      required this.addressDetailsKey,
-      this.latitude,
-      this.longitude});
+  AddressModel({
+    this.storeName,
+    this.storeDistance,
+    this.storeAddress,
+    this.isExpanded = false,
+    required this.addressDetailsKey,
+    this.latitude,
+    this.longitude,
+  });
 
   @override
   bool operator ==(Object other) =>

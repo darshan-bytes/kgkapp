@@ -2,10 +2,7 @@ class DashboardDateRangeDataModel {
   String? title;
   int? id;
 
-  DashboardDateRangeDataModel({
-    this.title,
-    this.id,
-  });
+  DashboardDateRangeDataModel({this.title, this.id});
 
   @override
   bool operator ==(Object other) {

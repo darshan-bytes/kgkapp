@@ -123,21 +123,25 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
     };
 
     /// Makes the API request and handles the response.
-    Either<ErrorResponse, PaginationData<DesignLibraryListItemDataModel>>? response =
-        await AppRepository(context).getDesignLibraryList(query: params);
+    Either<ErrorResponse, PaginationData<DesignLibraryListItemDataModel>>? response = await AppRepository(
+      context,
+    ).getDesignLibraryList(query: params);
 
-    response?.fold((error) {
-      if (error.message.isNotNullNorEmpty) {
-        Utils.showMessage(error.message);
-      }
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
 
-      /// Show the total number of records in the UI side
-      totalFilteredRecords = success.filteredRecords;
-      final localList = success.dataList ?? [];
-      designLibraryList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
-    });
+        /// Show the total number of records in the UI side
+        totalFilteredRecords = success.filteredRecords;
+        final localList = success.dataList ?? [];
+        designLibraryList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
+      },
+    );
     paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     emit(const DesignLibraryLoadedState());
   }
@@ -178,8 +182,11 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   }
 
   /// Handles applying a filter to the design library.
-  Future<void> _handleApplyFilter(
-      {required BuildContext context, required Emitter<DesignLibraryState> emit, required List<FilterData> appliedFilterData}) async {
+  Future<void> _handleApplyFilter({
+    required BuildContext context,
+    required Emitter<DesignLibraryState> emit,
+    required List<FilterData> appliedFilterData,
+  }) async {
     emit(const DesignLibraryLoadingState());
     paginationScrollController.pullToRefresh();
     designLibraryList.clear();
@@ -206,10 +213,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   }
 
   Future<void> onTapSortOption(BuildContext context) async {
-    final result = await Utils.showSmartModalBottomSheet(
-      context: context,
-      builder: (context) => SortScreen(sortData: sortOptions),
-    );
+    final result = await Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: sortOptions));
 
     if (result != null) {
       add(DesignLibrarySortEvent(context: context, sortData: result[RoutesData.sortData]));
@@ -217,8 +221,9 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   }
 
   Future<void> _setupFilters(BuildContext context) async {
-    final List<FilterOptionModel> tempFilterData =
-        await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.designLibrary);
+    final List<FilterOptionModel> tempFilterData = await BlocProvider.of<AppBloc>(
+      context,
+    ).getFilterOptionList(context, AppConst.designLibrary);
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {
       if (filterOption.data.isNotEmpty) {

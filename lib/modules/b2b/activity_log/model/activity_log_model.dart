@@ -5,11 +5,7 @@ class ActivityLogModel {
   String? logDate;
   List<ActivityModel>? activities = [];
 
-  ActivityLogModel({
-    this.id,
-    this.logDate,
-    this.activities,
-  });
+  ActivityLogModel({this.id, this.logDate, this.activities});
 
   @override
   bool operator ==(Object other) {
@@ -29,11 +25,7 @@ class ActivityModel {
   String? time;
   String? activity;
 
-  ActivityModel({
-    this.id,
-    this.time,
-    this.activity,
-  });
+  ActivityModel({this.id, this.time, this.activity});
 
   @override
   bool operator ==(Object other) {

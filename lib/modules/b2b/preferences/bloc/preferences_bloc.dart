@@ -39,7 +39,8 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     currencyList = StorageManager().getCurrencyList();
 
     selectedCountry = countryList.first;
-    selectedLanguage = languageList.firstWhereOrNull((element) => element == StorageManager().getLocale()) ??
+    selectedLanguage =
+        languageList.firstWhereOrNull((element) => element == StorageManager().getLocale()) ??
         languageList.firstWhereOrNull((e) => e.isDefault == true) ??
         languageList.firstWhereOrNull((e) => e.code == APPStrings.languageEn);
     selectedCurrency =
@@ -58,15 +59,18 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
       ApiKey.filters: {ApiKey.dynamicObject: {}},
       ApiKey.pagination: {ApiKey.limit: 50, ApiKey.page: 1},
       ApiKey.search: "",
-      ApiKey.sort: {ApiKey.field: "", ApiKey.dir: ""}
+      ApiKey.sort: {ApiKey.field: "", ApiKey.dir: ""},
     };
 
     await AppRepository(event.context).getLanguageList(body: body).then((response) {
-      response?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (data) {
-        languageList = data.languageData;
-      });
+      response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (data) {
+          languageList = data.languageData;
+        },
+      );
     });
   }
 
@@ -100,9 +104,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         context: event.context,
         callback: () {
           event.context.pop();
-          Utils.showMessage(
-            APPStrings.preferencesSaved.tr,
-          );
+          Utils.showMessage(APPStrings.preferencesSaved.tr);
         },
       ),
     );

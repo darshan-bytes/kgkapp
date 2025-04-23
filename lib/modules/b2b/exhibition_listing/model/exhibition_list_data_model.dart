@@ -22,27 +22,28 @@ class ExhibitionListDataModel {
   UserIdDetails? createdByDetails;
   UserIdDetails? updatedByDetails;
 
-  ExhibitionListDataModel(
-      {this.name,
-      this.description,
-      this.startDate,
-      this.endDate,
-      this.startTime,
-      this.endTime,
-      this.venue,
-      this.createdBy,
-      this.updatedBy,
-      this.exhibitionType,
-      this.fileReferenceId,
-      this.status,
-      this.id,
-      this.boothInfo,
-      this.cscCode,
-      this.city,
-      this.state,
-      this.fileUrl,
-      this.createdByDetails,
-      this.updatedByDetails});
+  ExhibitionListDataModel({
+    this.name,
+    this.description,
+    this.startDate,
+    this.endDate,
+    this.startTime,
+    this.endTime,
+    this.venue,
+    this.createdBy,
+    this.updatedBy,
+    this.exhibitionType,
+    this.fileReferenceId,
+    this.status,
+    this.id,
+    this.boothInfo,
+    this.cscCode,
+    this.city,
+    this.state,
+    this.fileUrl,
+    this.createdByDetails,
+    this.updatedByDetails,
+  });
 
   ExhibitionListDataModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -98,18 +99,9 @@ class ExhibitionListDataModel {
 }
 
 extension ExhibitionListDataExtension on ExhibitionListDataModel {
-  String get fullDate => "${startDate?.changeDateFormat(
-        outputDateFormat: DateFormatter.dateFormatDD,
-        inputDateFormat: DateFormatter.dateFormatYYYYMMDD,
-      )} - ${endDate?.changeDateFormat(
-        outputDateFormat: DateFormatter.dateFormatDDMMMYY,
-        inputDateFormat: DateFormatter.dateFormatYYYYMMDD,
-      )}";
-  String get fullTime => "${startTime?.changeDateFormat(
-        outputDateFormat: DateFormatter.timeFormatHA,
-        inputDateFormat: DateFormatter.timeFormat,
-      )} - ${endTime?.changeDateFormat(
-        outputDateFormat: DateFormatter.timeFormatHA,
-        inputDateFormat: DateFormatter.timeFormat,
-      )}";
+  String get fullDate =>
+      "${startDate?.changeDateFormat(outputDateFormat: DateFormatter.dateFormatDD, inputDateFormat: DateFormatter.dateFormatYYYYMMDD)} - ${endDate?.changeDateFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY, inputDateFormat: DateFormatter.dateFormatYYYYMMDD)}";
+
+  String get fullTime =>
+      "${startTime?.changeDateFormat(outputDateFormat: DateFormatter.timeFormatHA, inputDateFormat: DateFormatter.timeFormat)} - ${endTime?.changeDateFormat(outputDateFormat: DateFormatter.timeFormatHA, inputDateFormat: DateFormatter.timeFormat)}";
 }

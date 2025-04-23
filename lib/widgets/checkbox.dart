@@ -69,28 +69,26 @@ class SmartCheckbox extends StatelessWidget {
             SizedBox(
               height: height ?? 20.w,
               width: width ?? 20.w,
-              child: isRadio
-                  ? SmartImage(
-                      path: value ? AppImages.icRadioSelected : AppImages.icRadio,
-                      height: height ?? 20.w,
-                      width: width ?? 20.w,
-                    )
-                  : Checkbox(
-                      activeColor: style.activeColor,
-                      checkColor: style.checkColor,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
-                      side: BorderSide(color: borderColor ?? style.borderColor),
-                      value: value,
-                      onChanged: (bool? newValue) {
-                        onChanged(newValue);
-                      },
-                    ),
+              child:
+                  isRadio
+                      ? SmartImage(
+                        path: value ? AppImages.icRadioSelected : AppImages.icRadio,
+                        height: height ?? 20.w,
+                        width: width ?? 20.w,
+                      )
+                      : Checkbox(
+                        activeColor: style.activeColor,
+                        checkColor: style.checkColor,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
+                        side: BorderSide(color: borderColor ?? style.borderColor),
+                        value: value,
+                        onChanged: (bool? newValue) {
+                          onChanged(newValue);
+                        },
+                      ),
             ),
             SizedBox(width: spaceBetweenLabelAndCheckbox ?? 6.w),
-            if (label != null)
-              Flexible(
-                child: SmartText(label, style: style.textStyle.merge(labelStyle)),
-              )
+            if (label != null) Flexible(child: SmartText(label, style: style.textStyle.merge(labelStyle))),
           ],
         ),
       ),

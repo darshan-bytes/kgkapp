@@ -52,19 +52,22 @@ class ApplyPromoCodeBloc extends Bloc<ApplyPromoCodeEvent, ApplyPromoCodeState> 
   Future<void> fetchApplyPromoCodeList(BuildContext context, Emitter<ApplyPromoCodeState> emit) async {
     Either<ErrorResponse, CommonResponse<ApplyPromoCodeModel>>? response = await AppRepository(context).fetchPromoCodeList();
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-      emit(ApplyPromoCodeLoadedState());
-    }, (CommonResponse<ApplyPromoCodeModel> success) {
-      final List<ApplyPromoCodeModel> data = success.responseData as List<ApplyPromoCodeModel>;
-      if (data.isNotNullNorEmpty) {
-        applyPromoCodeList = data;
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+        emit(ApplyPromoCodeLoadedState());
+      },
+      (CommonResponse<ApplyPromoCodeModel> success) {
+        final List<ApplyPromoCodeModel> data = success.responseData as List<ApplyPromoCodeModel>;
+        if (data.isNotNullNorEmpty) {
+          applyPromoCodeList = data;
 
-        /// Identifies for the selected promo code and set it in the state
-        appliedPromoCode = applyPromoCodeList.firstWhereOrNull((e) => promoCode != null && e.title == promoCode?.title);
-      }
-      emit(ApplyPromoCodeLoadedState());
-    });
+          /// Identifies for the selected promo code and set it in the state
+          appliedPromoCode = applyPromoCodeList.firstWhereOrNull((e) => promoCode != null && e.title == promoCode?.title);
+        }
+        emit(ApplyPromoCodeLoadedState());
+      },
+    );
   }
 
   /// Handles the ApplyPromoCodeEvent
@@ -72,10 +75,7 @@ class ApplyPromoCodeBloc extends Bloc<ApplyPromoCodeEvent, ApplyPromoCodeState> 
     emit(ApplyPromoCodeLoadingState());
     String id = StorageManager().getBagId() ?? "";
     if (id.isEmpty) return;
-    final Map<String, dynamic> body = {
-      ApiKey.promoCode_: event.promoCode,
-      ApiKey.cartId_: id,
-    };
+    final Map<String, dynamic> body = {ApiKey.promoCode_: event.promoCode, ApiKey.cartId_: id};
     final response = await AppRepository(event.context).applyPromoCode(body);
     await response?.fold(
       (ErrorResponse l) {

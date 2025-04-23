@@ -3,10 +3,7 @@ import 'package:kgk/kgk.dart';
 class AllBidsBottomSheet extends StatelessWidget {
   final List<Map<String, dynamic>> recentBidList;
 
-  const AllBidsBottomSheet({
-    super.key,
-    required this.recentBidList,
-  });
+  const AllBidsBottomSheet({super.key, required this.recentBidList});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +13,7 @@ class AllBidsBottomSheet extends StatelessWidget {
       constraints: BoxConstraints(maxHeight: 608.h),
       child: Container(
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: style.whiteColor,
-        ),
+        decoration: BoxDecoration(color: style.whiteColor),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -58,10 +53,7 @@ class AllBidsBottomSheet extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SmartText(
-            APPStrings.allBids.tr,
-            style: style.allBidsTitleStyle,
-          ),
+          SmartText(APPStrings.allBids.tr, style: style.allBidsTitleStyle),
           SmartImage(
             path: AppImages.icCross,
             height: 24.w,
@@ -84,29 +76,22 @@ class AllBidsBottomSheet extends StatelessWidget {
           const SmartImage(path: AppImages.icCalendar),
           SizedBox(width: 8.w),
           Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  SmartText(
-                    labelText,
-                    style: style.auctionTimerStyle,
+            flex: 1,
+            child: Row(
+              children: [
+                SmartText(labelText, style: style.auctionTimerStyle),
+                SizedBox(width: 5.w),
+                if (isMyBid)
+                  Container(
+                    decoration: BoxDecoration(color: style.myBidBackgroundColor, borderRadius: BorderRadius.circular(23.r)),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
+                    child: SmartText(APPStrings.myBid.tr, style: style.myBidTextStyle),
                   ),
-                  SizedBox(width: 5.w),
-                  if (isMyBid)
-                    Container(
-                        decoration: BoxDecoration(color: style.myBidBackgroundColor, borderRadius: BorderRadius.circular(23.r)),
-                        padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
-                        child: SmartText(
-                          APPStrings.myBid.tr,
-                          style: style.myBidTextStyle,
-                        ))
-                ],
-              )),
-          SizedBox(width: 8.w),
-          SmartText(
-            value,
-            style: style.recentBidValueStyle,
+              ],
+            ),
           ),
+          SizedBox(width: 8.w),
+          SmartText(value, style: style.recentBidValueStyle),
         ],
       ),
     );

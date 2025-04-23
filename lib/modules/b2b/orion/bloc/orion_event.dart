@@ -52,10 +52,10 @@ final class OrionDiamondPropertiesChangedEvent extends OrionEvent {
   final int diamondPropertiesIndex;
   final int propertiesIndex;
 
-  const OrionDiamondPropertiesChangedEvent(this.context,this.diamondPropertiesIndex, this.propertiesIndex);
+  const OrionDiamondPropertiesChangedEvent(this.context, this.diamondPropertiesIndex, this.propertiesIndex);
 
   @override
-  List<Object> get props => [context,diamondPropertiesIndex, propertiesIndex];
+  List<Object> get props => [context, diamondPropertiesIndex, propertiesIndex];
 }
 
 final class OrionPriceRangeEditEvent extends OrionEvent {
@@ -81,30 +81,30 @@ final class OrionDiamondChangePointIndexEvent extends OrionEvent {
   final BuildContext context;
   final int index;
 
-  const OrionDiamondChangePointIndexEvent({required this.context,required this.index});
+  const OrionDiamondChangePointIndexEvent({required this.context, required this.index});
 
   @override
-  List<Object> get props => [context,index];
+  List<Object> get props => [context, index];
 }
 
 final class OrionDiamondChartTouchInteractionUpEvent extends OrionEvent {
   final BuildContext context;
   final ChartTouchInteractionArgs tapArgs;
 
-  const OrionDiamondChartTouchInteractionUpEvent({required this.context,required this.tapArgs});
+  const OrionDiamondChartTouchInteractionUpEvent({required this.context, required this.tapArgs});
 
   @override
-  List<Object> get props => [context,tapArgs];
+  List<Object> get props => [context, tapArgs];
 }
 
 final class OrionDiamondChartTouchInteractionDownEvent extends OrionEvent {
   final BuildContext context;
   final ChartTouchInteractionArgs tapArgs;
 
-  const OrionDiamondChartTouchInteractionDownEvent({required this.context,required this.tapArgs});
+  const OrionDiamondChartTouchInteractionDownEvent({required this.context, required this.tapArgs});
 
   @override
-  List<Object> get props => [context,tapArgs];
+  List<Object> get props => [context, tapArgs];
 }
 
 final class OrionDiamondChartTouchInteractionMoveEvent extends OrionEvent {
@@ -120,7 +120,7 @@ final class OrionDiamondUpdatePinPositionEvent extends OrionEvent {
   final BuildContext context;
   final DragUpdateDetails dragUpdateDetails;
 
-  const OrionDiamondUpdatePinPositionEvent({required this.context,required this.dragUpdateDetails});
+  const OrionDiamondUpdatePinPositionEvent({required this.context, required this.dragUpdateDetails});
 
   @override
   List<Object> get props => [context, dragUpdateDetails];
@@ -156,7 +156,7 @@ class OrionDiamondOnPointTapEvent extends OrionEvent {
   final int index;
   final ChartPointDetails pointDetails;
 
-  const OrionDiamondOnPointTapEvent({required this.context,required this.index, required this.pointDetails});
+  const OrionDiamondOnPointTapEvent({required this.context, required this.index, required this.pointDetails});
 
   @override
   List<Object> get props => [context, index, pointDetails];

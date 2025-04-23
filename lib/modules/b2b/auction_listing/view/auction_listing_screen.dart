@@ -26,8 +26,9 @@ class AuctionListingScreen extends StatelessWidget {
   Widget _getBody(AuctionListingBloc auctionListingBloc) {
     return SafeArea(
       child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
-        buildWhen: (previous, current) =>
-            current is AuctionListingLoadedState || current is AuctionListingReloadingState || current is AuctionListingLoadingState,
+        buildWhen:
+            (previous, current) =>
+                current is AuctionListingLoadedState || current is AuctionListingReloadingState || current is AuctionListingLoadingState,
         builder: (context, state) {
           if (state is AuctionListingLoadingState) {
             return const SmartCircularProgressIndicator();
@@ -91,10 +92,7 @@ class AuctionListingScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
-                    return AuctionListItem(
-                      auctionListModel: auctionListModel,
-                      stoneTypeImage: AppImages.icRingThin,
-                    );
+                    return AuctionListItem(auctionListModel: auctionListModel, stoneTypeImage: AppImages.icRingThin);
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 16.h),
                 ),
@@ -119,13 +117,14 @@ class AuctionListingScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => AdvanceFilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        auctionListingBloc.add(AuctionListFilterEvent(filterData: value, context: context));
-                      }
-                    },
-                  ),
+                  builder:
+                      (context) => AdvanceFilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            auctionListingBloc.add(AuctionListFilterEvent(filterData: value, context: context));
+                          }
+                        },
+                      ),
                 );
               },
             ),

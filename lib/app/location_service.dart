@@ -29,40 +29,6 @@ class LocationService with WidgetsBindingObserver {
       // Check location services are enabled
       if (!await geoloc.Geolocator.isLocationServiceEnabled()) {
         await Utils.showPermissionDeniedDialog(
-            context: context,
-            onOkPressed: (context) async {
-              await context.pop();
-              geoloc.Geolocator.openAppSettings();
-            },
-            onCancelPressed: (context) async {
-              await context.pop();
-            });
-        return null;
-      }
-
-      // Request and check permissions
-      if (!await _checkAndRequestPermission()) {
-        await Utils.showPermissionDeniedDialog(
-            context: context,
-            onOkPressed: (context) async {
-              await context.pop();
-              geoloc.Geolocator.openAppSettings();
-            },
-            onCancelPressed: (context) async {
-              await context.pop();
-            });
-        return null;
-      }
-
-      // Fetch current position with high accuracy
-      return await geoloc.Geolocator.getCurrentPosition(
-        locationSettings: const geoloc.LocationSettings(
-          accuracy: geoloc.LocationAccuracy.high,
-        ),
-      );
-    } catch (e) {
-      debugPrint("Error fetching location: $e");
-      await Utils.showPermissionDeniedDialog(
           context: context,
           onOkPressed: (context) async {
             await context.pop();
@@ -70,7 +36,42 @@ class LocationService with WidgetsBindingObserver {
           },
           onCancelPressed: (context) async {
             await context.pop();
-          });
+          },
+        );
+        return null;
+      }
+
+      // Request and check permissions
+      if (!await _checkAndRequestPermission()) {
+        await Utils.showPermissionDeniedDialog(
+          context: context,
+          onOkPressed: (context) async {
+            await context.pop();
+            geoloc.Geolocator.openAppSettings();
+          },
+          onCancelPressed: (context) async {
+            await context.pop();
+          },
+        );
+        return null;
+      }
+
+      // Fetch current position with high accuracy
+      return await geoloc.Geolocator.getCurrentPosition(
+        locationSettings: const geoloc.LocationSettings(accuracy: geoloc.LocationAccuracy.high),
+      );
+    } catch (e) {
+      debugPrint("Error fetching location: $e");
+      await Utils.showPermissionDeniedDialog(
+        context: context,
+        onOkPressed: (context) async {
+          await context.pop();
+          geoloc.Geolocator.openAppSettings();
+        },
+        onCancelPressed: (context) async {
+          await context.pop();
+        },
+      );
       return null;
     }
   }

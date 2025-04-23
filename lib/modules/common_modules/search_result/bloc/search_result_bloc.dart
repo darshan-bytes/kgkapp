@@ -58,12 +58,13 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     newlyLaunchedItems.clear();
     if (!isNoDataFound) {
       productList = List.generate(
-          20,
-          (index) => ProductDetailsModel(
-                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                name: "Diamond Vine Ring in 18k Rose Gold",
-                originalPrice: '\$5,000.00',
-              ));
+        20,
+        (index) => ProductDetailsModel(
+          imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+          name: "Diamond Vine Ring in 18k Rose Gold",
+          originalPrice: '\$5,000.00',
+        ),
+      );
       refreshCompleter.complete(true);
     } else {
       paginationScrollController.isPageLoaded.complete(true);
@@ -76,23 +77,18 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
           "https://i.ibb.co/S7q1RKQ/4.png",
           "https://i.ibb.co/gFLXVS0/3.png",
         ];
-        shopDiamondsByShapeList.add(
-          AuctionListModel(
-            id: index.toString(),
-            name: nameList[index],
-            imageUrl: imageList[index],
-          ),
-        );
+        shopDiamondsByShapeList.add(AuctionListModel(id: index.toString(), name: nameList[index], imageUrl: imageList[index]));
       });
       List.generate(
-          5,
-          (index) => newlyLaunchedItems.add(
-                ProductDetailsModel(
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                  name: "Diamond Vine Ring in 18k Rose Gold",
-                  originalPrice: '\$5,000.00',
-                ),
-              ));
+        5,
+        (index) => newlyLaunchedItems.add(
+          ProductDetailsModel(
+            imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+            name: "Diamond Vine Ring in 18k Rose Gold",
+            originalPrice: '\$5,000.00',
+          ),
+        ),
+      );
     }
 
     emit(const SearchResultLoadedState());
@@ -108,14 +104,15 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     emit(const SearchResultLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     List.generate(
-        20,
-        (index) => productList.add(
-              ProductDetailsModel(
-                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                name: "Diamond Vine Ring in 18k Rose Gold",
-                originalPrice: '\$5,000.00',
-              ),
-            ));
+      20,
+      (index) => productList.add(
+        ProductDetailsModel(
+          imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+          name: "Diamond Vine Ring in 18k Rose Gold",
+          originalPrice: '\$5,000.00',
+        ),
+      ),
+    );
     paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     emit(SearchResultLoadedMoreState(event.currentPage + 1));
   }
@@ -125,12 +122,13 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     await Future.delayed(const Duration(seconds: 2));
     paginationScrollController.pullToRefresh();
     productList = List.generate(
-        20,
-        (index) => ProductDetailsModel(
-              imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-              name: "Diamond Vine Ring in 18k Rose Gold",
-              originalPrice: '\$5,000.00',
-            ));
+      20,
+      (index) => ProductDetailsModel(
+        imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+        name: "Diamond Vine Ring in 18k Rose Gold",
+        originalPrice: '\$5,000.00',
+      ),
+    );
     refreshCompleter.complete(true);
 
     emit(const SearchResultLoadedState());

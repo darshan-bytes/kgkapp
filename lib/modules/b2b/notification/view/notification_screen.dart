@@ -7,9 +7,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).allNotificationViewStyle;
     return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.notification.tr,
-      ),
+      appBar: SmartAppBar(title: APPStrings.notification.tr),
       body: SmartSingleChildScrollView(
         onRefresh: () async {},
         physics: const BouncingScrollPhysics(),
@@ -29,11 +27,7 @@ class NotificationScreen extends StatelessWidget {
               child: IntrinsicWidth(
                 child: InkWell(
                   onTap: () {},
-                  child: SmartText(
-                    APPStrings.clearAll.tr,
-                    style: style.clearAllStyle,
-                    textAlign: TextAlign.center,
-                  ),
+                  child: SmartText(APPStrings.clearAll.tr, style: style.clearAllStyle, textAlign: TextAlign.center),
                 ),
               ),
             ),
@@ -42,14 +36,12 @@ class NotificationScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 10,
               separatorBuilder: (context, index) {
-                return Divider(
-                  height: 1.h,
-                );
+                return Divider(height: 1.h);
               },
               itemBuilder: (context, index) {
                 return _notificationItem(context, index);
               },
-            )
+            ),
           ],
         ),
       ),
@@ -66,12 +58,7 @@ class NotificationScreen extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: SmartText(
-                  'You added Ralph as system admin',
-                  style: style.titleStyle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: SmartText('You added Ralph as system admin', style: style.titleStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
               Container(
                 height: 8.w,
@@ -81,25 +68,16 @@ class NotificationScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 4.h,
-          ),
+          SizedBox(height: 4.h),
           SmartText(
             'Ralph can perform all the action associated with role “system admin”',
             style: style.descStyle,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(
-            height: 12.h,
-          ),
-          SmartText(
-            '09:30 PM',
-            style: style.timeLabelStyle,
-          ),
-          SizedBox(
-            height: 16.h,
-          ),
+          SizedBox(height: 12.h),
+          SmartText('09:30 PM', style: style.timeLabelStyle),
+          SizedBox(height: 16.h),
         ],
       ),
     );

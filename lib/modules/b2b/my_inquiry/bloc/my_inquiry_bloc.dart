@@ -61,23 +61,26 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchMyInquiryFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? []) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? []) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Get secondary filter data
@@ -93,8 +96,13 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
   /// Fetch my inquiries from server and populate the list
   /// [isLoadMore] is used to check if the list is to be loaded more or not
   /// [query] is used to pass the query parameters to the server
-  Future<void> fetchMyInquiries(BuildContext context, Emitter<MyInquiryState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query, String searchString = ''}) async {
+  Future<void> fetchMyInquiries(
+    BuildContext context,
+    Emitter<MyInquiryState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+    String searchString = '',
+  }) async {
     /// Build the query dynamically
     query = buildQuery(
       filterData: filterData,
@@ -103,16 +111,20 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
       pageLimit: AppConst.pageLimit,
     );
 
-    Either<ErrorResponse, PaginationData<MyInquiriesModel>>? response =
-        await AppRepository(context).fetchMyInquiries(body: query, isLoadMore: isLoadMore);
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (PaginationData<MyInquiriesModel> success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<MyInquiriesModel> dataList = success.dataList ?? [];
-      myInquiryList.addAll(_populateMyInquiryList(dataList));
-      smartPaginationScrollController.isPageLoaded.complete(smartPaginationScrollController.currentPage == totalNumberOfPages);
-    });
+    Either<ErrorResponse, PaginationData<MyInquiriesModel>>? response = await AppRepository(
+      context,
+    ).fetchMyInquiries(body: query, isLoadMore: isLoadMore);
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (PaginationData<MyInquiriesModel> success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        List<MyInquiriesModel> dataList = success.dataList ?? [];
+        myInquiryList.addAll(_populateMyInquiryList(dataList));
+        smartPaginationScrollController.isPageLoaded.complete(smartPaginationScrollController.currentPage == totalNumberOfPages);
+      },
+    );
   }
 
   /// Populate digital catalogue list
@@ -157,11 +169,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
       String fullName = detail.fullName;
       String imageUrl = detail.profilePic ?? '';
 
-      return B2BItemField(
-        label: APPStrings.assignTo.tr,
-        value: fullName,
-        imageUrl: imageUrl,
-      );
+      return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();
   }
 
@@ -179,10 +187,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueAsc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()},
     });
     return query;
   }
@@ -197,7 +202,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -233,7 +238,11 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
 
     /// Show confirmation dialog
     await showConfirmationDialog(
-        context: event.context, title: APPStrings.makeAnInquiry.tr, message: APPStrings.removeInquiryMsg.tr, index: event.index);
+      context: event.context,
+      title: APPStrings.makeAnInquiry.tr,
+      message: APPStrings.removeInquiryMsg.tr,
+      index: event.index,
+    );
     emit(MyInquiryLoadedState());
   }
 
@@ -270,8 +279,12 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     // smartPaginationScrollController.isPageLoaded.complete(false);
   }
 
-  Future<void> removeInquiry(BuildContext context, int index, List<B2BCustomListingDataModel> myInquiryList,
-      SmartPaginationScrollController smartPaginationScrollController) async {
+  Future<void> removeInquiry(
+    BuildContext context,
+    int index,
+    List<B2BCustomListingDataModel> myInquiryList,
+    SmartPaginationScrollController smartPaginationScrollController,
+  ) async {
     if (myInquiryList.isEmpty) return;
 
     context.pop();
@@ -281,13 +294,10 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
 
     try {
       final response = await AppRepository(context).removeMyInquiry(body: params);
-      response?.fold(
-        (error) => Utils.showMessage(error.message),
-        (success) {
-          Utils.showMessage(success.message);
-          add(MyInquiryUpdateEvent(context));
-        },
-      );
+      response?.fold((error) => Utils.showMessage(error.message), (success) {
+        Utils.showMessage(success.message);
+        add(MyInquiryUpdateEvent(context));
+      });
     } catch (e) {
       debugPrint('An error occurred: $e');
     }

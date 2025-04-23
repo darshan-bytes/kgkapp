@@ -66,33 +66,34 @@ class PddDataModel {
       conceptBy: json["concept_by"],
       createdByDetails: UserIdDetails.fromJson(json["created_by_details"]),
       approvedByDetails: UserIdDetails.fromJson(json["approved_by_details"]),
-      assignedToDetails: json["assigned_to_details"] == null
-          ? []
-          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
+      assignedToDetails:
+          json["assigned_to_details"] == null
+              ? []
+              : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "presentation_number": presentationNumber,
-        "created_by": createdBy,
-        "approved_by": approvedBy,
-        "approved_at": approvedAt?.toIso8601String(),
-        "status": status,
-        "cover_image": coverImage,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "totalProjects": totalProjects,
-        "concept_number": conceptNumber,
-        "concept_name": conceptName,
-        "collection": collection,
-        "business_category": businessCategory,
-        "assigned_to": assignedTo.map((x) => x).toList(),
-        "concept_by_id": conceptById,
-        "concept_by": conceptBy,
-        "created_by_details": createdByDetails.toJson(),
-        "approved_by_details": approvedByDetails.toJson(),
-      };
+    "_id": id,
+    "presentation_number": presentationNumber,
+    "created_by": createdBy,
+    "approved_by": approvedBy,
+    "approved_at": approvedAt?.toIso8601String(),
+    "status": status,
+    "cover_image": coverImage,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "totalProjects": totalProjects,
+    "concept_number": conceptNumber,
+    "concept_name": conceptName,
+    "collection": collection,
+    "business_category": businessCategory,
+    "assigned_to": assignedTo.map((x) => x).toList(),
+    "concept_by_id": conceptById,
+    "concept_by": conceptBy,
+    "created_by_details": createdByDetails.toJson(),
+    "approved_by_details": approvedByDetails.toJson(),
+  };
 
   @override
   String toString() {

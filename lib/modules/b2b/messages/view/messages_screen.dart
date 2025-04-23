@@ -8,9 +8,7 @@ class MessagesScreen extends StatelessWidget {
     final MessagesBloc bloc = BlocProvider.of<MessagesBloc>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: SmartAppBar(
-        title: APPStrings.messages.tr,
-      ),
+      appBar: SmartAppBar(title: APPStrings.messages.tr),
       body: SafeArea(
         child: Column(
           children: [

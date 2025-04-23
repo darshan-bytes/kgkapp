@@ -31,7 +31,7 @@ class StoneDetailScreen extends StatelessWidget {
                   ),
                 SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
                 SizedBox(height: 40.h),
-                _productDetail(context, bloc)
+                _productDetail(context, bloc),
               ],
             );
           },
@@ -51,75 +51,80 @@ class StoneDetailScreen extends StatelessWidget {
           ],
         ),
         child: SafeArea(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 6,
-              child: SizedBox(
-                height: 55.h,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SmartImage(path: bloc.imgList.isNotEmpty ? bloc.imgList.first : '', height: 54.w, width: 54.w),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SmartText(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 6,
+                child: SizedBox(
+                  height: 55.h,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SmartImage(path: bloc.imgList.isNotEmpty ? bloc.imgList.first : '', height: 54.w, width: 54.w),
+                      SizedBox(width: 8.w),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SmartText(
                               bloc.productDetails?.finalPrice.isNotNullNorEmpty == true
                                   ? "${bloc.productDetails?.finalPrice}\n"
                                   : bloc.productDetails?.originalPrice,
                               style: style.priceStyle,
                               maxLines: 1,
-                              isAutoSizeText: true),
-                          if (bloc.productDetails?.finalPrice.isNotNullNorEmpty == true &&
-                              (bloc.productDetails?.finalPrice != bloc.productDetails?.originalPrice))
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Flexible(
+                              isAutoSizeText: true,
+                            ),
+                            if (bloc.productDetails?.finalPrice.isNotNullNorEmpty == true &&
+                                (bloc.productDetails?.finalPrice != bloc.productDetails?.originalPrice))
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
                                     child: SmartText(
-                                  bloc.productDetails?.originalPrice,
-                                  style: productDetailsStyle.originalPriceStyle
-                                      .copyWith(decoration: TextDecoration.lineThrough, fontSize: 12.sp),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                                SizedBox(width: 2.w),
-                                SmartText(
-                                  bloc.productDetails?.discountPercentageString,
-                                  style: productDetailsStyle.discountStyle,
-                                  maxLines: 1,
-                                ),
-                              ],
-                            )
-                        ],
+                                      bloc.productDetails?.originalPrice,
+                                      style: productDetailsStyle.originalPriceStyle.copyWith(
+                                        decoration: TextDecoration.lineThrough,
+                                        fontSize: 12.sp,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  SizedBox(width: 2.w),
+                                  SmartText(
+                                    bloc.productDetails?.discountPercentageString,
+                                    style: productDetailsStyle.discountStyle,
+                                    maxLines: 1,
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: 4.w),
-            Expanded(
-              flex: 4,
-              child: SmartButton(
-                onTap: () {
-                  bloc.add(StoneDetailSelectStoneForDIYEvent(context: context));
-                },
-                padding: EdgeInsetsDirectional.zero,
-                title: APPStrings.selectDiamond.tr,
-                height: 55.h,
+              SizedBox(width: 4.w),
+              Expanded(
+                flex: 4,
+                child: SmartButton(
+                  onTap: () {
+                    bloc.add(StoneDetailSelectStoneForDIYEvent(context: context));
+                  },
+                  padding: EdgeInsetsDirectional.zero,
+                  title: APPStrings.selectDiamond.tr,
+                  height: 55.h,
+                ),
               ),
-            ),
-          ],
-        )),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -132,29 +137,16 @@ class StoneDetailScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (bloc.productDetails?.lotCode != null) ...[
-            SmartText(
-              bloc.productDetails?.lotCode,
-              style: style.skuStyle,
-            ),
+            SmartText(bloc.productDetails?.lotCode, style: style.skuStyle),
             SizedBox(height: 8.h),
           ],
-          SmartText(
-            bloc.productName,
-            style: style.diamondNameStyle,
-          ),
+          SmartText(bloc.productName, style: style.diamondNameStyle),
           SizedBox(height: 14.h),
           Row(
             children: [
-              SmartImage(
-                path: AppImages.icDiamond,
-                height: 24.w,
-                width: 24.w,
-              ),
+              SmartImage(path: AppImages.icDiamond, height: 24.w, width: 24.w),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.diamondPurityYouCanTrust.tr,
-                style: style.diamondPurityStyle,
-              )
+              SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle),
             ],
           ),
           SizedBox(height: 16.h),
@@ -162,25 +154,15 @@ class StoneDetailScreen extends StatelessWidget {
             children: [
               const SmartImage(path: AppImages.icTruck),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.shippingAcrossAllCountries.tr,
-                style: style.shippingStyle,
-              )
+              SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.shippingStyle),
             ],
           ),
           SizedBox(height: 24.h),
           const Divider(),
-          ProductDetailsComponentsView(
-            commodity: Commodity.diamond,
-            components: [],
-            stoneElements: bloc.productDetails?.stoneElements,
-          ),
+          ProductDetailsComponentsView(commodity: Commodity.diamond, components: [], stoneElements: bloc.productDetails?.stoneElements),
           Divider(height: 1.h),
           SizedBox(height: 24.h),
-          const InquiryWidget(
-            email: 'enquiry.diaind@kgkmail.com',
-            phone: '+91 - 1234567830',
-          ),
+          const InquiryWidget(email: 'enquiry.diaind@kgkmail.com', phone: '+91 - 1234567830'),
           SizedBox(height: 24.h),
         ],
       ),
@@ -191,10 +173,7 @@ class StoneDetailScreen extends StatelessWidget {
     final style = AppTheme.of(context).settingDetailScreenStyle;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SmartText(type, style: style.settingTypeStyle),
-        SmartText(value, style: style.settingValueStyle),
-      ],
+      children: [SmartText(type, style: style.settingTypeStyle), SmartText(value, style: style.settingValueStyle)],
     );
   }
 }

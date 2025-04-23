@@ -26,10 +26,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadiusDirectional.only(
-          topStart: Radius.circular(6.r),
-          topEnd: Radius.circular(6.r),
-        ),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,10 +82,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
           onTap: () {
             context.pop();
           },
-          child: SmartImage(
-            path: AppImages.icCross,
-            color: style.primaryColor,
-          ),
+          child: SmartImage(path: AppImages.icCross, color: style.primaryColor),
         ),
       ],
     );
@@ -169,21 +163,22 @@ class ProductMenuBottomSheet extends StatelessWidget {
     return Column(
       children: [
         SmartButton(
-            onTap: () {
-              if (buttonText.isNullOrEmpty) {
-                if (productDetails.isAddedToCart) {
-                  context.pop(arguments: {RoutesData.isGoToBag: true});
-                } else {
-                  BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
-                }
+          onTap: () {
+            if (buttonText.isNullOrEmpty) {
+              if (productDetails.isAddedToCart) {
+                context.pop(arguments: {RoutesData.isGoToBag: true});
               } else {
-                onAddToBag?.call();
+                BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
               }
-              context.pop();
-            },
-            title: buttonText ??
-                ((productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr)).toLowerCase().capitalizeFirst,
-            prefixImage: AppImages.icShoppingBag),
+            } else {
+              onAddToBag?.call();
+            }
+            context.pop();
+          },
+          title:
+              buttonText ?? ((productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr)).toLowerCase().capitalizeFirst,
+          prefixImage: AppImages.icShoppingBag,
+        ),
         SizedBox(height: 8.h),
 
         /// For now Buy Now is removed from the app. It will be used in future for B2B implementation.
@@ -207,11 +202,12 @@ class ProductMenuBottomSheet extends StatelessWidget {
           context.pop();
           Utils.showSmartModalBottomSheet(
             context: context,
-            builder: (context) => QuotationRequestConfirmation(
-              onContinueShopping: () {
-                context.pop();
-              },
-            ),
+            builder:
+                (context) => QuotationRequestConfirmation(
+                  onContinueShopping: () {
+                    context.pop();
+                  },
+                ),
           );
         }, style),
         _buildActionItem(AppImages.icExport, APPStrings.export.tr, () {}, style),
@@ -227,22 +223,8 @@ class ProductMenuBottomSheet extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              height: 32.w,
-              width: 32.w,
-              child: Center(
-                child: SmartImage(
-                  path: imagePath,
-                ),
-              ),
-            ),
-            SmartText(
-              text,
-              style: style.imageLableStyle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
+            SizedBox(height: 32.w, width: 32.w, child: Center(child: SmartImage(path: imagePath))),
+            SmartText(text, style: style.imageLableStyle, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
           ],
         ),
       ),

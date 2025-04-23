@@ -23,20 +23,20 @@ class OrderTimelineScreen extends StatelessWidget {
                 Widget child = OrderTimeLineWidget(timelineData: timelineList);
                 return isDisplayData.$1
                     ? Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 4.h),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(22.r),
-                              border: Border.all(color: style.dateTagBorderColor),
-                            ),
-                            child: SmartText(isDisplayData.$2, style: style.dateTagStyle, textAlign: TextAlign.center),
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 4.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(22.r),
+                            border: Border.all(color: style.dateTagBorderColor),
                           ),
-                          SizedBox(height: 16.h),
-                          child,
-                        ],
-                      )
+                          child: SmartText(isDisplayData.$2, style: style.dateTagStyle, textAlign: TextAlign.center),
+                        ),
+                        SizedBox(height: 16.h),
+                        child,
+                      ],
+                    )
                     : child;
               },
               separatorBuilder: (context, index) => SizedBox(height: 16.h),
@@ -58,20 +58,14 @@ class OrderTimeLineWidget extends StatelessWidget {
     final OrderTimelineStyle style = AppTheme.of(context).orderTimelineStyle;
     return Container(
       padding: EdgeInsetsDirectional.all(16.w),
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        borderRadius: BorderRadius.circular(6.r),
-      ),
+      decoration: BoxDecoration(color: style.backgroundColor, borderRadius: BorderRadius.circular(6.r)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           SmartText(timelineData.title, style: style.titleStyle),
           SizedBox(height: 4.h),
-          SmartText(
-            timelineData.description,
-            style: style.subTitleStyle,
-          ),
+          SmartText(timelineData.description, style: style.subTitleStyle),
           SizedBox(height: 16.h),
           SmartText(timelineData.time, style: style.timeStyle),
         ],

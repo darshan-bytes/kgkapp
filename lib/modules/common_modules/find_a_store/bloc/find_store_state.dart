@@ -16,6 +16,7 @@ final class FindReloadState extends FindStoreState {
 
 final class FindStorePaginationInitializedState extends FindStoreState {
   const FindStorePaginationInitializedState();
+
   @override
   List<Object> get props => [];
 }

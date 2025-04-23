@@ -30,55 +30,40 @@ class SmartOptionTile extends StatelessWidget {
         padding: EdgeInsetsDirectional.symmetric(vertical: 16.0.h),
         child: Column(
           children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SmartImage(
-                path: profileListModel.image ?? '',
-                height: imageSize ?? 24.w,
-                width: imageSize ?? 24.w,
-                color: leadingImageColor,
-                fit: BoxFit.contain,
-                matchTextDirection: true,
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (profileListModel.title.isNotNullNorEmpty)
-                      SmartText(
-                        profileListModel.title!.tr,
-                        style: style.titleStyle.merge(titleStyle),
-                      ),
-                    if (profileListModel.title.isNotNullNorEmpty && profileListModel.subTitle.isNotNullNorEmpty)
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                    if (profileListModel.subTitle.isNotNullNorEmpty)
-                      SmartText(
-                        profileListModel.subTitle!.tr,
-                        style: style.subTextStyle.merge(subTitleStyle),
-                      ),
-                  ],
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SmartImage(
+                  path: profileListModel.image ?? '',
+                  height: imageSize ?? 24.w,
+                  width: imageSize ?? 24.w,
+                  color: leadingImageColor,
+                  fit: BoxFit.contain,
+                  matchTextDirection: true,
                 ),
-              ),
-              if (profileListModel.trailingIcon.isNotNullNorEmpty)
-                SizedBox(
-                  width: 12.w,
-                ),
-              if (profileListModel.trailingIcon.isNotNullNorEmpty)
-                Container(
-                  height: 24.w,
-                  width: 24.w,
-                  alignment: AlignmentDirectional.center,
-                  child: SmartImage(
-                    path: profileListModel.trailingIcon ?? "",
-                    color: style.arrowRightColor,
-                    matchTextDirection: true,
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (profileListModel.title.isNotNullNorEmpty)
+                        SmartText(profileListModel.title!.tr, style: style.titleStyle.merge(titleStyle)),
+                      if (profileListModel.title.isNotNullNorEmpty && profileListModel.subTitle.isNotNullNorEmpty) SizedBox(height: 1.h),
+                      if (profileListModel.subTitle.isNotNullNorEmpty)
+                        SmartText(profileListModel.subTitle!.tr, style: style.subTextStyle.merge(subTitleStyle)),
+                    ],
                   ),
                 ),
-            ]),
+                if (profileListModel.trailingIcon.isNotNullNorEmpty) SizedBox(width: 12.w),
+                if (profileListModel.trailingIcon.isNotNullNorEmpty)
+                  Container(
+                    height: 24.w,
+                    width: 24.w,
+                    alignment: AlignmentDirectional.center,
+                    child: SmartImage(path: profileListModel.trailingIcon ?? "", color: style.arrowRightColor, matchTextDirection: true),
+                  ),
+              ],
+            ),
           ],
         ),
       ),

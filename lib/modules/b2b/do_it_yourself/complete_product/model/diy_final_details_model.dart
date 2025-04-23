@@ -1,12 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class DiyFinalDetailsModel {
-  DiyFinalDetailsModel({
-    required this.product,
-    required this.diamondDetailed,
-    required this.sku,
-    required this.dIYPrice,
-  });
+  DiyFinalDetailsModel({required this.product, required this.diamondDetailed, required this.sku, required this.dIYPrice});
 
   final DiyStyleListModel? product;
   final DiamondDataModel? diamondDetailed;
@@ -23,11 +18,11 @@ class DiyFinalDetailsModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "product": product?.toJson(),
-        "diamondDetailed": diamondDetailed?.toJson(),
-        "sku": sku,
-        "price": dIYPrice?.toJson(),
-      };
+    "product": product?.toJson(),
+    "diamondDetailed": diamondDetailed?.toJson(),
+    "sku": sku,
+    "price": dIYPrice?.toJson(),
+  };
 }
 
 class DIYPrice {
@@ -56,10 +51,10 @@ class DIYPrice {
   }
 
   Map<String, dynamic> toJson() => {
-        "total_discount_price": totalDiscountPrice,
-        "total_discount_price_in": totalDiscountPriceIn,
-        "total_final_price": totalFinalPrice,
-        "total_final_price_in": totalFinalPriceIn,
-        "total_discount": totalDiscount,
-      };
+    "total_discount_price": totalDiscountPrice,
+    "total_discount_price_in": totalDiscountPriceIn,
+    "total_final_price": totalFinalPrice,
+    "total_final_price_in": totalFinalPriceIn,
+    "total_discount": totalDiscount,
+  };
 }

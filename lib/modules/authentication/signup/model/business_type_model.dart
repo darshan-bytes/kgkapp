@@ -26,10 +26,10 @@ class BusinessType {
   }
 
   Map<String, dynamic> toJson() => {
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "id": id,
-        "name": name,
-        "slug": slug,
-      };
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "id": id,
+    "name": name,
+    "slug": slug,
+  };
 }

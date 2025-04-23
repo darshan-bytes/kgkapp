@@ -26,10 +26,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   late TabController tabController;
 
   /// List of tabs
-  final List<Widget> tabs = <Widget>[
-    Tab(text: APPStrings.products.tr),
-    Tab(text: APPStrings.orders.tr),
-  ];
+  final List<Widget> tabs = <Widget>[Tab(text: APPStrings.products.tr), Tab(text: APPStrings.orders.tr)];
 
   /// The total number of filtered records
   int totalFilteredRecords = 0;
@@ -150,15 +147,12 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   /// Fetches the exhibition details data from the API
   Future<void> _getExhibitionDetails(BuildContext context, String id) async {
     Either<ErrorResponse, ExhibitionListDataModel>? response = await AppRepository(context).fetchExhibitionDetails(id: id);
-    response?.fold(
-      (error) => error.message.isNotNullNorEmpty ? Utils.showMessage(error.message) : null,
-      (data) {
-        /// Set the exhibition details.
-        exhibitionDetails = data;
-        appbarTitle = exhibitionDetails.name ?? '';
-        exhibitionType = exhibitionDetails.exhibitionType ?? "";
-      },
-    );
+    response?.fold((error) => error.message.isNotNullNorEmpty ? Utils.showMessage(error.message) : null, (data) {
+      /// Set the exhibition details.
+      exhibitionDetails = data;
+      appbarTitle = exhibitionDetails.name ?? '';
+      exhibitionType = exhibitionDetails.exhibitionType ?? "";
+    });
   }
 
   /// Fetches the exhibition product details data from the API
@@ -171,8 +165,11 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   }
 
   /// Handles tab selection and reloads order data accordingly
-  Future<void> _handleTabSelection(
-      {required BuildContext context, required int index, required Emitter<ExhibitionDetailsState> emit}) async {
+  Future<void> _handleTabSelection({
+    required BuildContext context,
+    required int index,
+    required Emitter<ExhibitionDetailsState> emit,
+  }) async {
     if (currentTab == index) return;
     currentTab = index;
     emit(const ExhibitionDetailsReloadState());
@@ -215,8 +212,11 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     emit(const ExhibitionChangeListingTypeState());
   }
 
-  Future<void> _handleLoadMore(
-      {required BuildContext context, required Emitter<ExhibitionDetailsState> emit, required int currentPage}) async {
+  Future<void> _handleLoadMore({
+    required BuildContext context,
+    required Emitter<ExhibitionDetailsState> emit,
+    required int currentPage,
+  }) async {
     if (currentPage <= totalNumberOfPages!) {
       emit(ExhibitionListingLoadingMoreState());
       await _callProductListingApi(context: context, exhibitionType: exhibitionType, emit: emit);
@@ -243,8 +243,11 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     emit(const ExhibitionDetailsLoadedState());
   }
 
-  Future<void> _callProductListingApi(
-      {required BuildContext context, required String exhibitionType, required Emitter<ExhibitionDetailsState> emit}) async {
+  Future<void> _callProductListingApi({
+    required BuildContext context,
+    required String exhibitionType,
+    required Emitter<ExhibitionDetailsState> emit,
+  }) async {
     Either<ErrorResponse, dynamic>? response;
 
     /// Call appropriate API based on exhibitionType
@@ -268,61 +271,68 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
         isLoadMore: false,
       );
     } else if (exhibitionType == AppConst.cadLibrary) {
-      response = await AppRepository(context).getCadLibraryList(query: {
-        ApiKey.limit: AppConst.pageLimit.toString(),
-        ApiKey.page: paginationScrollController.currentPage.toString(),
-        ApiKey.exhibitionId: exhibitionId,
-      }, isLoadMore: false);
+      response = await AppRepository(context).getCadLibraryList(
+        query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        },
+        isLoadMore: false,
+      );
     } else if (exhibitionType == AppConst.designLibrary) {
-      response = await AppRepository(context).getDesignLibraryList(query: {
-        ApiKey.limit: AppConst.pageLimit.toString(),
-        ApiKey.page: paginationScrollController.currentPage.toString(),
-        ApiKey.exhibitionId: exhibitionId,
-      });
+      response = await AppRepository(context).getDesignLibraryList(
+        query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        },
+      );
     } else if (exhibitionType == AppConst.styleLibrary) {
-      response = await AppRepository(context).getStyleLibraryList(query: {
-        ApiKey.limit: AppConst.pageLimit.toString(),
-        ApiKey.page: paginationScrollController.currentPage.toString(),
-        ApiKey.exhibitionId: exhibitionId,
-      }, isLoadMore: false);
+      response = await AppRepository(context).getStyleLibraryList(
+        query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        },
+        isLoadMore: false,
+      );
     } else if (exhibitionType == AppConst.skuLibrary) {
-      response = await AppRepository(context).getSkuLibraryList(query: {
-        ApiKey.limit: AppConst.pageLimit.toString(),
-        ApiKey.page: paginationScrollController.currentPage.toString(),
-        ApiKey.exhibitionId: exhibitionId,
-      });
+      response = await AppRepository(context).getSkuLibraryList(
+        query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        },
+      );
     }
 
     /// Process API response
-    await response?.fold(
-      (error) => Utils.showMessage(error.message),
-      (success) async {
-        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-        totalFilteredRecords = success.filteredRecords ?? 0;
+    await response?.fold((error) => Utils.showMessage(error.message), (success) async {
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+      totalFilteredRecords = success.filteredRecords ?? 0;
 
-        /// Populate product list
-        if (exhibitionType == AppConst.diamond) {
-          productList.addAll(_populateDiamondProductList(success.data));
-        } else if (exhibitionType == AppConst.jewellery) {
-          productList.addAll(_populateJewelleryProductList(success.data));
-        } else if (exhibitionType == AppConst.gemstone) {
-          productList.addAll(_populateGemstoneProductList(success.data));
-        } else if (exhibitionType == AppConst.cadLibrary) {
-          productList.addAll(_populateCadLibraryProductList(success.dataList ?? []));
-        } else if (exhibitionType == AppConst.designLibrary) {
-          productList.addAll(_populateDesignLibraryProductList(success.dataList ?? []));
-        } else if (exhibitionType == AppConst.styleLibrary) {
-          productList.addAll(_populateStyleLibraryProductList(success.dataList ?? []));
-        } else if (exhibitionType == AppConst.skuLibrary) {
-          productList.addAll(_populateSkuLibraryProductList(success.dataList ?? []));
-        }
+      /// Populate product list
+      if (exhibitionType == AppConst.diamond) {
+        productList.addAll(_populateDiamondProductList(success.data));
+      } else if (exhibitionType == AppConst.jewellery) {
+        productList.addAll(_populateJewelleryProductList(success.data));
+      } else if (exhibitionType == AppConst.gemstone) {
+        productList.addAll(_populateGemstoneProductList(success.data));
+      } else if (exhibitionType == AppConst.cadLibrary) {
+        productList.addAll(_populateCadLibraryProductList(success.dataList ?? []));
+      } else if (exhibitionType == AppConst.designLibrary) {
+        productList.addAll(_populateDesignLibraryProductList(success.dataList ?? []));
+      } else if (exhibitionType == AppConst.styleLibrary) {
+        productList.addAll(_populateStyleLibraryProductList(success.dataList ?? []));
+      } else if (exhibitionType == AppConst.skuLibrary) {
+        productList.addAll(_populateSkuLibraryProductList(success.dataList ?? []));
+      }
 
-        /// Manage pagination state
-        if (!paginationScrollController.isPageLoaded.isCompleted) {
-          paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-        }
-      },
-    );
+      /// Manage pagination state
+      if (!paginationScrollController.isPageLoaded.isCompleted) {
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+      }
+    });
 
     emit(ExhibitionDetailsLoadedState());
   }
@@ -337,7 +347,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
           if (element.dateRange != null) {
             filters[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ].join(',');
           }
           break;
@@ -376,8 +386,12 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     return query;
   }
 
-  Future<void> _callExhibitionOrderListingApi(BuildContext context, Emitter<ExhibitionDetailsState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
+  Future<void> _callExhibitionOrderListingApi(
+    BuildContext context,
+    Emitter<ExhibitionDetailsState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+  }) async {
     /// Build the query base on the current tab applied filters data
     query = buildQuery(
       filterData: filterData,
@@ -385,44 +399,51 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       currentPage: paginationScrollController.currentPage,
       pageLimit: AppConst.pageLimit,
     );
-    Either<ErrorResponse, PaginationData<OrderItem>>? response =
-        await AppRepository(context).getMyOrderList(body: query, isLoadMore: isLoadMore);
+    Either<ErrorResponse, PaginationData<OrderItem>>? response = await AppRepository(
+      context,
+    ).getMyOrderList(body: query, isLoadMore: isLoadMore);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      totalFilteredRecords = success.filteredRecords ?? 0;
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        totalFilteredRecords = success.filteredRecords ?? 0;
 
-      exhibitionOrdersList.addAll(_populateOrderList((success.dataList as List<OrderItem>)));
+        exhibitionOrdersList.addAll(_populateOrderList((success.dataList as List<OrderItem>)));
 
-      /// Manage pagination state
-      if (!paginationScrollController.isPageLoaded.isCompleted) {
-        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      }
-    });
+        /// Manage pagination state
+        if (!paginationScrollController.isPageLoaded.isCompleted) {
+          paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        }
+      },
+    );
   }
 
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchOrderListingFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? []) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? []) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Get secondary filter data
@@ -458,9 +479,10 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       jewelleryDataList.length,
       (index) => ProductDetailsModel(
         productId: jewelleryDataList[index].id,
-        imageUrl: (jewelleryDataList[index].multipleFinishedViewImage.isNotNullNorEmpty)
-            ? jewelleryDataList[index].multipleFinishedViewImage.first.imageUrl
-            : '',
+        imageUrl:
+            (jewelleryDataList[index].multipleFinishedViewImage.isNotNullNorEmpty)
+                ? jewelleryDataList[index].multipleFinishedViewImage.first.imageUrl
+                : '',
         title: jewelleryDataList[index].contractNoSkuNo,
         subTitle: jewelleryDataList[index].productDescription,
         kgkCollectionName: jewelleryDataList[index].kgkCollection ?? "\n",
@@ -520,9 +542,10 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       designLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
         productId: designLibraryListItemDataList[index].sId,
-        imageUrl: (designLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
-            ? designLibraryListItemDataList[index].images?.first
-            : '',
+        imageUrl:
+            (designLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
+                ? designLibraryListItemDataList[index].images?.first
+                : '',
         title: designLibraryListItemDataList[index].contractNoSkuNo,
         subTitle: designLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: designLibraryListItemDataList[index].kgkCollection ?? "\n",
@@ -539,9 +562,10 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       styleLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
         productId: styleLibraryListItemDataList[index].sId,
-        imageUrl: (styleLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
-            ? styleLibraryListItemDataList[index].images?.first
-            : '',
+        imageUrl:
+            (styleLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
+                ? styleLibraryListItemDataList[index].images?.first
+                : '',
         title: styleLibraryListItemDataList[index].contractNoSkuNo,
         subTitle: styleLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: styleLibraryListItemDataList[index].kgkCollection ?? "\n",
@@ -558,9 +582,10 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       skuProductList.length,
       (index) => ProductDetailsModel(
         productId: skuProductList[index].suid,
-        imageUrl: (skuProductList[index].multipleFinishedViewImage.isNotNullNorEmpty)
-            ? skuProductList[index].multipleFinishedViewImage.first.imageUrl
-            : '',
+        imageUrl:
+            (skuProductList[index].multipleFinishedViewImage.isNotNullNorEmpty)
+                ? skuProductList[index].multipleFinishedViewImage.first.imageUrl
+                : '',
         title: skuProductList[index].contractNumber,
         subTitle: skuProductList[index].productDescription ?? '',
         kgkCollectionName: skuProductList[index].kgkCollection ?? "\n",
@@ -585,7 +610,9 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
         strTotalAmount: data.totalPrice?.setCurrency,
         strOrderedBy: data.createdByDetails?.fullName,
         strCreatedOn: data.createdAt?.changeDateFormat(
-            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
+          inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
+          outputDateFormat: DateFormatter.dateFormatDDMMMYYYY,
+        ),
         strOrderedByImageUrl: data.createdByDetails?.profilePicUrl,
         strTotalQuantity: data.totalQuantity?.toString(),
       );

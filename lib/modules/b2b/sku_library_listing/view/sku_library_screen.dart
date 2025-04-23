@@ -29,13 +29,7 @@ class SkuLibraryScreen extends StatelessWidget {
               return const SmartCircularProgressIndicator();
             }
             if (state is SkuLibraryLoadedState) {
-              return Column(
-                children: [
-                  _buildFilterCount(bloc, context),
-                  SizedBox(height: 16.h),
-                  _buildList(bloc),
-                ],
-              );
+              return Column(children: [_buildFilterCount(bloc, context), SizedBox(height: 16.h), _buildList(bloc)]);
             }
             return const SizedBox.shrink();
           },
@@ -80,10 +74,7 @@ class SkuLibraryScreen extends StatelessWidget {
           unselectedButtonIconColor: diamondListingStyle.listIconColor,
           unselectedButtonColor: diamondListingStyle.listBackgroundColor,
           unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-          borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(4.r),
-            bottomStart: Radius.circular(4.r),
-          ),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(4.r), bottomStart: Radius.circular(4.r)),
           onTap: () {
             bloc.add(const SkuLibraryChangeListingTypeEvent(isGrid: true));
           },
@@ -98,10 +89,7 @@ class SkuLibraryScreen extends StatelessWidget {
           unselectedButtonIconColor: diamondListingStyle.listIconColor,
           unselectedButtonColor: diamondListingStyle.listBackgroundColor,
           unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-          borderRadius: BorderRadiusDirectional.only(
-            topEnd: Radius.circular(4.r),
-            bottomEnd: Radius.circular(4.r),
-          ),
+          borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
           onTap: () {
             bloc.add(const SkuLibraryChangeListingTypeEvent(isGrid: false));
           },
@@ -112,8 +100,9 @@ class SkuLibraryScreen extends StatelessWidget {
 
   Widget _buildList(SkuLibraryBloc bloc) {
     return BlocBuilder<SkuLibraryBloc, SkuLibraryState>(
-      buildWhen: (previous, current) =>
-          current is SkuLibraryChangeListingTypeState || current is SkuLibraryLoadedMoreState || current is SkuLibraryLoadingMoreState,
+      buildWhen:
+          (previous, current) =>
+              current is SkuLibraryChangeListingTypeState || current is SkuLibraryLoadedMoreState || current is SkuLibraryLoadingMoreState,
       builder: (context, state) {
         if (bloc.skuLibraryList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noSkuLibraryFound.tr);
@@ -124,9 +113,7 @@ class SkuLibraryScreen extends StatelessWidget {
   }
 
   Widget _buildListOrGridView(SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
-    return Expanded(
-      child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state, context),
-    );
+    return Expanded(child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state, context));
   }
 
   Widget _buildGridView(SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
@@ -142,10 +129,13 @@ class SkuLibraryScreen extends StatelessWidget {
           (index) => DesignListingGridItem.designGridItem(
             designModel: bloc.skuLibraryList[index],
             onTap: () {
-              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                RoutesData.isPageFor: ScreenIdentifier.productForLibrarySKU,
-                RoutesData.productId: bloc.skuLibraryList[index].id,
-              });
+              context.pushNamed(
+                AppRoutes.productDetailsPage,
+                arguments: {
+                  RoutesData.isPageFor: ScreenIdentifier.productForLibrarySKU,
+                  RoutesData.productId: bloc.skuLibraryList[index].id,
+                },
+              );
             },
           ),
         ),
@@ -168,10 +158,13 @@ class SkuLibraryScreen extends StatelessWidget {
                 margin: EdgeInsetsDirectional.only(bottom: 24.h),
                 designModel: bloc.skuLibraryList[index],
                 onTap: () {
-                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                    RoutesData.isPageFor: ScreenIdentifier.productForLibrarySKU,
-                    RoutesData.productId: bloc.skuLibraryList[index].id,
-                  });
+                  context.pushNamed(
+                    AppRoutes.productDetailsPage,
+                    arguments: {
+                      RoutesData.isPageFor: ScreenIdentifier.productForLibrarySKU,
+                      RoutesData.productId: bloc.skuLibraryList[index].id,
+                    },
+                  );
                 },
               ),
               if (state is SkuLibraryLoadingMoreState && index == bloc.skuLibraryList.length - 1) const SmartCircularProgressIndicator(),
@@ -196,13 +189,14 @@ class SkuLibraryScreen extends StatelessWidget {
               BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
               Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => FilterScreen(
-                  onApply: (value) {
-                    if (value != null && value is List<FilterData>) {
-                      bloc.add(SkuLibraryFilterEvent(context: context, filterData: value));
-                    }
-                  },
-                ),
+                builder:
+                    (context) => FilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          bloc.add(SkuLibraryFilterEvent(context: context, filterData: value));
+                        }
+                      },
+                    ),
               );
             },
             onSortTap: () async {
@@ -220,7 +214,9 @@ class SkuLibraryScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is SkuLibraryLoadedState || current is SkuLibraryChangeListingTypeState,
       builder: (context, state) {
         return ScrollToTopFAB(
-            canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop);
+          canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+          onTap: bloc.paginationScrollController.scrollToTop,
+        );
       },
     );
   }

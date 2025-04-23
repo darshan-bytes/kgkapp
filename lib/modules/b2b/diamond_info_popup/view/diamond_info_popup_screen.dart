@@ -24,16 +24,11 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                   _buildImageSlider(bloc),
                   if (productInfoModel.productName.isNotNullNorEmpty) ...[
                     SizedBox(height: 16.h),
-                    SmartText(
-                      productInfoModel.productName,
-                      style: style.productNameStyle,
-                    ),
+                    SmartText(productInfoModel.productName, style: style.productNameStyle),
                   ],
                   if (productInfoModel.originalPrice.isNotNullNorEmpty) ...[
                     Padding(
-                      padding: EdgeInsetsDirectional.only(
-                        top: 4.h,
-                      ),
+                      padding: EdgeInsetsDirectional.only(top: 4.h),
                       child: Row(
                         children: [
                           Flexible(
@@ -112,9 +107,10 @@ class DiamondInfoPopupScreen extends StatelessWidget {
       alignment: AlignmentDirectional.centerEnd,
       children: [
         CarouselSlider(
-          items: bloc.imgList.map((e) {
-            return SmartImage(path: e);
-          }).toList(),
+          items:
+              bloc.imgList.map((e) {
+                return SmartImage(path: e);
+              }).toList(),
           carouselController: bloc.controller,
           options: CarouselOptions(
             autoPlay: bloc.imgList.length > 1,
@@ -133,11 +129,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                 width: 24.w,
                 child: InkWell(
                   onTap: () => bloc.controller.previousPage(),
-                  child: const Center(
-                    child: SmartImage(
-                      path: AppImages.icArrowLeft,
-                    ),
-                  ),
+                  child: const Center(child: SmartImage(path: AppImages.icArrowLeft)),
                 ),
               ),
               Container(
@@ -146,11 +138,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                 width: 24.w,
                 child: InkWell(
                   onTap: () => bloc.controller.nextPage(),
-                  child: const Center(
-                    child: SmartImage(
-                      path: AppImages.icArrowRight,
-                    ),
-                  ),
+                  child: const Center(child: SmartImage(path: AppImages.icArrowRight)),
                 ),
               ),
             ],
@@ -160,7 +148,11 @@ class DiamondInfoPopupScreen extends StatelessWidget {
   }
 
   Widget _buildBasicInfo(
-      ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style, DiamondInfoPopupBloc bloc, BuildContext context) {
+    ProductInfoModel productInfoModel,
+    DiamondInfoPopupScreenStyle style,
+    DiamondInfoPopupBloc bloc,
+    BuildContext context,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -184,24 +176,26 @@ class DiamondInfoPopupScreen extends StatelessWidget {
   Widget _buildProductInfoItem(String title, String? value, DiamondInfoPopupScreenStyle style, BuildContext context, {String? url}) {
     return Padding(
       padding: EdgeInsetsDirectional.only(bottom: 8.0.h),
-      child: Row(children: [
-        Expanded(child: SmartText(title, style: style.itemTitleStyle)),
-        Expanded(
+      child: Row(
+        children: [
+          Expanded(child: SmartText(title, style: style.itemTitleStyle)),
+          Expanded(
             child: SmartText(
-          value.isNotNullNorEmpty ? value : APPStrings.dash.tr,
-          style: url.isNotNullNorEmpty
-              ? style.itemValueStyle.copyWith(
-                  color: AppTheme.of(context).colors.primary,
-                  decoration: TextDecoration.underline,
-                )
-              : style.itemValueStyle,
-          onTap: url.isNotNullNorEmpty
-              ? () {
-                  Utils.launchUrlFromString(url!);
-                }
-              : null,
-        )),
-      ]),
+              value.isNotNullNorEmpty ? value : APPStrings.dash.tr,
+              style:
+                  url.isNotNullNorEmpty
+                      ? style.itemValueStyle.copyWith(color: AppTheme.of(context).colors.primary, decoration: TextDecoration.underline)
+                      : style.itemValueStyle,
+              onTap:
+                  url.isNotNullNorEmpty
+                      ? () {
+                        Utils.launchUrlFromString(url!);
+                      }
+                      : null,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -219,16 +213,9 @@ class DiamondInfoPopupScreen extends StatelessWidget {
           },
           child: Row(
             children: [
-              SmartImage(
-                path: AppImages.icCertificate,
-                height: 24.w,
-                width: 24.w,
-              ),
+              SmartImage(path: AppImages.icCertificate, height: 24.w, width: 24.w),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.certificate.tr,
-                style: myBagScreenStyle.diamondPurityStyle,
-              )
+              SmartText(APPStrings.certificate.tr, style: myBagScreenStyle.diamondPurityStyle),
             ],
           ),
         ),
@@ -237,10 +224,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
           children: [
             const SmartImage(path: AppImages.icDiamond),
             SizedBox(width: 16.w),
-            SmartText(
-              APPStrings.purityGuaranteed.tr,
-              style: myBagScreenStyle.diamondPurityStyle,
-            )
+            SmartText(APPStrings.purityGuaranteed.tr, style: myBagScreenStyle.diamondPurityStyle),
           ],
         ),
         SizedBox(height: 16.h),
@@ -248,10 +232,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
           children: [
             const SmartImage(path: AppImages.icTruck),
             SizedBox(width: 16.w),
-            SmartText(
-              APPStrings.shippingAcrossAllCountries.tr,
-              style: myBagScreenStyle.diamondPurityStyle,
-            )
+            SmartText(APPStrings.shippingAcrossAllCountries.tr, style: myBagScreenStyle.diamondPurityStyle),
           ],
         ),
       ],

@@ -15,10 +15,7 @@ class EditProfileBottomSheet extends StatelessWidget {
         padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w, vertical: 24.h),
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(12.r),
-            topEnd: Radius.circular(12.r),
-          ),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,10 +38,7 @@ class EditProfileBottomSheet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SmartText(
-          APPStrings.editProfile.tr,
-          style: style.bottomTitleStyle,
-        ),
+        SmartText(APPStrings.editProfile.tr, style: style.bottomTitleStyle),
         SmartImage(
           path: AppImages.icCross,
           height: 24.w,
@@ -69,9 +63,10 @@ class EditProfileBottomSheet extends StatelessWidget {
               alignment: AlignmentDirectional.bottomEnd,
               children: [
                 SmartImage(
-                  path: (bloc.profilePickedImage != null || bloc.selectedProfilePickedImage != null)
-                      ? (bloc.selectedProfilePickedImage ?? bloc.profilePickedImage)!.path
-                      : AppImages.icProfilePic,
+                  path:
+                      (bloc.profilePickedImage != null || bloc.selectedProfilePickedImage != null)
+                          ? (bloc.selectedProfilePickedImage ?? bloc.profilePickedImage)!.path
+                          : AppImages.icProfilePic,
                   height: 73.w,
                   width: 73.w,
                   fit: BoxFit.cover,
@@ -105,8 +100,8 @@ class EditProfileBottomSheet extends StatelessWidget {
                         },
                       ),
                     ),
-                  )
-                ]
+                  ),
+                ],
               ],
             ),
           ],
@@ -227,20 +222,11 @@ class EditProfileBottomSheet extends StatelessWidget {
                     padding: EdgeInsetsDirectional.all(12.w),
                     margin: EdgeInsetsDirectional.only(end: 12.w),
                     decoration: BoxDecoration(
-                      border: BorderDirectional(
-                        end: BorderSide(
-                          color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
-                        ),
-                      ),
+                      border: BorderDirectional(end: BorderSide(color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SmartText(
-                          '+${bloc.selectedCountry.phoneCode}',
-                          style: AppTheme.of(context).textFieldStyle.textStyle,
-                        ),
-                      ],
+                      children: [SmartText('+${bloc.selectedCountry.phoneCode}', style: AppTheme.of(context).textFieldStyle.textStyle)],
                     ),
                   ),
                 ),

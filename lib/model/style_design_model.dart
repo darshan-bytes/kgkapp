@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-class StyleDesignModel{
+class StyleDesignModel {
   String? id;
   String? productImageUrl;
   String? designId;

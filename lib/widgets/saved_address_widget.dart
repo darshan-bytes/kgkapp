@@ -25,10 +25,7 @@ class SavedAddressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final SavedAddressStyle style = AppTheme.of(context).savedAddressStyle;
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.r),
-        border: Border.all(color: style.borderColor, width: 1.w),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(6.r), border: Border.all(color: style.borderColor, width: 1.w)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -52,7 +49,7 @@ class SavedAddressWidget extends StatelessWidget {
                           onChanged: onShippingAddressChange ?? (value) {},
                           label: APPStrings.sameAsShipping.tr,
                         ),
-                      )
+                      ),
                   ],
                 ),
                 SizedBox(height: 16.h),

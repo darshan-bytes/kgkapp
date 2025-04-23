@@ -18,10 +18,7 @@ class DbfTabviewListTile extends StatelessWidget {
               hintText: APPStrings.searchX.tr.interpolate([APPStrings.dbf.tr.toUpperCase()]),
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
               onTapOutside: (p) {},
-              suffixIcon: SmartImage(
-                path: AppImages.icSearchThin,
-                padding: EdgeInsetsDirectional.all(14.w),
-              ),
+              suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(14.w)),
             ),
             SizedBox(height: 24.h),
             monitoringBloc.buildListView(context, MonitoringTab.dbf),
@@ -36,12 +33,7 @@ class DbfTabviewListTile extends StatelessWidget {
               child: FilterBottomActionBar(
                 controller: monitoringBloc.currentController.controller,
                 onFilterTap: () {
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    builder: (context) => FilterScreen(
-                      onApply: () {},
-                    ),
-                  );
+                  Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
                 },
               ),
             );

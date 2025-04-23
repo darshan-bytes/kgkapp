@@ -15,14 +15,7 @@ class CscDetails {
   final String? countryName;
   final String? subareaCode;
 
-  CscDetails copyWith({
-    String? id,
-    String? cscCode,
-    String? cscName,
-    String? countryCode,
-    String? countryName,
-    String? subareaCode,
-  }) {
+  CscDetails copyWith({String? id, String? cscCode, String? cscName, String? countryCode, String? countryName, String? subareaCode}) {
     return CscDetails(
       id: id ?? this.id,
       cscCode: cscCode ?? this.cscCode,
@@ -45,13 +38,13 @@ class CscDetails {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "csc_code": cscCode,
-        "csc_name": cscName,
-        "country_code": countryCode,
-        "country_name": countryName,
-        "subarea_code": subareaCode,
-      };
+    "id": id,
+    "csc_code": cscCode,
+    "csc_name": cscName,
+    "country_code": countryCode,
+    "country_name": countryName,
+    "subarea_code": subareaCode,
+  };
 
   @override
   bool operator ==(Object other) =>

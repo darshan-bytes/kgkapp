@@ -13,8 +13,10 @@ class InquiryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).inquiryWidgetStyle;
     return Container(
-      decoration:
-          BoxDecoration(border: Border.all(color: colors(context).colorD3DAE0, width: 1.w), borderRadius: BorderRadius.circular(8.r)),
+      decoration: BoxDecoration(
+        border: Border.all(color: colors(context).colorD3DAE0, width: 1.w),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
       padding: EdgeInsetsDirectional.all(16.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,19 +25,13 @@ class InquiryWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SmartText(
-                  title ?? APPStrings.haveAQuestion.tr,
-                  style: style.haveAQuestionStyle,
-                ),
+                SmartText(title ?? APPStrings.haveAQuestion.tr, style: style.haveAQuestionStyle),
                 SizedBox(height: 8.h),
                 SmartText(description ?? APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle),
                 SizedBox(height: 12.h),
                 Row(
                   children: [
-                    const SmartImage(
-                      path: AppImages.icPhone,
-                      matchTextDirection: true,
-                    ),
+                    const SmartImage(path: AppImages.icPhone, matchTextDirection: true),
                     SizedBox(width: 8.w),
                     SmartText(
                       phone,
@@ -49,10 +45,7 @@ class InquiryWidget extends StatelessWidget {
                 SizedBox(height: 14.h),
                 Row(
                   children: [
-                    const SmartImage(
-                      path: AppImages.icMail,
-                      matchTextDirection: true,
-                    ),
+                    const SmartImage(path: AppImages.icMail, matchTextDirection: true),
                     SizedBox(width: 8.w),
                     SmartText(
                       email,
@@ -71,13 +64,8 @@ class InquiryWidget extends StatelessWidget {
               height: 32.w,
               width: 32.w,
               alignment: AlignmentDirectional.center,
-              child: SmartImage(
-                path: AppImages.icArrowRight,
-                height: 14.w,
-                width: 14.w,
-                matchTextDirection: true,
-              ),
-            )
+              child: SmartImage(path: AppImages.icArrowRight, height: 14.w, width: 14.w, matchTextDirection: true),
+            ),
         ],
       ),
     );

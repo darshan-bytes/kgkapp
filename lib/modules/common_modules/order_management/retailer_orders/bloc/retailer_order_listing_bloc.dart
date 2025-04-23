@@ -4,11 +4,7 @@ part 'retailer_order_listing_event.dart';
 
 part 'retailer_order_listing_state.dart';
 
-enum RetailerOrdersTab {
-  diamond,
-  gemstone,
-  jewellery,
-}
+enum RetailerOrdersTab { diamond, gemstone, jewellery }
 
 class RetailerOrderListingBloc extends Bloc<RetailerOrderListingEvent, RetailerOrderListingState> {
   // Identifies the source of the user: B2B or B2C.

@@ -48,10 +48,7 @@ final class ClearAllFilterDataEvent extends SortFilterEvent {
   const ClearAllFilterDataEvent({required this.context, required this.onApply});
 
   @override
-  List<Object> get props => [
-        context,
-        onApply,
-      ];
+  List<Object> get props => [context, onApply];
 }
 
 final class ApplyFilterDataEvent extends SortFilterEvent {

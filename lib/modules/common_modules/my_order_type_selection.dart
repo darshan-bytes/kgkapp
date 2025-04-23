@@ -23,8 +23,10 @@ class MyOrderTypeSelection extends StatelessWidget {
               const SizedBox(height: 20),
               SmartButton(
                 onTap: () {
-                  context.pushNamed(AppRoutes.retailerOrderListingPage,
-                      arguments: {RoutesData.isPageFor: ScreenIdentifier.orderDetailsForRetailer});
+                  context.pushNamed(
+                    AppRoutes.retailerOrderListingPage,
+                    arguments: {RoutesData.isPageFor: ScreenIdentifier.orderDetailsForRetailer},
+                  );
                 },
                 title: 'Retailer Order',
               ),

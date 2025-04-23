@@ -60,14 +60,17 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
     emit(AuctionListingReloadState());
     if (auctionSearchController.text.isNotEmpty) {
       String query = auctionSearchController.text.toLowerCase();
-      auctionList = originalAuctionList
-          .where((auction) =>
-              (auction.name ?? '').toLowerCase().contains(query) ||
-              (auction.skuNo ?? '').toLowerCase().contains(query) ||
-              (auction.type ?? '').toLowerCase().contains(query) ||
-              (auction.bidAmount ?? '').toLowerCase().contains(query) ||
-              (auction.bidPlacedOn ?? '').toLowerCase().contains(query))
-          .toList();
+      auctionList =
+          originalAuctionList
+              .where(
+                (auction) =>
+                    (auction.name ?? '').toLowerCase().contains(query) ||
+                    (auction.skuNo ?? '').toLowerCase().contains(query) ||
+                    (auction.type ?? '').toLowerCase().contains(query) ||
+                    (auction.bidAmount ?? '').toLowerCase().contains(query) ||
+                    (auction.bidPlacedOn ?? '').toLowerCase().contains(query),
+              )
+              .toList();
     } else {
       auctionList = List.from(originalAuctionList);
     }
@@ -111,7 +114,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
           if (element.dateRange != null) {
             filters[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -131,11 +134,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   }
 
   /// Build the complete query dynamically
-  Map<String, dynamic> buildQuery({
-    required List<FilterData> filterData,
-    required int currentPage,
-    required int pageLimit,
-  }) {
+  Map<String, dynamic> buildQuery({required List<FilterData> filterData, required int currentPage, required int pageLimit}) {
     Map<String, dynamic> query = {};
 
     /// this is for status filter
@@ -144,37 +143,37 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
     /// Add pagination, search, and sorting parameters
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
 
   /// Fetch auction listing data
-  Future<void> fetchAuctionListData(BuildContext context, Emitter<AuctionListingState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
+  Future<void> fetchAuctionListData(
+    BuildContext context,
+    Emitter<AuctionListingState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+  }) async {
     /// Build the query dynamically
-    query = buildQuery(
-      filterData: filterData,
-      currentPage: paginationScrollController.currentPage,
-      pageLimit: AppConst.pageLimit,
-    );
+    query = buildQuery(filterData: filterData, currentPage: paginationScrollController.currentPage, pageLimit: AppConst.pageLimit);
     Either<ErrorResponse, AuctionListingModel>? response = await AppRepository(context).getAuctionList(body: query, isLoadMore: isLoadMore);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (AuctionListingModel success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      if (paginationScrollController.currentPage == 1) {
-        originalAuctionList.clear();
-      }
-      originalAuctionList.addAll(_populateAuctionList(success.data));
-      auctionList = List.from(originalAuctionList);
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(AuctionListingLoadedState());
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (AuctionListingModel success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        if (paginationScrollController.currentPage == 1) {
+          originalAuctionList.clear();
+        }
+        originalAuctionList.addAll(_populateAuctionList(success.data));
+        auctionList = List.from(originalAuctionList);
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(AuctionListingLoadedState());
+      },
+    );
   }
 
   /// Handle load more
@@ -223,23 +222,26 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
 
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response = await AppRepository(context).fetchAuctionListingFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? <Filters>[]) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? <Filters>[]) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Get secondary filter data

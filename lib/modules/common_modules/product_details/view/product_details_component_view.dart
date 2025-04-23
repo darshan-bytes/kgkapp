@@ -28,8 +28,10 @@ class ProductDetailsComponentsView extends StatelessWidget {
     }
     return SmartExpansionTile(
       onExpansionChanged: (value) {},
-      title: SmartText(commodity == Commodity.diamond ? APPStrings.diamondDetails : APPStrings.gemstoneDetails,
-          style: style.settingSelectionTitleStyle),
+      title: SmartText(
+        commodity == Commodity.diamond ? APPStrings.diamondDetails : APPStrings.gemstoneDetails,
+        style: style.settingSelectionTitleStyle,
+      ),
       children: _buildStoneElementWidgets(stoneElements ?? [], context),
     );
   }
@@ -61,8 +63,14 @@ class ProductDetailsComponentsView extends StatelessWidget {
     for (final subComponentList in subComponents) {
       for (final valueElement in subComponentList) {
         bool isUrl = valueElement.value?.isURL ?? false;
-        widgets.add(_settingWidget(valueElement.title ?? '', isUrl ? APPStrings.clickHeretoView : valueElement.value ?? '', context,
-            url: isUrl ? valueElement.value : null));
+        widgets.add(
+          _settingWidget(
+            valueElement.title ?? '',
+            isUrl ? APPStrings.clickHeretoView : valueElement.value ?? '',
+            context,
+            url: isUrl ? valueElement.value : null,
+          ),
+        );
       }
       if (subComponents.last != subComponentList) {
         widgets.add(Divider(height: 32.h));
@@ -74,8 +82,12 @@ class ProductDetailsComponentsView extends StatelessWidget {
   List<Widget> _buildStoneElementWidgets(List<StoneElement> stoneElements, BuildContext context) {
     return stoneElements.map((element) {
       bool isUrl = element.value?.isURL ?? false;
-      return _settingWidget(element.title ?? '', isUrl ? APPStrings.clickHeretoView : element.value ?? '', context,
-          url: isUrl ? element.value : null);
+      return _settingWidget(
+        element.title ?? '',
+        isUrl ? APPStrings.clickHeretoView : element.value ?? '',
+        context,
+        url: isUrl ? element.value : null,
+      );
     }).toList();
   }
 
@@ -89,14 +101,16 @@ class ProductDetailsComponentsView extends StatelessWidget {
           SmartText(type, style: style.settingTypeStyle),
           SmartText(
             value.isNotNullNorEmpty ? value : APPStrings.dash.tr,
-            style: url.isNotNullNorEmpty
-                ? style.settingValueStyle.copyWith(color: AppTheme.of(context).colors.primary, decoration: TextDecoration.underline)
-                : style.settingValueStyle,
-            onTap: url.isNotNullNorEmpty
-                ? () {
-                    Utils.launchUrlFromString(url!);
-                  }
-                : null,
+            style:
+                url.isNotNullNorEmpty
+                    ? style.settingValueStyle.copyWith(color: AppTheme.of(context).colors.primary, decoration: TextDecoration.underline)
+                    : style.settingValueStyle,
+            onTap:
+                url.isNotNullNorEmpty
+                    ? () {
+                      Utils.launchUrlFromString(url!);
+                    }
+                    : null,
           ),
         ],
       ),

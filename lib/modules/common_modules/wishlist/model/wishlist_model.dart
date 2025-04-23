@@ -1,13 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class WishlistModel {
-  WishlistModel({
-    required this.filteredRecords,
-    required this.totalRecords,
-    required this.data,
-    required this.page,
-    required this.limit,
-  });
+  WishlistModel({required this.filteredRecords, required this.totalRecords, required this.data, required this.page, required this.limit});
 
   int? filteredRecords;
   int? totalRecords;
@@ -26,12 +20,12 @@ class WishlistModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "filteredRecords": filteredRecords,
-        "totalRecords": totalRecords,
-        "data": data.map((x) => x.toJson()).toList(),
-        "page": page,
-        "limit": limit,
-      };
+    "filteredRecords": filteredRecords,
+    "totalRecords": totalRecords,
+    "data": data.map((x) => x.toJson()).toList(),
+    "page": page,
+    "limit": limit,
+  };
 
   @override
   String toString() {
@@ -68,13 +62,13 @@ class WishlistDatum {
   }
 
   Map<String, dynamic> toJson() => {
-        "product_id": productId,
-        "listing_name": listingName,
-        "customer_id": customerId,
-        "id": id,
-        "productData": productData?.toJson(),
-        "isAddedToCart": isAddedToCart,
-      };
+    "product_id": productId,
+    "listing_name": listingName,
+    "customer_id": customerId,
+    "id": id,
+    "productData": productData?.toJson(),
+    "isAddedToCart": isAddedToCart,
+  };
 
   @override
   String toString() {
@@ -172,13 +166,16 @@ class ProductData {
       metalKt: json["metal_kt"],
       brandName: json["brand_name"],
       market: json["market"],
-      multipleFinishedViewImage: json["multiple_finished_view_image"] == null
-          ? []
-          : List<MultipleFinishedViewImageShopByMetal>.from(
-              json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImageShopByMetal.fromJson(x))),
-      componentDetails: json["component_details"] == null
-          ? []
-          : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
+      multipleFinishedViewImage:
+          json["multiple_finished_view_image"] == null
+              ? []
+              : List<MultipleFinishedViewImageShopByMetal>.from(
+                json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImageShopByMetal.fromJson(x)),
+              ),
+      componentDetails:
+          json["component_details"] == null
+              ? []
+              : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
       suid: json["suid"],
       crt: json["crt"].toString(),
       gms: json["gms"].toString(),
@@ -199,33 +196,33 @@ class ProductData {
   }
 
   Map<String, dynamic> toJson() => {
-        "exclusive": exclusive,
-        "id": id,
-        "product_description": productDescription,
-        "bin_group": binGroup,
-        "metal_color_1": metalColor1,
-        "currency": currency,
-        "csc_code": cscCode,
-        "certificate_no": certificateNo,
-        "diamond_grade": diamondGrade,
-        "new_arrival": newArrival,
-        "best_seller": bestSeller,
-        "metal_kt": metalKt,
-        "brand_name": brandName,
-        "market": market,
-        "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
-        "component_details": componentDetails.map((x) => x.toJson()).toList(),
-        "suid": suid,
-        "crt": crt,
-        "gms": gms,
-        "rating": rating,
-        "review_count": reviewCount,
-        "metal_color_1_hex_code": metalColor1HexCode,
-        "discount_percentage": discountPercentage,
-        "discount_price": discountPrice,
-        "is_favorite": wishlistId,
-        "final_price": finalPrice,
-      };
+    "exclusive": exclusive,
+    "id": id,
+    "product_description": productDescription,
+    "bin_group": binGroup,
+    "metal_color_1": metalColor1,
+    "currency": currency,
+    "csc_code": cscCode,
+    "certificate_no": certificateNo,
+    "diamond_grade": diamondGrade,
+    "new_arrival": newArrival,
+    "best_seller": bestSeller,
+    "metal_kt": metalKt,
+    "brand_name": brandName,
+    "market": market,
+    "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
+    "component_details": componentDetails.map((x) => x.toJson()).toList(),
+    "suid": suid,
+    "crt": crt,
+    "gms": gms,
+    "rating": rating,
+    "review_count": reviewCount,
+    "metal_color_1_hex_code": metalColor1HexCode,
+    "discount_percentage": discountPercentage,
+    "discount_price": discountPrice,
+    "is_favorite": wishlistId,
+    "final_price": finalPrice,
+  };
 
   @override
   String toString() {
