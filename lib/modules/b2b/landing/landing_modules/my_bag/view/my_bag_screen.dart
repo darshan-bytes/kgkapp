@@ -395,6 +395,35 @@ class MyBagScreen extends StatelessWidget {
                           : null,
                   qualityOptionsList: [],
                 );
+              case Commodity.designLibrary:
+              case Commodity.styleLibrary:
+              case Commodity.cadLibrary:
+              case Commodity.skuLibrary:
+                return CartProductItem(
+                  isOutOfStock: false,
+                  onTap: () {
+                    _onProductTap(context, product, bloc);
+                  },
+                  productDetails: product,
+                  onChangedCheckbox: (value) {
+                    bloc.add(MyBagSelectProductChangedEvent(index: index));
+                  },
+                  onRemoveTap: () {
+                    bloc.add(MyBagRemoveProductEvent(context: context, index: index));
+                  },
+                  onMoveToWishListTap: () {
+                    bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
+                  },
+                  onQuantityChanged: (quantity) {
+                    bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
+                  },
+                  quantityOptionsList: List.generate(10, (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
+                  selectedQuantity:
+                      product.quantity != null
+                          ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
+                          : null,
+                  qualityOptionsList: [],
+                );
               default:
                 return const SizedBox.shrink();
             }
@@ -416,6 +445,7 @@ class MyBagScreen extends StatelessWidget {
         }
         BagOrderSummaryDataModel? bagOrderSummary = bloc.bagOrderSummaryData;
         return OrderSummary(
+          isPromoCodeApplied: bloc.userType == UserType.b2cUser,
           promoCode: bagOrderSummary?.promoCode,
           onTapCheckout: () {
             bloc.add(MyBagCheckoutEvent(context: context));
@@ -496,7 +526,9 @@ class MyBagScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTextInfoColumn(
-                bloc.commodity == Commodity.jewellery ? APPStrings.totalItems.tr : APPStrings.totalStones.tr,
+                (bloc.commodity != Commodity.diamond || bloc.commodity != Commodity.gemstone)
+                    ? APPStrings.totalItems.tr
+                    : APPStrings.totalStones.tr,
                 bloc.bagListDataModel?.summary?.totalItems?.toString() ?? '-',
                 style,
               ),
