@@ -17,8 +17,12 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
     // Initialize and play the splash screen video
     try {
-      playerController = VideoPlayerController.asset(AppConst.splashScreenVideoUrl);
+      playerController = VideoPlayerController.asset(
+        AppConst.splashScreenVideoUrl,
+        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true, allowBackgroundPlayback: true),
+      );
       await playerController.initialize();
+      await playerController.setVolume(0);
       await playerController.play();
     } catch (e) {
       debugPrint("Error initializing video player: $e");

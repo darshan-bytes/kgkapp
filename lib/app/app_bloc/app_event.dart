@@ -87,11 +87,12 @@ class ProductAddToBagEvent extends AppEvent {
   final ProductDetailsModel productDetails;
   final BuildContext context;
   final bool isBuyNow;
+  final VoidCallback? onProductAdded;
 
-  const ProductAddToBagEvent(this.productDetails, this.context, {this.isBuyNow = false});
+  const ProductAddToBagEvent(this.productDetails, this.context, {this.isBuyNow = false, this.onProductAdded});
 
   @override
-  List<Object> get props => [productDetails, context];
+  List<Object?> get props => [productDetails, context, isBuyNow, onProductAdded];
 }
 
 class ProductAddToWatchListEvent extends AppEvent {

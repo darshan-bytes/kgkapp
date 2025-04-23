@@ -502,7 +502,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
                 designLibraryData.multipleFinishedViewImage.isNullOrEmpty
                     ? ''
                     : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
-            commodity: Commodity.jewellery,
+            commodity: Commodity.designLibrary,
             components: designLibraryData.components,
           );
         },
@@ -551,6 +551,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
                     ? ''
                     : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
             components: designLibraryData.components,
+            commodity: screenIdentifier == ScreenIdentifier.productForLibraryCAD ? Commodity.cadLibrary : Commodity.styleLibrary,
           );
         },
       );
@@ -590,6 +591,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imageUrl:
                 skuLibraryData.multipleFinishedViewImage.isNullOrEmpty ? '' : skuLibraryData.multipleFinishedViewImage[0].imageUrl ?? '',
             components: skuLibraryData.components,
+            commodity: Commodity.skuLibrary,
           );
         },
       );
@@ -955,11 +957,19 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
-  void handleBagButtonClick(BuildContext context) {
+  Future<void> handleBagButtonClick(BuildContext context) async {
     if (productDetails == null) return;
     if (!isAddedToCart) {
-      BlocProvider.of<AppBloc>(context).onTapBag(context, productDetails: productDetails!);
-      isAddedToCart = true;
+      Completer<void> completer = Completer<void>();
+      BlocProvider.of<AppBloc>(context).onTapBag(
+        context,
+        productDetails: productDetails!,
+        onProductAdded: () {
+          isAddedToCart = true;
+          completer.complete();
+        },
+      );
+      await completer.future;
     } else {
       BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
       context.popUntil((route) => route.settings.name == AppRoutes.landingPage);

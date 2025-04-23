@@ -146,9 +146,11 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
           ((sourceModel.multipleFinishedViewImage).isNotNullNorEmpty &&
                   sourceModel.multipleFinishedViewImage?.firstOrNull?.imageAvailable?.toLowerCase() == 'yes')
               ? sourceModel.multipleFinishedViewImage?.firstOrNull?.imageUrl
-              : (sourceModel.imageCad ?? sourceModel.imageSketch),
-      strCADLibraryNumber: sourceModel.designCreatedDt,
+              : null,
+      strCADLibraryNumber: sourceModel.styleNumber,
       strCADLibraryProductName: sourceModel.autoDescription,
+      strCarats: "${sourceModel.crt ?? 0} ${APPStrings.crt.tr}",
+      strGrams: "${sourceModel.approximateModelWeight ?? 0} ${APPStrings.grms.tr}",
     );
   }
 

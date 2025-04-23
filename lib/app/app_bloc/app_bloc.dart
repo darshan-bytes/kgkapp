@@ -175,10 +175,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapBag(context, {required ProductDetailsModel productDetails}) {
+  void onTapBag(context, {required ProductDetailsModel productDetails, VoidCallback? onProductAdded}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      add(ProductAddToBagEvent(productDetails, context));
+      add(ProductAddToBagEvent(productDetails, context, onProductAdded: onProductAdded));
     });
   }
 

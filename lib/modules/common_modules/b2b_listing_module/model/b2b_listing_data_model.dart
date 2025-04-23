@@ -91,6 +91,8 @@ class B2BCustomListingDataModel {
   List<B2BItemField>? fields;
   List<String>? descriptionImageList;
   List<Presentation>? presentationList;
+  String? strCarats;
+  String? strGrams;
 
   B2BCustomListingDataModel({
     this.id,
@@ -183,5 +185,7 @@ class B2BCustomListingDataModel {
     this.descriptionImageList,
     this.presentationList,
     this.strTotalQuantity,
+    this.strCarats,
+    this.strGrams,
   });
 }
