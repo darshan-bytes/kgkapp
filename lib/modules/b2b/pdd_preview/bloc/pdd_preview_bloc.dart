@@ -64,7 +64,8 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
   }
 
   void _onNavigateToPddVersionHistoryEvent(NavigateToPddVersionHistoryEvent event, Emitter<PddPreviewState> emit) {
-    event.context.pushNamed(AppRoutes.presentationPreviewHistory);
+    ///TODO: Implement Presentation history
+    // event.context.pushNamed(AppRoutes.presentationPreviewHistory);
   }
 
   Future<void> getPresentationPreviewDataAPI(BuildContext context, String presentationId) async {

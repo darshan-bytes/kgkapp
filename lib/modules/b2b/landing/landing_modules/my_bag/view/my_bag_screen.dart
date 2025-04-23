@@ -47,17 +47,11 @@ class MyBagScreen extends StatelessWidget {
                 _buildSelectAllProductBox(bloc, style, context),
                 SizedBox(height: 24.h),
                 _buildMyBagList(bloc, style),
-                if (bloc.commodity != Commodity.jewellery) ...[
-                  _buildBagTotalDiamondItemsDetails(bloc, style),
-                  SizedBox(height: 24.h),
-                ],
+                if (bloc.commodity != Commodity.jewellery) ...[_buildBagTotalDiamondItemsDetails(bloc, style), SizedBox(height: 24.h)],
                 _buildOrderSummary(bloc, style, context),
                 SizedBox(height: 32.h),
                 _buildInquirySection(bloc, style),
-                if (bloc.suggestedProductList.isNotEmpty) ...[
-                  SizedBox(height: 24.h),
-                  _buildSuggestedProductList(bloc, style, context),
-                ],
+                if (bloc.suggestedProductList.isNotEmpty) ...[SizedBox(height: 24.h), _buildSuggestedProductList(bloc, style, context)],
                 if (bloc.mostPurchaseProductList.isNotEmpty) ...[
                   SizedBox(height: 24.h),
                   _buildMostPurchaseProductList(bloc, style, context),
@@ -151,7 +145,7 @@ class MyBagScreen extends StatelessWidget {
           // SizedBox(height: 16.h),
           // buildCheckoutButton(context),
           SizedBox(height: 24.h),
-          const Divider()
+          const Divider(),
         ],
       ),
     );
@@ -392,11 +386,13 @@ class MyBagScreen extends StatelessWidget {
                     bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
                   },
                   quantityOptionsList: List.generate(
-                      ((product.stockQty ?? 0) < (product.quantity ?? 0) ? product.quantity : product.stockQty) ?? 0,
-                      (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
-                  selectedQuantity: product.quantity != null
-                      ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
-                      : null,
+                    ((product.stockQty ?? 0) < (product.quantity ?? 0) ? product.quantity : product.stockQty) ?? 0,
+                    (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1),
+                  ),
+                  selectedQuantity:
+                      product.quantity != null
+                          ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
+                          : null,
                   qualityOptionsList: [],
                 );
               default:
@@ -424,8 +420,9 @@ class MyBagScreen extends StatelessWidget {
           onTapCheckout: () {
             bloc.add(MyBagCheckoutEvent(context: context));
           },
-          items: bagOrderSummary?.charges
-                  .map((e) => OrderSummaryItem(title: e.title ?? '', value: e.displayValue?.setCurrency ?? ''))
+          items:
+              bagOrderSummary?.charges
+                  .map((e) => OrderSummaryItem(title: e.title ?? '', value: "${e.displaySymbol}${e.displayValue?.setCurrency ?? ''}"))
                   .toList() ??
               [],
           totalPrice: bagOrderSummary?.totalAmount?.setCurrency ?? '',
@@ -440,25 +437,13 @@ class MyBagScreen extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         children: [
-          InquiryWidget(
-            phone: bloc.inquiryPhone,
-            email: bloc.inquiryEmail,
-            isRightArrow: false,
-            title: APPStrings.unhappyWithPricing.tr,
-          ),
+          InquiryWidget(phone: bloc.inquiryPhone, email: bloc.inquiryEmail, isRightArrow: false, title: APPStrings.unhappyWithPricing.tr),
           SizedBox(height: 24.h),
           Row(
             children: [
-              SmartImage(
-                path: AppImages.icDiamond,
-                height: 24.w,
-                width: 24.w,
-              ),
+              SmartImage(path: AppImages.icDiamond, height: 24.w, width: 24.w),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.diamondPurityYouCanTrust.tr,
-                style: style.diamondPurityStyle,
-              )
+              SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle),
             ],
           ),
           SizedBox(height: 16.h),
@@ -466,10 +451,7 @@ class MyBagScreen extends StatelessWidget {
             children: [
               const SmartImage(path: AppImages.icTruck),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.shippingAcrossAllCountries.tr,
-                style: style.diamondPurityStyle,
-              )
+              SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.diamondPurityStyle),
             ],
           ),
           SizedBox(height: 32.h),
@@ -480,26 +462,28 @@ class MyBagScreen extends StatelessWidget {
 
   Widget _buildSuggestedProductList(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
     return SmartSuggestionProductList(
-        title: APPStrings.youMayAlsoLike.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-        },
-        suggestedProductList: bloc.suggestedProductList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        scrollController: bloc.scrollController);
+      title: APPStrings.youMayAlsoLike.tr,
+      onViewAllTap: () {
+        context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+      },
+      suggestedProductList: bloc.suggestedProductList,
+      onEyeTap: () {},
+      onFavTap: () {},
+      scrollController: bloc.scrollController,
+    );
   }
 
   Widget _buildMostPurchaseProductList(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
     return SmartSuggestionProductList(
-        title: APPStrings.mostPurchasedDiamonds.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
-        },
-        suggestedProductList: bloc.mostPurchaseProductList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        scrollController: bloc.mostPurchaseScrollController);
+      title: APPStrings.mostPurchasedDiamonds.tr,
+      onViewAllTap: () {
+        context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+      },
+      suggestedProductList: bloc.mostPurchaseProductList,
+      onEyeTap: () {},
+      onFavTap: () {},
+      scrollController: bloc.mostPurchaseScrollController,
+    );
   }
 
   Widget _buildBagTotalDiamondItemsDetails(MyBagBloc bloc, MyBagScreenStyle style) {
@@ -511,11 +495,17 @@ class MyBagScreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTextInfoColumn(bloc.commodity == Commodity.jewellery ? APPStrings.totalItems.tr : APPStrings.totalStones.tr,
-                  bloc.bagListDataModel?.summary?.totalItems?.toString() ?? '-', style),
+              _buildTextInfoColumn(
+                bloc.commodity == Commodity.jewellery ? APPStrings.totalItems.tr : APPStrings.totalStones.tr,
+                bloc.bagListDataModel?.summary?.totalItems?.toString() ?? '-',
+                style,
+              ),
               SizedBox(width: 12.w),
               _buildTextInfoColumn(
-                  APPStrings.origTotalDiscount.tr, '${bloc.bagListDataModel?.summary?.discountPercentage?.toString() ?? '0.0'}%', style)
+                APPStrings.origTotalDiscount.tr,
+                '${bloc.bagListDataModel?.summary?.discountPercentage?.toString() ?? '0.0'}%',
+                style,
+              ),
             ],
           ),
           BlocBuilder<MyBagBloc, MyBagState>(
@@ -546,7 +536,10 @@ class MyBagScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTextInfoColumn(
-                  APPStrings.totalPriceAfterDiscount.tr, bloc.bagListDataModel?.summary?.discountAmount?.setCurrency ?? '-', style),
+                APPStrings.totalPriceAfterDiscount.tr,
+                bloc.bagListDataModel?.summary?.discountAmount?.setCurrency ?? '-',
+                style,
+              ),
               SizedBox(width: 12.w),
               _buildTextInfoColumn(APPStrings.totalWeight.tr, bloc.bagListDataModel?.summary?.totalCarats?.toString() ?? '-', style),
             ],
@@ -567,10 +560,16 @@ class MyBagScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildTextInfoColumn(
-                    APPStrings.totalRequestedDiscount.tr, "${bloc.bagListDataModel?.summary?.yourDiscount?.toString() ?? '0'}%", style),
+                  APPStrings.totalRequestedDiscount.tr,
+                  "${bloc.bagListDataModel?.summary?.yourDiscount?.toString() ?? '0'}%",
+                  style,
+                ),
                 SizedBox(width: 12.w),
                 _buildTextInfoColumn(
-                    APPStrings.totalValueAfterDiscount.tr, bloc.bagListDataModel?.summary?.yourAmount?.setCurrency ?? '', style),
+                  APPStrings.totalValueAfterDiscount.tr,
+                  bloc.bagListDataModel?.summary?.yourAmount?.setCurrency ?? '',
+                  style,
+                ),
               ],
             ),
             SizedBox(height: 24.h),
@@ -636,15 +635,9 @@ class MyBagScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartText(
-            title,
-            style: style.bottomBarTotalTextStyle,
-          ),
+          SmartText(title, style: style.bottomBarTotalTextStyle),
           SizedBox(height: 8.h),
-          SmartText(
-            value,
-            style: style.textInfoValueStyle,
-          ),
+          SmartText(value, style: style.textInfoValueStyle),
         ],
       ),
     );
@@ -652,11 +645,12 @@ class MyBagScreen extends StatelessWidget {
 
   void handleDiamondMenuButtonTap(BuildContext mainContext, int index, MyBagBloc bloc, MyBagScreenStyle style) {
     Utils.showSmartModalBottomSheet(
-        context: mainContext,
-        backgroundColor: style.backgroundColor,
-        builder: (BuildContext context) {
-          return buildDiamondMenuPopUp(context, index, bloc, mainContext);
-        });
+      context: mainContext,
+      backgroundColor: style.backgroundColor,
+      builder: (BuildContext context) {
+        return buildDiamondMenuPopUp(context, index, bloc, mainContext);
+      },
+    );
   }
 
   Widget buildDiamondMenuPopUp(BuildContext context, int index, MyBagBloc bloc, BuildContext mainContext) {
@@ -712,15 +706,18 @@ class MyBagScreen extends StatelessWidget {
     if (productDetails.commodity == null) {
       return;
     }
-    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-      RoutesData.productId: productDetails.suid ?? '',
-      RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!)
-    }).then(
-      (value) {
-        if (!bloc.isClosed) {
-          bloc.add(InitialMyBagEvent(context: context));
-        }
-      },
-    );
+    context
+        .pushNamed(
+          AppRoutes.productDetailsPage,
+          arguments: {
+            RoutesData.productId: productDetails.suid ?? '',
+            RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!),
+          },
+        )
+        .then((value) {
+          if (!bloc.isClosed) {
+            bloc.add(InitialMyBagEvent(context: context));
+          }
+        });
   }
 }

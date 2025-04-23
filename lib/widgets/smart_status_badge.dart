@@ -27,10 +27,7 @@ class SmartStatusBadge extends StatelessWidget {
       child: Container(
         height: height,
         padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 4.h),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(borderRadius ?? 100.r),
-        ),
+        decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(borderRadius ?? 100.r)),
         child: Center(
           child: SmartText(
             statusText.tr,
