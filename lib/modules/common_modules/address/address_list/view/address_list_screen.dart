@@ -270,6 +270,7 @@ class AddressListScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is AddressListLoadedState,
       builder: (context, state) {
         return OrderSummary(
+          isPromoCodeApplied: addressListBloc.userType == UserType.b2cUser,
           onApplyPromoCode: () {},
           promoCode: addressListBloc.bagOrderSummaryData?.promoCode,
           items:

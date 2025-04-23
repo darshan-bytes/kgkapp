@@ -52,6 +52,18 @@ shorebird release ios
 shorebird preview
 ```
 
+If you want to create an **APK file**, use:
+
+```bash
+shorebird release android --artifact apk
+```
+
+If you want an **IPA file for the development environment**, use:
+
+```bash
+shorebird release ios --export-method development
+```
+
 ---
 
 ### 6. Patch an Update for Android

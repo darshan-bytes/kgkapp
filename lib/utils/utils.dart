@@ -335,6 +335,14 @@ class Utils {
         return ScreenIdentifier.productForDiamonds;
       case Commodity.gemstone:
         return ScreenIdentifier.productForGemstones;
+      case Commodity.designLibrary:
+        return ScreenIdentifier.productForLibraryDesign;
+      case Commodity.skuLibrary:
+        return ScreenIdentifier.productForLibrarySKU;
+      case Commodity.styleLibrary:
+        return ScreenIdentifier.productForLibraryStyle;
+      case Commodity.cadLibrary:
+        return ScreenIdentifier.productForLibraryCAD;
       default:
         return ScreenIdentifier.productForRing;
     }

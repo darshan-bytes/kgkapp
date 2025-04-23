@@ -153,6 +153,8 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
       strDesignListingImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
       strDesignNumber: sourceModel.contractNoSkuNo ?? "",
       strDbfNumber: sourceModel.designDescription,
+      strCarats: sourceModel.crt.isNotNullNorEmpty ? "${sourceModel.crt} ${APPStrings.crt.tr}" : null,
+      strGrams: sourceModel.approximateModelWeight.isNotNullNorEmpty ? "${sourceModel.approximateModelWeight} ${APPStrings.grms.tr}" : null,
     );
   }
 

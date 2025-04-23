@@ -146,6 +146,8 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
           (sourceModel.multipleFinishedViewImage).isNotNullNorEmpty ? sourceModel.multipleFinishedViewImage.firstOrNull?.imageUrl : '',
       strDesignNumber: sourceModel.contractNumber,
       strDbfNumber: sourceModel.productDescription,
+      strCarats: sourceModel.crt.isNotNullNorEmpty ? "${sourceModel.crt} ${APPStrings.crt.tr}" : null,
+      strGrams: sourceModel.gms.isNotNullNorEmpty ? "${sourceModel.gms} ${APPStrings.grms.tr}" : null,
     );
   }
 
