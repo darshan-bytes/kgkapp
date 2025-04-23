@@ -31,13 +31,11 @@ class ProductCustomiseDescriptionWidget extends StatelessWidget {
             ),
             SizedBox(width: 16.w),
             IconButton(
-                onPressed: () {
-                  onTap();
-                },
-                icon: const SmartImage(
-                  path: AppImages.icArrowRight,
-                  matchTextDirection: true,
-                ))
+              onPressed: () {
+                onTap();
+              },
+              icon: const SmartImage(path: AppImages.icArrowRight, matchTextDirection: true),
+            ),
           ],
         ),
       ),

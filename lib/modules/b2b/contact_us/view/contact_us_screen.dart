@@ -25,39 +25,39 @@ class ContactUsScreen extends StatelessWidget {
             return bloc.isLoading
                 ? SmartCircularProgressIndicator()
                 : SmartSingleChildScrollView(
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 18.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SmartText(bloc.title, style: style.headerTitleStyle),
-                        SizedBox(height: 8.h),
-                        SmartText(bloc.description, style: style.messageStyle),
-                        SizedBox(height: 18.h),
-                        SmartImage(path: bloc.imageUrl, height: 356.h),
-                        SizedBox(height: 20.h),
-                        _buildFullNameField(bloc),
-                        SizedBox(height: 14.h),
-                        _buildEmailField(bloc),
-                        SizedBox(height: 14.h),
-                        _buildContactNumberField(bloc, context, style),
-                        SizedBox(height: 14.h),
-                        _buildInquiryTypeDropdown(bloc),
-                        // Right now hide this section ones confirmation comes from client totally remove this
-                        // _buildProductDropdown(bloc),
-                        SizedBox(height: 14.h),
-                        _buildCommentField(bloc),
-                        SizedBox(height: 22.h),
-                        SmartButton(
-                          onTap: () {
-                            bloc.add(ContactUsSubmitEvent(context: context));
-                          },
-                          title: APPStrings.submit.tr,
-                        ),
-                        SizedBox(height: 18.h),
-                        _buildStillNeedSection(bloc, style),
-                      ],
-                    ),
-                  );
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 18.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SmartText(bloc.title, style: style.headerTitleStyle),
+                      SizedBox(height: 8.h),
+                      SmartText(bloc.description, style: style.messageStyle),
+                      SizedBox(height: 18.h),
+                      SmartImage(path: bloc.imageUrl, height: 356.h),
+                      SizedBox(height: 20.h),
+                      _buildFullNameField(bloc),
+                      SizedBox(height: 14.h),
+                      _buildEmailField(bloc),
+                      SizedBox(height: 14.h),
+                      _buildContactNumberField(bloc, context, style),
+                      SizedBox(height: 14.h),
+                      _buildInquiryTypeDropdown(bloc),
+                      // Right now hide this section ones confirmation comes from client totally remove this
+                      // _buildProductDropdown(bloc),
+                      SizedBox(height: 14.h),
+                      _buildCommentField(bloc),
+                      SizedBox(height: 22.h),
+                      SmartButton(
+                        onTap: () {
+                          bloc.add(ContactUsSubmitEvent(context: context));
+                        },
+                        title: APPStrings.submit.tr,
+                      ),
+                      SizedBox(height: 18.h),
+                      _buildStillNeedSection(bloc, style),
+                    ],
+                  ),
+                );
           },
         ),
       ),
@@ -73,8 +73,9 @@ class ContactUsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             BlocBuilder<ContactUsBloc, ContactUsState>(
-              buildWhen: (previous, current) =>
-                  current is ContactUsFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
+              buildWhen:
+                  (previous, current) =>
+                      current is ContactUsFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
               builder: (context, state) {
                 return SmartTextField(
                   labelText: APPStrings.contactNumber.tr,
@@ -106,9 +107,7 @@ class ContactUsScreen extends StatelessWidget {
                             margin: EdgeInsetsDirectional.only(end: 12.w),
                             decoration: BoxDecoration(
                               border: BorderDirectional(
-                                end: BorderSide(
-                                  color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
-                                ),
+                                end: BorderSide(color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor),
                               ),
                             ),
                             child: Row(
@@ -227,12 +226,7 @@ class ContactUsScreen extends StatelessWidget {
     if (options.length > 1) {
       Utils.showSmartModalBottomSheet(
         context: currentContext,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
-          ),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
         builder: (context) {
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -241,10 +235,7 @@ class ContactUsScreen extends StatelessWidget {
               SizedBox(height: 24.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: SmartText(
-                  APPStrings.selectContact.tr,
-                  style: AppTheme.of(context).faqStyle.titleStyle,
-                ),
+                child: SmartText(APPStrings.selectContact.tr, style: AppTheme.of(context).faqStyle.titleStyle),
               ),
               SizedBox(height: 16.h),
               ListView.separated(

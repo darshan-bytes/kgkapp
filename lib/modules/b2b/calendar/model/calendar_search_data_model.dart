@@ -30,12 +30,12 @@ class CalendarDataModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "title": title,
-        "start_date": startDate?.toIso8601String(),
-        "end_date": endDate?.toIso8601String(),
-        "start_time": startTime,
-        "end_time": endTime,
-        "id": id,
-        "type": type,
-      };
+    "title": title,
+    "start_date": startDate?.toIso8601String(),
+    "end_date": endDate?.toIso8601String(),
+    "start_time": startTime,
+    "end_time": endTime,
+    "id": id,
+    "type": type,
+  };
 }

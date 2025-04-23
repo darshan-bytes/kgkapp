@@ -72,9 +72,7 @@ class CartProductItem extends StatelessWidget {
       child: Container(
         padding: padding,
         margin: margin,
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-        ),
+        decoration: BoxDecoration(color: style.backgroundColor),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -90,45 +88,42 @@ class CartProductItem extends StatelessWidget {
             ],
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                productImageSection(style),
-                SizedBox(width: 16.w),
-                productDetailsSection(style, context),
-              ],
+              children: [productImageSection(style), SizedBox(width: 16.w), productDetailsSection(style, context)],
             ),
             if (onRemoveTap != null || (isEnableAddToWishList && onMoveToWishListTap != null)) ...[
               SizedBox(height: 10.h),
               Container(
-                decoration: BoxDecoration(
-                  border: Border.symmetric(horizontal: BorderSide(color: style.borderColor)),
-                ),
+                decoration: BoxDecoration(border: Border.symmetric(horizontal: BorderSide(color: style.borderColor))),
                 child: Row(
                   children: [
                     Expanded(
-                        child: SmartButton(
-                      activeBackgroundColor: style.backgroundColor,
-                      title: APPStrings.remove.tr,
-                      titleStyle: style.removeBagTextStyle,
-                      borderRadius: const BorderRadius.all(Radius.zero),
-                      onTap: () {
-                        if (onRemoveTap != null) {
-                          onRemoveTap!();
-                        }
-                      },
-                    )),
+                      child: SmartButton(
+                        activeBackgroundColor: style.backgroundColor,
+                        title: APPStrings.remove.tr,
+                        titleStyle: style.removeBagTextStyle,
+                        borderRadius: const BorderRadius.all(Radius.zero),
+                        onTap: () {
+                          if (onRemoveTap != null) {
+                            onRemoveTap!();
+                          }
+                        },
+                      ),
+                    ),
                     Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
                     if (isEnableAddToWishList)
                       Expanded(
-                          child: SmartButton(
-                              activeBackgroundColor: style.backgroundColor,
-                              title: APPStrings.moveToWishlist.tr,
-                              titleStyle: style.removeBagTextStyle,
-                              borderRadius: const BorderRadius.all(Radius.zero),
-                              onTap: () {
-                                if (onMoveToWishListTap != null) {
-                                  onMoveToWishListTap!();
-                                }
-                              })),
+                        child: SmartButton(
+                          activeBackgroundColor: style.backgroundColor,
+                          title: APPStrings.moveToWishlist.tr,
+                          titleStyle: style.removeBagTextStyle,
+                          borderRadius: const BorderRadius.all(Radius.zero),
+                          onTap: () {
+                            if (onMoveToWishListTap != null) {
+                              onMoveToWishListTap!();
+                            }
+                          },
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -148,53 +143,36 @@ class CartProductItem extends StatelessWidget {
           width: boxWidth ?? 96.w,
           alignment: AlignmentDirectional.center,
           color: style.productBackgroundColor,
-          child: SmartImage(
-            path: productDetails.imageUrl ?? '',
-            height: imageHeight,
-            width: imageWidth,
-            fit: fit,
-          ),
+          child: SmartImage(path: productDetails.imageUrl ?? '', height: imageHeight, width: imageWidth, fit: fit),
         ),
         if (isCheckboxShow)
           PositionedDirectional(
-              top: 8.h,
-              start: 8.w,
-              child: SmartCheckbox(
-                height: 24.w,
-                width: 24.w,
-                value: isSelectedProduct,
-                onChanged: (bool? newValue) {
-                  if (onChangedCheckbox != null) {
-                    onChangedCheckbox!(newValue);
-                  }
-                },
-              )),
+            top: 8.h,
+            start: 8.w,
+            child: SmartCheckbox(
+              height: 24.w,
+              width: 24.w,
+              value: isSelectedProduct,
+              onChanged: (bool? newValue) {
+                if (onChangedCheckbox != null) {
+                  onChangedCheckbox!(newValue);
+                }
+              },
+            ),
+          ),
       ],
     );
   }
 
-  Widget buildIcon({
-    required String path,
-    Function()? onTap,
-    required ProductItemStyle style,
-    Color? backgroundColor,
-  }) {
+  Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor ?? style.backgroundColor,
-          borderRadius: BorderRadius.circular(4.r),
-        ),
+        decoration: BoxDecoration(color: backgroundColor ?? style.backgroundColor, borderRadius: BorderRadius.circular(4.r)),
         height: 24.w,
         width: 24.w,
         alignment: AlignmentDirectional.center,
-        child: SmartImage(
-          path: path,
-          height: 16.w,
-          width: 16.w,
-          fit: BoxFit.contain,
-        ),
+        child: SmartImage(path: path, height: 16.w, width: 16.w, fit: BoxFit.contain),
       ),
     );
   }
@@ -211,26 +189,19 @@ class CartProductItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: SmartText(
-                    productDetails.name,
-                    style: style.productNameStyle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child: SmartText(productDetails.name, style: style.productNameStyle, maxLines: 2, overflow: TextOverflow.ellipsis),
                 ),
                 if (onDeleteTap != null)
                   GestureDetector(
                     onTap: onDeleteTap,
                     child: Container(
-                        margin: EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 2.h),
-                        child: SmartImage(path: AppImages.icDelete, height: 18.w, width: 18.w)),
+                      margin: EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 2.h),
+                      child: SmartImage(path: AppImages.icDelete, height: 18.w, width: 18.w),
+                    ),
                   ),
               ],
             ),
-            if (productDetails.finalPrice.isNotNullNorEmpty) ...[
-              SizedBox(height: 8.h),
-              priceSection(style),
-            ],
+            if (productDetails.finalPrice.isNotNullNorEmpty) ...[SizedBox(height: 8.h), priceSection(style)],
             if (productDetails.gms.isNotNullNorEmpty || productDetails.cts.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
               diamondAndGramSection(style, context),
@@ -275,12 +246,10 @@ class CartProductItem extends StatelessWidget {
                           return SmartText(APPStrings.qtyX.tr.interpolate([e.name]));
                         }).toList();
                       },
-                      items: quantityOptionsList
-                          .map((e) => DropdownMenuItem<CartProductQuantity>(
-                                value: e,
-                                child: SmartText(e.name ?? ''),
-                              ))
-                          .toList(),
+                      items:
+                          quantityOptionsList
+                              .map((e) => DropdownMenuItem<CartProductQuantity>(value: e, child: SmartText(e.name ?? '')))
+                              .toList(),
                     ),
                   ],
                 ),
@@ -305,12 +274,7 @@ class CartProductItem extends StatelessWidget {
         if (productDetails.finalPrice.isNotNullNorEmpty == true && (productDetails.finalPrice != productDetails.originalPrice)) ...[
           SizedBox(width: 10.w),
           Flexible(
-            child: SmartText(
-              productDetails.originalPrice,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: style.checkedPriceStyle,
-            ),
+            child: SmartText(productDetails.originalPrice, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.checkedPriceStyle),
           ),
         ],
       ],

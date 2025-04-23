@@ -40,16 +40,16 @@ class UserResponse {
   }
 
   Map<String, dynamic> toJson() => {
-        "access_token": accessToken,
-        "user_id": userId,
-        "user_permissions": userPermissions?.toJson(),
-        "role": role?.toJson(),
-        "default_csc_code": defaultCscCode,
-        "user_id_details": userIdDetails?.toJson(),
-        "bag_id": bagId,
-        "customer_organization_id": customerOrganizationId?.toString(),
-        "isVerified": isVerified,
-      };
+    "access_token": accessToken,
+    "user_id": userId,
+    "user_permissions": userPermissions?.toJson(),
+    "role": role?.toJson(),
+    "default_csc_code": defaultCscCode,
+    "user_id_details": userIdDetails?.toJson(),
+    "bag_id": bagId,
+    "customer_organization_id": customerOrganizationId?.toString(),
+    "isVerified": isVerified,
+  };
 
   @override
   String toString() {
@@ -58,29 +58,17 @@ class UserResponse {
 }
 
 class Role {
-  Role({
-    required this.id,
-    required this.name,
-    required this.slug,
-  });
+  Role({required this.id, required this.name, required this.slug});
 
   final String? id;
   final String? name;
   final String? slug;
 
   factory Role.fromJson(Map<String, dynamic> json) {
-    return Role(
-      id: json["id"]?.toString(),
-      name: json["name"],
-      slug: json["slug"],
-    );
+    return Role(id: json["id"]?.toString(), name: json["name"], slug: json["slug"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "slug": slug,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "name": name, "slug": slug};
 
   @override
   String toString() {
@@ -144,22 +132,22 @@ class UserIdDetails {
   }
 
   Map<String, dynamic> toJson() => {
-        "firstname": firstname,
-        "lastname": lastname,
-        "profile_pic": profilePic,
-        "user_account_id": userAccountId,
-        "email": email,
-        "user_type": userType,
-        "profile_pic_url": profilePicUrl,
-        "phone_code": phoneCode,
-        "phone": phone,
-        "org_name": organisationName,
-        "account_type": accountType,
-        "customer_alias_name": customerAliasName,
-        "customer_code": customerCode,
-        "company_name": companyName,
-        "company_slug": companySlug,
-      };
+    "firstname": firstname,
+    "lastname": lastname,
+    "profile_pic": profilePic,
+    "user_account_id": userAccountId,
+    "email": email,
+    "user_type": userType,
+    "profile_pic_url": profilePicUrl,
+    "phone_code": phoneCode,
+    "phone": phone,
+    "org_name": organisationName,
+    "account_type": accountType,
+    "customer_alias_name": customerAliasName,
+    "customer_code": customerCode,
+    "company_name": companyName,
+    "company_slug": companySlug,
+  };
 
   @override
   String toString() {
@@ -240,17 +228,17 @@ class UserPermissions {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "user_id": userId,
-        "permissions": permissions?.toJson(),
-        "jewellery": jewellery?.toJson(),
-        "gemstone": gemstone?.toJson(),
-        "diamond": diamond?.toJson(),
-        "deleted": deleted,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
-      };
+    "_id": id,
+    "user_id": userId,
+    "permissions": permissions?.toJson(),
+    "jewellery": jewellery?.toJson(),
+    "gemstone": gemstone?.toJson(),
+    "diamond": diamond?.toJson(),
+    "deleted": deleted,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "__v": v,
+  };
 }
 
 class Diamond {
@@ -273,20 +261,21 @@ class Diamond {
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       restriction: json["restriction"] == null ? [] : List<dynamic>.from(json["restriction"]!.map((x) => x)),
-      visibilityAndSequence: json["visibility_and_sequence"] == null
-          ? []
-          : List<VisibilityAndSequence>.from(json["visibility_and_sequence"]!.map((x) => VisibilityAndSequence.fromJson(x))),
+      visibilityAndSequence:
+          json["visibility_and_sequence"] == null
+              ? []
+              : List<VisibilityAndSequence>.from(json["visibility_and_sequence"]!.map((x) => VisibilityAndSequence.fromJson(x))),
       id: json["_id"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "restriction": restriction.map((x) => x).toList(),
-        "visibility_and_sequence": visibilityAndSequence.map((x) => x.toJson()).toList(),
-        "_id": id,
-      };
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "restriction": restriction.map((x) => x).toList(),
+    "visibility_and_sequence": visibilityAndSequence.map((x) => x.toJson()).toList(),
+    "_id": id,
+  };
 
   @override
   String toString() {
@@ -295,25 +284,16 @@ class Diamond {
 }
 
 class VisibilityAndSequence {
-  VisibilityAndSequence({
-    required this.name,
-    required this.code,
-  });
+  VisibilityAndSequence({required this.name, required this.code});
 
   final String? name;
   final String? code;
 
   factory VisibilityAndSequence.fromJson(Map<String, dynamic> json) {
-    return VisibilityAndSequence(
-      name: json["name"],
-      code: json["code"],
-    );
+    return VisibilityAndSequence(name: json["name"], code: json["code"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "code": code,
-      };
+  Map<String, dynamic> toJson() => {"name": name, "code": code};
 
   @override
   String toString() {
@@ -322,21 +302,15 @@ class VisibilityAndSequence {
 }
 
 class Comment {
-  Comment({
-    required this.allowed,
-  });
+  Comment({required this.allowed});
 
   final bool? allowed;
 
   factory Comment.fromJson(Map<String, dynamic> json) {
-    return Comment(
-      allowed: json["allowed"],
-    );
+    return Comment(allowed: json["allowed"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "allowed": allowed,
-      };
+  Map<String, dynamic> toJson() => {"allowed": allowed};
 
   @override
   String toString() {
@@ -505,57 +479,57 @@ class Permissions {
   }
 
   Map<String, dynamic> toJson() => {
-        "activity_logs": activityLogs?.toJson(),
-        "exhibitions": exhibitions?.toJson(),
-        "asset_mgmt": assetMgmt?.toJson(),
-        "review_feedbacks": reviewFeedbacks?.toJson(),
-        "digital_catalogue": digitalCatalogue?.toJson(),
-        "calendars": calendars?.toJson(),
-        "messages": messages?.toJson(),
-        "cms_page_builder": cmsPageBuilder?.toJson(),
-        "companies": companies?.toJson(),
-        "currency": currency?.toJson(),
-        "leads": leads?.toJson(),
-        "request": request?.toJson(),
-        "department": department?.toJson(),
-        "system_templates": systemTemplates?.toJson(),
-        "diamond_categories": diamondCategories?.toJson(),
-        "jewellery_categories": jewelleryCategories?.toJson(),
-        "gemstone_categories": gemstoneCategories?.toJson(),
-        "payment_terms": paymentTerms?.toJson(),
-        "filter_options": filterOptions?.toJson(),
-        "diamond_shapes": diamondShapes?.toJson(),
-        "diamond_colors": diamondColors?.toJson(),
-        "jewellery_metal_colors": jewelleryMetalColors?.toJson(),
-        "faqs": faqs?.toJson(),
-        "tasks": tasks?.toJson(),
-        "meetings": meetings?.toJson(),
-        "inquiries": inquiries?.toJson(),
-        "language": language?.toJson(),
-        "auctions": auctions?.toJson(),
-        "orders": orders?.toJson(),
-        "newsletter_subscribers": newsletterSubscribers?.toJson(),
-        "internal_note_types": internalNoteTypes?.toJson(),
-        "projects": projects?.toJson(),
-        "designs": designs?.toJson(),
-        "styles": styles?.toJson(),
-        "concepts": concepts?.toJson(),
-        "presentations": presentations?.toJson(),
-        "retailer_stores": retailerStores?.toJson(),
-        "roles": roles?.toJson(),
-        "deals": deals?.toJson(),
-        "customer_groups": customerGroups?.toJson(),
-        "users": users?.toJson(),
-        "orion": orion?.toJson(),
-        "cad_library": cadLibrary?.toJson(),
-        "design_library": designLibrary?.toJson(),
-        "finished_good_library": finishedGoodLibrary?.toJson(),
-        "sku_library": skuLibrary?.toJson(),
-        "style_library": styleLibrary?.toJson(),
-        "watchlist": watchlist?.toJson(),
-        "wishlist": wishlist?.toJson(),
-        "gemstone_shapes": gemstoneShapes?.toJson(),
-      };
+    "activity_logs": activityLogs?.toJson(),
+    "exhibitions": exhibitions?.toJson(),
+    "asset_mgmt": assetMgmt?.toJson(),
+    "review_feedbacks": reviewFeedbacks?.toJson(),
+    "digital_catalogue": digitalCatalogue?.toJson(),
+    "calendars": calendars?.toJson(),
+    "messages": messages?.toJson(),
+    "cms_page_builder": cmsPageBuilder?.toJson(),
+    "companies": companies?.toJson(),
+    "currency": currency?.toJson(),
+    "leads": leads?.toJson(),
+    "request": request?.toJson(),
+    "department": department?.toJson(),
+    "system_templates": systemTemplates?.toJson(),
+    "diamond_categories": diamondCategories?.toJson(),
+    "jewellery_categories": jewelleryCategories?.toJson(),
+    "gemstone_categories": gemstoneCategories?.toJson(),
+    "payment_terms": paymentTerms?.toJson(),
+    "filter_options": filterOptions?.toJson(),
+    "diamond_shapes": diamondShapes?.toJson(),
+    "diamond_colors": diamondColors?.toJson(),
+    "jewellery_metal_colors": jewelleryMetalColors?.toJson(),
+    "faqs": faqs?.toJson(),
+    "tasks": tasks?.toJson(),
+    "meetings": meetings?.toJson(),
+    "inquiries": inquiries?.toJson(),
+    "language": language?.toJson(),
+    "auctions": auctions?.toJson(),
+    "orders": orders?.toJson(),
+    "newsletter_subscribers": newsletterSubscribers?.toJson(),
+    "internal_note_types": internalNoteTypes?.toJson(),
+    "projects": projects?.toJson(),
+    "designs": designs?.toJson(),
+    "styles": styles?.toJson(),
+    "concepts": concepts?.toJson(),
+    "presentations": presentations?.toJson(),
+    "retailer_stores": retailerStores?.toJson(),
+    "roles": roles?.toJson(),
+    "deals": deals?.toJson(),
+    "customer_groups": customerGroups?.toJson(),
+    "users": users?.toJson(),
+    "orion": orion?.toJson(),
+    "cad_library": cadLibrary?.toJson(),
+    "design_library": designLibrary?.toJson(),
+    "finished_good_library": finishedGoodLibrary?.toJson(),
+    "sku_library": skuLibrary?.toJson(),
+    "style_library": styleLibrary?.toJson(),
+    "watchlist": watchlist?.toJson(),
+    "wishlist": wishlist?.toJson(),
+    "gemstone_shapes": gemstoneShapes?.toJson(),
+  };
 }
 
 class PermissionData {
@@ -596,26 +570,20 @@ class PermissionData {
   }
 
   Map<String, dynamic> toJson() => {
-        "list": list?.toJson(),
-        "export": activityLogsExport?.toJson(),
-        "comment": comment?.toJson(),
-        "create": create?.toJson(),
-        "delete": delete?.toJson(),
-        "import": activityLogsImport?.toJson(),
-        "share": share?.toJson(),
-        "update": update?.toJson(),
-        "view": view?.toJson(),
-      };
+    "list": list?.toJson(),
+    "export": activityLogsExport?.toJson(),
+    "comment": comment?.toJson(),
+    "create": create?.toJson(),
+    "delete": delete?.toJson(),
+    "import": activityLogsImport?.toJson(),
+    "share": share?.toJson(),
+    "update": update?.toJson(),
+    "view": view?.toJson(),
+  };
 }
 
 class CmsPageBuilder extends Equatable {
-  const CmsPageBuilder({
-    required this.create,
-    required this.delete,
-    required this.list,
-    required this.update,
-    required this.share,
-  });
+  const CmsPageBuilder({required this.create, required this.delete, required this.list, required this.update, required this.share});
 
   final Comment? create;
   final Comment? delete;
@@ -634,42 +602,28 @@ class CmsPageBuilder extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        "create": create?.toJson(),
-        "delete": delete?.toJson(),
-        "list": list?.toJson(),
-        "update": update?.toJson(),
-        "share": share?.toJson(),
-      };
+    "create": create?.toJson(),
+    "delete": delete?.toJson(),
+    "list": list?.toJson(),
+    "update": update?.toJson(),
+    "share": share?.toJson(),
+  };
 
   @override
-  List<Object?> get props => [
-        create,
-        delete,
-        list,
-        update,
-        share,
-      ];
+  List<Object?> get props => [create, delete, list, update, share];
 }
 
 class Orion extends Equatable {
-  const Orion({
-    required this.view,
-  });
+  const Orion({required this.view});
 
   final Comment? view;
 
   factory Orion.fromJson(Map<String, dynamic> json) {
-    return Orion(
-      view: json["view"] == null ? null : Comment.fromJson(json["view"]),
-    );
+    return Orion(view: json["view"] == null ? null : Comment.fromJson(json["view"]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "view": view?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"view": view?.toJson()};
 
   @override
-  List<Object?> get props => [
-        view,
-      ];
+  List<Object?> get props => [view];
 }

@@ -215,8 +215,12 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   /// Fetch diamond list
-  Future<void> fetchDiamondList(BuildContext context, Emitter<StoneListingState> emit,
-      {bool isLoadMore = false, Map<String, String>? query}) async {
+  Future<void> fetchDiamondList(
+    BuildContext context,
+    Emitter<StoneListingState> emit, {
+    bool isLoadMore = false,
+    Map<String, String>? query,
+  }) async {
     final String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, DiamondListingModel>? response;
     query ??= {};
@@ -232,23 +236,23 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       }
     }
     filterData
-        .where((element) =>
-            (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
-            (element.filterType == FilterType.range && element.rangeValues != null))
-        .forEach(
-      (element) {
-        if (element.filterType == FilterType.range) {
-          query!['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
-          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
-        } else if (element.filterType == FilterType.boolean &&
-            (element.secondaryFilterData ?? []).isNotEmpty &&
-            element.secondaryFilterData!.any((e) => e.isSelected)) {
-          query![element.code ?? ''] = 'YES';
-        } else {
-          query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
-        }
-      },
-    );
+        .where(
+          (element) =>
+              (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+              (element.filterType == FilterType.range && element.rangeValues != null),
+        )
+        .forEach((element) {
+          if (element.filterType == FilterType.range) {
+            query!['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+            query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+          } else if (element.filterType == FilterType.boolean &&
+              (element.secondaryFilterData ?? []).isNotEmpty &&
+              element.secondaryFilterData!.any((e) => e.isSelected)) {
+            query![element.code ?? ''] = 'YES';
+          } else {
+            query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+          }
+        });
 
     if (productNavigation == AppConst.youMayLike) {
       response = await AppRepository(context).getDiamondYouMayLike(
@@ -267,7 +271,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       Map<String, String> queryParam = {
         ApiKey.page: paginationScrollController.currentPage.toString(),
         ApiKey.limit: AppConst.pageLimit.toString(),
-        ApiKey.stone: AppConst.diamondsDealsOfTheDayParam
+        ApiKey.stone: AppConst.diamondsDealsOfTheDayParam,
       };
       queryParam.addAll(query);
       response = await AppRepository(context).getDiamondDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
@@ -294,60 +298,65 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   /// Handle diamond list response
-  void _handleDiamondListResponse(
-      {required Either<ErrorResponse, DiamondListingModel>? response, required Emitter<StoneListingState> emit}) {
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      final diamondList = success.data;
+  void _handleDiamondListResponse({
+    required Either<ErrorResponse, DiamondListingModel>? response,
+    required Emitter<StoneListingState> emit,
+  }) {
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        final diamondList = success.data;
 
-      /// Show the total number of records in the UI side
-      totalFilteredRecords = success.filteredRecords;
-      diamondDatumList.addAll(diamondList);
-      productList.addAll(
-        diamondList.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
-      );
+        /// Show the total number of records in the UI side
+        totalFilteredRecords = success.filteredRecords;
+        diamondDatumList.addAll(diamondList);
+        productList.addAll(diamondList.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList());
 
-      /// Here sometime the pagination is not completed and called multiple times so we have managed it
-      if (paginationScrollController.isPageLoaded.isCompleted) {
-        paginationScrollController.isPageLoaded = Completer<bool>();
-      }
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(const StoneDiamondListLoadedState());
-    });
+        /// Here sometime the pagination is not completed and called multiple times so we have managed it
+        if (paginationScrollController.isPageLoaded.isCompleted) {
+          paginationScrollController.isPageLoaded = Completer<bool>();
+        }
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(const StoneDiamondListLoadedState());
+      },
+    );
   }
 
   /// Fetch gemstone list
-  Future<void> fetchGemstoneList(BuildContext context, Emitter<StoneListingState> emit,
-      {bool isLoadMore = false, Map<String, String?>? query}) async {
+  Future<void> fetchGemstoneList(
+    BuildContext context,
+    Emitter<StoneListingState> emit, {
+    bool isLoadMore = false,
+    Map<String, String?>? query,
+  }) async {
     final String type = isInitialToggle ? AppConst.precious : AppConst.semiPrecious;
     Either<ErrorResponse, GemstoneListingModel>? response;
     query ??= {};
     if (filterDataMap?.isNotEmpty ?? false) {
-      query.addAll(
-        filterDataMap!.map((key, value) => MapEntry(key.toString(), value ?? '')),
-      );
+      query.addAll(filterDataMap!.map((key, value) => MapEntry(key.toString(), value ?? '')));
     }
 
     filterData
-        .where((element) =>
-            (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
-            (element.filterType == FilterType.range && element.rangeValues != null))
-        .forEach(
-      (element) {
-        if (element.filterType == FilterType.range) {
-          query!['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
-          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
-        } else if (element.filterType == FilterType.boolean &&
-            (element.secondaryFilterData ?? []).isNotEmpty &&
-            element.secondaryFilterData!.any((e) => e.isSelected)) {
-          query![element.code ?? ''] = 'YES';
-        } else {
-          query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
-        }
-      },
-    );
+        .where(
+          (element) =>
+              (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+              (element.filterType == FilterType.range && element.rangeValues != null),
+        )
+        .forEach((element) {
+          if (element.filterType == FilterType.range) {
+            query!['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+            query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+          } else if (element.filterType == FilterType.boolean &&
+              (element.secondaryFilterData ?? []).isNotEmpty &&
+              element.secondaryFilterData!.any((e) => e.isSelected)) {
+            query![element.code ?? ''] = 'YES';
+          } else {
+            query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+          }
+        });
 
     if (productId.isNotEmpty && productNavigation.isNotEmpty) {
       if (productNavigation == AppConst.youMayLike) {
@@ -368,12 +377,10 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       Map<String, String> queryParam = {
         ApiKey.page: paginationScrollController.currentPage.toString(),
         ApiKey.limit: AppConst.pageLimit.toString(),
-        ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam
+        ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam,
       };
       if (query.isNotEmpty) {
-        Map<String, String> stringMap = query.map(
-          (key, value) => MapEntry(key.toString(), value ?? ''),
-        );
+        Map<String, String> stringMap = query.map((key, value) => MapEntry(key.toString(), value ?? ''));
         queryParam.addAll(stringMap);
       }
       response = await AppRepository(context).getGemstoneDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
@@ -393,23 +400,26 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   /// Handle gemstone list response
-  void _handleGemstoneListResponse(
-      {required Either<ErrorResponse, GemstoneListingModel>? response, required Emitter<StoneListingState> emit}) {
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      final gemstoneList = success.data;
+  void _handleGemstoneListResponse({
+    required Either<ErrorResponse, GemstoneListingModel>? response,
+    required Emitter<StoneListingState> emit,
+  }) {
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        final gemstoneList = success.data;
 
-      /// Show the total number of records in the UI side
-      totalFilteredRecords = success.filteredRecords;
-      gemstoneDatumList.addAll(gemstoneList);
-      productList.addAll(
-        gemstoneList.map((gemstone) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList(),
-      );
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(const StoneDiamondListLoadedState());
-    });
+        /// Show the total number of records in the UI side
+        totalFilteredRecords = success.filteredRecords;
+        gemstoneDatumList.addAll(gemstoneList);
+        productList.addAll(gemstoneList.map((gemstone) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList());
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(const StoneDiamondListLoadedState());
+      },
+    );
   }
 
   /// Stone Change Type
@@ -538,8 +548,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Initialize sort options
   Future<void> _initializeSortOptions(BuildContext context) async {
-    List<SortOptions> sortOptionsList = await StorageManager()
-        .getSortingList(screenIdentifier == ScreenIdentifier.diamondForDIY ? Commodity.diamond.value : Commodity.gemstone.value);
+    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(
+      screenIdentifier == ScreenIdentifier.diamondForDIY ? Commodity.diamond.value : Commodity.gemstone.value,
+    );
     if (sortOptionsList.isNotNullNorEmpty) {
       sortOptions = sortOptionsList;
       SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;

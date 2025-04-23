@@ -1,8 +1,5 @@
 class ContactUsModel {
-  ContactUsModel({
-    required this.data,
-    required this.meta,
-  });
+  ContactUsModel({required this.data, required this.meta});
 
   final List<ContactUsModelDatum> data;
   final ContactUsMeta? meta;
@@ -14,17 +11,11 @@ class ContactUsModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-        "meta": meta?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"data": data.map((x) => x.toJson()).toList(), "meta": meta?.toJson()};
 }
 
 class ContactUsModelDatum {
-  ContactUsModelDatum({
-    required this.id,
-    required this.attributes,
-  });
+  ContactUsModelDatum({required this.id, required this.attributes});
 
   final int? id;
   final PurpleAttributes? attributes;
@@ -36,10 +27,7 @@ class ContactUsModelDatum {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "attributes": attributes?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "attributes": attributes?.toJson()};
 }
 
 class PurpleAttributes {
@@ -68,12 +56,12 @@ class PurpleAttributes {
   }
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "publishedAt": publishedAt?.toIso8601String(),
-        "locale": locale,
-        "contact_us": contactUs.map((x) => x.toJson()).toList(),
-      };
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "publishedAt": publishedAt?.toIso8601String(),
+    "locale": locale,
+    "contact_us": contactUs.map((x) => x.toJson()).toList(),
+  };
 }
 
 class ContactUs {
@@ -108,21 +96,18 @@ class ContactUs {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "__component": component,
-        "support_title": supportTitle,
-        "user_type": userType?.toJson(),
-        "business_type": businessType?.toJson(),
-        "card": card?.toJson(),
-        "support": support.map((x) => x.toJson()).toList(),
-      };
+    "id": id,
+    "__component": component,
+    "support_title": supportTitle,
+    "user_type": userType?.toJson(),
+    "business_type": businessType?.toJson(),
+    "card": card?.toJson(),
+    "support": support.map((x) => x.toJson()).toList(),
+  };
 }
 
 class ContactUsBusinessType {
-  ContactUsBusinessType({
-    required this.id,
-    required this.businessTypes,
-  });
+  ContactUsBusinessType({required this.id, required this.businessTypes});
 
   final int? id;
   final List<String> businessTypes;
@@ -134,10 +119,7 @@ class ContactUsBusinessType {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "business_types": businessTypes.map((x) => x).toList(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "business_types": businessTypes.map((x) => x).toList()};
 }
 
 class ContactUsCard {
@@ -178,41 +160,32 @@ class ContactUsCard {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "tag": tag,
-        "RedirecTo": redirecTo,
-        "RedirectionType": redirectionType,
-        "url": url,
-        "mobile_image": mobileImage?.toJson(),
-        "image": image?.toJson(),
-      };
+    "id": id,
+    "title": title,
+    "description": description,
+    "tag": tag,
+    "RedirecTo": redirecTo,
+    "RedirectionType": redirectionType,
+    "url": url,
+    "mobile_image": mobileImage?.toJson(),
+    "image": image?.toJson(),
+  };
 }
 
 class ContactUsImage {
-  ContactUsImage({
-    required this.data,
-  });
+  ContactUsImage({required this.data});
 
   final List<ImageDatum> data;
 
   factory ContactUsImage.fromJson(Map<String, dynamic> json) {
-    return ContactUsImage(
-      data: json["data"] == null ? [] : List<ImageDatum>.from(json["data"]!.map((x) => ImageDatum.fromJson(x))),
-    );
+    return ContactUsImage(data: json["data"] == null ? [] : List<ImageDatum>.from(json["data"]!.map((x) => ImageDatum.fromJson(x))));
   }
 
-  Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() => {"data": data.map((x) => x.toJson()).toList()};
 }
 
 class ImageDatum {
-  ImageDatum({
-    required this.id,
-    required this.attributes,
-  });
+  ImageDatum({required this.id, required this.attributes});
 
   final int? id;
   final ContactUsFluffyAttributes? attributes;
@@ -224,10 +197,7 @@ class ImageDatum {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "attributes": attributes?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "attributes": attributes?.toJson()};
 }
 
 class ContactUsFluffyAttributes {
@@ -289,31 +259,27 @@ class ContactUsFluffyAttributes {
   }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "alternativeText": alternativeText,
-        "caption": caption,
-        "width": width,
-        "height": height,
-        "formats": formats?.toJson(),
-        "hash": hash,
-        "ext": ext,
-        "mime": mime,
-        "size": size,
-        "url": url,
-        "previewUrl": previewUrl,
-        "provider": provider,
-        "provider_metadata": providerMetadata,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-      };
+    "name": name,
+    "alternativeText": alternativeText,
+    "caption": caption,
+    "width": width,
+    "height": height,
+    "formats": formats?.toJson(),
+    "hash": hash,
+    "ext": ext,
+    "mime": mime,
+    "size": size,
+    "url": url,
+    "previewUrl": previewUrl,
+    "provider": provider,
+    "provider_metadata": providerMetadata,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+  };
 }
 
 class Formats {
-  Formats({
-    required this.small,
-    required this.medium,
-    required this.thumbnail,
-  });
+  Formats({required this.small, required this.medium, required this.thumbnail});
 
   final Medium? small;
   final Medium? medium;
@@ -327,11 +293,7 @@ class Formats {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "small": small?.toJson(),
-        "medium": medium?.toJson(),
-        "thumbnail": thumbnail?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"small": small?.toJson(), "medium": medium?.toJson(), "thumbnail": thumbnail?.toJson()};
 }
 
 class Medium {
@@ -375,27 +337,21 @@ class Medium {
   }
 
   Map<String, dynamic> toJson() => {
-        "ext": ext,
-        "url": url,
-        "hash": hash,
-        "mime": mime,
-        "name": name,
-        "path": path,
-        "size": size,
-        "width": width,
-        "height": height,
-        "sizeInBytes": sizeInBytes,
-      };
+    "ext": ext,
+    "url": url,
+    "hash": hash,
+    "mime": mime,
+    "name": name,
+    "path": path,
+    "size": size,
+    "width": width,
+    "height": height,
+    "sizeInBytes": sizeInBytes,
+  };
 }
 
 class ContactUsSupport {
-  ContactUsSupport({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.action,
-    required this.url,
-  });
+  ContactUsSupport({required this.id, required this.title, required this.description, required this.action, required this.url});
 
   final int? id;
   final String? title;
@@ -413,62 +369,36 @@ class ContactUsSupport {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "action": action,
-        "url": url,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "title": title, "description": description, "action": action, "url": url};
 }
 
 class ContactUsUserType {
-  ContactUsUserType({
-    required this.id,
-    required this.userType,
-  });
+  ContactUsUserType({required this.id, required this.userType});
 
   final int? id;
   final String? userType;
 
   factory ContactUsUserType.fromJson(Map<String, dynamic> json) {
-    return ContactUsUserType(
-      id: json["id"],
-      userType: json["user_type"],
-    );
+    return ContactUsUserType(id: json["id"], userType: json["user_type"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_type": userType,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "user_type": userType};
 }
 
 class ContactUsMeta {
-  ContactUsMeta({
-    required this.pagination,
-  });
+  ContactUsMeta({required this.pagination});
 
   final ContactUsPagination? pagination;
 
   factory ContactUsMeta.fromJson(Map<String, dynamic> json) {
-    return ContactUsMeta(
-      pagination: json["pagination"] == null ? null : ContactUsPagination.fromJson(json["pagination"]),
-    );
+    return ContactUsMeta(pagination: json["pagination"] == null ? null : ContactUsPagination.fromJson(json["pagination"]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "pagination": pagination?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"pagination": pagination?.toJson()};
 }
 
 class ContactUsPagination {
-  ContactUsPagination({
-    required this.page,
-    required this.pageSize,
-    required this.pageCount,
-    required this.total,
-  });
+  ContactUsPagination({required this.page, required this.pageSize, required this.pageCount, required this.total});
 
   final int? page;
   final int? pageSize;
@@ -476,18 +406,8 @@ class ContactUsPagination {
   final int? total;
 
   factory ContactUsPagination.fromJson(Map<String, dynamic> json) {
-    return ContactUsPagination(
-      page: json["page"],
-      pageSize: json["pageSize"],
-      pageCount: json["pageCount"],
-      total: json["total"],
-    );
+    return ContactUsPagination(page: json["page"], pageSize: json["pageSize"], pageCount: json["pageCount"], total: json["total"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "page": page,
-        "pageSize": pageSize,
-        "pageCount": pageCount,
-        "total": total,
-      };
+  Map<String, dynamic> toJson() => {"page": page, "pageSize": pageSize, "pageCount": pageCount, "total": total};
 }

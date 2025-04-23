@@ -7,10 +7,7 @@ class SavedAddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final SavedAddressBloc savedAddressBloc = BlocProvider.of<SavedAddressBloc>(context);
     final SavedAddressStyle style = AppTheme.of(context).savedAddressStyle;
-    return Scaffold(
-      appBar: SmartAppBar(title: APPStrings.savedAddress.tr),
-      body: _buildBody(style, savedAddressBloc, context),
-    );
+    return Scaffold(appBar: SmartAppBar(title: APPStrings.savedAddress.tr), body: _buildBody(style, savedAddressBloc, context));
   }
 
   Widget _buildBody(SavedAddressStyle style, SavedAddressBloc bloc, BuildContext context) {

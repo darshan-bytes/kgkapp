@@ -27,12 +27,9 @@ class ActivityLogBloc extends Bloc<ActivityLogEvent, ActivityLogState> {
       });
     }
 
-    activityLogList = List.generate(
-      3,
-      (index) {
-        return ActivityLogModel(id: index.toString(), logDate: "16 Aug 2023", activities: getActivities(index));
-      },
-    );
+    activityLogList = List.generate(3, (index) {
+      return ActivityLogModel(id: index.toString(), logDate: "16 Aug 2023", activities: getActivities(index));
+    });
     emit(const ActivityLogLoadedState());
   }
 }

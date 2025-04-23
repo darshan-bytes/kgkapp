@@ -65,25 +65,25 @@ class CurrencyListModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "slug": slug,
-        "code": code,
-        "symbol": symbol,
-        "is_default": isDefault,
-        "symbol_position": symbolPosition,
-        "decimal_separator": decimalSeparator,
-        "thousand_separator": thousandSeparator,
-        "decimal_digits": decimalDigits,
-        "conversion_type": conversionType,
-        "status": status,
-        "created_by": createdBy,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "id": id,
-        "updated_by": updatedBy,
-        "created_by_details": createdByDetails?.toJson(),
-        "updated_by_details": updatedByDetails?.toJson(),
-      };
+    "name": name,
+    "slug": slug,
+    "code": code,
+    "symbol": symbol,
+    "is_default": isDefault,
+    "symbol_position": symbolPosition,
+    "decimal_separator": decimalSeparator,
+    "thousand_separator": thousandSeparator,
+    "decimal_digits": decimalDigits,
+    "conversion_type": conversionType,
+    "status": status,
+    "created_by": createdBy,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "id": id,
+    "updated_by": updatedBy,
+    "created_by_details": createdByDetails?.toJson(),
+    "updated_by_details": updatedByDetails?.toJson(),
+  };
 
   @override
   bool operator ==(Object other) =>

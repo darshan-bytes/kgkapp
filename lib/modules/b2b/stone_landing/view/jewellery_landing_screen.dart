@@ -5,12 +5,7 @@ class JewelleryLandingScreen extends StatelessWidget {
   final StonesLandingScreenStyle style;
   final HomeScreenStyle homeScreenStyle;
 
-  const JewelleryLandingScreen({
-    super.key,
-    required this.bloc,
-    required this.style,
-    required this.homeScreenStyle,
-  });
+  const JewelleryLandingScreen({super.key, required this.bloc, required this.style, required this.homeScreenStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +20,20 @@ class JewelleryLandingScreen extends StatelessWidget {
             await bloc.pullToRefresh(context);
           },
           child: ListView.builder(
-              itemCount: bloc.jewelleryStrapiList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = bloc.jewelleryStrapiList[index];
-                return bloc.getJewelleriesWidgetsFromSlug(
-                    context, (item.slug)?.landingSlug ?? LandingSlug.unknown, bloc, style, homeScreenStyle, index);
-              }),
+            itemCount: bloc.jewelleryStrapiList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final item = bloc.jewelleryStrapiList[index];
+              return bloc.getJewelleriesWidgetsFromSlug(
+                context,
+                (item.slug)?.landingSlug ?? LandingSlug.unknown,
+                bloc,
+                style,
+                homeScreenStyle,
+                index,
+              );
+            },
+          ),
         );
       },
     );
@@ -113,9 +115,7 @@ class JewelleryLandingScreen extends StatelessWidget {
             padding: EdgeInsetsDirectional.all(16.w),
             backgroundImageHeight: 200.h,
             spaceBetweenTitleAndSubTitle: 4.h,
-            buttonList: [
-              SmartButton(onTap: () {}, title: APPStrings.getStarted.tr),
-            ],
+            buttonList: [SmartButton(onTap: () {}, title: APPStrings.getStarted.tr)],
           ),
           SizedBox(height: 24.h),
           StonesBannerView(
@@ -127,10 +127,8 @@ class JewelleryLandingScreen extends StatelessWidget {
             padding: EdgeInsetsDirectional.all(16.w),
             backgroundImageHeight: 200.h,
             spaceBetweenTitleAndSubTitle: 4.h,
-            buttonList: [
-              SmartButton(onTap: () {}, title: APPStrings.getStarted.tr),
-            ],
-          )
+            buttonList: [SmartButton(onTap: () {}, title: APPStrings.getStarted.tr)],
+          ),
         ],
       ),
     );
@@ -154,11 +152,8 @@ class JewelleryLandingScreen extends StatelessWidget {
         spaceBetweenTitleAndSubTitle: 4.h,
         buttonList: [
           SmartButton(onTap: () {}, title: APPStrings.startWithSetting.tr),
-          SmartText(
-            APPStrings.or.tr,
-            optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
-          ),
-          SmartButton(onTap: () {}, title: APPStrings.startWithDiamond.tr)
+          SmartText(APPStrings.or.tr, optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h)),
+          SmartButton(onTap: () {}, title: APPStrings.startWithDiamond.tr),
         ],
       ),
     );

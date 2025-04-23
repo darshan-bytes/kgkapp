@@ -5,12 +5,7 @@ class DiamondLandingScreen extends StatelessWidget {
   final StonesLandingScreenStyle style;
   final HomeScreenStyle homeScreenStyle;
 
-  const DiamondLandingScreen({
-    super.key,
-    required this.bloc,
-    required this.style,
-    required this.homeScreenStyle,
-  });
+  const DiamondLandingScreen({super.key, required this.bloc, required this.style, required this.homeScreenStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +20,20 @@ class DiamondLandingScreen extends StatelessWidget {
             await bloc.pullToRefresh(context);
           },
           child: ListView.builder(
-              itemCount: bloc.diamondStrapiList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = bloc.diamondStrapiList[index];
-                return bloc.getDiamondWidgetsFromSlug(
-                    context, (item.slug)?.landingSlug ?? LandingSlug.unknown, bloc, style, homeScreenStyle, index);
-              }),
+            itemCount: bloc.diamondStrapiList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final item = bloc.diamondStrapiList[index];
+              return bloc.getDiamondWidgetsFromSlug(
+                context,
+                (item.slug)?.landingSlug ?? LandingSlug.unknown,
+                bloc,
+                style,
+                homeScreenStyle,
+                index,
+              );
+            },
+          ),
         );
         // return Column(
         //   children: [
@@ -130,10 +132,7 @@ class DiamondLandingScreen extends StatelessWidget {
           width: 88.w,
           title: item.name ?? '',
           titleStyle: homeScreenStyle.shopGemstoneTitleStyle,
-          margin: EdgeInsetsDirectional.only(
-            start: index == 0 ? 17.w : 0,
-            end: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0,
-          ),
+          margin: EdgeInsetsDirectional.only(start: index == 0 ? 17.w : 0, end: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0),
           titleMaxLines: 1,
           fit: BoxFit.fill,
           imageUrl: item.imageUrl ?? '',

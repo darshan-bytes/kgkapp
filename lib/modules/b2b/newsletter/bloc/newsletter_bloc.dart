@@ -4,11 +4,7 @@ part 'newsletter_event.dart';
 
 part 'newsletter_state.dart';
 
-enum NewsletterTab {
-  template,
-  categories,
-  subscribers,
-}
+enum NewsletterTab { template, categories, subscribers }
 
 class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
   UserType userType = UserType.b2cUser;
@@ -38,11 +34,7 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
 
   //Newsletter tab bar view
   List<Widget> buildTabBarView(NewsletterBloc bloc) {
-    return [
-      NewsletterTemplateTabView(bloc: bloc),
-      NewsletterCategoriesTabView(bloc: bloc),
-      NewsletterSubscriberTabView(bloc: bloc),
-    ];
+    return [NewsletterTemplateTabView(bloc: bloc), NewsletterCategoriesTabView(bloc: bloc), NewsletterSubscriberTabView(bloc: bloc)];
   }
 
   NewsletterBloc() : super(const NewsletterInitialState()) {
@@ -214,35 +206,37 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
   static List<TemplateListModel> _generateTemplateNewsletterList() {
     return [
       TemplateListModel(
-          title: "Festival Offer Reminder",
-          templateSubList: List.generate(
-            2,
-            (index) => B2BCustomListingDataModel(
-              id: "1",
-              strName: "Festival offer reminder - New year",
-              status: ProjectStatus.inActive,
-              strCountry: "USA",
-              strCountryImageUrl: AppImages.icFlagUSA,
-              strValidity: "Default",
-              strCreatedBy: "Jenny Wilson",
-              strCreatedByImageUrl: "https://i.ibb.co/vk9xjQw/Frame-3977-1.png",
-            ),
-          )),
+        title: "Festival Offer Reminder",
+        templateSubList: List.generate(
+          2,
+          (index) => B2BCustomListingDataModel(
+            id: "1",
+            strName: "Festival offer reminder - New year",
+            status: ProjectStatus.inActive,
+            strCountry: "USA",
+            strCountryImageUrl: AppImages.icFlagUSA,
+            strValidity: "Default",
+            strCreatedBy: "Jenny Wilson",
+            strCreatedByImageUrl: "https://i.ibb.co/vk9xjQw/Frame-3977-1.png",
+          ),
+        ),
+      ),
       TemplateListModel(
-          title: "New Product Announcement",
-          templateSubList: List.generate(
-            8,
-            (index) => B2BCustomListingDataModel(
-              id: "1",
-              strName: "Festival offer reminder - New year",
-              status: index % 2 == 0 ? ProjectStatus.active : ProjectStatus.inActive,
-              strCountry: "USA",
-              strCountryImageUrl: AppImages.icFlagUSA,
-              strValidity: "Default",
-              strCreatedBy: "Jenny Wilson",
-              strCreatedByImageUrl: "https://i.ibb.co/vk9xjQw/Frame-3977-1.png",
-            ),
-          )),
+        title: "New Product Announcement",
+        templateSubList: List.generate(
+          8,
+          (index) => B2BCustomListingDataModel(
+            id: "1",
+            strName: "Festival offer reminder - New year",
+            status: index % 2 == 0 ? ProjectStatus.active : ProjectStatus.inActive,
+            strCountry: "USA",
+            strCountryImageUrl: AppImages.icFlagUSA,
+            strValidity: "Default",
+            strCreatedBy: "Jenny Wilson",
+            strCreatedByImageUrl: "https://i.ibb.co/vk9xjQw/Frame-3977-1.png",
+          ),
+        ),
+      ),
     ];
   }
 

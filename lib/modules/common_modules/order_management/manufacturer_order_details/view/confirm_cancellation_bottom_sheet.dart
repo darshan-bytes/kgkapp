@@ -17,18 +17,11 @@ class ConfirmCancellationBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildAppBar(context, style),
-            SizedBox(
-              height: 4.h,
-            ),
-            SmartText(
-              APPStrings.orderWillBeCancelledX.tr.interpolate(['14567']),
-              style: style.subTitleStyle,
-            ),
+            SizedBox(height: 4.h),
+            SmartText(APPStrings.orderWillBeCancelledX.tr.interpolate(['14567']), style: style.subTitleStyle),
             SizedBox(height: 24.h),
             _buildCancelDetailsInfoCard(style),
-            SizedBox(
-              height: 36.h,
-            ),
+            SizedBox(height: 36.h),
             _bottomSelectionButton(context, bloc),
           ],
         ),
@@ -40,10 +33,7 @@ class ConfirmCancellationBottomSheet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SmartText(
-          APPStrings.areYouSure.tr,
-          style: style.headerTitleStyle,
-        ),
+        SmartText(APPStrings.areYouSure.tr, style: style.headerTitleStyle),
         SmartImage(
           path: AppImages.icCross,
           onTap: () {
@@ -56,10 +46,7 @@ class ConfirmCancellationBottomSheet extends StatelessWidget {
 
   Widget _buildCancelDetailsInfoCard(ConfirmCancelPopupStyle style) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.r),
-        color: style.detailBgColor,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.r), color: style.detailBgColor),
       padding: EdgeInsetsDirectional.all(16.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,17 +61,7 @@ class ConfirmCancellationBottomSheet extends StatelessWidget {
 
   Widget _buildTitleQtyWidget(String title, String qty, ConfirmCancelPopupStyle style) {
     return Column(
-      children: [
-        SmartText(
-          title,
-          style: style.itemsTitleStyle,
-        ),
-        SizedBox(height: 8.h),
-        SmartText(
-          qty,
-          style: style.qtyTitleStyle,
-        ),
-      ],
+      children: [SmartText(title, style: style.itemsTitleStyle), SizedBox(height: 8.h), SmartText(qty, style: style.qtyTitleStyle)],
     );
   }
 

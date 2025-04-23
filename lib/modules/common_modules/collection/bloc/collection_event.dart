@@ -17,10 +17,7 @@ final class ChangeCollectionTabsEvent extends CollectionEvent {
   final int index;
   final BuildContext context;
 
-  const ChangeCollectionTabsEvent({
-    required this.context,
-    required this.index,
-  });
+  const ChangeCollectionTabsEvent({required this.context, required this.index});
 
   @override
   List<Object> get props => [context, index];

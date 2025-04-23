@@ -55,15 +55,15 @@ class CommodityMasterDetails {
   }
 
   Map<String, dynamic> toJson() => {
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "id": id,
-        "code": code,
-        "name": name,
-        "sub_type_code": subTypeCode,
-        "img_reference_id": imgReferenceId,
-        "img_path": imgPath,
-      };
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "id": id,
+    "code": code,
+    "name": name,
+    "sub_type_code": subTypeCode,
+    "img_reference_id": imgReferenceId,
+    "img_path": imgPath,
+  };
 
   @override
   bool operator ==(Object other) =>

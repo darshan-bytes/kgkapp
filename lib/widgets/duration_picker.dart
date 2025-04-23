@@ -38,27 +38,23 @@ class SmartDurationPicker extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (labelText != null) ...[
-          SmartText(
-            labelText!,
-            style: style.labelStyle,
-          ),
-          SizedBox(height: 8.h),
-        ],
+        if (labelText != null) ...[SmartText(labelText!, style: style.labelStyle), SizedBox(height: 8.h)],
         InkWell(
           focusNode: focusNode,
           onTap: () {
             Utils.showSmartModalBottomSheet(
-                context: context,
-                isScrollControlled: false,
-                builder: (context) {
-                  return CustomDurationPicker(
-                      initialDuration: duration.value ?? Duration.zero,
-                      onDurationChanged: (duration) {
-                        this.duration.value = duration;
-                        onDurationChanged(duration);
-                      });
-                });
+              context: context,
+              isScrollControlled: false,
+              builder: (context) {
+                return CustomDurationPicker(
+                  initialDuration: duration.value ?? Duration.zero,
+                  onDurationChanged: (duration) {
+                    this.duration.value = duration;
+                    onDurationChanged(duration);
+                  },
+                );
+              },
+            );
           },
           child: Container(
             height: buttonHeight ?? 48.w,
@@ -66,22 +62,20 @@ class SmartDurationPicker extends StatelessWidget {
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
-              border: border ??
-                  Border.all(
-                    color: style.enabledTextFieldBorderColor,
-                  ),
+              border: border ?? Border.all(color: style.enabledTextFieldBorderColor),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: ValueListenableBuilder(
-                      valueListenable: duration,
-                      builder: (context, value, child) {
-                        return SmartText(
-                          duration.value?.formattedDurationShort ?? hintText ?? APPStrings.select.tr,
-                          style: duration.value != null ? style.textStyle : style.hintStyle,
-                        );
-                      }),
+                    valueListenable: duration,
+                    builder: (context, value, child) {
+                      return SmartText(
+                        duration.value?.formattedDurationShort ?? hintText ?? APPStrings.select.tr,
+                        style: duration.value != null ? style.textStyle : style.hintStyle,
+                      );
+                    },
+                  ),
                 ),
                 const SmartImage(path: AppImages.icArrowDropDown),
               ],
@@ -89,17 +83,13 @@ class SmartDurationPicker extends StatelessWidget {
           ),
         ),
         AnimatedSize(
-            duration: Duration(milliseconds: 200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: errorText.isNotNullNorEmpty
-                  ? [
-                      SizedBox(height: 8.h),
-                      SmartText(errorText!, style: style.errorStyle),
-                    ]
-                  : [],
-            )),
+          duration: Duration(milliseconds: 200),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: errorText.isNotNullNorEmpty ? [SizedBox(height: 8.h), SmartText(errorText!, style: style.errorStyle)] : [],
+          ),
+        ),
       ],
     );
   }
@@ -112,11 +102,7 @@ class CustomDurationPicker extends StatelessWidget {
   final ValueNotifier<int> hours = ValueNotifier<int>(0);
   final ValueNotifier<int> minutes = ValueNotifier<int>(0);
 
-  CustomDurationPicker({
-    super.key,
-    required this.initialDuration,
-    required this.onDurationChanged,
-  }) {
+  CustomDurationPicker({super.key, required this.initialDuration, required this.onDurationChanged}) {
     days.value = initialDuration.inDays;
     hours.value = initialDuration.inHours % 24;
     minutes.value = initialDuration.inMinutes % 60;
@@ -151,20 +137,21 @@ class CustomDurationPicker extends StatelessWidget {
                             SizedBox(
                               height: 250.h,
                               child: ValueListenableBuilder(
-                                  valueListenable: days,
-                                  builder: (context, value, child) {
-                                    return CupertinoPicker(
-                                      scrollController: FixedExtentScrollController(initialItem: days.value),
-                                      itemExtent: 32.h,
-                                      looping: true,
-                                      onSelectedItemChanged: (int value) {
-                                        days.value = value;
-                                      },
-                                      children: List<Widget>.generate(31, (int index) {
-                                        return Center(child: SmartText("$index", style: TextStyle(fontSize: 20.sp)));
-                                      }),
-                                    );
-                                  }),
+                                valueListenable: days,
+                                builder: (context, value, child) {
+                                  return CupertinoPicker(
+                                    scrollController: FixedExtentScrollController(initialItem: days.value),
+                                    itemExtent: 32.h,
+                                    looping: true,
+                                    onSelectedItemChanged: (int value) {
+                                      days.value = value;
+                                    },
+                                    children: List<Widget>.generate(31, (int index) {
+                                      return Center(child: SmartText("$index", style: TextStyle(fontSize: 20.sp)));
+                                    }),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -176,20 +163,21 @@ class CustomDurationPicker extends StatelessWidget {
                             SizedBox(
                               height: 250.h,
                               child: ValueListenableBuilder(
-                                  valueListenable: hours,
-                                  builder: (context, value, child) {
-                                    return CupertinoPicker(
-                                      scrollController: FixedExtentScrollController(initialItem: hours.value),
-                                      itemExtent: 32.h,
-                                      looping: true,
-                                      onSelectedItemChanged: (int value) {
-                                        hours.value = value;
-                                      },
-                                      children: List<Widget>.generate(24, (int index) {
-                                        return Center(child: SmartText("$index", style: TextStyle(fontSize: 20.sp)));
-                                      }),
-                                    );
-                                  }),
+                                valueListenable: hours,
+                                builder: (context, value, child) {
+                                  return CupertinoPicker(
+                                    scrollController: FixedExtentScrollController(initialItem: hours.value),
+                                    itemExtent: 32.h,
+                                    looping: true,
+                                    onSelectedItemChanged: (int value) {
+                                      hours.value = value;
+                                    },
+                                    children: List<Widget>.generate(24, (int index) {
+                                      return Center(child: SmartText("$index", style: TextStyle(fontSize: 20.sp)));
+                                    }),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -201,21 +189,22 @@ class CustomDurationPicker extends StatelessWidget {
                             SizedBox(
                               height: 250.h,
                               child: ValueListenableBuilder(
-                                  valueListenable: minutes,
-                                  builder: (context, value, child) {
-                                    return CupertinoPicker(
-                                      scrollController: FixedExtentScrollController(initialItem: minutes.value),
-                                      itemExtent: 32.h,
-                                      looping: true,
-                                      useMagnifier: true,
-                                      onSelectedItemChanged: (int value) {
-                                        minutes.value = value;
-                                      },
-                                      children: List<Widget>.generate(60, (int index) {
-                                        return Center(child: SmartText("$index", style: TextStyle(fontSize: 20.sp)));
-                                      }),
-                                    );
-                                  }),
+                                valueListenable: minutes,
+                                builder: (context, value, child) {
+                                  return CupertinoPicker(
+                                    scrollController: FixedExtentScrollController(initialItem: minutes.value),
+                                    itemExtent: 32.h,
+                                    looping: true,
+                                    useMagnifier: true,
+                                    onSelectedItemChanged: (int value) {
+                                      minutes.value = value;
+                                    },
+                                    children: List<Widget>.generate(60, (int index) {
+                                      return Center(child: SmartText("$index", style: TextStyle(fontSize: 20.sp)));
+                                    }),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -224,22 +213,24 @@ class CustomDurationPicker extends StatelessWidget {
                   ),
                   SizedBox(height: 16.h),
                   SmartButton(
-                      onTap: () {
-                        onDurationChanged(Duration(days: days.value, hours: hours.value, minutes: minutes.value));
-                        context.pop();
-                      },
-                      title: APPStrings.ok.tr),
+                    onTap: () {
+                      onDurationChanged(Duration(days: days.value, hours: hours.value, minutes: minutes.value));
+                      context.pop();
+                    },
+                    title: APPStrings.ok.tr,
+                  ),
                 ],
               ),
               Align(
                 alignment: AlignmentDirectional.topEnd,
                 child: SmartImage(
-                    path: AppImages.icCross,
-                    width: 24.w,
-                    height: 24.w,
-                    onTap: () {
-                      context.pop();
-                    }),
+                  path: AppImages.icCross,
+                  width: 24.w,
+                  height: 24.w,
+                  onTap: () {
+                    context.pop();
+                  },
+                ),
               ),
             ],
           ),

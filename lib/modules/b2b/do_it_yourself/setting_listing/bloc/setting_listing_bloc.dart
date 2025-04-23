@@ -116,23 +116,23 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
 
     Map<String, String>? query = {};
     filterData
-        .where((element) =>
-            (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
-            (element.filterType == FilterType.range && element.rangeValues != null))
-        .forEach(
-      (element) {
-        if (element.filterType == FilterType.range) {
-          query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
-          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
-        } else if (element.filterType == FilterType.boolean &&
-            (element.secondaryFilterData ?? []).isNotEmpty &&
-            element.secondaryFilterData!.any((e) => e.isSelected)) {
-          query[element.code ?? ''] = AppConst.filterBoolYesValue;
-        } else {
-          query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
-        }
-      },
-    );
+        .where(
+          (element) =>
+              (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+              (element.filterType == FilterType.range && element.rangeValues != null),
+        )
+        .forEach((element) {
+          if (element.filterType == FilterType.range) {
+            query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+            query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+          } else if (element.filterType == FilterType.boolean &&
+              (element.secondaryFilterData ?? []).isNotEmpty &&
+              element.secondaryFilterData!.any((e) => e.isSelected)) {
+            query[element.code ?? ''] = AppConst.filterBoolYesValue;
+          } else {
+            query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+          }
+        });
 
     if (diamondDataForDIY?.shapeCode != null) {
       query[ApiKey.shapeCode] = diamondDataForDIY?.shapeCode ?? '';
@@ -150,13 +150,12 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
       query: query,
     );
 
-    response?.fold(
-      (error) => Utils.showMessage(error.message),
-      (PaginationData<DiyStyleListModel> success) {
-        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-        final List<DiyStyleListModel> localList = (success.dataList ?? []);
-        diyStyleList.addAll(localList);
-        productList.addAll(localList.map((item) {
+    response?.fold((error) => Utils.showMessage(error.message), (PaginationData<DiyStyleListModel> success) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+      final List<DiyStyleListModel> localList = (success.dataList ?? []);
+      diyStyleList.addAll(localList);
+      productList.addAll(
+        localList.map((item) {
           return ProductDetailsModel(
             suid: item.suid ?? "",
             imageUrl: item.imageSketch,
@@ -168,12 +167,12 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
             businessCategoryName: item.businessCategoryName ?? "",
             colorsCode: [item.metalColor1HexCode ?? ""],
           );
-        }).toList());
-        if (paginationScrollController.isPageLoaded.isCompleted) {
-          paginationScrollController.isPageLoaded = Completer<bool>();
-        }
-        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      },
-    );
+        }).toList(),
+      );
+      if (paginationScrollController.isPageLoaded.isCompleted) {
+        paginationScrollController.isPageLoaded = Completer<bool>();
+      }
+      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+    });
   }
 }

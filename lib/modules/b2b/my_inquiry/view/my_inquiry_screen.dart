@@ -7,27 +7,26 @@ class MyInquiryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<MyInquiryBloc>(context);
     return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.myInquiries.tr,
-      ),
+      appBar: SmartAppBar(title: APPStrings.myInquiries.tr),
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       body: BlocBuilder<MyInquiryBloc, MyInquiryState>(
         buildWhen: (previous, current) => current is MyInquiryLoadedState,
         builder: (context, state) {
           return ListView.builder(
-              padding: EdgeInsetsDirectional.all(17.w),
-              itemCount: bloc.myInquiryList.length,
-              itemBuilder: (listContext, index) {
-                return B2BListingItem(
-                  margin: EdgeInsetsDirectional.only(bottom: 24.h),
-                  onTapMenuButton: () {
-                    handleMenuButtonTap(context, index, bloc, bloc.myInquiryList[index].strInquiryId ?? '');
-                  },
-                  type: B2BListingType.myInquiryType,
-                  listingItemModel: bloc.myInquiryList[index],
-                  onTap: () {},
-                );
-              });
+            padding: EdgeInsetsDirectional.all(17.w),
+            itemCount: bloc.myInquiryList.length,
+            itemBuilder: (listContext, index) {
+              return B2BListingItem(
+                margin: EdgeInsetsDirectional.only(bottom: 24.h),
+                onTapMenuButton: () {
+                  handleMenuButtonTap(context, index, bloc, bloc.myInquiryList[index].strInquiryId ?? '');
+                },
+                type: B2BListingType.myInquiryType,
+                listingItemModel: bloc.myInquiryList[index],
+                onTap: () {},
+              );
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -58,12 +57,9 @@ class MyInquiryScreen extends StatelessWidget {
             style,
             () async {
               context.pop();
-              await mainContext.pushNamed(
-                AppRoutes.makeInquiryPage,
-                arguments: {
-                  RoutesData.inquiryData: bloc.myInquiryList[index],
-                },
-              ).then((onValue) {
+              await mainContext.pushNamed(AppRoutes.makeInquiryPage, arguments: {RoutesData.inquiryData: bloc.myInquiryList[index]}).then((
+                onValue,
+              ) {
                 if (onValue != null) {
                   if (onValue[RoutesData.isInquiryUpdated]!) {
                     bloc.add(MyInquiryUpdateEvent(mainContext));
@@ -116,13 +112,14 @@ class MyInquiryScreen extends StatelessWidget {
             onFilterTap: () {
               Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (_) => AdvanceFilterScreen(
-                  onApply: (value) {
-                    if (value != null && value is List<FilterData>) {
-                      myInquiryBloc.add(FilterMyInquiryEvent(context, value));
-                    }
-                  },
-                ),
+                builder:
+                    (_) => AdvanceFilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          myInquiryBloc.add(FilterMyInquiryEvent(context, value));
+                        }
+                      },
+                    ),
               );
             },
           );

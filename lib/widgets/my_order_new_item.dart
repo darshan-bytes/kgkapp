@@ -42,23 +42,19 @@ class MyOrderNewItem extends StatelessWidget {
                   children: [
                     Expanded(child: _buildDetailColumn(APPStrings.orderId.tr, model.orderId, style)),
                     Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SmartText(
-                          APPStrings.status.tr,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: style.titleStyle,
-                        ),
-                        SizedBox(height: 4.h),
-                        SmartStatusBadge(
-                          currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == model.orderStatus.value),
-                          fontSize: 10.sp,
-                        ),
-                      ],
-                    )),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SmartText(APPStrings.status.tr, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.titleStyle),
+                          SizedBox(height: 4.h),
+                          SmartStatusBadge(
+                            currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == model.orderStatus.value),
+                            fontSize: 10.sp,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 16.h),
@@ -114,21 +110,8 @@ class MyOrderNewItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              SmartText(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: style.titleStyle,
-              ),
-              if (isOrderStatus) ...[
-                SizedBox(
-                  width: 10.w,
-                ),
-                SmartStatusBadge(
-                  currentStatus: ProjectStatus.blueInProgress,
-                  fontSize: 10.sp,
-                ),
-              ]
+              SmartText(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.titleStyle),
+              if (isOrderStatus) ...[SizedBox(width: 10.w), SmartStatusBadge(currentStatus: ProjectStatus.blueInProgress, fontSize: 10.sp)],
             ],
           ),
           SizedBox(height: 4.h),

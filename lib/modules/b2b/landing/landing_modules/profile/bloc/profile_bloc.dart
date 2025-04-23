@@ -62,19 +62,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   XFile? selectedProfilePickedImage;
 
   List<Country> selectedCountryCodes = [
-    Country.from(json: {
-      "e164_cc": "91",
-      "iso2_cc": "IN",
-      "e164_sc": 0,
-      "geographic": true,
-      "level": 1,
-      "name": "India",
-      "example": "9123456789",
-      "display_name": "India (IN) [+91]",
-      "full_example_with_plus_sign": "+919123456789",
-      "display_name_no_e164_cc": "India (IN)",
-      "e164_key": "91-IN-0",
-    })
+    Country.from(
+      json: {
+        "e164_cc": "91",
+        "iso2_cc": "IN",
+        "e164_sc": 0,
+        "geographic": true,
+        "level": 1,
+        "name": "India",
+        "example": "9123456789",
+        "display_name": "India (IN) [+91]",
+        "full_example_with_plus_sign": "+919123456789",
+        "display_name_no_e164_cc": "India (IN)",
+        "e164_key": "91-IN-0",
+      },
+    ),
   ];
   late Country selectedCountry;
 
@@ -227,31 +229,29 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _fetchUserDetailsAPI(BuildContext context, Emitter<ProfileState> emit) async {
     emit(ProfileReloadState());
     Either<ErrorResponse, CommonResponse>? getProfileResponse = await UserRepository(context).getUserProfile();
-    await getProfileResponse?.fold(
-      (l) => Utils.showMessage(l.message),
-      (r) async {
-        UserIdDetails userData = r.responseData;
-        userIdDetails = userData;
-        await StorageManager().setUserData(userData);
-        firstNameController.text = userIdDetails?.firstname ?? '';
-        lastNameController.text = userIdDetails?.lastname ?? '';
-        emailController.text = userIdDetails?.email ?? '';
-        contactNumberController.text = userIdDetails?.phone ?? '';
-        profilePickedImage = null;
-        if (userIdDetails?.profilePic != null) {
-          profilePickedImage = XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? '');
-        }
-        BlocProvider.of<LandingBloc>(context)
-            .add(LandingProfilePictureUpdateEvent(profilePicture: userIdDetails?.profilePicUrl?.setMediaUrl));
-        firstNameError = null;
-        lastNameError = null;
-        contactNumberError = null;
-        if (isPhoneNumberUsed.isCompleted) {
-          isPhoneNumberUsed = Completer<bool>();
-        }
-        isPhoneNumberUsed.complete(false);
-      },
-    );
+    await getProfileResponse?.fold((l) => Utils.showMessage(l.message), (r) async {
+      UserIdDetails userData = r.responseData;
+      userIdDetails = userData;
+      await StorageManager().setUserData(userData);
+      firstNameController.text = userIdDetails?.firstname ?? '';
+      lastNameController.text = userIdDetails?.lastname ?? '';
+      emailController.text = userIdDetails?.email ?? '';
+      contactNumberController.text = userIdDetails?.phone ?? '';
+      profilePickedImage = null;
+      if (userIdDetails?.profilePic != null) {
+        profilePickedImage = XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? '');
+      }
+      BlocProvider.of<LandingBloc>(
+        context,
+      ).add(LandingProfilePictureUpdateEvent(profilePicture: userIdDetails?.profilePicUrl?.setMediaUrl));
+      firstNameError = null;
+      lastNameError = null;
+      contactNumberError = null;
+      if (isPhoneNumberUsed.isCompleted) {
+        isPhoneNumberUsed = Completer<bool>();
+      }
+      isPhoneNumberUsed.complete(false);
+    });
     emit(ProfileLoadedState());
   }
 
@@ -278,8 +278,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     await _handleEditProfilePhoneNumberValidation(context: context, phoneNumber: contactNumberController.text, emit: emit);
   }
 
-  Future<void> _handleEditProfilePhoneNumberValidation(
-      {required String phoneNumber, required BuildContext context, required Emitter<ProfileState> emit}) async {
+  Future<void> _handleEditProfilePhoneNumberValidation({
+    required String phoneNumber,
+    required BuildContext context,
+    required Emitter<ProfileState> emit,
+  }) async {
     isPhoneNumberUsed = Completer<bool>();
     await Future.delayed(const Duration(milliseconds: 500));
     if (!emit.isDone) {
@@ -288,21 +291,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       }
       if (phoneNumber.isNotEmpty &&
           CountryUtils.validatePhoneNumber(contactNumberController.text.trim(), "+${selectedCountry.phoneCode}")) {
-        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse = await UserRepository(context)
-            .validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: phoneNumber, userId: userIdDetails?.userAccountId);
+        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse = await UserRepository(
+          context,
+        ).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: phoneNumber, userId: userIdDetails?.userAccountId);
 
         if (!emit.isDone) {
           emit(ProfileReloadState());
-          await phoneNumberValidationResponse?.fold((l) {
-            Utils.showMessage(l.message);
-          }, (r) async {
-            if (isPhoneNumberUsed.isCompleted) {
-              isPhoneNumberUsed = Completer<bool>();
-            }
-            isPhoneNumberUsed.complete(r.responseData);
-            contactNumberError = (await isPhoneNumberUsed.future) ? APPStrings.phoneNumberAlreadyUsed.tr : null;
-            emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber));
-          });
+          await phoneNumberValidationResponse?.fold(
+            (l) {
+              Utils.showMessage(l.message);
+            },
+            (r) async {
+              if (isPhoneNumberUsed.isCompleted) {
+                isPhoneNumberUsed = Completer<bool>();
+              }
+              isPhoneNumberUsed.complete(r.responseData);
+              contactNumberError = (await isPhoneNumberUsed.future) ? APPStrings.phoneNumberAlreadyUsed.tr : null;
+              emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber));
+            },
+          );
         }
       }
     }
@@ -337,27 +344,26 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ApiKey.phone: contactNumberController.text.trim(),
       if (profilePickedImage == null && selectedProfilePickedImage == null) ApiKey.profilePic: '',
     };
-    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(event.context)
-        .editUserProfile(params, images: selectedProfilePickedImage != null ? [selectedProfilePickedImage!.path] : []);
+    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(
+      event.context,
+    ).editUserProfile(params, images: selectedProfilePickedImage != null ? [selectedProfilePickedImage!.path] : []);
 
-    await editProfileResponse?.fold(
-      (l) => Utils.showMessage(l.message),
-      (r) async {
-        UserIdDetails userData = r.responseData;
-        profilePickedImage = null;
-        if (userData.profilePic != null) {
-          profilePickedImage = selectedProfilePickedImage ?? XFile(userData.profilePicUrl?.setMediaUrl ?? '');
-        }
-        selectedProfilePickedImage = null;
-        await StorageManager().setUserData(userData);
-        userIdDetails = userData;
+    await editProfileResponse?.fold((l) => Utils.showMessage(l.message), (r) async {
+      UserIdDetails userData = r.responseData;
+      profilePickedImage = null;
+      if (userData.profilePic != null) {
+        profilePickedImage = selectedProfilePickedImage ?? XFile(userData.profilePicUrl?.setMediaUrl ?? '');
+      }
+      selectedProfilePickedImage = null;
+      await StorageManager().setUserData(userData);
+      userIdDetails = userData;
 
-        (event.context.mounted ? event.context : getNavigatorKeyContext).pop();
-        Utils.showMessage(r.message);
-        BlocProvider.of<LandingBloc>(getNavigatorKeyContext)
-            .add(LandingProfilePictureUpdateEvent(profilePicture: userData.profilePicUrl?.setMediaUrl, isForce: true));
-      },
-    );
+      (event.context.mounted ? event.context : getNavigatorKeyContext).pop();
+      Utils.showMessage(r.message);
+      BlocProvider.of<LandingBloc>(
+        getNavigatorKeyContext,
+      ).add(LandingProfilePictureUpdateEvent(profilePicture: userData.profilePicUrl?.setMediaUrl, isForce: true));
+    });
   }
 
   bool _validateChangePassword(Emitter<ProfileState> emit) {
@@ -392,7 +398,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final Map<String, dynamic> params = {
       ApiKey.oldPassword: currentPasswordController.text.trim(),
       ApiKey.newPassword: newPasswordController.text.trim(),
-      ApiKey.isAdminChange: false
+      ApiKey.isAdminChange: false,
     };
     event.context.setAppLoading(true);
 
@@ -466,61 +472,68 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   List<ProfileListModel> _getB2BUserProfileActions(BuildContext context) {
     return [
       ProfileListModel(
-          image: AppImages.icMyOrders,
-          title: APPStrings.myOrder,
-          subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.orderPage);
-          }),
+        image: AppImages.icMyOrders,
+        title: APPStrings.myOrder,
+        subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.orderPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icActions,
-          title: APPStrings.auctions,
-          subTitle: APPStrings.listOfAuctionsYouAppliedTo,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.auctionListingPage);
-          }),
+        image: AppImages.icActions,
+        title: APPStrings.auctions,
+        subTitle: APPStrings.listOfAuctionsYouAppliedTo,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.auctionListingPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icInquiries,
-          title: APPStrings.myInquiries,
-          subTitle: APPStrings.yourSubmittedInquiries,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.myInquiryScreen);
-          }),
+        image: AppImages.icInquiries,
+        title: APPStrings.myInquiries,
+        subTitle: APPStrings.yourSubmittedInquiries,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.myInquiryScreen);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icWatchlist,
-          title: APPStrings.watchlist,
-          subTitle: APPStrings.listOfProductsAddedToWatchlist,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.watchListPage);
-          }),
+        image: AppImages.icWatchlist,
+        title: APPStrings.watchlist,
+        subTitle: APPStrings.listOfProductsAddedToWatchlist,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.watchListPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icExhibition,
-          title: APPStrings.exhibition,
-          subTitle: APPStrings.listOfExhibitionsOfKGK,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.exhibitionListingPage);
-          }),
+        image: AppImages.icExhibition,
+        title: APPStrings.exhibition,
+        subTitle: APPStrings.listOfExhibitionsOfKGK,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.exhibitionListingPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icActivityLog,
-          title: APPStrings.activityLog,
-          subTitle: APPStrings.getLogOnTheAccount,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.activityLogScreenPage);
-          }),
+        image: AppImages.icActivityLog,
+        title: APPStrings.activityLog,
+        subTitle: APPStrings.getLogOnTheAccount,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.activityLogScreenPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icNewsFeed,
-          title: APPStrings.newsFeed,
-          subTitle: APPStrings.createAndSeeNewsFeeds,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.newsletterPage);
-          }),
+        image: AppImages.icNewsFeed,
+        title: APPStrings.newsFeed,
+        subTitle: APPStrings.createAndSeeNewsFeeds,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.newsletterPage);
+        },
+      ),
       ProfileListModel(
         image: AppImages.icMasters,
         title: APPStrings.masters,
@@ -531,51 +544,56 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         },
       ),
       ProfileListModel(
-          image: AppImages.icStore,
-          title: APPStrings.findAStore,
-          subTitle: APPStrings.searchYourNearbyStores,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.findStorePage);
-          }),
+        image: AppImages.icStore,
+        title: APPStrings.findAStore,
+        subTitle: APPStrings.searchYourNearbyStores,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.findStorePage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icMapPin,
-          title: APPStrings.savedAddress,
-          subTitle: APPStrings.listOfAllYourSavedAddresses,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.savedAddressPage);
-          }),
+        image: AppImages.icMapPin,
+        title: APPStrings.savedAddress,
+        subTitle: APPStrings.listOfAllYourSavedAddresses,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.savedAddressPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icLock,
-          title: APPStrings.changePassword,
-          subTitle: APPStrings.changeYourExistingPassword,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            Utils.showSmartModalBottomSheet(
-              context: context,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
-              ),
-              builder: (context) => const ChangePasswordBottomSheet(),
-            );
-          }),
+        image: AppImages.icLock,
+        title: APPStrings.changePassword,
+        subTitle: APPStrings.changeYourExistingPassword,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          Utils.showSmartModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
+            ),
+            builder: (context) => const ChangePasswordBottomSheet(),
+          );
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icPreferences,
-          title: APPStrings.preferences,
-          subTitle: APPStrings.defaultCountryLanguageAndCurrency,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.preferencesPage);
-          }),
+        image: AppImages.icPreferences,
+        title: APPStrings.preferences,
+        subTitle: APPStrings.defaultCountryLanguageAndCurrency,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.preferencesPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icNotificationSettings,
-          title: APPStrings.notificationSettings,
-          subTitle: APPStrings.changeNotificationSettings,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.notificationSettingsPage);
-          }),
+        image: AppImages.icNotificationSettings,
+        title: APPStrings.notificationSettings,
+        subTitle: APPStrings.changeNotificationSettings,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.notificationSettingsPage);
+        },
+      ),
     ];
   }
 
@@ -583,83 +601,93 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   List<ProfileListModel> _getDefaultProfileActions(BuildContext context) {
     return [
       ProfileListModel(
-          image: AppImages.icMyOrders,
-          title: APPStrings.myOrder,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.orderPage);
-          }),
+        image: AppImages.icMyOrders,
+        title: APPStrings.myOrder,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.orderPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icActions,
-          title: APPStrings.auctions,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.auctionListingPage);
-          }),
+        image: AppImages.icActions,
+        title: APPStrings.auctions,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.auctionListingPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icInquiries,
-          title: APPStrings.myInquiries,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.makeInquiryPage);
-          }),
+        image: AppImages.icInquiries,
+        title: APPStrings.myInquiries,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.makeInquiryPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icWatchlist,
-          title: APPStrings.watchlist,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.watchListPage);
-          }),
+        image: AppImages.icWatchlist,
+        title: APPStrings.watchlist,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.watchListPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icNewsFeed,
-          title: APPStrings.newsFeed,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.newsletterPage);
-          }),
+        image: AppImages.icNewsFeed,
+        title: APPStrings.newsFeed,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.newsletterPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icStore,
-          title: APPStrings.findAStore,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.findStorePage);
-          }),
+        image: AppImages.icStore,
+        title: APPStrings.findAStore,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.findStorePage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icMapPin,
-          title: APPStrings.savedAddress,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.savedAddressPage);
-          }),
+        image: AppImages.icMapPin,
+        title: APPStrings.savedAddress,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.savedAddressPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icLock,
-          title: APPStrings.changePassword,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            _clearChangePasswordData();
+        image: AppImages.icLock,
+        title: APPStrings.changePassword,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          _clearChangePasswordData();
 
-            Utils.showSmartModalBottomSheet(
-              context: context,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
-              ),
-              builder: (context) => const ChangePasswordBottomSheet(),
-            );
-          }),
+          Utils.showSmartModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
+            ),
+            builder: (context) => const ChangePasswordBottomSheet(),
+          );
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icPreferences,
-          title: APPStrings.preferences,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.preferencesPage);
-          }),
+        image: AppImages.icPreferences,
+        title: APPStrings.preferences,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.preferencesPage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icNotificationSettings,
-          title: APPStrings.notificationSettings,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.notificationSettingsPage);
-          }),
+        image: AppImages.icNotificationSettings,
+        title: APPStrings.notificationSettings,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.notificationSettingsPage);
+        },
+      ),
     ];
   }
 
@@ -670,99 +698,99 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         image: AppImages.icAboutUs,
         title: APPStrings.aboutUs,
         onTap: (context) {
-          context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-            RoutesData.cmsPageData: CmsWebViewDataModel(
-              url: AppConst.profileAboutUsWebViewURL,
-              title: APPStrings.aboutUs,
-              attribute: Attributes.aboutUsPage, // For future use
-            )
-          });
+          context.pushNamed(
+            AppRoutes.cmsWebViewPage,
+            arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(
+                url: AppConst.profileAboutUsWebViewURL,
+                title: APPStrings.aboutUs,
+                attribute: Attributes.aboutUsPage, // For future use
+              ),
+            },
+          );
         },
       ),
       ProfileListModel(
-          image: AppImages.icEducation,
-          title: APPStrings.education,
-          isSubListExpanded: false,
-          profileSubList: [
-            ProfileListModel(
-              title: APPStrings.diamonds,
-              onTap: (context) {
-                context.pushNamed(
-                  AppRoutes.cmsWebViewPage,
-                  arguments: {
-                    RoutesData.cmsPageData: CmsWebViewDataModel(
-                      url: AppConst.profileDiamondWebViewURL,
-                      title: APPStrings.diamonds,
-                    )
-                  },
-                );
-              },
-            ),
-            ProfileListModel(
-              title: APPStrings.labCreatedDiamonds,
-              onTap: (context) {
-                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                  RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: AppConst.profileDiamondWebViewURL,
-                    title: APPStrings.labCreatedDiamonds,
-                  )
-                });
-              },
-            ),
-            ProfileListModel(
-              title: APPStrings.gemstone,
-              onTap: (context) {
-                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                  RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: AppConst.profileGemstoneWebViewURL,
-                    title: APPStrings.gemstone,
-                  )
-                });
-              },
-            ),
-            ProfileListModel(
-              title: APPStrings.metals,
-              onTap: (context) {
-                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                  RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: AppConst.profileMetalsWebViewURL,
-                    title: APPStrings.metals,
-                  )
-                });
-              },
-            ),
-            ProfileListModel(
-              title: APPStrings.ringSizer,
-              onTap: (context) {
-                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                  RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: AppConst.profileRingSizerWebViewURL,
-                    title: APPStrings.ringSizer,
-                  )
-                });
-              },
-            ),
-          ],
-          onTap: (context) {
-            context.pushNamed(AppRoutes.findStorePage);
-          }),
+        image: AppImages.icEducation,
+        title: APPStrings.education,
+        isSubListExpanded: false,
+        profileSubList: [
+          ProfileListModel(
+            title: APPStrings.diamonds,
+            onTap: (context) {
+              context.pushNamed(
+                AppRoutes.cmsWebViewPage,
+                arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileDiamondWebViewURL, title: APPStrings.diamonds),
+                },
+              );
+            },
+          ),
+          ProfileListModel(
+            title: APPStrings.labCreatedDiamonds,
+            onTap: (context) {
+              context.pushNamed(
+                AppRoutes.cmsWebViewPage,
+                arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileDiamondWebViewURL, title: APPStrings.labCreatedDiamonds),
+                },
+              );
+            },
+          ),
+          ProfileListModel(
+            title: APPStrings.gemstone,
+            onTap: (context) {
+              context.pushNamed(
+                AppRoutes.cmsWebViewPage,
+                arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileGemstoneWebViewURL, title: APPStrings.gemstone),
+                },
+              );
+            },
+          ),
+          ProfileListModel(
+            title: APPStrings.metals,
+            onTap: (context) {
+              context.pushNamed(
+                AppRoutes.cmsWebViewPage,
+                arguments: {RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileMetalsWebViewURL, title: APPStrings.metals)},
+              );
+            },
+          ),
+          ProfileListModel(
+            title: APPStrings.ringSizer,
+            onTap: (context) {
+              context.pushNamed(
+                AppRoutes.cmsWebViewPage,
+                arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileRingSizerWebViewURL, title: APPStrings.ringSizer),
+                },
+              );
+            },
+          ),
+        ],
+        onTap: (context) {
+          context.pushNamed(AppRoutes.findStorePage);
+        },
+      ),
       ProfileListModel(
-          image: AppImages.icSupport,
-          title: APPStrings.faqs,
-          isSubListExpanded: false,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.faqPage);
-          }),
+        image: AppImages.icSupport,
+        title: APPStrings.faqs,
+        isSubListExpanded: false,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.faqPage);
+        },
+      ),
       ProfileListModel(
         image: AppImages.icPolicies,
         title: APPStrings.policies,
         onTap: (context) {
-          context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-            RoutesData.cmsPageData: CmsWebViewDataModel(
-              url: AppConst.profilePrivacyPolicyWebViewURL,
-              title: APPStrings.policies,
-            )
-          });
+          context.pushNamed(
+            AppRoutes.cmsWebViewPage,
+            arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profilePrivacyPolicyWebViewURL, title: APPStrings.policies),
+            },
+          );
         },
       ),
     ];
@@ -796,32 +824,38 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _handleLogout({required BuildContext context, required Emitter<ProfileState> emit}) async {
     Either<ErrorResponse, CommonResponse>? response = await UserRepository(context).logoutUser({});
     clearData();
-    await response?.fold((l) async {
-      BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-      await StorageManager().clearSession();
-      context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
-    }, (r) async {
-      BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-      await StorageManager().clearSession();
+    await response?.fold(
+      (l) async {
+        BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
+        BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+        await StorageManager().clearSession();
+        context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+      },
+      (r) async {
+        BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
+        BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+        await StorageManager().clearSession();
 
-      context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
-    });
+        context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+      },
+    );
   }
 
   /// Delete profile event to clear session and navigate to login page
   Future<void> _handleDeleteProfile({required BuildContext context, required Emitter<ProfileState> emit}) async {
     Either<ErrorResponse, CommonResponse>? response = await UserRepository(context).deleteAccount();
-    await response?.fold((l) {
-      ErrorResponse errorModel = l;
-      Utils.showMessage(errorModel.message);
-    }, (r) async {
-      BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-      await StorageManager().clearSession();
-      context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
-    });
+    await response?.fold(
+      (l) {
+        ErrorResponse errorModel = l;
+        Utils.showMessage(errorModel.message);
+      },
+      (r) async {
+        BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
+        BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+        await StorageManager().clearSession();
+        context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+      },
+    );
   }
 
   void clearData() {
@@ -842,19 +876,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
       ),
-      builder: (context) => LayoutBuilder(
-        builder: (context, _) {
-          return AnimatedPadding(
-            padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-            duration: const Duration(milliseconds: 50),
-            curve: Curves.easeOut,
-            child: Container(
-              constraints: BoxConstraints(maxHeight: context.height, minHeight: 660.h),
-              child: const EditProfileBottomSheet(),
-            ),
-          );
-        },
-      ),
+      builder:
+          (context) => LayoutBuilder(
+            builder: (context, _) {
+              return AnimatedPadding(
+                padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                duration: const Duration(milliseconds: 50),
+                curve: Curves.easeOut,
+                child: Container(
+                  constraints: BoxConstraints(maxHeight: context.height, minHeight: 660.h),
+                  child: const EditProfileBottomSheet(),
+                ),
+              );
+            },
+          ),
     );
   }
 

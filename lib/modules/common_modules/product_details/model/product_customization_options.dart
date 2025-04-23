@@ -7,13 +7,7 @@ class ProductCustomizationOptions {
   List<ProductCustomizationOptionValues>? values;
   ProductCustomizationOptionValues? selectedValue;
 
-  ProductCustomizationOptions({
-    this.id,
-    this.name,
-    this.type,
-    this.values,
-    this.selectedValue,
-  });
+  ProductCustomizationOptions({this.id, this.name, this.type, this.values, this.selectedValue});
 }
 
 extension ProductCustomizationOptionsExtension on ProductCustomizationOptions {
@@ -28,13 +22,7 @@ class ProductCustomizationOptionValues {
   String? image;
   int availableProductCount;
 
-  ProductCustomizationOptionValues({
-    this.id,
-    this.value,
-    this.shapeCode,
-    this.image,
-    this.availableProductCount = 0,
-  });
+  ProductCustomizationOptionValues({this.id, this.value, this.shapeCode, this.image, this.availableProductCount = 0});
 
   @override
   bool operator ==(Object other) {

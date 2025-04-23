@@ -8,9 +8,7 @@ class MakeInquiryScreen extends StatelessWidget {
     final bloc = BlocProvider.of<MakeInquiryBloc>(context);
     final style = AppTheme.of(context).makeInquiryStyle;
     return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.makeAnInquiry.tr,
-      ),
+      appBar: SmartAppBar(title: APPStrings.makeAnInquiry.tr),
       backgroundColor: style.whiteColor,
       body: SafeArea(
         child: SmartSingleChildScrollView(
@@ -18,12 +16,7 @@ class MakeInquiryScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SmartImage(
-                path: 'https://i.ibb.co/RPzDQqL/Rectangle-656.png',
-                height: 464.h,
-                width: context.width,
-                fit: BoxFit.cover,
-              ),
+              SmartImage(path: 'https://i.ibb.co/RPzDQqL/Rectangle-656.png', height: 464.h, width: context.width, fit: BoxFit.cover),
               SizedBox(height: 14.h),
               _buildFullNameField(bloc),
               SizedBox(height: 14.h),
@@ -32,16 +25,14 @@ class MakeInquiryScreen extends StatelessWidget {
               _buildInquiryTypeDropdown(bloc),
               SizedBox(height: 14.h),
               _buildSelectStatusDropdown(bloc),
-              if(!bloc.isUpdateInquiry) ...[
-                SizedBox(height: 14.h),
-                _buildCommentField(bloc),
-              ],
+              if (!bloc.isUpdateInquiry) ...[SizedBox(height: 14.h), _buildCommentField(bloc)],
               SizedBox(height: 18.h),
               SmartButton(
-                  onTap: () {
-                    bloc.add(MakeInquirySubmitEvent(context: context, inquiryId: bloc.inquiryId ?? ''));
-                  },
-                  title: APPStrings.submit.tr)
+                onTap: () {
+                  bloc.add(MakeInquirySubmitEvent(context: context, inquiryId: bloc.inquiryId ?? ''));
+                },
+                title: APPStrings.submit.tr,
+              ),
             ],
           ),
         ),
@@ -99,8 +90,12 @@ class MakeInquiryScreen extends StatelessWidget {
           },
           displayStringForOption: (ProductModel option) => option.name,
           onSelected: (ProductModel selection) {},
-          fieldViewBuilder:
-              (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+          fieldViewBuilder: (
+            BuildContext context,
+            TextEditingController textEditingController,
+            FocusNode focusNode,
+            VoidCallback onFieldSubmitted,
+          ) {
             return SmartTextField(
               key: bloc.targetKey,
               controller: textEditingController,
@@ -121,9 +116,7 @@ class MakeInquiryScreen extends StatelessWidget {
                 elevation: 4.0,
                 child: Container(
                   width: context.width * 0.8,
-                  constraints: BoxConstraints(
-                    maxHeight: 200.h,
-                  ),
+                  constraints: BoxConstraints(maxHeight: 200.h),
                   child: Scrollbar(
                     thumbVisibility: true,
                     controller: bloc.productScrollController,

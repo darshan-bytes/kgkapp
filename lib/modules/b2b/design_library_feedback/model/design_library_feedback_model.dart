@@ -5,13 +5,7 @@ class DesignLibraryFeedbackModel {
   String? daysAgo;
   String? feedbackMessage;
 
-  DesignLibraryFeedbackModel({
-    this.id,
-    this.designerImageUrl,
-    this.designerName,
-    this.daysAgo,
-    this.feedbackMessage,
-  });
+  DesignLibraryFeedbackModel({this.id, this.designerImageUrl, this.designerName, this.daysAgo, this.feedbackMessage});
 
   @override
   bool operator ==(Object other) {

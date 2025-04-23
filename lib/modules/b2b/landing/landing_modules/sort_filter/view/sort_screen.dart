@@ -13,10 +13,7 @@ class SortScreen extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadiusDirectional.only(
-          topStart: Radius.circular(16.r),
-          topEnd: Radius.circular(16.r),
-        ),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       child: SmartSingleChildScrollView(
         child: Column(
@@ -50,12 +47,7 @@ class SortScreen extends StatelessWidget {
                     padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 16.w),
                     child: Row(
                       children: [
-                        Expanded(
-                          child: SmartText(
-                            sortData[index].name?.tr,
-                            style: style.itemTitleStyle,
-                          ),
-                        ),
+                        Expanded(child: SmartText(sortData[index].name?.tr, style: style.itemTitleStyle)),
                         if (sortData[index].name == sortFilterBloc.selectedSortData.name) const SmartImage(path: AppImages.icCheck),
                       ],
                     ),

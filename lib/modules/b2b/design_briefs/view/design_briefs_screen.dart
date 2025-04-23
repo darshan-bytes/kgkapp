@@ -22,15 +22,10 @@ class DesignBriefsScreen extends StatelessWidget {
                     SmartTextField(
                       hintText: APPStrings.searchX.tr.interpolate([APPStrings.designs.tr.toLowerCase()]),
                       controller: designBriefsBloc.designBriefsSearchController,
-                      suffixIcon: SmartImage(
-                        path: AppImages.icSearchThin,
-                        padding: EdgeInsetsDirectional.all(16.w),
-                      ),
+                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
                     ),
                     SizedBox(height: 24.h),
-                    Expanded(
-                      child: _buildDesignBriefsList(designBriefsBloc),
-                    ),
+                    Expanded(child: _buildDesignBriefsList(designBriefsBloc)),
                   ],
                 );
               } else {
@@ -50,10 +45,7 @@ class DesignBriefsScreen extends StatelessWidget {
     return ListView.separated(
       itemCount: designBriefsBloc.designBriefsList.length,
       itemBuilder: (context, index) {
-        return B2BListingItem(
-          type: B2BListingType.designBriefsType,
-          listingItemModel: designBriefsBloc.designBriefsList[index],
-        );
+        return B2BListingItem(type: B2BListingType.designBriefsType, listingItemModel: designBriefsBloc.designBriefsList[index]);
       },
       separatorBuilder: (context, index) => SizedBox(height: 16.h),
     );

@@ -18,15 +18,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   List<ProductDetailModel> selectedCategoriesList = [];
 
   //B2C subCategory List
-  List<ProductDetailModel> naturalDiamondSubOptionsB2CList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
-  List<ProductDetailModel> labGrownDiamondSubOptionsB2CList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
-  List<ProductDetailModel> gemstonesSubOptionsB2CList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
+  List<ProductDetailModel> naturalDiamondSubOptionsB2CList = [ProductDetailModel(name: 'Collection', image: '')];
+  List<ProductDetailModel> labGrownDiamondSubOptionsB2CList = [ProductDetailModel(name: 'Collection', image: '')];
+  List<ProductDetailModel> gemstonesSubOptionsB2CList = [ProductDetailModel(name: 'Collection', image: '')];
   List<ProductDetailModel> jewellerySubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
@@ -35,9 +29,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Diamond', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
   ];
-  List<ProductDetailModel> aboutUsSubOptionsB2CList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
+  List<ProductDetailModel> aboutUsSubOptionsB2CList = [ProductDetailModel(name: 'Collection', image: '')];
   List<ProductDetailModel> educationSubOptionsB2CList = [
     ProductDetailModel(name: 'Diamonds', image: ''),
     ProductDetailModel(name: 'Gemstone', image: ''),
@@ -54,12 +46,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Collection', image: ''),
     ProductDetailModel(name: 'Landing', image: ''),
   ];
-  List<ProductDetailModel> diamondSubOptionsB2BList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
-  List<ProductDetailModel> gemstoneSubOptionsB2BList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
+  List<ProductDetailModel> diamondSubOptionsB2BList = [ProductDetailModel(name: 'Collection', image: '')];
+  List<ProductDetailModel> gemstoneSubOptionsB2BList = [ProductDetailModel(name: 'Collection', image: '')];
 
   List<ProductDetailModel> librarySubOptionsList = [
     ProductDetailModel(name: 'Design Library', image: ''),
@@ -68,17 +56,13 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'SKU Library', image: ''),
   ];
 
-  List<ProductDetailModel> digitalCatalogueSubOptionsB2BList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
+  List<ProductDetailModel> digitalCatalogueSubOptionsB2BList = [ProductDetailModel(name: 'Collection', image: '')];
 
   List<ProductDetailModel> doItYourselfSubOptionsB2BList = [
     ProductDetailModel(name: 'Diamond', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
   ];
-  List<ProductDetailModel> orionSubCategoryList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-  ];
+  List<ProductDetailModel> orionSubCategoryList = [ProductDetailModel(name: 'Collection', image: '')];
 
   CategoriesBloc() : super(CategoriesInitial()) {
     on<CategoriesInitialEvent>(onCategoriesInitialEvent);
@@ -93,49 +77,67 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
         CategoriesModel(
-            name: 'Jewellery', image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png', productsDetailsList: jewellerySubOptionsB2BList),
+          name: 'Jewellery',
+          image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png',
+          productsDetailsList: jewellerySubOptionsB2BList,
+        ),
         CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: diamondSubOptionsB2BList),
         CategoriesModel(
-            name: 'Gemstone', image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png', productsDetailsList: gemstoneSubOptionsB2BList),
+          name: 'Gemstone',
+          image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png',
+          productsDetailsList: gemstoneSubOptionsB2BList,
+        ),
         CategoriesModel(
-            name: 'Libraries', image: 'https://i.ibb.co/ScfcyDw/Libraries-Category.png', productsDetailsList: librarySubOptionsList),
+          name: 'Libraries',
+          image: 'https://i.ibb.co/ScfcyDw/Libraries-Category.png',
+          productsDetailsList: librarySubOptionsList,
+        ),
         CategoriesModel(
-            name: 'Digital \nCatalogue',
-            image: 'https://i.ibb.co/7tr0GFf/Digital-Catalogue-Category.png',
-            productsDetailsList: digitalCatalogueSubOptionsB2BList,
-            isExpanded: false),
-        CategoriesModel(
-            name: 'Do It \nYourself',
-            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
-            productsDetailsList: doItYourselfSubOptionsB2BList),
-        CategoriesModel(
-            name: 'Orion',
-            image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
-            productsDetailsList: orionSubCategoryList,
-            isExpanded: false),
-        CategoriesModel(
-          name: 'Exhibition',
-          image: 'https://i.ibb.co/VxhKkNW/Mask-group.png',
-          productsDetailsList: [],
+          name: 'Digital \nCatalogue',
+          image: 'https://i.ibb.co/7tr0GFf/Digital-Catalogue-Category.png',
+          productsDetailsList: digitalCatalogueSubOptionsB2BList,
           isExpanded: false,
-        )
+        ),
+        CategoriesModel(
+          name: 'Do It \nYourself',
+          image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+          productsDetailsList: doItYourselfSubOptionsB2BList,
+        ),
+        CategoriesModel(
+          name: 'Orion',
+          image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
+          productsDetailsList: orionSubCategoryList,
+          isExpanded: false,
+        ),
+        CategoriesModel(name: 'Exhibition', image: 'https://i.ibb.co/VxhKkNW/Mask-group.png', productsDetailsList: [], isExpanded: false),
       ]);
     } else {
       categories.addAll([
         CategoriesModel(
-            name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: naturalDiamondSubOptionsB2CList),
+          name: 'Natural \nDiamonds',
+          image: 'https://i.ibb.co/HgjT1rt/Image.png',
+          productsDetailsList: naturalDiamondSubOptionsB2CList,
+        ),
         CategoriesModel(
-            name: 'Lab-grown \nDiamonds',
-            image: 'https://i.ibb.co/1LRFJ3h/Lab-grown-Category.png',
-            productsDetailsList: labGrownDiamondSubOptionsB2CList),
+          name: 'Lab-grown \nDiamonds',
+          image: 'https://i.ibb.co/1LRFJ3h/Lab-grown-Category.png',
+          productsDetailsList: labGrownDiamondSubOptionsB2CList,
+        ),
         CategoriesModel(
-            name: 'Gemstone', image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png', productsDetailsList: gemstonesSubOptionsB2CList),
+          name: 'Gemstone',
+          image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png',
+          productsDetailsList: gemstonesSubOptionsB2CList,
+        ),
         CategoriesModel(
-            name: 'Jewellery', image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png', productsDetailsList: jewellerySubOptionsB2CList),
+          name: 'Jewellery',
+          image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png',
+          productsDetailsList: jewellerySubOptionsB2CList,
+        ),
         CategoriesModel(
-            name: 'Do It \nYourself',
-            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
-            productsDetailsList: doItYourselfSubOptionsB2CList),
+          name: 'Do It \nYourself',
+          image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+          productsDetailsList: doItYourselfSubOptionsB2CList,
+        ),
         CategoriesModel(
           name: 'About Us',
           image: 'https://i.ibb.co/QD2Tw8M/About-Us-Category.png',
@@ -143,12 +145,16 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           isExpanded: false,
         ),
         CategoriesModel(
-            name: 'Education', image: 'https://i.ibb.co/rFjpN0q/Education-Category.png', productsDetailsList: educationSubOptionsB2CList),
+          name: 'Education',
+          image: 'https://i.ibb.co/rFjpN0q/Education-Category.png',
+          productsDetailsList: educationSubOptionsB2CList,
+        ),
         CategoriesModel(
-            name: 'Orion',
-            image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
-            productsDetailsList: orionSubCategoryList,
-            isExpanded: false),
+          name: 'Orion',
+          image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
+          productsDetailsList: orionSubCategoryList,
+          isExpanded: false,
+        ),
       ]);
     }
     emit(CategoriesFetchData());
@@ -415,12 +421,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   Map<RoutesData, dynamic>? _getAboutUsRouteArgumentsForB2C(String? categorySubName) {
-    return {
-      RoutesData.cmsPageData: CmsWebViewDataModel(
-        url: AppConst.profileAboutUsWebViewURL,
-        title: APPStrings.aboutUs.tr,
-      )
-    };
+    return {RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileAboutUsWebViewURL, title: APPStrings.aboutUs.tr)};
   }
 
   String? _getEducationRouteNameForB2C(String? categorySubName) {
@@ -443,40 +444,17 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getEducationRouteArgumentsForB2C(String? categorySubName) {
     switch (categorySubName) {
       case 'Diamonds':
-        return {
-          RoutesData.cmsPageData: CmsWebViewDataModel(
-            url: AppConst.profileDiamondWebViewURL,
-            title: APPStrings.diamonds.tr,
-          )
-        };
+        return {RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileDiamondWebViewURL, title: APPStrings.diamonds.tr)};
       case 'Lab created diamonds':
         return {
-          RoutesData.cmsPageData: CmsWebViewDataModel(
-            url: AppConst.profileDiamondWebViewURL,
-            title: APPStrings.labCreatedDiamonds.tr,
-          )
+          RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileDiamondWebViewURL, title: APPStrings.labCreatedDiamonds.tr),
         };
       case 'Gemstone':
-        return {
-          RoutesData.cmsPageData: CmsWebViewDataModel(
-            url: AppConst.profileGemstoneWebViewURL,
-            title: APPStrings.gemstone.tr,
-          )
-        };
+        return {RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileGemstoneWebViewURL, title: APPStrings.gemstone.tr)};
       case 'Metals':
-        return {
-          RoutesData.cmsPageData: CmsWebViewDataModel(
-            url: AppConst.profileMetalsWebViewURL,
-            title: APPStrings.metals.tr,
-          )
-        };
+        return {RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileMetalsWebViewURL, title: APPStrings.metals.tr)};
       case 'Ring sizer':
-        return {
-          RoutesData.cmsPageData: CmsWebViewDataModel(
-            url: AppConst.profileRingSizerWebViewURL,
-            title: APPStrings.ringSizer.tr,
-          )
-        };
+        return {RoutesData.cmsPageData: CmsWebViewDataModel(url: AppConst.profileRingSizerWebViewURL, title: APPStrings.ringSizer.tr)};
       default:
         return defaultAction();
     }

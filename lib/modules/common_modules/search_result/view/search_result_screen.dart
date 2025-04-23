@@ -15,18 +15,23 @@ class SearchResultScreen extends StatelessWidget {
   }
 
   Widget _buildBody(
-      DiamondListingStyle diamondListingStyle, SearchResultScreenStyle style, SearchResultBloc searchResultBloc, BuildContext context) {
+    DiamondListingStyle diamondListingStyle,
+    SearchResultScreenStyle style,
+    SearchResultBloc searchResultBloc,
+    BuildContext context,
+  ) {
     return BlocBuilder<SearchResultBloc, SearchResultState>(
       buildWhen: (_, current) => current is SearchResultLoadedState,
       builder: (context, state) {
         if (state is SearchResultLoadedState) {
           return SafeArea(
             child: SmartSingleChildScrollView(
-              onRefresh: searchResultBloc.productList.isNotEmpty
-                  ? () async {
-                      await searchResultBloc.pullToRefresh();
-                    }
-                  : null,
+              onRefresh:
+                  searchResultBloc.productList.isNotEmpty
+                      ? () async {
+                        await searchResultBloc.pullToRefresh();
+                      }
+                      : null,
               physics: const ClampingScrollPhysics(),
               controller: searchResultBloc.paginationScrollController.scrollController,
               child: Column(
@@ -69,7 +74,7 @@ class SearchResultScreen extends StatelessWidget {
                   if (searchResultBloc.productList.isEmpty) ...[
                     _buildNewlyLaunchedItems(searchResultBloc, style, context),
                     _buildExploreDigitalCatalogue(style, context),
-                  ]
+                  ],
                 ],
               ),
             ),
@@ -129,7 +134,7 @@ class SearchResultScreen extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );
@@ -142,42 +147,46 @@ class SearchResultScreen extends StatelessWidget {
         return Column(
           children: [
             BlocBuilder<SearchResultBloc, SearchResultState>(
-              buildWhen: (_, current) =>
-                  current is SearchResultChangeListingTypeState ||
-                  current is SearchResultLoadedState ||
-                  current is SearchResultLoadedMoreState,
+              buildWhen:
+                  (_, current) =>
+                      current is SearchResultChangeListingTypeState ||
+                      current is SearchResultLoadedState ||
+                      current is SearchResultLoadedMoreState,
               builder: (context, state) {
                 if (searchResultBloc.isGrid) {
                   return SmartGridView(
-                      items: searchResultBloc.productList.map((ProductDetailsModel productDetails) {
-                    return ProductGridItem(
-                      productDetails: productDetails,
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                      onTap: () {},
-                      onAddToBagTap: () {},
-                      prefixImage: AppImages.icShoppingBag,
-                      imageSize: 16.w,
-                    );
-                  }).toList());
+                    items:
+                        searchResultBloc.productList.map((ProductDetailsModel productDetails) {
+                          return ProductGridItem(
+                            productDetails: productDetails,
+                            onEyeTap: () {},
+                            onFavTap: () {},
+                            onTap: () {},
+                            onAddToBagTap: () {},
+                            prefixImage: AppImages.icShoppingBag,
+                            imageSize: 16.w,
+                          );
+                        }).toList(),
+                  );
                 } else {
                   return ListView.separated(
                     itemCount: searchResultBloc.productList.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => ProductListItem(
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                      onAddToBagTap: () {},
-                      productDetails: searchResultBloc.productList[index],
-                    ),
+                    itemBuilder:
+                        (context, index) => ProductListItem(
+                          onEyeTap: () {},
+                          onFavTap: () {},
+                          onAddToBagTap: () {},
+                          productDetails: searchResultBloc.productList[index],
+                        ),
                     separatorBuilder: (context, index) => SizedBox(height: 17.h),
                   );
                 }
               },
             ),
             if (state is SearchResultLoadingMoreState) const SmartCircularProgressIndicator(),
-            SizedBox(height: 17.h)
+            SizedBox(height: 17.h),
           ],
         );
       },
@@ -250,10 +259,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildNewlyLaunchedItems(SearchResultBloc bloc, SearchResultScreenStyle style, BuildContext context) {
     return Container(
       color: style.newlyLaunchedBackgroundColor,
-      padding: EdgeInsetsDirectional.symmetric(
-        vertical: 40.h,
-        horizontal: 16.w,
-      ),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 40.h, horizontal: 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -266,12 +272,7 @@ class SearchResultScreen extends StatelessWidget {
               bloc.newlyLaunchedItems.length > 4
                   ? 4
                   : (bloc.newlyLaunchedItems.length % 2 == 0 ? bloc.newlyLaunchedItems.length : bloc.newlyLaunchedItems.length - 1),
-              (index) => ProductGridItem(
-                productDetails: bloc.newlyLaunchedItems[index],
-                onEyeTap: () {},
-                onFavTap: () {},
-                onTap: () {},
-              ),
+              (index) => ProductGridItem(productDetails: bloc.newlyLaunchedItems[index], onEyeTap: () {}, onFavTap: () {}, onTap: () {}),
             ),
           ),
           SizedBox(height: 24.h),
@@ -281,7 +282,7 @@ class SearchResultScreen extends StatelessWidget {
               context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
             },
             title: APPStrings.exploreNow.tr,
-          )
+          ),
         ],
       ),
     );
@@ -307,11 +308,7 @@ class SearchResultScreen extends StatelessWidget {
             activeImageColor: style.whiteColor,
           ),
           SizedBox(height: 30.h),
-          SmartImage(
-            path: 'https://i.ibb.co/nQVVDJM/image-255.png',
-            height: 242.h,
-            width: 342.w,
-          ),
+          SmartImage(path: 'https://i.ibb.co/nQVVDJM/image-255.png', height: 242.h, width: 342.w),
         ],
       ),
     );

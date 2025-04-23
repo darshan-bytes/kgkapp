@@ -189,59 +189,51 @@ class PlaceOrderResponse {
   }
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "order_for": orderFor,
-        "order_context": orderContext,
-        "order_context_id": orderContextId,
-        "products": products.map((x) => x.toJson()).toList(),
-        "shipping_address_id": shippingAddressId,
-        "billing_address_id": billingAddressId,
-        "total_price": totalPrice,
-        "sub_total": subTotal,
-        "total_percentage": totalPercentage,
-        "currency": currency,
-        "current_currency_rate": currentCurrencyRate,
-        "product_description": productDescription,
-        "created_by": createdBy,
-        "order_status": orderStatus,
-        "meta_info": metaInfo?.toJson(),
-        "name": name,
-        "email": email,
-        "phone": phone,
-        "commodity": commodity,
-        "user_type": userType,
-        "charges": charges.map((x) => x.toJson()).toList(),
-        "promo_code": promoCode?.toJson(),
-        "_id": id,
-        "isDeleted": isDeleted,
-        "deletedAt": deletedAt,
-        "unique_id": uniqueId,
-        "__v": v,
-        "items": items,
-        "quantity": totalQuantity,
-        "created_by_details": createdByDetails?.toJson(),
-        "shipping_address_detail": shippingAddressDetails?.toJson(),
-        "billing_address_detail": billingAddressDetails?.toJson(),
-      };
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "order_for": orderFor,
+    "order_context": orderContext,
+    "order_context_id": orderContextId,
+    "products": products.map((x) => x.toJson()).toList(),
+    "shipping_address_id": shippingAddressId,
+    "billing_address_id": billingAddressId,
+    "total_price": totalPrice,
+    "sub_total": subTotal,
+    "total_percentage": totalPercentage,
+    "currency": currency,
+    "current_currency_rate": currentCurrencyRate,
+    "product_description": productDescription,
+    "created_by": createdBy,
+    "order_status": orderStatus,
+    "meta_info": metaInfo?.toJson(),
+    "name": name,
+    "email": email,
+    "phone": phone,
+    "commodity": commodity,
+    "user_type": userType,
+    "charges": charges.map((x) => x.toJson()).toList(),
+    "promo_code": promoCode?.toJson(),
+    "_id": id,
+    "isDeleted": isDeleted,
+    "deletedAt": deletedAt,
+    "unique_id": uniqueId,
+    "__v": v,
+    "items": items,
+    "quantity": totalQuantity,
+    "created_by_details": createdByDetails?.toJson(),
+    "shipping_address_detail": shippingAddressDetails?.toJson(),
+    "billing_address_detail": billingAddressDetails?.toJson(),
+  };
 }
 
 class MetaInfo {
-  MetaInfo({
-    required this.paymentCondition,
-    required this.discount,
-    required this.comments,
-  });
+  MetaInfo({required this.paymentCondition, required this.discount, required this.comments});
 
   final String? paymentCondition;
   final double? discount;
   final String? comments;
 
-  MetaInfo copyWith({
-    String? paymentCondition,
-    double? discount,
-    String? comments,
-  }) {
+  MetaInfo copyWith({String? paymentCondition, double? discount, String? comments}) {
     return MetaInfo(
       paymentCondition: paymentCondition ?? this.paymentCondition,
       discount: discount ?? this.discount,
@@ -257,11 +249,7 @@ class MetaInfo {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "paymentCondition": paymentCondition,
-        "discount": discount,
-        "comments": comments,
-      };
+  Map<String, dynamic> toJson() => {"paymentCondition": paymentCondition, "discount": discount, "comments": comments};
 }
 
 class OrderProduct {
@@ -351,21 +339,21 @@ class OrderProduct {
   }
 
   Map<String, dynamic> toJson() => {
-        "suid": suid,
-        "quantity": quantity,
-        "disc_percentage": discPercentage,
-        "_id": id,
-        "id": productId,
-        "productId": productProductId,
-        "product_description": productDescription,
-        "cts_or_gms": ctsOrGms,
-        "your_rate": yourRate,
-        "your_discount": yourDiscount,
-        "your_amount": yourAmount,
-        "original_amount": originalAmount,
-        "original_rate": originalRate,
-        "image": image,
-      };
+    "suid": suid,
+    "quantity": quantity,
+    "disc_percentage": discPercentage,
+    "_id": id,
+    "id": productId,
+    "productId": productProductId,
+    "product_description": productDescription,
+    "cts_or_gms": ctsOrGms,
+    "your_rate": yourRate,
+    "your_discount": yourDiscount,
+    "your_amount": yourAmount,
+    "original_amount": originalAmount,
+    "original_rate": originalRate,
+    "image": image,
+  };
 }
 
 extension PlaceOrderModelExt on PlaceOrderResponse {

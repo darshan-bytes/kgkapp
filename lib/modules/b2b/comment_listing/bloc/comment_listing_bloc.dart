@@ -45,23 +45,23 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
 
   /// Calls the API to fetch comments for the selected product and catalogue.
   Future<void> _callPreviewCatalogueCommentApi({required BuildContext context}) async {
-    final Map<String, dynamic> params = {
-      ApiKey.productId_: productId,
-      ApiKey.catalogueId: catalogueId,
-    };
+    final Map<String, dynamic> params = {ApiKey.productId_: productId, ApiKey.catalogueId: catalogueId};
 
     /// API request to fetch comments.
     Either<ErrorResponse, CommentsAddedResponseModel?>? response = await AppRepository(context).getPreviewCatalogueCommentList(params);
 
-    response?.fold((error) {
-      if (error.message.isNotNullNorEmpty) {
-        Utils.showMessage(error.message);
-      }
-    }, (commentsAddedResponse) {
-      if (commentsAddedResponse != null) {
-        commentsAddedResponseModel = commentsAddedResponse;
-      }
-    });
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (commentsAddedResponse) {
+        if (commentsAddedResponse != null) {
+          commentsAddedResponseModel = commentsAddedResponse;
+        }
+      },
+    );
   }
 
   /// Call this method before showing the input field
@@ -85,10 +85,7 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
     Either<ErrorResponse, CommonResponse<CommentsAddedResponseModel>>? response;
 
     if (_currentEditingCommentId != null) {
-      response = await AppRepository(event.context).editDigitalCatalogueComments(
-        commentId: _currentEditingCommentId!,
-        body: params,
-      );
+      response = await AppRepository(event.context).editDigitalCatalogueComments(commentId: _currentEditingCommentId!, body: params);
     } else {
       response = await AppRepository(event.context).digitalCatalogueAddComment(params);
     }
@@ -115,8 +112,9 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
 
   Future<void> _onCommentDeletedApiCallEvent(CommentDeletedApiCallEvent event, Emitter<CommentListingState> emit) async {
     emit(CommentLoadingState());
-    Either<ErrorResponse, CommonResponse>? response =
-        await AppRepository(event.context).deleteDigitalCatalogueComments(commentId: event.commentId);
+    Either<ErrorResponse, CommonResponse>? response = await AppRepository(
+      event.context,
+    ).deleteDigitalCatalogueComments(commentId: event.commentId);
 
     await response?.fold(
       (error) async {

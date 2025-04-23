@@ -5,12 +5,7 @@ class GemstoneLandingScreen extends StatelessWidget {
   final StonesLandingScreenStyle style;
   final HomeScreenStyle homeScreenStyle;
 
-  const GemstoneLandingScreen({
-    super.key,
-    required this.bloc,
-    required this.style,
-    required this.homeScreenStyle,
-  });
+  const GemstoneLandingScreen({super.key, required this.bloc, required this.style, required this.homeScreenStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +20,20 @@ class GemstoneLandingScreen extends StatelessWidget {
             await bloc.pullToRefresh(context);
           },
           child: ListView.builder(
-              itemCount: bloc.gemstoneStrapiList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = bloc.gemstoneStrapiList[index];
-                return bloc.getGemStoneWidgetsFromSlug(
-                    context, (item.slug)?.landingSlug ?? LandingSlug.unknown, bloc, style, homeScreenStyle, index);
-              }),
+            itemCount: bloc.gemstoneStrapiList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final item = bloc.gemstoneStrapiList[index];
+              return bloc.getGemStoneWidgetsFromSlug(
+                context,
+                (item.slug)?.landingSlug ?? LandingSlug.unknown,
+                bloc,
+                style,
+                homeScreenStyle,
+                index,
+              );
+            },
+          ),
         );
       },
     );

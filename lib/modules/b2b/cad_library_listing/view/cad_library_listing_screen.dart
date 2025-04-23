@@ -75,8 +75,10 @@ class CadLibraryListingScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.cadList.length]),
-                  style: diamondListingStyle.filterProductCountTextStyle),
+              SmartText(
+                APPStrings.showingListLengthX.tr.interpolate([bloc.cadList.length]),
+                style: diamondListingStyle.filterProductCountTextStyle,
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -113,7 +115,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -123,12 +125,13 @@ class CadLibraryListingScreen extends StatelessWidget {
 
   Widget _buildCadList(CadLibraryListingBloc bloc) {
     return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
-      buildWhen: (previous, current) =>
-          current is CadChangeListingTypeState ||
-          current is CadListLoadedMoreState ||
-          current is CadListLoadingMoreState ||
-          current is CadListingLoadingState ||
-          current is CadListingLoadedState,
+      buildWhen:
+          (previous, current) =>
+              current is CadChangeListingTypeState ||
+              current is CadListLoadedMoreState ||
+              current is CadListLoadingMoreState ||
+              current is CadListingLoadingState ||
+              current is CadListingLoadedState,
       builder: (context, state) {
         if (state is CadListingLoadingState) {
           return const SmartCircularProgressIndicator();
@@ -146,9 +149,7 @@ class CadLibraryListingScreen extends StatelessWidget {
   }
 
   Widget _buildListOrGridView(CadLibraryListingBloc bloc, CadLibraryListingState state, {required BuildContext context}) {
-    return Expanded(
-      child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state, context),
-    );
+    return Expanded(child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state, context));
   }
 
   Widget _buildGridView(CadLibraryListingBloc bloc, CadLibraryListingState state, BuildContext context) {
@@ -159,17 +160,20 @@ class CadLibraryListingScreen extends StatelessWidget {
         await bloc.pullToRefresh(context: context);
       },
       child: SmartGridView(
-        items: bloc.cadList
-            .map((item) => DesignListingGridItem.cadLibrary(
-                  designModel: item,
-                  onTap: () {
-                    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                      RoutesData.isPageFor: bloc.screenIdentifier,
-                      RoutesData.productId: item.id,
-                    });
-                  },
-                ))
-            .toList(),
+        items:
+            bloc.cadList
+                .map(
+                  (item) => DesignListingGridItem.cadLibrary(
+                    designModel: item,
+                    onTap: () {
+                      context.pushNamed(
+                        AppRoutes.productDetailsPage,
+                        arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: item.id},
+                      );
+                    },
+                  ),
+                )
+                .toList(),
         isLoadingMore: state is CadListLoadingMoreState,
       ),
     );
@@ -192,10 +196,10 @@ class CadLibraryListingScreen extends StatelessWidget {
                 margin: EdgeInsetsDirectional.symmetric(vertical: 10.h),
                 designModel: bloc.cadList[index],
                 onTap: () {
-                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                    RoutesData.isPageFor: bloc.screenIdentifier,
-                    RoutesData.productId: bloc.cadList[index].id,
-                  });
+                  context.pushNamed(
+                    AppRoutes.productDetailsPage,
+                    arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: bloc.cadList[index].id},
+                  );
                 },
               ),
               if (state is CadListLoadingMoreState && index == bloc.cadList.length - 1) const SmartCircularProgressIndicator(),
@@ -218,20 +222,20 @@ class CadLibraryListingScreen extends StatelessWidget {
               BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
               await Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => FilterScreen(
-                  onApply: (value) {
-                    if (value != null && value is List<FilterData>) {
-                      bloc.add(CadLibraryFilterEvent(context: context, filterData: value));
-                    }
-                  },
-                ),
+                builder:
+                    (context) => FilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          bloc.add(CadLibraryFilterEvent(context: context, filterData: value));
+                        }
+                      },
+                    ),
               );
             },
             onSortTap: () async {
-              await Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => SortScreen(sortData: bloc.sortOptions),
-              ).then((onValue) {
+              await Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: bloc.sortOptions)).then((
+                onValue,
+              ) {
                 if (onValue != null) {
                   bloc.add(CadSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
                 }

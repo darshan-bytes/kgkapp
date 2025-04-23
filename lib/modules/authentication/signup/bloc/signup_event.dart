@@ -27,10 +27,7 @@ final class SignUpChangeCountryCodeEvent extends SignUpEvent {
   final int index;
   final Country country;
 
-  const SignUpChangeCountryCodeEvent({
-    required this.index,
-    required this.country,
-  });
+  const SignUpChangeCountryCodeEvent({required this.index, required this.country});
 
   @override
   List<Object> get props => [index, country];

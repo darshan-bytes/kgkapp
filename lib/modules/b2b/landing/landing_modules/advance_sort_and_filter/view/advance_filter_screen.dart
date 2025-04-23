@@ -18,12 +18,14 @@ class AdvanceFilterScreen extends StatelessWidget {
           SmartText(
             APPStrings.clearAll.tr,
             onTap: () {
-              filterBloc.add(ClearAllAdvanceFilterDataEvent(
-                context: context,
-                onApply: (List<FilterData> data) {
-                  onApply(data);
-                },
-              ));
+              filterBloc.add(
+                ClearAllAdvanceFilterDataEvent(
+                  context: context,
+                  onApply: (List<FilterData> data) {
+                    onApply(data);
+                  },
+                ),
+              );
             },
           ),
         ],
@@ -32,10 +34,7 @@ class AdvanceFilterScreen extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              flex: 1,
-              child: _buildFilterList(context, filterBloc, style),
-            ),
+            Expanded(flex: 1, child: _buildFilterList(context, filterBloc, style)),
             Expanded(
               flex: 2,
               child: Container(
@@ -56,9 +55,7 @@ class AdvanceFilterScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 4.h),
                         ],
-                        Expanded(
-                          child: _buildSubFilterList(context, filterBloc, style),
-                        ),
+                        Expanded(child: _buildSubFilterList(context, filterBloc, style)),
                       ],
                     );
                   },
@@ -71,12 +68,7 @@ class AdvanceFilterScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
-          decoration: BoxDecoration(
-            color: style.backgroundColor,
-            border: BorderDirectional(
-              top: BorderSide(color: style.itemBorderColor),
-            ),
-          ),
+          decoration: BoxDecoration(color: style.backgroundColor, border: BorderDirectional(top: BorderSide(color: style.itemBorderColor))),
           child: SafeArea(
             child: Row(
               children: [
@@ -129,16 +121,9 @@ class AdvanceFilterScreen extends StatelessWidget {
                   padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 16.w),
                   decoration: BoxDecoration(
                     color: isSelected ? style.selectedBackgroundColor : null,
-                    border: BorderDirectional(
-                      bottom: BorderSide(
-                        color: style.itemBorderColor,
-                      ),
-                    ),
+                    border: BorderDirectional(bottom: BorderSide(color: style.itemBorderColor)),
                   ),
-                  child: SmartText(
-                    filterData.name,
-                    style: isSelected ? style.selectedTitleStyle : style.titleStyle,
-                  ),
+                  child: SmartText(filterData.name, style: isSelected ? style.selectedTitleStyle : style.titleStyle),
                 ),
               );
             },
@@ -150,11 +135,12 @@ class AdvanceFilterScreen extends StatelessWidget {
 
   Widget _buildSubFilterList(BuildContext context, AdvanceSortFilterBloc filterBloc, FilterStyle style) {
     return BlocBuilder<AdvanceSortFilterBloc, AdvanceSortFilterState>(
-      buildWhen: (previous, current) =>
-          current is AdvanceFilterDataSelectedState ||
-          current is AdvanceSelectSecondaryFilterDataState ||
-          current is AdvanceSortAndFilterPriceRangeChangedState ||
-          current is SearchAdvanceFilterDataState,
+      buildWhen:
+          (previous, current) =>
+              current is AdvanceFilterDataSelectedState ||
+              current is AdvanceSelectSecondaryFilterDataState ||
+              current is AdvanceSortAndFilterPriceRangeChangedState ||
+              current is SearchAdvanceFilterDataState,
       builder: (context, state) {
         switch (filterBloc.selectedFilterData?.filterType) {
           case FilterType.range:
@@ -190,19 +176,16 @@ class AdvanceFilterScreen extends StatelessWidget {
               },
               child: Container(
                 padding: EdgeInsetsDirectional.symmetric(vertical: 12.w, horizontal: 16.h),
-                decoration: BoxDecoration(
-                  border: BorderDirectional(
-                    bottom: BorderSide(color: style.itemBorderColor),
-                  ),
-                ),
+                decoration: BoxDecoration(border: BorderDirectional(bottom: BorderSide(color: style.itemBorderColor))),
                 child: SmartCheckbox(
-                    value: secondaryFilterData.isSelected,
-                    label: secondaryFilterData.name,
-                    labelStyle: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
-                    spaceBetweenLabelAndCheckbox: 8.w,
-                    onChanged: (value) {
-                      handleOnChange(filterBloc, secondaryFilterData);
-                    }),
+                  value: secondaryFilterData.isSelected,
+                  label: secondaryFilterData.name,
+                  labelStyle: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
+                  spaceBetweenLabelAndCheckbox: 8.w,
+                  onChanged: (value) {
+                    handleOnChange(filterBloc, secondaryFilterData);
+                  },
+                ),
               ),
             );
           },
@@ -225,13 +208,11 @@ class AdvanceFilterScreen extends StatelessWidget {
               initialDateRange: filterBloc.selectedFilterData?.dateRange,
               firstDate: DateTime(1900),
               lastDate: DateTime(2200),
-            ).then(
-              (value) {
-                if (value != null) {
-                  filterBloc.add(ChangeAdvanceDateRangeEvent(dateRange: value));
-                }
-              },
-            );
+            ).then((value) {
+              if (value != null) {
+                filterBloc.add(ChangeAdvanceDateRangeEvent(dateRange: value));
+              }
+            });
           },
           child: SmartTextField(
             suffixIcon: Icon(Icons.calendar_month),
@@ -239,12 +220,10 @@ class AdvanceFilterScreen extends StatelessWidget {
             contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
             hintText: "${APPStrings.createdOn.tr} - ",
             disabledBorderColor: style.itemBorderColor,
-            controller: TextEditingController(
-              text: filterBloc.selectedFilterData?.dateRange?.formatDateRange(),
-            ),
+            controller: TextEditingController(text: filterBloc.selectedFilterData?.dateRange?.formatDateRange()),
             onTap: () async {},
           ),
-        )
+        ),
       ],
     );
   }

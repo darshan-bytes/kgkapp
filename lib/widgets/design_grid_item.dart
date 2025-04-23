@@ -1,9 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-enum _GridViewType {
-  designGridItem,
-  cadLibrary,
-}
+enum _GridViewType { designGridItem, cadLibrary }
 
 class DesignListingGridItem extends StatelessWidget {
   final B2BCustomListingDataModel designModel;
@@ -68,10 +65,7 @@ class DesignListingGridItem extends StatelessWidget {
         padding: padding,
         margin: margin,
         width: productItemWidth,
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-          border: Border.all(color: style.borderColor),
-        ),
+        decoration: BoxDecoration(color: style.backgroundColor, border: Border.all(color: style.borderColor)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -102,12 +96,7 @@ class DesignListingGridItem extends StatelessWidget {
           width: width,
           alignment: AlignmentDirectional.center,
           color: style.productBackgroundColor,
-          child: SmartImage(
-            path: _getImageUrl(),
-            height: imageHeight,
-            width: imageWidth,
-            fit: fit,
-          ),
+          child: SmartImage(path: _getImageUrl(), height: imageHeight, width: imageWidth, fit: fit),
         ),
         if (_viewType == _GridViewType.designGridItem && status != null)
           PositionedDirectional(
@@ -118,7 +107,7 @@ class DesignListingGridItem extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
               currentStatus: status,
             ),
-          )
+          ),
       ],
     );
   }
@@ -150,12 +139,7 @@ class DesignListingGridItem extends StatelessWidget {
   List<Widget> _buildDesignGridItemDetails(ProductItemStyle style, DesignListingGridItemStyle designListingGridItemStyle) {
     return [
       if (designModel.strDesignNumber.isNotNullNorEmpty) ...[
-        SmartText(
-          designModel.strDesignNumber,
-          style: style.productNameStyle,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
+        SmartText(designModel.strDesignNumber, style: style.productNameStyle, maxLines: 2, overflow: TextOverflow.ellipsis),
         SizedBox(height: 8.h),
       ],
       if (designModel.strDbfNumber.isNotNullNorEmpty) ...[
@@ -198,21 +182,11 @@ class DesignListingGridItem extends StatelessWidget {
   List<Widget> _buildCADLibraryDetails(DesignListingGridItemStyle style) {
     return [
       if (designModel.strCADLibraryNumber.isNotNullNorEmpty) ...[
-        SmartText(
-          designModel.strCADLibraryNumber,
-          style: style.dbfNumberTextStyle,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        SmartText(designModel.strCADLibraryNumber, style: style.dbfNumberTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
         SizedBox(height: 8.h),
       ],
       if (designModel.strCADLibraryProductName.isNotNullNorEmpty)
-        SmartText(
-          designModel.strCADLibraryProductName,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: style.salesManTextStyle,
-        ),
+        SmartText(designModel.strCADLibraryProductName, maxLines: 2, overflow: TextOverflow.ellipsis, style: style.salesManTextStyle),
     ];
   }
 }

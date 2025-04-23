@@ -12,8 +12,18 @@ class ApplyPromoCodeModel {
   String? description;
   String? status;
 
-  ApplyPromoCodeModel(
-      {this.id, this.title, this.code, this.type, this.value, this.startDate, this.endDate, this.createdBy, this.description, this.status});
+  ApplyPromoCodeModel({
+    this.id,
+    this.title,
+    this.code,
+    this.type,
+    this.value,
+    this.startDate,
+    this.endDate,
+    this.createdBy,
+    this.description,
+    this.status,
+  });
 
   ApplyPromoCodeModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

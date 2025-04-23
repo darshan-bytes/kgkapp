@@ -44,10 +44,7 @@ final class HomeKgkCoutureSelectionChangeEvent extends HomeEvent {
   final int index;
   final BuildContext context;
 
-  const HomeKgkCoutureSelectionChangeEvent({
-    required this.context,
-    required this.index,
-  });
+  const HomeKgkCoutureSelectionChangeEvent({required this.context, required this.index});
 
   @override
   List<Object> get props => [context, index];

@@ -48,10 +48,7 @@ class AddressSelectionWidget extends StatelessWidget {
                 SizedBox(height: 8.h),
                 Container(
                   padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
-                  decoration: BoxDecoration(
-                    color: style.defaultTagColor,
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
+                  decoration: BoxDecoration(color: style.defaultTagColor, borderRadius: BorderRadius.circular(12.r)),
                   child: SmartText(APPStrings.txtDefault.tr, style: style.defaultTagStyle),
                 ),
               ],
@@ -82,12 +79,6 @@ class AddressSelectionWidget extends StatelessWidget {
         ],
       ],
     );
-    return onTap != null
-        ? InkWell(
-            borderRadius: BorderRadius.circular(8.r),
-            onTap: onTap,
-            child: child,
-          )
-        : child;
+    return onTap != null ? InkWell(borderRadius: BorderRadius.circular(8.r), onTap: onTap, child: child) : child;
   }
 }

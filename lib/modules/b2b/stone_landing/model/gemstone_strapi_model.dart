@@ -1,10 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class GemstoneStrapiModel {
-  GemstoneStrapiModel({
-    required this.data,
-    required this.meta,
-  });
+  GemstoneStrapiModel({required this.data, required this.meta});
 
   final List<Datum> data;
   final Meta? meta;
@@ -16,10 +13,7 @@ class GemstoneStrapiModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-        "meta": meta?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"data": data.map((x) => x.toJson()).toList(), "meta": meta?.toJson()};
 
   @override
   String toString() {
@@ -28,25 +22,16 @@ class GemstoneStrapiModel {
 }
 
 class Datum {
-  Datum({
-    required this.id,
-    required this.attributes,
-  });
+  Datum({required this.id, required this.attributes});
 
   final int? id;
   final PurpleAttributes? attributes;
 
   factory Datum.fromJson(Map<String, dynamic> json) {
-    return Datum(
-      id: json["id"],
-      attributes: json["attributes"] == null ? null : PurpleAttributes.fromJson(json["attributes"]),
-    );
+    return Datum(id: json["id"], attributes: json["attributes"] == null ? null : PurpleAttributes.fromJson(json["attributes"]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "attributes": attributes?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "attributes": attributes?.toJson()};
 
   @override
   String toString() {
@@ -80,12 +65,12 @@ class PurpleAttributes {
   }
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "publishedAt": publishedAt?.toIso8601String(),
-        "locale": locale,
-        "gemstones": gemstones.map((x) => x.toJson()).toList(),
-      };
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "publishedAt": publishedAt?.toIso8601String(),
+    "locale": locale,
+    "gemstones": gemstones.map((x) => x.toJson()).toList(),
+  };
 
   @override
   String toString() {
@@ -164,27 +149,27 @@ class Gemstone {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "__component": component,
-        "slug": slug?.toJson(),
-        "button": button,
-        "user_type": userType?.toJson(),
-        "business_type": businessType?.toJson(),
-        "poster": poster?.toJson(),
-        "info": info?.toJson(),
-        "title": title,
-        "description": description,
-        "background_image": backgroundImage?.toJson(),
-        "details": details?.toJson(),
-        "country": country.map((x) => x.toJson()).toList(),
-        "image": image?.toJson(),
-        "mobile_image": mobileImage?.toJson(),
-        "banner": banner.map((x) => x.toJson()).toList(),
-        "headline": headline,
-        "about": about?.toJson(),
-        "FAQs": faQs.map((x) => x.toJson()).toList(),
-        "points": points.map((x) => x.toJson()).toList(),
-      };
+    "id": id,
+    "__component": component,
+    "slug": slug?.toJson(),
+    "button": button,
+    "user_type": userType?.toJson(),
+    "business_type": businessType?.toJson(),
+    "poster": poster?.toJson(),
+    "info": info?.toJson(),
+    "title": title,
+    "description": description,
+    "background_image": backgroundImage?.toJson(),
+    "details": details?.toJson(),
+    "country": country.map((x) => x.toJson()).toList(),
+    "image": image?.toJson(),
+    "mobile_image": mobileImage?.toJson(),
+    "banner": banner.map((x) => x.toJson()).toList(),
+    "headline": headline,
+    "about": about?.toJson(),
+    "FAQs": faQs.map((x) => x.toJson()).toList(),
+    "points": points.map((x) => x.toJson()).toList(),
+  };
 }
 
 class About {
@@ -222,21 +207,19 @@ class About {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "tag": tag,
-        "RedirecTo": redirecTo,
-        "RedirectionType": redirectionType,
-        "mobile_image": mobileImage?.toJson(),
-        "image": image?.toJson(),
-      };
+    "id": id,
+    "title": title,
+    "description": description,
+    "tag": tag,
+    "RedirecTo": redirecTo,
+    "RedirectionType": redirectionType,
+    "mobile_image": mobileImage?.toJson(),
+    "image": image?.toJson(),
+  };
 }
 
 class AboutImage {
-  AboutImage({
-    required this.data,
-  });
+  AboutImage({required this.data});
 
   final List<Dat> data;
 
@@ -253,14 +236,10 @@ class AboutImage {
     }
 
     // If it's already a list, process it normally
-    return AboutImage(
-      data: (jsonData as List<dynamic>).map((x) => Dat.fromJson(x as Map<String, dynamic>)).toList(),
-    );
+    return AboutImage(data: (jsonData as List<dynamic>).map((x) => Dat.fromJson(x as Map<String, dynamic>)).toList());
   }
 
-  Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() => {"data": data.map((x) => x.toJson()).toList()};
 
   @override
   String toString() {
@@ -269,25 +248,16 @@ class AboutImage {
 }
 
 class Dat {
-  Dat({
-    required this.id,
-    required this.attributes,
-  });
+  Dat({required this.id, required this.attributes});
 
   final int? id;
   final DataAttributes? attributes;
 
   factory Dat.fromJson(Map<String, dynamic> json) {
-    return Dat(
-      id: json["id"],
-      attributes: json["attributes"] == null ? null : DataAttributes.fromJson(json["attributes"]),
-    );
+    return Dat(id: json["id"], attributes: json["attributes"] == null ? null : DataAttributes.fromJson(json["attributes"]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "attributes": attributes?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "attributes": attributes?.toJson()};
 
   @override
   String toString() {
@@ -354,23 +324,23 @@ class DataAttributes {
   }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "alternativeText": alternativeText,
-        "caption": caption,
-        "width": width,
-        "height": height,
-        "formats": formats?.toJson(),
-        "hash": hash,
-        "ext": ext,
-        "mime": mime,
-        "size": size,
-        "url": url,
-        "previewUrl": previewUrl,
-        "provider": provider,
-        "provider_metadata": providerMetadata,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-      };
+    "name": name,
+    "alternativeText": alternativeText,
+    "caption": caption,
+    "width": width,
+    "height": height,
+    "formats": formats?.toJson(),
+    "hash": hash,
+    "ext": ext,
+    "mime": mime,
+    "size": size,
+    "url": url,
+    "previewUrl": previewUrl,
+    "provider": provider,
+    "provider_metadata": providerMetadata,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+  };
 
   @override
   String toString() {
@@ -379,12 +349,7 @@ class DataAttributes {
 }
 
 class Formats {
-  Formats({
-    required this.large,
-    required this.small,
-    required this.medium,
-    required this.thumbnail,
-  });
+  Formats({required this.large, required this.small, required this.medium, required this.thumbnail});
 
   final Large? large;
   final Large? small;
@@ -401,11 +366,11 @@ class Formats {
   }
 
   Map<String, dynamic> toJson() => {
-        "large": large?.toJson(),
-        "small": small?.toJson(),
-        "medium": medium?.toJson(),
-        "thumbnail": thumbnail?.toJson(),
-      };
+    "large": large?.toJson(),
+    "small": small?.toJson(),
+    "medium": medium?.toJson(),
+    "thumbnail": thumbnail?.toJson(),
+  };
 
   @override
   String toString() {
@@ -454,17 +419,17 @@ class Large {
   }
 
   Map<String, dynamic> toJson() => {
-        "ext": ext,
-        "url": url,
-        "hash": hash,
-        "mime": mime,
-        "name": name,
-        "path": path,
-        "size": size,
-        "width": width,
-        "height": height,
-        "sizeInBytes": sizeInBytes,
-      };
+    "ext": ext,
+    "url": url,
+    "hash": hash,
+    "mime": mime,
+    "name": name,
+    "path": path,
+    "size": size,
+    "width": width,
+    "height": height,
+    "sizeInBytes": sizeInBytes,
+  };
 
   @override
   String toString() {
@@ -473,13 +438,7 @@ class Large {
 }
 
 class BackgroundImage {
-  BackgroundImage({
-    required this.id,
-    required this.title,
-    required this.url,
-    required this.mobileImage,
-    required this.image,
-  });
+  BackgroundImage({required this.id, required this.title, required this.url, required this.mobileImage, required this.image});
 
   final int? id;
   final dynamic title;
@@ -497,13 +456,7 @@ class BackgroundImage {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "url": url,
-        "mobile_image": mobileImage?.toJson(),
-        "image": image?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "title": title, "url": url, "mobile_image": mobileImage?.toJson(), "image": image?.toJson()};
 }
 
 class Banner {
@@ -547,17 +500,17 @@ class Banner {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "tag": tag,
-        "button_label": buttonLabel,
-        "button_url": buttonUrl,
-        "button_target": buttonTarget,
-        "description": description,
-        "redirectTo": redirectTo,
-        "redirectionType": redirectionType,
-        "image": image?.toJson(),
-      };
+    "id": id,
+    "title": title,
+    "tag": tag,
+    "button_label": buttonLabel,
+    "button_url": buttonUrl,
+    "button_target": buttonTarget,
+    "description": description,
+    "redirectTo": redirectTo,
+    "redirectionType": redirectionType,
+    "image": image?.toJson(),
+  };
 
   @override
   String toString() {
@@ -566,25 +519,16 @@ class Banner {
 }
 
 class BusinessType {
-  BusinessType({
-    required this.id,
-    required this.businessType,
-  });
+  BusinessType({required this.id, required this.businessType});
 
   final int? id;
   final String? businessType;
 
   factory BusinessType.fromJson(Map<String, dynamic> json) {
-    return BusinessType(
-      id: json["id"],
-      businessType: json["business_type"],
-    );
+    return BusinessType(id: json["id"], businessType: json["business_type"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "business_type": businessType,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "business_type": businessType};
 
   @override
   String toString() {
@@ -621,13 +565,13 @@ class Button {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "label": label,
-        "url": url,
-        "target": target,
-        "redirectTo": redirectTo,
-        "redirectionType": redirectionType,
-      };
+    "id": id,
+    "label": label,
+    "url": url,
+    "target": target,
+    "redirectTo": redirectTo,
+    "redirectionType": redirectionType,
+  };
 
   @override
   String toString() {
@@ -636,29 +580,17 @@ class Button {
 }
 
 class Details {
-  Details({
-    required this.id,
-    required this.title,
-    required this.description,
-  });
+  Details({required this.id, required this.title, required this.description});
 
   final int? id;
   final String? title;
   final dynamic description;
 
   factory Details.fromJson(Map<String, dynamic> json) {
-    return Details(
-      id: json["id"],
-      title: json["title"],
-      description: json["description"],
-    );
+    return Details(id: json["id"], title: json["title"], description: json["description"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "title": title, "description": description};
 
   @override
   String toString() {
@@ -667,13 +599,7 @@ class Details {
 }
 
 class Info {
-  Info({
-    required this.id,
-    required this.title,
-    required this.headline,
-    required this.tagline,
-    required this.sectionTitle,
-  });
+  Info({required this.id, required this.title, required this.headline, required this.tagline, required this.sectionTitle});
 
   final int? id;
   final String? title;
@@ -691,22 +617,11 @@ class Info {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "headline": headline,
-        "tagline": tagline,
-        "section_title": sectionTitle,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "title": title, "headline": headline, "tagline": tagline, "section_title": sectionTitle};
 }
 
 class Faq {
-  Faq({
-    required this.id,
-    required this.question,
-    required this.answer,
-    required this.title,
-  });
+  Faq({required this.id, required this.question, required this.answer, required this.title});
 
   final int? id;
   final String? question;
@@ -714,20 +629,10 @@ class Faq {
   final String? title;
 
   factory Faq.fromJson(Map<String, dynamic> json) {
-    return Faq(
-      id: json["id"],
-      question: json["question"],
-      answer: json["answer"],
-      title: json["title"],
-    );
+    return Faq(id: json["id"], question: json["question"], answer: json["answer"], title: json["title"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "question": question,
-        "answer": answer,
-        "title": title,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "question": question, "answer": answer, "title": title};
 
   @override
   String toString() {
@@ -736,27 +641,18 @@ class Faq {
 }
 
 class Slug {
-  Slug({
-    required this.id,
-    required this.slug,
-  });
+  Slug({required this.id, required this.slug});
 
   final int? id;
   final String? slug;
 
   factory Slug.fromJson(Map<String, dynamic> json) {
-    return Slug(
-      id: json["id"],
-      slug: json["slug"],
-    );
+    return Slug(id: json["id"], slug: json["slug"]);
   }
 
   LandingSlug get landingSlug => LandingSlug.values.firstWhereOrNull((element) => element.value == slug) ?? LandingSlug.unknown;
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "slug": slug,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "slug": slug};
 
   @override
   String toString() {
@@ -765,25 +661,16 @@ class Slug {
 }
 
 class UserType {
-  UserType({
-    required this.id,
-    required this.userType,
-  });
+  UserType({required this.id, required this.userType});
 
   final int? id;
   final String? userType;
 
   factory UserType.fromJson(Map<String, dynamic> json) {
-    return UserType(
-      id: json["id"],
-      userType: json["user_type"],
-    );
+    return UserType(id: json["id"], userType: json["user_type"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_type": userType,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "user_type": userType};
 
   @override
   String toString() {
@@ -792,21 +679,15 @@ class UserType {
 }
 
 class Meta {
-  Meta({
-    required this.pagination,
-  });
+  Meta({required this.pagination});
 
   final Pagination? pagination;
 
   factory Meta.fromJson(Map<String, dynamic> json) {
-    return Meta(
-      pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]),
-    );
+    return Meta(pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "pagination": pagination?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"pagination": pagination?.toJson()};
 
   @override
   String toString() {
@@ -815,12 +696,7 @@ class Meta {
 }
 
 class Pagination {
-  Pagination({
-    required this.page,
-    required this.pageSize,
-    required this.pageCount,
-    required this.total,
-  });
+  Pagination({required this.page, required this.pageSize, required this.pageCount, required this.total});
 
   final int? page;
   final int? pageSize;
@@ -828,20 +704,10 @@ class Pagination {
   final int? total;
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
-    return Pagination(
-      page: json["page"],
-      pageSize: json["pageSize"],
-      pageCount: json["pageCount"],
-      total: json["total"],
-    );
+    return Pagination(page: json["page"], pageSize: json["pageSize"], pageCount: json["pageCount"], total: json["total"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "page": page,
-        "pageSize": pageSize,
-        "pageCount": pageCount,
-        "total": total,
-      };
+  Map<String, dynamic> toJson() => {"page": page, "pageSize": pageSize, "pageCount": pageCount, "total": total};
 
   @override
   String toString() {

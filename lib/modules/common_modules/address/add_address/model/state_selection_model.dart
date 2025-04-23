@@ -1,39 +1,19 @@
 class CountryStateModel {
-  CountryStateModel({
-    this.name,
-    this.code,
-    this.countryCode,
-  });
+  CountryStateModel({this.name, this.code, this.countryCode});
 
   final String? name;
   final String? code;
   final String? countryCode;
 
-  CountryStateModel copyWith({
-    String? name,
-    String? code,
-    String? countryCode,
-  }) {
-    return CountryStateModel(
-      name: name ?? this.name,
-      code: code ?? this.code,
-      countryCode: countryCode ?? this.countryCode,
-    );
+  CountryStateModel copyWith({String? name, String? code, String? countryCode}) {
+    return CountryStateModel(name: name ?? this.name, code: code ?? this.code, countryCode: countryCode ?? this.countryCode);
   }
 
   factory CountryStateModel.fromJson(Map<String, dynamic> json) {
-    return CountryStateModel(
-      name: json["name"],
-      code: json["code"],
-      countryCode: json["country_code"],
-    );
+    return CountryStateModel(name: json["name"], code: json["code"], countryCode: json["country_code"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "code": code,
-        "country_code": countryCode,
-      };
+  Map<String, dynamic> toJson() => {"name": name, "code": code, "country_code": countryCode};
 
   @override
   bool operator ==(Object other) =>

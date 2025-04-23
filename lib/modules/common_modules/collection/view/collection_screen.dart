@@ -70,11 +70,12 @@ class CollectionScreen extends StatelessWidget {
             return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
           }
           return BlocBuilder<CollectionBloc, CollectionState>(
-            buildWhen: (previous, current) =>
-                current is CollectionListLoadedMoreState ||
-                current is CollectionListLoadingMoreState ||
-                current is CollectionMasterListLoadedState ||
-                current is CollectionLoadingState,
+            buildWhen:
+                (previous, current) =>
+                    current is CollectionListLoadedMoreState ||
+                    current is CollectionListLoadingMoreState ||
+                    current is CollectionMasterListLoadedState ||
+                    current is CollectionLoadingState,
             builder: (context, state) {
               return RefreshIndicator.adaptive(
                 onRefresh: () async {
@@ -95,8 +96,11 @@ class CollectionScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               SmartImage(
-                                onTap: () =>
-                                    bloc.navigateToJewelleryListingScreen(context: context, collectionName: collectionDataModel.name ?? ""),
+                                onTap:
+                                    () => bloc.navigateToJewelleryListingScreen(
+                                      context: context,
+                                      collectionName: collectionDataModel.name ?? "",
+                                    ),
                                 path: collectionDataModel.image ?? '',
                                 width: context.width,
                                 fit: BoxFit.contain,
@@ -115,7 +119,7 @@ class CollectionScreen extends StatelessWidget {
                           ),
                         ),
                         if (state is CollectionListLoadingMoreState && index == bloc.collectionMasterList.length - 1)
-                          const SmartCircularProgressIndicator()
+                          const SmartCircularProgressIndicator(),
                       ],
                     );
                   },

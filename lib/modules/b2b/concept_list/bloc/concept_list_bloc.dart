@@ -98,7 +98,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -132,16 +132,18 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
 
-  Future<void> apiCallForConceptList(BuildContext context, Emitter<ConceptListState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query, String searchString = ''}) async {
+  Future<void> apiCallForConceptList(
+    BuildContext context,
+    Emitter<ConceptListState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+    String searchString = '',
+  }) async {
     query = buildQuery(
       filterData: filterData,
       searchString: searchString,
@@ -149,18 +151,22 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
       pageLimit: AppConst.pageLimit,
     );
 
-    Either<ErrorResponse, PaginationData<ConceptModel>>? response =
-        await AppRepository(context).getConceptList(body: query, isShowLoader: isLoadMore);
+    Either<ErrorResponse, PaginationData<ConceptModel>>? response = await AppRepository(
+      context,
+    ).getConceptList(body: query, isShowLoader: isLoadMore);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (PaginationData<ConceptModel> success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<ConceptModel> dataList = success.dataList ?? [];
-      conceptList.addAll(_generateB2BListingModel(dataList));
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(ConceptListLoadedState());
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (PaginationData<ConceptModel> success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        List<ConceptModel> dataList = success.dataList ?? [];
+        conceptList.addAll(_generateB2BListingModel(dataList));
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(ConceptListLoadedState());
+      },
+    );
   }
 
   void _onConceptListSearchEvent(ConceptListSearchEvent event, Emitter<ConceptListState> emit) {
@@ -186,29 +192,28 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
   }
 
   List<B2BCustomListingDataModel> _generateB2BListingModel(List<ConceptModel> conceptModelList) {
-    return conceptModelList.map(
-      (concept) {
-        // Use map and spread operator for cleaner list transformation
-        List<String> dummy = concept.files.map((file) => file['path'].toString().setMediaUrl).toList();
-        return B2BCustomListingDataModel(
-            id: concept.id,
-            strConceptNumber: concept.conceptNumber,
-            strPresentation: concept.presentationCount.toString(),
-            strConceptName: concept.conceptName,
-            status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
-            fields: generateB2BItemFields(concept.assignedToDetails),
-            strCreatedBy: concept.createdByDetails?.fullName,
-            strCreatedByImageUrl: concept.createdByDetails?.profilePic,
-            strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
-            strPresentationNumber: concept.presentationCount.toString(),
-            strConceptBy: concept.conceptCustomerIdDetails?.userType,
-            strName: concept.conceptName,
-            strDescription: concept.description ?? '',
-            descriptionImageList: dummy,
-            presentationList: concept.presentation,
-            strRevisedDate: concept.receivedAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY));
-      },
-    ).toList();
+    return conceptModelList.map((concept) {
+      // Use map and spread operator for cleaner list transformation
+      List<String> dummy = concept.files.map((file) => file['path'].toString().setMediaUrl).toList();
+      return B2BCustomListingDataModel(
+        id: concept.id,
+        strConceptNumber: concept.conceptNumber,
+        strPresentation: concept.presentationCount.toString(),
+        strConceptName: concept.conceptName,
+        status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
+        fields: generateB2BItemFields(concept.assignedToDetails),
+        strCreatedBy: concept.createdByDetails?.fullName,
+        strCreatedByImageUrl: concept.createdByDetails?.profilePic,
+        strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        strPresentationNumber: concept.presentationCount.toString(),
+        strConceptBy: concept.conceptCustomerIdDetails?.userType,
+        strName: concept.conceptName,
+        strDescription: concept.description ?? '',
+        descriptionImageList: dummy,
+        presentationList: concept.presentation,
+        strRevisedDate: concept.receivedAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
+      );
+    }).toList();
   }
 
   ProjectStatus getOrderStatus({required String orderStatus}) {
@@ -237,34 +242,33 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
       String fullName = detail.fullName;
       String imageUrl = detail.profilePic ?? '';
 
-      return B2BItemField(
-        label: APPStrings.assignTo.tr,
-        value: fullName,
-        imageUrl: imageUrl,
-      );
+      return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();
   }
 
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).getConceptFilterList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? []) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? []) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Get secondary filter data

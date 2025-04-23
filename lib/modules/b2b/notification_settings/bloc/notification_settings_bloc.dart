@@ -16,14 +16,18 @@ class NotificationSettingsBloc extends Bloc<NotificationSettingsEvent, Notificat
   }
 
   Future<void> _notificationOrderStatusToggledEvent(
-      NotificationOrderStatusToggledEvent event, Emitter<NotificationSettingsState> emit) async {
+    NotificationOrderStatusToggledEvent event,
+    Emitter<NotificationSettingsState> emit,
+  ) async {
     emit(NotificationReloadState());
     isOrderStatusUpdateEnable = event.isEnable;
     emit(const NotificationOrderStatusToggledState());
   }
 
   Future<void> _notificationAnnouncementToggledEvent(
-      NotificationAnnouncementToggledEvent event, Emitter<NotificationSettingsState> emit) async {
+    NotificationAnnouncementToggledEvent event,
+    Emitter<NotificationSettingsState> emit,
+  ) async {
     emit(NotificationReloadState());
     isAnnouncementsEnable = event.isEnable;
     emit(const NotificationAnnouncementToggledState());

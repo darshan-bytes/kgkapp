@@ -228,9 +228,10 @@ class CadLibraryListItemDataModel {
     brand = json['brand'];
     isAddedToCart = json['isAddedToCart'] ?? false;
     isCommented = json['is_commented'] ?? false;
-    multipleFinishedViewImage = json["multiple_finished_view_image"] == null
-        ? []
-        : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x)));
+    multipleFinishedViewImage =
+        json["multiple_finished_view_image"] == null
+            ? []
+            : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x)));
     if (json["components"] != null) {
       components = List<Component>.from(json["components"]!.map((x) => Component.fromJson(x)));
     }
@@ -327,15 +328,16 @@ class FindingDetails {
   String? remarks;
   String? sId;
 
-  FindingDetails(
-      {this.findingName,
-      this.findingDescription,
-      this.findingWeight,
-      this.sizeLength,
-      this.laserLinking,
-      this.tourchShoulder,
-      this.remarks,
-      this.sId});
+  FindingDetails({
+    this.findingName,
+    this.findingDescription,
+    this.findingWeight,
+    this.sizeLength,
+    this.laserLinking,
+    this.tourchShoulder,
+    this.remarks,
+    this.sId,
+  });
 
   FindingDetails.fromJson(Map<String, dynamic> json) {
     findingName = json['FindingName'];
@@ -372,15 +374,16 @@ class StoneCardDetails {
   String? sId;
   String? cADRenderImageAvailable;
 
-  StoneCardDetails(
-      {this.stoneCardSuid,
-      this.stoneCardRefSuid,
-      this.stoneCardNumber,
-      this.styleSkuNumber,
-      this.image,
-      this.componentDetails,
-      this.sId,
-      this.cADRenderImageAvailable});
+  StoneCardDetails({
+    this.stoneCardSuid,
+    this.stoneCardRefSuid,
+    this.stoneCardNumber,
+    this.styleSkuNumber,
+    this.image,
+    this.componentDetails,
+    this.sId,
+    this.cADRenderImageAvailable,
+  });
 
   StoneCardDetails.fromJson(Map<String, dynamic> json) {
     stoneCardSuid = json['StoneCardSuid'];
@@ -433,24 +436,25 @@ class PreviewCatalogueComponentDetails {
   String? clientStone;
   String? sId;
 
-  PreviewCatalogueComponentDetails(
-      {this.rM,
-      this.commodity,
-      this.origin,
-      this.shape,
-      this.color,
-      this.cut,
-      this.sieve,
-      this.mMSize,
-      this.pPWt,
-      this.pcs,
-      this.minWt,
-      this.maxWt,
-      this.settingType,
-      this.method,
-      this.centerStone,
-      this.clientStone,
-      this.sId});
+  PreviewCatalogueComponentDetails({
+    this.rM,
+    this.commodity,
+    this.origin,
+    this.shape,
+    this.color,
+    this.cut,
+    this.sieve,
+    this.mMSize,
+    this.pPWt,
+    this.pcs,
+    this.minWt,
+    this.maxWt,
+    this.settingType,
+    this.method,
+    this.centerStone,
+    this.clientStone,
+    this.sId,
+  });
 
   PreviewCatalogueComponentDetails.fromJson(Map<String, dynamic> json) {
     rM = json['RM'];

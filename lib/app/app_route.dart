@@ -93,19 +93,13 @@ class AppRoutes {
 
       case signInPage:
         builder = (context) {
-          return BlocProvider<SignInBloc>(
-            create: (context) => SignInBloc()..add(SignInInitialEvent(context)),
-            child: const SignInScreen(),
-          );
+          return BlocProvider<SignInBloc>(create: (context) => SignInBloc()..add(SignInInitialEvent(context)), child: const SignInScreen());
         };
         break;
 
       case signUpPage:
         builder = (context) {
-          return BlocProvider<SignUpBloc>(
-            create: (_) => SignUpBloc()..add(SignUpInitialEvent(context)),
-            child: const SignUpScreen(),
-          );
+          return BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()..add(SignUpInitialEvent(context)), child: const SignUpScreen());
         };
         break;
       case otpVerificationPage:
@@ -274,19 +268,16 @@ class AppRoutes {
 
       case orderConfirmationPage:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => OrderConfirmationScreen(
-            orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
-          ),
+          pageBuilder:
+              (context, animation, secondaryAnimation) =>
+                  OrderConfirmationScreen(orderNumber: context.routesData?[RoutesData.orderNumber] ?? ''),
           transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case orderPage:
         builder = (context) {
-          return BlocProvider<OrdersBloc>(
-            create: (context) => OrdersBloc()..add(OrdersInitialEvent(context)),
-            child: const OrderScreen(),
-          );
+          return BlocProvider<OrdersBloc>(create: (context) => OrdersBloc()..add(OrdersInitialEvent(context)), child: const OrderScreen());
         };
         break;
 
@@ -337,19 +328,13 @@ class AppRoutes {
 
       case searchPage:
         builder = (context) {
-          return BlocProvider<SearchBloc>(
-            create: (context) => SearchBloc()..add(InitialSearchEvent()),
-            child: const SearchScreen(),
-          );
+          return BlocProvider<SearchBloc>(create: (context) => SearchBloc()..add(InitialSearchEvent()), child: const SearchScreen());
         };
         break;
 
       case qrScannerPage:
         builder = (context) {
-          return BlocProvider<QrCodeScanLoginBloc>(
-            create: (context) => QrCodeScanLoginBloc(),
-            child: const QrScannerScreen(),
-          );
+          return BlocProvider<QrCodeScanLoginBloc>(create: (context) => QrCodeScanLoginBloc(), child: const QrScannerScreen());
         };
         break;
 
@@ -382,10 +367,7 @@ class AppRoutes {
 
       case faqPage:
         builder = (context) {
-          return BlocProvider<FaqBloc>(
-            create: (context) => FaqBloc()..add(FaqInitialEvent(context)),
-            child: const FaqScreen(),
-          );
+          return BlocProvider<FaqBloc>(create: (context) => FaqBloc()..add(FaqInitialEvent(context)), child: const FaqScreen());
         };
         break;
 
@@ -611,10 +593,7 @@ class AppRoutes {
 
       case orionPage:
         builder = (context) {
-          return BlocProvider<OrionBloc>(
-            create: (context) => OrionBloc()..add(OrionInitialEvent(context)),
-            child: const OrionScreen(),
-          );
+          return BlocProvider<OrionBloc>(create: (context) => OrionBloc()..add(OrionInitialEvent(context)), child: const OrionScreen());
         };
         break;
 
@@ -739,26 +718,18 @@ class AppRoutes {
   }
 
   static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(builder: (_) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Error'),
-        ),
-        body: const Center(
-          child: Text('ERROR: Page not found'),
-        ),
-      );
-    });
+    return MaterialPageRoute(
+      builder: (_) {
+        return Scaffold(appBar: AppBar(title: const Text('Error')), body: const Center(child: Text('ERROR: Page not found')));
+      },
+    );
   }
 
   static Route<dynamic> _buildRoute(RouteSettings settings, WidgetBuilder builder) {
     if (Platform.isIOS) {
       return CupertinoPageRoute(
         builder: (context) {
-          return PopScope(
-            canPop: !(BlocProvider.of<AppBloc>(context).isLoading),
-            child: builder(context),
-          );
+          return PopScope(canPop: !(BlocProvider.of<AppBloc>(context).isLoading), child: builder(context));
         },
         settings: settings,
         fullscreenDialog: false,
@@ -766,10 +737,7 @@ class AppRoutes {
     } else {
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
-          return PopScope(
-            canPop: !(BlocProvider.of<AppBloc>(context).isLoading),
-            child: builder(context),
-          );
+          return PopScope(canPop: !(BlocProvider.of<AppBloc>(context).isLoading), child: builder(context));
         },
         transitionsBuilder: commonTransitionBuilder,
         settings: settings,
@@ -779,16 +747,17 @@ class AppRoutes {
 
   // make commomn transition builder
   static Widget commonTransitionBuilder(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     const begin = Offset(1.0, 0.0);
     const end = Offset.zero;
     final tween = Tween(begin: begin, end: end);
     final offsetAnimation = animation.drive(tween);
 
-    return SlideTransition(
-      position: offsetAnimation,
-      child: child,
-    );
+    return SlideTransition(position: offsetAnimation, child: child);
   }
 }
 
@@ -862,7 +831,7 @@ enum ScreenIdentifier {
   cancelOrderForRetailer,
   cancelOrderForManufacturer,
   productForLibraryDesign,
-  productForLibrarySKU
+  productForLibrarySKU,
 }
 
 extension RoutesDataExtension on BuildContext {
@@ -891,8 +860,11 @@ extension RoutesDataExtension on BuildContext {
     return await Navigator.pushNamedAndRemoveUntil(this, routeName, predicate, arguments: arguments);
   }
 
-  Future<dynamic> pushNamedAndRemoveUntilOfContext(String routeName, RoutePredicate predicate,
-      {Map<RoutesData, dynamic>? arguments}) async {
+  Future<dynamic> pushNamedAndRemoveUntilOfContext(
+    String routeName,
+    RoutePredicate predicate, {
+    Map<RoutesData, dynamic>? arguments,
+  }) async {
     return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 

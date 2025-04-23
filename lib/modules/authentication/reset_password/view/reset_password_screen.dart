@@ -9,11 +9,7 @@ class ResetPasswordScreen extends StatelessWidget {
     final resetPasswordBloc = BlocProvider.of<ResetPasswordBloc>(context);
 
     return Scaffold(
-      appBar: SmartAppBar(
-        appBarHeight: 52.h,
-        isBorder: false,
-        backgroundColor: style.backgroundColor,
-      ),
+      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor),
       bottomNavigationBar: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -46,14 +42,8 @@ class ResetPasswordScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SmartText(
-                        APPStrings.resetPassword.tr,
-                        style: style.titleTextStyle,
-                      ),
-                      SmartText(
-                        APPStrings.resetPasswordDescription.tr,
-                        style: style.subTitleStyle,
-                      ),
+                      SmartText(APPStrings.resetPassword.tr, style: style.titleTextStyle),
+                      SmartText(APPStrings.resetPasswordDescription.tr, style: style.subTitleStyle),
                       SizedBox(height: 32.h),
                       SmartTextField(
                         controller: resetPasswordBloc.newPasswordController,

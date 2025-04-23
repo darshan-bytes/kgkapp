@@ -68,8 +68,9 @@ class StonesBannerView extends StatelessWidget {
               width: backgroundImageWidth ?? double.infinity,
             ),
           Padding(
-              padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
-              child: _buildBannerForegroundView(style)),
+            padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
+            child: _buildBannerForegroundView(style),
+          ),
         ],
       ),
     );
@@ -82,7 +83,11 @@ class StonesBannerView extends StatelessWidget {
       children: [
         if (foregroundImagePath != null) ...[
           SmartImage(
-              path: foregroundImagePath ?? '', height: foregroundImageHeight, width: foregroundImageWidth, fit: foregroundImageBoxFit),
+            path: foregroundImagePath ?? '',
+            height: foregroundImageHeight,
+            width: foregroundImageWidth,
+            fit: foregroundImageBoxFit,
+          ),
           SizedBox(height: spaceBetweenImageAndTitle),
         ],
         if (bannerTitleText != null) ...[

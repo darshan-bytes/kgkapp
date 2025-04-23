@@ -46,26 +46,15 @@ class ExhibitionPlacesTabView extends StatelessWidget {
   Widget _buildImageAndText(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
     return Column(
       children: [
-        SmartImage(
-          path: 'https://i.ibb.co/RQj8JGk/Rectangle-651.png',
-          width: 390.w,
-          height: 283.h,
-        ),
+        SmartImage(path: 'https://i.ibb.co/RQj8JGk/Rectangle-651.png', width: 390.w, height: 283.h),
         Container(
           padding: EdgeInsetsDirectional.symmetric(vertical: 32.0.h, horizontal: 17.0.w),
-          decoration: BoxDecoration(
-            color: style.textBackgroundColor,
-          ),
+          decoration: BoxDecoration(color: style.textBackgroundColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SmartText(
-                APPStrings.maximizeYourReach.tr,
-                style: style.titleStyle,
-              ),
-              SizedBox(
-                height: 4.0.h,
-              ),
+              SmartText(APPStrings.maximizeYourReach.tr, style: style.titleStyle),
+              SizedBox(height: 4.0.h),
               SmartText(
                 APPStrings.showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform.tr,
                 maxLines: 2,
@@ -73,21 +62,13 @@ class ExhibitionPlacesTabView extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
 
   Widget _buildCatalogueExhibitionList(BuildContext context, ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 24.h,
-        ),
-        _buildExhibitionSubList(bloc, style),
-      ],
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [SizedBox(height: 24.h), _buildExhibitionSubList(bloc, style)]);
   }
 
   Widget _buildExhibitionSubList(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
@@ -102,10 +83,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SmartText(
-                APPStrings.exhibitionsInX.tr.interpolate([item.title]),
-                style: style.listTextStyle,
-              ),
+              SmartText(APPStrings.exhibitionsInX.tr.interpolate([item.title]), style: style.listTextStyle),
               ListView.separated(
                 separatorBuilder: (context, subIndex) => const Divider(),
                 itemCount: bloc.exhibitionNameListing[index].exhibitionSubList?.length ?? 0,
@@ -119,9 +97,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
                       /// If user is internal user then navigate to exhibition details page otherwise not navigate
                       UserType userType = BlocProvider.of<AppBloc>(context).userType;
                       if (userType == UserType.internal) {
-                        context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {
-                          RoutesData.exhibitionId: item.id,
-                        });
+                        context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {RoutesData.exhibitionId: item.id});
                       }
                     },
                     child: Padding(
@@ -129,16 +105,9 @@ class ExhibitionPlacesTabView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SmartText(
-                            item.name ?? '',
-                            maxLines: 2,
-                            style: style.listTitleStyle,
-                          ),
+                          SmartText(item.name ?? '', maxLines: 2, style: style.listTitleStyle),
                           SizedBox(height: 8.h),
-                          SmartText(
-                            item.author,
-                            style: style.listAuthorStyle,
-                          ),
+                          SmartText(item.author, style: style.listAuthorStyle),
                           SizedBox(height: 12.h),
                           if (item.status != null) _buildStatusBadge(style, item.status!),
                         ],
@@ -157,15 +126,8 @@ class ExhibitionPlacesTabView extends StatelessWidget {
   Widget _buildStatusBadge(ExhibitionListingItemStyle style, String status) {
     return Container(
       padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        border: Border.all(color: style.borderColor, width: 1.w),
-      ),
-      child: SmartText(
-        status,
-        style: style.listStatusStyle,
-        textAlign: TextAlign.center,
-      ),
+      decoration: BoxDecoration(color: style.backgroundColor, border: Border.all(color: style.borderColor, width: 1.w)),
+      child: SmartText(status, style: style.listStatusStyle, textAlign: TextAlign.center),
     );
   }
 }

@@ -35,11 +35,7 @@ class OrderScreen extends StatelessWidget {
   }
 
   List<Widget> _buildTabBarView(OrdersBloc ordersBloc) {
-    return [
-      DiamondTabView(ordersBloc: ordersBloc),
-      GemstoneTabView(ordersBloc: ordersBloc),
-      JewelleryTabView(ordersBloc: ordersBloc),
-    ];
+    return [DiamondTabView(ordersBloc: ordersBloc), GemstoneTabView(ordersBloc: ordersBloc), JewelleryTabView(ordersBloc: ordersBloc)];
   }
 
   Widget _buildBottomNavigationBar(OrdersBloc ordersBloc) {
@@ -53,13 +49,14 @@ class OrderScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => AdvanceFilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        ordersBloc.add(OrdersListFilterEvent(filterData: value, context: context));
-                      }
-                    },
-                  ),
+                  builder:
+                      (context) => AdvanceFilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            ordersBloc.add(OrdersListFilterEvent(filterData: value, context: context));
+                          }
+                        },
+                      ),
                 );
               },
             ),

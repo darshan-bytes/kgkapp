@@ -119,7 +119,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -153,17 +153,19 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
 
   /// Fetch digital catalogue data
-  Future<void> fetchDigitalCatalogueList(BuildContext context, Emitter<DigitalCatalogueState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query, String searchString = ''}) async {
+  Future<void> fetchDigitalCatalogueList(
+    BuildContext context,
+    Emitter<DigitalCatalogueState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+    String searchString = '',
+  }) async {
     /// Build the query dynamically
     query = buildQuery(
       filterData: filterData,
@@ -172,18 +174,22 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
       pageLimit: AppConst.pageLimit,
     );
 
-    Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>? response =
-        await AppRepository(context).digitalCatalogueFilters(body: query, isLoadMore: isLoadMore);
+    Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>? response = await AppRepository(
+      context,
+    ).digitalCatalogueFilters(body: query, isLoadMore: isLoadMore);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (PaginationData<DigitalCatalogueDetails> success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<DigitalCatalogueDetails> dataList = success.dataList ?? [];
-      digitalCatalogueList.addAll(_populateDigitalCatalogueList(dataList));
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(DigitalCatalogueLoadedState());
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (PaginationData<DigitalCatalogueDetails> success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        List<DigitalCatalogueDetails> dataList = success.dataList ?? [];
+        digitalCatalogueList.addAll(_populateDigitalCatalogueList(dataList));
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(DigitalCatalogueLoadedState());
+      },
+    );
   }
 
   /// Handle load more
@@ -216,16 +222,20 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   /// Handle delete digital catalogue
   Future<void> _handleDeleteDigitalCatalogue(DeleteDigitalCatalogueEvent event, Emitter<DigitalCatalogueState> emit) async {
     emit(DigitalCatalogueLoadingState());
-    Either<ErrorResponse, CommonResponse>? response =
-        await AppRepository(event.context).deleteDigitalCatalogue(catalogueId: event.catalogueId);
-    await response?.fold((error) async {
-      Utils.showMessage(error.message);
-    }, (success) {
-      if (success.message.isNotNullNorEmpty) {
-        Utils.showMessage(success.message);
-      }
-      digitalCatalogueList.removeWhere((element) => element.id == event.catalogueId);
-    });
+    Either<ErrorResponse, CommonResponse>? response = await AppRepository(
+      event.context,
+    ).deleteDigitalCatalogue(catalogueId: event.catalogueId);
+    await response?.fold(
+      (error) async {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        if (success.message.isNotNullNorEmpty) {
+          Utils.showMessage(success.message);
+        }
+        digitalCatalogueList.removeWhere((element) => element.id == event.catalogueId);
+      },
+    );
     emit(DigitalCatalogueLoadedState());
   }
 
@@ -249,23 +259,26 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchDigitalCatalogueFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? []) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? []) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Get secondary filter data

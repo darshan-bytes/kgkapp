@@ -15,13 +15,7 @@ class AuctionListingModel {
   int? page;
   int? limit;
 
-  AuctionListingModel copyWith({
-    int? filteredRecords,
-    int? totalRecords,
-    List<AuctionDatum>? data,
-    int? page,
-    int? limit,
-  }) {
+  AuctionListingModel copyWith({int? filteredRecords, int? totalRecords, List<AuctionDatum>? data, int? page, int? limit}) {
     return AuctionListingModel(
       filteredRecords: filteredRecords ?? this.filteredRecords,
       totalRecords: totalRecords ?? this.totalRecords,
@@ -42,12 +36,12 @@ class AuctionListingModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "filteredRecords": filteredRecords,
-        "totalRecords": totalRecords,
-        "data": data.map((x) => x.toJson()).toList(),
-        "page": page,
-        "limit": limit,
-      };
+    "filteredRecords": filteredRecords,
+    "totalRecords": totalRecords,
+    "data": data.map((x) => x.toJson()).toList(),
+    "page": page,
+    "limit": limit,
+  };
 
   @override
   String toString() {
@@ -122,17 +116,17 @@ class AuctionDatum {
   }
 
   Map<String, dynamic> toJson() => {
-        "auction_id": auctionId,
-        "product_description": productDescription,
-        "product_image": productImage,
-        "type": type,
-        "product_sku": productSku,
-        "product_id": productId,
-        "created_at": createdAt?.toIso8601String(),
-        "auction_status": auctionStatus,
-        "bid_amount": bidAmount,
-        "status": status,
-      };
+    "auction_id": auctionId,
+    "product_description": productDescription,
+    "product_image": productImage,
+    "type": type,
+    "product_sku": productSku,
+    "product_id": productId,
+    "created_at": createdAt?.toIso8601String(),
+    "auction_status": auctionStatus,
+    "bid_amount": bidAmount,
+    "status": status,
+  };
 
   static ProjectStatus getAuctionStatus({required String auctionStatus}) {
     switch (auctionStatus) {

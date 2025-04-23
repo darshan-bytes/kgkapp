@@ -20,25 +20,26 @@ class SkuProductModel {
   List<String>? images;
   bool? isCommented;
 
-  SkuProductModel(
-      {this.sId,
-      this.contractNumber,
-      this.multipleFinishedViewImage,
-      this.productDescription,
-      this.productPriceIntCurrency,
-      this.businessCategoryCode,
-      this.suid,
-      this.crt,
-      this.gms,
-      this.metalColor1HexCode,
-      this.businessCategoryName,
-      this.jewelleryTypeName,
-      this.kgkCollection,
-      this.finalPrice,
-      this.discountPrice,
-      this.originalPrice,
-      this.isCommented = false,
-      this.images});
+  SkuProductModel({
+    this.sId,
+    this.contractNumber,
+    this.multipleFinishedViewImage,
+    this.productDescription,
+    this.productPriceIntCurrency,
+    this.businessCategoryCode,
+    this.suid,
+    this.crt,
+    this.gms,
+    this.metalColor1HexCode,
+    this.businessCategoryName,
+    this.jewelleryTypeName,
+    this.kgkCollection,
+    this.finalPrice,
+    this.discountPrice,
+    this.originalPrice,
+    this.isCommented = false,
+    this.images,
+  });
 
   SkuProductModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

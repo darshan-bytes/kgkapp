@@ -33,14 +33,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: style.whiteColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.5),
-            spreadRadius: 7.r,
-            blurRadius: 7.r,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.5), spreadRadius: 7.r, blurRadius: 7.r, offset: const Offset(0, 3))],
       ),
       child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
         buildWhen: (previous, current) => current is ProductDetailsLoadedState || current is ProductDetailsAuctionPlaceBidState,
@@ -91,12 +84,13 @@ class ProductDetailsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SmartText(
-                                  bloc.productDetails?.finalPrice.isNotNullNorEmpty == true
-                                      ? "${bloc.productDetails?.finalPrice}\n"
-                                      : bloc.productDetails?.originalPrice,
-                                  style: style.priceStyle,
-                                  maxLines: 1,
-                                  isAutoSizeText: true),
+                                bloc.productDetails?.finalPrice.isNotNullNorEmpty == true
+                                    ? "${bloc.productDetails?.finalPrice}\n"
+                                    : bloc.productDetails?.originalPrice,
+                                style: style.priceStyle,
+                                maxLines: 1,
+                                isAutoSizeText: true,
+                              ),
                               if (bloc.productDetails?.finalPrice.isNotNullNorEmpty == true &&
                                   (bloc.productDetails?.finalPrice != bloc.productDetails?.originalPrice))
                                 Row(
@@ -104,20 +98,17 @@ class ProductDetailsScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Flexible(
-                                        child: SmartText(
-                                      bloc.productDetails?.originalPrice,
-                                      style: style.originalPriceStyle.copyWith(decoration: TextDecoration.lineThrough, fontSize: 12.sp),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    )),
-                                    SizedBox(width: 2.w),
-                                    SmartText(
-                                      bloc.productDetails?.discountPercentageString,
-                                      style: style.discountStyle,
-                                      maxLines: 1,
+                                      child: SmartText(
+                                        bloc.productDetails?.originalPrice,
+                                        style: style.originalPriceStyle.copyWith(decoration: TextDecoration.lineThrough, fontSize: 12.sp),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
+                                    SizedBox(width: 2.w),
+                                    SmartText(bloc.productDetails?.discountPercentageString, style: style.discountStyle, maxLines: 1),
                                   ],
-                                )
+                                ),
                             ],
                           ),
                         ),
@@ -152,7 +143,7 @@ class ProductDetailsScreen extends StatelessWidget {
         children: [
           SmartText(APPStrings.totalApproxPrice.tr, style: style.totalApproxStyle),
           const Spacer(),
-          SmartText("\$1,470.00", style: style.totalApproxStyle)
+          SmartText("\$1,470.00", style: style.totalApproxStyle),
         ],
       ),
       SizedBox(height: 14.h),
@@ -177,30 +168,34 @@ class ProductDetailsScreen extends StatelessWidget {
 
   List<Widget> _buildB2BCustomisationDetails(ProductDetailsBloc bloc, ProductDetailsStyle style) {
     return [
-      Row(children: [
-        SmartImage(
+      Row(
+        children: [
+          SmartImage(
             path: bloc.productDetails?.imageUrl ?? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
             height: 73.w,
             width: 73.w,
-            imageBorderRadius: BorderRadius.circular(7.66.r)),
-        SizedBox(width: 10.w),
-        Expanded(
+            imageBorderRadius: BorderRadius.circular(7.66.r),
+          ),
+          SizedBox(width: 10.w),
+          Expanded(
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SmartText("C097973", style: style.originalPriceStyle),
-            SizedBox(height: 4.h),
-            SmartText("14k White & Rose gold Engagement Ring", style: style.bottomNavBarSubTitleStyle, isAutoSizeText: true),
-          ],
-        )),
-      ]),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SmartText("C097973", style: style.originalPriceStyle),
+                SizedBox(height: 4.h),
+                SmartText("14k White & Rose gold Engagement Ring", style: style.bottomNavBarSubTitleStyle, isAutoSizeText: true),
+              ],
+            ),
+          ),
+        ],
+      ),
       SizedBox(height: 16.h),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SmartText(APPStrings.total.tr, style: style.totalApproxSubStyle),
           SizedBox(width: 16.w),
-          Flexible(child: SmartText("\$35,700.00", style: style.totalApproxSubStyle))
+          Flexible(child: SmartText("\$35,700.00", style: style.totalApproxSubStyle)),
         ],
       ),
       SizedBox(height: 8.h),
@@ -214,43 +209,42 @@ class ProductDetailsScreen extends StatelessWidget {
         final compareProductBloc = BlocProvider.of<CompareProductBloc>(context);
         return bloc.isCompare
             ? ElevatedButton(
-                onPressed: () {
-                  if (compareProductBloc.productIdList.length < 2) {
-                    Utils.showMessage(APPStrings.compareProductMinimum.tr);
-                    return;
-                  } else {
-                    context.pushNamed(AppRoutes.compareProductPage);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: style.ratingGlowColor,
-                  padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 24.w),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SmartText(APPStrings.compare.tr, style: AppTheme.of(context).primaryButtonStyle.titleStyle),
-                    SizedBox(width: 16.w),
-                    Container(
-                      height: 24.w,
-                      width: 24.w,
-                      alignment: AlignmentDirectional.center,
-                      decoration: BoxDecoration(
-                        color: style.compareCountBGColor,
-                        borderRadius: BorderRadius.circular(4.r),
-                      ),
-                      child: BlocBuilder<CompareProductBloc, CompareProductState>(
-                        buildWhen: (previous, current) => current is CompareProductAddedState,
-                        builder: (context, state) {
-                          return SmartText(compareProductBloc.productIdList.length.toString(),
-                              style: AppTheme.of(context).primaryButtonStyle.titleStyle);
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              )
+              onPressed: () {
+                if (compareProductBloc.productIdList.length < 2) {
+                  Utils.showMessage(APPStrings.compareProductMinimum.tr);
+                  return;
+                } else {
+                  context.pushNamed(AppRoutes.compareProductPage);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: style.ratingGlowColor,
+                padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 24.w),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SmartText(APPStrings.compare.tr, style: AppTheme.of(context).primaryButtonStyle.titleStyle),
+                  SizedBox(width: 16.w),
+                  Container(
+                    height: 24.w,
+                    width: 24.w,
+                    alignment: AlignmentDirectional.center,
+                    decoration: BoxDecoration(color: style.compareCountBGColor, borderRadius: BorderRadius.circular(4.r)),
+                    child: BlocBuilder<CompareProductBloc, CompareProductState>(
+                      buildWhen: (previous, current) => current is CompareProductAddedState,
+                      builder: (context, state) {
+                        return SmartText(
+                          compareProductBloc.productIdList.length.toString(),
+                          style: AppTheme.of(context).primaryButtonStyle.titleStyle,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            )
             : const SizedBox();
       },
     );
@@ -266,104 +260,108 @@ class ProductDetailsScreen extends StatelessWidget {
               return bloc.isErrorInLoadingData
                   ? getErrorWidget(bloc, context)
                   : Column(
-                      children: [
-                        Stack(
-                          children: [
-                            SmartCarouselSlider(
-                              imgList: bloc.imgList,
-                              controller: bloc.controller,
-                              on360Tap: bloc.the3DFile.isNotNullNorEmpty
-                                  ? () {
+                    children: [
+                      Stack(
+                        children: [
+                          SmartCarouselSlider(
+                            imgList: bloc.imgList,
+                            controller: bloc.controller,
+                            on360Tap:
+                                bloc.the3DFile.isNotNullNorEmpty
+                                    ? () {
                                       bloc.onTap360Image(context);
                                     }
-                                  : null,
-                              onVideoTap: bloc.videoUrl.isNotNullNorEmpty
-                                  ? () {
+                                    : null,
+                            onVideoTap:
+                                bloc.videoUrl.isNotNullNorEmpty
+                                    ? () {
                                       bloc.handleVideoTap(context);
                                     }
-                                  : null,
-                              onTapFullImage: (int index) {
-                                bloc.onTapFullImage(context: context, currentIndex: index);
-                              },
-                            ),
-                            if (!bloc.isCustomisation)
-                              Padding(
-                                padding: EdgeInsetsDirectional.all(12.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    if (bloc.canAddToWishlist) ...[
-                                      SizedBox(width: 8.w),
-                                      BlocBuilder<AppBloc, AppState>(
-                                        buildWhen: (previous, current) =>
-                                            current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
-                                        builder: (context, state) {
-                                          return SelectionButton(
-                                            height: 42.w,
-                                            width: 42.w,
-                                            padding: EdgeInsetsDirectional.all(6.w),
-                                            isSelected: false,
-                                            onTap: () {
-                                              if (bloc.productDetails != null) {
-                                                BlocProvider.of<AppBloc>(context).onTapFavorite(
-                                                  context,
-                                                  productDetails: bloc.productDetails!,
-                                                );
-                                              }
-                                            },
-                                            imageWidth: 20.w,
-                                            imageHeight: 20.w,
-                                            fit: BoxFit.contain,
-                                            image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
-                                          );
-                                        },
-                                      ),
-                                    ],
+                                    : null,
+                            onTapFullImage: (int index) {
+                              bloc.onTapFullImage(context: context, currentIndex: index);
+                            },
+                          ),
+                          if (!bloc.isCustomisation)
+                            Padding(
+                              padding: EdgeInsetsDirectional.all(12.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  if (bloc.canAddToWishlist) ...[
                                     SizedBox(width: 8.w),
-                                    SelectionButton(
-                                      height: 42.w,
-                                      width: 42.w,
-                                      padding: EdgeInsetsDirectional.all(6.w),
-                                      isSelected: false,
-                                      onTap: () async {
-                                        if (bloc.productDetails != null) {
-                                          String? link = await BlocProvider.of<AppBloc>(context).handleShareProduct(
-                                              context: context, productDetails: bloc.productDetails!, isShowLoading: true);
-                                          if (link != null) {
-                                            Utils.showSmartModalBottomSheet(
-                                              context: context,
-                                              enableDrag: false,
-                                              builder: (sheetContext) => ShareOptionSheet(
-                                                title: APPStrings.share.tr,
-                                                onTapQrCode: () async {
-                                                  sheetContext.pop();
-                                                  _showQrCodeDialog(context: context, data: link);
-                                                },
-                                                onTapCopy: () async {
-                                                  await Clipboard.setData(ClipboardData(text: link));
-                                                  Utils.showMessage(APPStrings.textCopied.tr);
-                                                },
-                                                onTapOther: () async {
-                                                  bloc.onTapShareLink(context: sheetContext, link: link);
-                                                },
-                                              ),
-                                            );
-                                          } else {
-                                            Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
-                                          }
-                                        }
+                                    BlocBuilder<AppBloc, AppState>(
+                                      buildWhen:
+                                          (previous, current) =>
+                                              current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
+                                      builder: (context, state) {
+                                        return SelectionButton(
+                                          height: 42.w,
+                                          width: 42.w,
+                                          padding: EdgeInsetsDirectional.all(6.w),
+                                          isSelected: false,
+                                          onTap: () {
+                                            if (bloc.productDetails != null) {
+                                              BlocProvider.of<AppBloc>(
+                                                context,
+                                              ).onTapFavorite(context, productDetails: bloc.productDetails!);
+                                            }
+                                          },
+                                          imageWidth: 20.w,
+                                          imageHeight: 20.w,
+                                          fit: BoxFit.contain,
+                                          image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
+                                        );
                                       },
-                                      image: AppImages.icShare,
                                     ),
                                   ],
-                                ),
+                                  SizedBox(width: 8.w),
+                                  SelectionButton(
+                                    height: 42.w,
+                                    width: 42.w,
+                                    padding: EdgeInsetsDirectional.all(6.w),
+                                    isSelected: false,
+                                    onTap: () async {
+                                      if (bloc.productDetails != null) {
+                                        String? link = await BlocProvider.of<AppBloc>(
+                                          context,
+                                        ).handleShareProduct(context: context, productDetails: bloc.productDetails!, isShowLoading: true);
+                                        if (link != null) {
+                                          Utils.showSmartModalBottomSheet(
+                                            context: context,
+                                            enableDrag: false,
+                                            builder:
+                                                (sheetContext) => ShareOptionSheet(
+                                                  title: APPStrings.share.tr,
+                                                  onTapQrCode: () async {
+                                                    sheetContext.pop();
+                                                    _showQrCodeDialog(context: context, data: link);
+                                                  },
+                                                  onTapCopy: () async {
+                                                    await Clipboard.setData(ClipboardData(text: link));
+                                                    Utils.showMessage(APPStrings.textCopied.tr);
+                                                  },
+                                                  onTapOther: () async {
+                                                    bloc.onTapShareLink(context: sheetContext, link: link);
+                                                  },
+                                                ),
+                                          );
+                                        } else {
+                                          Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+                                        }
+                                      }
+                                    },
+                                    image: AppImages.icShare,
+                                  ),
+                                ],
                               ),
-                          ],
-                        ),
-                        SizedBox(height: 20.h),
-                        _productDetail(style, bloc, context),
-                      ],
-                    );
+                            ),
+                        ],
+                      ),
+                      SizedBox(height: 20.h),
+                      _productDetail(style, bloc, context),
+                    ],
+                  );
             } else {
               return const SizedBox.shrink();
             }
@@ -382,14 +380,8 @@ class ProductDetailsScreen extends StatelessWidget {
           _productTypeAndCode(style, bloc),
           SizedBox(height: 8.h),
           SmartText(bloc.productName, style: style.productNameStyle),
-          if (bloc.productDetails?.reviewCount != null) ...[
-            SizedBox(height: 8.h),
-            _buildRatingBarAndReviews(style, bloc.productDetails),
-          ],
-          if (bloc.canCompare) ...[
-            SizedBox(height: 12.h),
-            _compareWidget(bloc, style),
-          ],
+          if (bloc.productDetails?.reviewCount != null) ...[SizedBox(height: 8.h), _buildRatingBarAndReviews(style, bloc.productDetails)],
+          if (bloc.canCompare) ...[SizedBox(height: 12.h), _compareWidget(bloc, style)],
           SizedBox(height: 16.h),
 
           /// AUCTION FLOW FOR DIAMOND
@@ -413,27 +405,23 @@ class ProductDetailsScreen extends StatelessWidget {
           if (!bloc.isCustomisation && bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             ProductCustomiseDescriptionWidget(
               onTap: () {
-                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                  RoutesData.isCustomisationPage: true,
-                  RoutesData.productId: bloc.productDetails?.productId,
-                  RoutesData.isPageFor: bloc.screenIdentifier
-                });
+                context.pushNamed(
+                  AppRoutes.productDetailsPage,
+                  arguments: {
+                    RoutesData.isCustomisationPage: true,
+                    RoutesData.productId: bloc.productDetails?.productId,
+                    RoutesData.isPageFor: bloc.screenIdentifier,
+                  },
+                );
               },
             ),
             Divider(height: 48.h),
           ],
           Row(
             children: [
-              SmartImage(
-                path: AppImages.icDiamond,
-                height: 24.w,
-                width: 24.w,
-              ),
+              SmartImage(path: AppImages.icDiamond, height: 24.w, width: 24.w),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.diamondPurityYouCanTrust.tr,
-                style: style.diamondPurityStyle,
-              )
+              SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle),
             ],
           ),
           SizedBox(height: 16.h),
@@ -441,19 +429,17 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               const SmartImage(path: AppImages.icTruck),
               SizedBox(width: 16.w),
-              SmartText(
-                APPStrings.shippingAcrossAllCountries.tr,
-                style: style.diamondPurityStyle,
-              )
+              SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.diamondPurityStyle),
             ],
           ),
           if (bloc.hasComponents) ...[
             SizedBox(height: 24.h),
             const Divider(),
             ProductDetailsComponentsView(
-                commodity: bloc.productDetails?.commodity ?? Commodity.jewellery,
-                components: bloc.productDetails?.components,
-                stoneElements: bloc.productDetails?.stoneElements),
+              commodity: bloc.productDetails?.commodity ?? Commodity.jewellery,
+              components: bloc.productDetails?.components,
+              stoneElements: bloc.productDetails?.stoneElements,
+            ),
           ],
           if (bloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
             SizedBox(height: 24.h),
@@ -466,18 +452,8 @@ class ProductDetailsScreen extends StatelessWidget {
                 padding: EdgeInsetsDirectional.symmetric(vertical: 24.h),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: SmartText(
-                        APPStrings.diamondDetails.tr,
-                        style: style.settingSelectionTitleStyle,
-                      ),
-                    ),
-                    SmartImage(
-                      path: AppImages.icRight,
-                      height: 20.w,
-                      width: 20.w,
-                      matchTextDirection: true,
-                    ),
+                    Expanded(child: SmartText(APPStrings.diamondDetails.tr, style: style.settingSelectionTitleStyle)),
+                    SmartImage(path: AppImages.icRight, height: 20.w, width: 20.w, matchTextDirection: true),
                   ],
                 ),
               ),
@@ -485,10 +461,7 @@ class ProductDetailsScreen extends StatelessWidget {
             const Divider(),
           ],
           SizedBox(height: 24.h),
-          const InquiryWidget(
-            email: 'enquiry.diaind@kgkmail.com',
-            phone: '+91 - 1234567830',
-          ),
+          const InquiryWidget(email: 'enquiry.diaind@kgkmail.com', phone: '+91 - 1234567830'),
           SizedBox(height: 24.h),
           const Divider(),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
@@ -527,9 +500,13 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             if (bloc.reviewList.length > 5) ...[
               SizedBox(height: 16.h),
-              SmartText(APPStrings.viewAllXReviews.tr.interpolate([bloc.reviewList.length]), style: style.viewAllReviewStyle, onTap: () {
-                context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: bloc.productDetails?.productId});
-              }),
+              SmartText(
+                APPStrings.viewAllXReviews.tr.interpolate([bloc.reviewList.length]),
+                style: style.viewAllReviewStyle,
+                onTap: () {
+                  context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: bloc.productDetails?.productId});
+                },
+              ),
             ],
           ],
           _buildSuggestedProductList(bloc, style, context),
@@ -543,42 +520,34 @@ class ProductDetailsScreen extends StatelessWidget {
     if (bloc.productDetails == null) return const SizedBox();
     return bloc.screenIdentifier == ScreenIdentifier.productForRing
         ? Row(
-            children: [
-              if (bloc.productDetails!.brandName.isNotNullNorEmpty)
-                SmartText(bloc.productDetails?.brandName, style: style.productTypeStyle),
-              if (bloc.productDetails!.brandName.isNotNullNorEmpty && bloc.productDetails!.productSku.isNotNullNorEmpty) ...[
-                SizedBox(width: 8.w),
-                Container(
-                  height: 4.w,
-                  width: 4.w,
-                  decoration: BoxDecoration(
-                      color: style.dotColor,
-                      border: Border.all(color: style.dotColor),
-                      borderRadius: BorderRadius.all(Radius.circular(50.r))),
+          children: [
+            if (bloc.productDetails!.brandName.isNotNullNorEmpty) SmartText(bloc.productDetails?.brandName, style: style.productTypeStyle),
+            if (bloc.productDetails!.brandName.isNotNullNorEmpty && bloc.productDetails!.productSku.isNotNullNorEmpty) ...[
+              SizedBox(width: 8.w),
+              Container(
+                height: 4.w,
+                width: 4.w,
+                decoration: BoxDecoration(
+                  color: style.dotColor,
+                  border: Border.all(color: style.dotColor),
+                  borderRadius: BorderRadius.all(Radius.circular(50.r)),
                 ),
-                SizedBox(width: 8.w),
-              ],
-              if (bloc.productDetails!.productSku.isNotNullNorEmpty)
-                SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle),
+              ),
+              SizedBox(width: 8.w),
             ],
-          )
+            if (bloc.productDetails!.productSku.isNotNullNorEmpty)
+              SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle),
+          ],
+        )
         : SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle);
   }
 
   Widget _buildRatingBarAndReviews(ProductDetailsStyle style, ProductDetailsModel? productDetails) {
     return Row(
       children: [
-        SmartRatingBar(
-          initialRating: productDetails?.rating ?? 0,
-          itemSize: 16.w,
-          onRatingUpdate: (value) {},
-          ignoreGestures: true,
-        ),
+        SmartRatingBar(initialRating: productDetails?.rating ?? 0, itemSize: 16.w, onRatingUpdate: (value) {}, ignoreGestures: true),
         SizedBox(width: 8.w),
-        SmartText(
-          APPStrings.reviewsX.tr.interpolate([productDetails?.reviewCount]),
-          style: style.productCodeStyle,
-        )
+        SmartText(APPStrings.reviewsX.tr.interpolate([productDetails?.reviewCount]), style: style.productCodeStyle),
       ],
     );
   }
@@ -605,18 +574,21 @@ class ProductDetailsScreen extends StatelessWidget {
               padding: EdgeInsetsDirectional.all(6.w),
               isSelected: false,
               onTap: () {
-                context.pushNamed(AppRoutes.makeInquiryPage, arguments: {
-                  RoutesData.inquiryContextId: bloc.productDetails?.suid,
-                  RoutesData.contextId: bloc.productDetails?.contractNoSkuNo,
-                  RoutesData.commodity: bloc.productDetails?.commodity?.value,
-                });
+                context.pushNamed(
+                  AppRoutes.makeInquiryPage,
+                  arguments: {
+                    RoutesData.inquiryContextId: bloc.productDetails?.suid,
+                    RoutesData.contextId: bloc.productDetails?.contractNoSkuNo,
+                    RoutesData.commodity: bloc.productDetails?.commodity?.value,
+                  },
+                );
               },
               imageWidth: 20.w,
               imageHeight: 20.w,
               fit: BoxFit.contain,
               image: AppImages.icInquiries,
               matchTextDirection: true,
-            )
+            ),
           ],
         );
       },
@@ -627,33 +599,31 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget _buildPriceDetails(ProductDetailsStyle style, ProductDetailsBloc bloc) {
     return bloc.screenIdentifier == ScreenIdentifier.productForRing
         ? Row(
-            children: [
-              SmartText('\$1200.00', style: style.priceStyle),
-              SizedBox(width: 8.w),
-              SmartText('\$1600.00', style: style.originalPriceStyle),
-              SizedBox(width: 8.w),
-              SmartText(APPStrings.percentageOffInterpolating.interpolate(["3"]), style: style.discountStyle),
-            ],
-          )
+          children: [
+            SmartText('\$1200.00', style: style.priceStyle),
+            SizedBox(width: 8.w),
+            SmartText('\$1600.00', style: style.originalPriceStyle),
+            SizedBox(width: 8.w),
+            SmartText(APPStrings.percentageOffInterpolating.interpolate(["3"]), style: style.discountStyle),
+          ],
+        )
         : Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SmartText('\$3,020', style: style.priceStyle),
-              SizedBox(
-                height: 8.h,
-              ),
-              Row(
-                children: [
-                  SmartText(APPStrings.wantToSeeProductPhysically.tr, style: style.productCodeStyle),
-                  Padding(
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
-                    child: SmartText(APPStrings.orderSample.tr, style: style.orderSampleStyle),
-                  ),
-                ],
-              ),
-            ],
-          );
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SmartText('\$3,020', style: style.priceStyle),
+            SizedBox(height: 8.h),
+            Row(
+              children: [
+                SmartText(APPStrings.wantToSeeProductPhysically.tr, style: style.productCodeStyle),
+                Padding(
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
+                  child: SmartText(APPStrings.orderSample.tr, style: style.orderSampleStyle),
+                ),
+              ],
+            ),
+          ],
+        );
   }
 
   Widget _buildCustomizationList(ProductDetailsBloc bloc) {
@@ -670,10 +640,7 @@ class ProductDetailsScreen extends StatelessWidget {
     final style = AppTheme.of(context).settingDetailScreenStyle;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SmartText(type, style: style.settingTypeStyle),
-        SmartText(value, style: style.settingValueStyle),
-      ],
+      children: [SmartText(type, style: style.settingTypeStyle), SmartText(value, style: style.settingValueStyle)],
     );
   }
 
@@ -689,16 +656,20 @@ class ProductDetailsScreen extends StatelessWidget {
             SmartSuggestionProductList(
               onAddToBagTap: () {},
               title: APPStrings.youMayAlsoLike.tr,
-              onViewAllTap: bloc.suggestedProductList.length > 5
-                  ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
-                      productNavigation: AppConst.youMayLike, productId: bloc.productId)
-                  : null,
+              onViewAllTap:
+                  bloc.suggestedProductList.length > 5
+                      ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(
+                        context,
+                        productNavigation: AppConst.youMayLike,
+                        productId: bloc.productId,
+                      )
+                      : null,
               suggestedProductList: bloc.suggestedProductList,
               onProductTap: (product) {
-                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                  RoutesData.productId: product.suid,
-                  RoutesData.isPageFor: bloc.screenIdentifier,
-                });
+                context.pushNamed(
+                  AppRoutes.productDetailsPage,
+                  arguments: {RoutesData.productId: product.suid, RoutesData.isPageFor: bloc.screenIdentifier},
+                );
               },
               onEyeTap: () {},
               onFavTap: () {},
@@ -726,18 +697,21 @@ class ProductDetailsScreen extends StatelessWidget {
               SmartSuggestionProductList(
                 onAddToBagTap: () {},
                 title: APPStrings.recentlyViewed.tr,
-                onViewAllTap: bloc.recentlyViewedProductList.length > 5
-                    ? () {
-                        bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
-                            productNavigation: AppConst.recentlyViewed);
-                      }
-                    : null,
+                onViewAllTap:
+                    bloc.recentlyViewedProductList.length > 5
+                        ? () {
+                          bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(
+                            context,
+                            productNavigation: AppConst.recentlyViewed,
+                          );
+                        }
+                        : null,
                 suggestedProductList: bloc.recentlyViewedProductList,
                 onProductTap: (product) {
-                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                    RoutesData.productId: product.suid,
-                    RoutesData.isPageFor: bloc.screenIdentifier,
-                  });
+                  context.pushNamed(
+                    AppRoutes.productDetailsPage,
+                    arguments: {RoutesData.productId: product.suid, RoutesData.isPageFor: bloc.screenIdentifier},
+                  );
                 },
                 onEyeTap: () {},
                 onFavTap: () {},
@@ -793,21 +767,17 @@ class ProductDetailsScreen extends StatelessWidget {
                   padding: EdgeInsetsDirectional.all(24.w),
                   decoration: BoxDecoration(
                     color: style.whiteColor,
-                    boxShadow: [
-                      BoxShadow(color: style.shadowColor, blurRadius: 15.0, spreadRadius: 5.0),
-                    ],
+                    boxShadow: [BoxShadow(color: style.shadowColor, blurRadius: 15.0, spreadRadius: 5.0)],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
-                          height: 56.w,
-                          width: 56.w,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: style.borderColor),
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          child: Icon(Icons.qr_code_2_outlined, size: 42.w, color: style.primaryColor)),
+                        height: 56.w,
+                        width: 56.w,
+                        decoration: BoxDecoration(border: Border.all(color: style.borderColor), borderRadius: BorderRadius.circular(12.r)),
+                        child: Icon(Icons.qr_code_2_outlined, size: 42.w, color: style.primaryColor),
+                      ),
                       SizedBox(height: 16.h),
                       SmartText(APPStrings.scanThisQRCode.tr, style: style.titleStyle),
                       SizedBox(height: 8.h),
@@ -827,7 +797,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     color: style.primaryColor,
                     onTap: () => context.pop(),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -838,8 +808,8 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget auctionRecentBidSection({required ProductDetailsBloc bloc}) {
     return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) =>
-          current is ProductDetailsAuctionTimerUpdateState || current is ProductDetailsAuctionTimerCompletedState,
+      buildWhen:
+          (previous, current) => current is ProductDetailsAuctionTimerUpdateState || current is ProductDetailsAuctionTimerCompletedState,
       builder: (context, state) {
         final style = AppTheme.of(context).auctionScreenStyle;
         bloc.getTimerText(state);
@@ -858,10 +828,12 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildStartingBid(ProductDetailsBloc bloc, AuctionScreenStyle style) {
-    return SmartRichText(spans: [
-      SmartTextSpan(text: APPStrings.startingBidPrice.tr, style: style.auctionTimerStyle),
-      SmartTextSpan(text: " ${bloc.startingBidPrice}", style: style.recentBidValueStyle),
-    ]);
+    return SmartRichText(
+      spans: [
+        SmartTextSpan(text: APPStrings.startingBidPrice.tr, style: style.auctionTimerStyle),
+        SmartTextSpan(text: " ${bloc.startingBidPrice}", style: style.recentBidValueStyle),
+      ],
+    );
   }
 
   Widget _buildRecentBidsContainer(ProductDetailsBloc bloc, AuctionScreenStyle style, BuildContext context) {
@@ -876,11 +848,13 @@ class ProductDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(children: [
-            SmartText(bloc.timerTitle, style: style.auctionTimerStyle),
-            SizedBox(width: 8.w),
-            Flexible(child: SmartText(bloc.timerValue, style: style.recentBidStyle)),
-          ]),
+          Row(
+            children: [
+              SmartText(bloc.timerTitle, style: style.auctionTimerStyle),
+              SizedBox(width: 8.w),
+              Flexible(child: SmartText(bloc.timerValue, style: style.recentBidStyle)),
+            ],
+          ),
           SizedBox(height: 10.h),
           const Divider(),
           SizedBox(height: 10.h),
@@ -890,7 +864,7 @@ class ProductDetailsScreen extends StatelessWidget {
             _buildRecentBidsList(bloc, style),
           ] else ...[
             Center(child: SmartText(APPStrings.noBidsFound.tr, textAlign: TextAlign.center)),
-          ]
+          ],
         ],
       ),
     );
@@ -912,10 +886,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget _buildViewAllBidsButton(BuildContext context, AuctionScreenStyle style, List<Map<String, dynamic>> recentBidList) {
     return InkWell(
       onTap: () async {
-        await Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => AllBidsBottomSheet(recentBidList: recentBidList),
-        );
+        await Utils.showSmartModalBottomSheet(context: context, builder: (context) => AllBidsBottomSheet(recentBidList: recentBidList));
       },
       child: Row(
         children: [
@@ -956,23 +927,20 @@ class ProductDetailsScreen extends StatelessWidget {
         children: [
           const SmartImage(path: AppImages.icSuccessPlaceBid),
           SizedBox(width: 8.w),
-          SmartRichText(spans: [
-            SmartTextSpan(text: APPStrings.yourBidOf.tr, style: style.auctionTimerStyle),
-            SmartTextSpan(text: " ${bloc.auctionDataModel?.myBidValue} ", style: style.recentBidValueStyle),
-            SmartTextSpan(text: APPStrings.hasBeenPlaced.tr, style: style.auctionTimerStyle),
-          ]),
+          SmartRichText(
+            spans: [
+              SmartTextSpan(text: APPStrings.yourBidOf.tr, style: style.auctionTimerStyle),
+              SmartTextSpan(text: " ${bloc.auctionDataModel?.myBidValue} ", style: style.recentBidValueStyle),
+              SmartTextSpan(text: APPStrings.hasBeenPlaced.tr, style: style.auctionTimerStyle),
+            ],
+          ),
         ],
       );
     }
     return SmartText(APPStrings.enterBidAmountHigherThanX.tr.interpolate([bloc.startingBidPrice]), style: style.auctionTimerStyle);
   }
 
-  Widget _buildBidItem({
-    required String labelText,
-    required String value,
-    required AuctionScreenStyle style,
-    bool isMyBid = false,
-  }) {
+  Widget _buildBidItem({required String labelText, required String value, required AuctionScreenStyle style, bool isMyBid = false}) {
     return Row(
       children: [
         const SmartImage(path: AppImages.icCalendar),

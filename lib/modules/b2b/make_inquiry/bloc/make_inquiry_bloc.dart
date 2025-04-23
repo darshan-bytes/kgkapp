@@ -104,14 +104,17 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
 
   Future<void> fetchInquiryType(context) async {
     await AppRepository(context).fetchInquiryType().then((value) {
-      value?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (r) {
-        List<String> list = r;
-        for (int i = 0; i < list.length; i++) {
-          inquiryTypeList.add(InquiryTypeModel(id: i, name: list[i]));
-        }
-      });
+      value?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          List<String> list = r;
+          for (int i = 0; i < list.length; i++) {
+            inquiryTypeList.add(InquiryTypeModel(id: i, name: list[i]));
+          }
+        },
+      );
     });
   }
 
@@ -161,18 +164,16 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
 
     final repository = AppRepository(context);
 
-    final response = isUpdateInquiry && inquiryId.isNotNullNorEmpty
-        ? await repository.editMakeInquiry(body: params, inquiryId: inquiryId!)
-        : await repository.submitMakeInquiry(body: params);
+    final response =
+        isUpdateInquiry && inquiryId.isNotNullNorEmpty
+            ? await repository.editMakeInquiry(body: params, inquiryId: inquiryId!)
+            : await repository.submitMakeInquiry(body: params);
 
-    response?.fold(
-      (l) => Utils.showMessage(l.message),
-      (r) {
-        clearData();
-        context.pop(arguments: {RoutesData.isInquiryUpdated: true});
-        Utils.showMessage(r.message);
-      },
-    );
+    response?.fold((l) => Utils.showMessage(l.message), (r) {
+      clearData();
+      context.pop(arguments: {RoutesData.isInquiryUpdated: true});
+      Utils.showMessage(r.message);
+    });
   }
 
   clearData() {

@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'forgot_email_sent_event.dart';
+
 part 'forgot_email_sent_state.dart';
 
 class ForgotEmailSentBloc extends Bloc<ForgotEmailSentEvent, ForgotEmailSentState> {

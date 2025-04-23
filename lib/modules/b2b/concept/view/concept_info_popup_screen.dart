@@ -5,12 +5,7 @@ class ConceptInfoPopupScreen extends StatelessWidget {
   final String conceptNo;
   final String conceptDesc;
 
-  ConceptInfoPopupScreen({
-    super.key,
-    required this.imageList,
-    required this.conceptNo,
-    required this.conceptDesc,
-  });
+  ConceptInfoPopupScreen({super.key, required this.imageList, required this.conceptNo, required this.conceptDesc});
 
   final ScrollController _scrollController = ScrollController();
 
@@ -29,34 +24,29 @@ class ConceptInfoPopupScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SmartText(
-                    APPStrings.conceptNoX.tr.interpolate([conceptNo]),
-                    style: style.titleStyle,
-                  ),
+                  SmartText(APPStrings.conceptNoX.tr.interpolate([conceptNo]), style: style.titleStyle),
                   SizedBox(height: 8.h),
-                  SmartText(
-                    conceptDesc,
-                    style: style.detailsTextStyle,
-                  ),
+                  SmartText(conceptDesc, style: style.detailsTextStyle),
                   SizedBox(height: 16.h),
                   if (imageList.isNotEmpty)
                     Scrollbar(
                       controller: _scrollController,
                       thumbVisibility: true,
                       child: SmartHorizontalItemBuilder(
-                          scrollController: _scrollController,
-                          itemCount: imageList.length,
-                          listPadding: EdgeInsetsDirectional.only(bottom: 16.h),
-                          itemBetweenSpace: 16.w,
-                          itemBuilder: (context, index) {
-                            return SmartImage(
-                              path: imageList[index],
-                              height: 64.h,
-                              width: 102.w,
-                              fit: BoxFit.fill,
-                              imageBorderRadius: BorderRadius.circular(4.r),
-                            );
-                          }),
+                        scrollController: _scrollController,
+                        itemCount: imageList.length,
+                        listPadding: EdgeInsetsDirectional.only(bottom: 16.h),
+                        itemBetweenSpace: 16.w,
+                        itemBuilder: (context, index) {
+                          return SmartImage(
+                            path: imageList[index],
+                            height: 64.h,
+                            width: 102.w,
+                            fit: BoxFit.fill,
+                            imageBorderRadius: BorderRadius.circular(4.r),
+                          );
+                        },
+                      ),
                     ),
                 ],
               ),
@@ -73,7 +63,7 @@ class ConceptInfoPopupScreen extends StatelessWidget {
                   context.pop();
                 },
               ),
-            )
+            ),
           ],
         ),
       ],

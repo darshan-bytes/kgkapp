@@ -44,10 +44,7 @@ class ExhibitionTabView extends StatelessWidget {
                     title: SmartTextField(
                       controller: exhibitionListingBloc.searchController,
                       hintText: APPStrings.searchX.tr.interpolate([APPStrings.exhibition.tr.toLowerCase()]),
-                      prefixIcon: SmartImage(
-                        path: AppImages.icSearchThin,
-                        padding: EdgeInsetsDirectional.all(17.w),
-                      ),
+                      prefixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(17.w)),
                       onTapOutside: (value) => FocusScope.of(context).unfocus(),
                       onValueChanges: (value) {
                         exhibitionListingBloc.add(ExhibitionListingSearchEvent(context: context));
@@ -58,13 +55,13 @@ class ExhibitionTabView extends StatelessWidget {
                     ),
                   ),
                   SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      childCount: exhibitionListingBloc.exhibitionCatalogueList.length,
-                      (context, index) {
-                        final ExhibitionListingModel item = exhibitionListingBloc.exhibitionCatalogueList[index];
-                        return _buildExhibitionCatalogueListItem(context: context, item: item, style: listingItemStyle);
-                      },
-                    ),
+                    delegate: SliverChildBuilderDelegate(childCount: exhibitionListingBloc.exhibitionCatalogueList.length, (
+                      context,
+                      index,
+                    ) {
+                      final ExhibitionListingModel item = exhibitionListingBloc.exhibitionCatalogueList[index];
+                      return _buildExhibitionCatalogueListItem(context: context, item: item, style: listingItemStyle);
+                    }),
                   ),
                   SliverToBoxAdapter(child: SizedBox(height: 48.h)),
                 ],
@@ -97,29 +94,25 @@ class ExhibitionTabView extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
 
-  Widget _buildExhibitionCatalogueListItem(
-      {required BuildContext context, required ExhibitionListingModel item, required ExhibitionListingItemStyle style}) {
+  Widget _buildExhibitionCatalogueListItem({
+    required BuildContext context,
+    required ExhibitionListingModel item,
+    required ExhibitionListingItemStyle style,
+  }) {
     return Container(
       margin: EdgeInsetsDirectional.only(bottom: 16.0.h),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: style.borderColor,
-          width: 1.w,
-        ),
-      ),
+      decoration: BoxDecoration(border: Border.all(color: style.borderColor, width: 1.w)),
       child: GestureDetector(
         onTap: () {
           /// If user is internal user then navigate to exhibition details page otherwise not navigate
           UserType userType = BlocProvider.of<AppBloc>(context).userType;
           if (userType == UserType.internal) {
-            context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {
-              RoutesData.exhibitionId: item.id,
-            });
+            context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {RoutesData.exhibitionId: item.id});
           }
         },
         child: Column(
@@ -127,17 +120,8 @@ class ExhibitionTabView extends StatelessWidget {
           children: [
             Stack(
               children: [
-                SmartImage(
-                  path: item.image ?? "",
-                  width: context.width,
-                  fit: BoxFit.scaleDown,
-                ),
-                if (item.status != null)
-                  PositionedDirectional(
-                    top: 16.h,
-                    start: 16.w,
-                    child: _buildStatusBadge(style, item.status!),
-                  ),
+                SmartImage(path: item.image ?? "", width: context.width, fit: BoxFit.scaleDown),
+                if (item.status != null) PositionedDirectional(top: 16.h, start: 16.w, child: _buildStatusBadge(style, item.status!)),
               ],
             ),
             Padding(
@@ -153,18 +137,23 @@ class ExhibitionTabView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
-                        child: Row(children: [
-                          SmartImage(path: AppImages.icCalendar, height: 16.h, width: 16.w),
-                          SizedBox(width: 2.w),
-                          SmartText(item.date, style: style.listSubTitleStyle),
-                        ]),
+                        child: Row(
+                          children: [
+                            SmartImage(path: AppImages.icCalendar, height: 16.h, width: 16.w),
+                            SizedBox(width: 2.w),
+                            SmartText(item.date, style: style.listSubTitleStyle),
+                          ],
+                        ),
                       ),
                       Flexible(
-                        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                          SmartImage(path: AppImages.icClock, height: 16.h, width: 16.w),
-                          SizedBox(width: 2.w),
-                          SmartText(item.time, style: style.listSubTitleStyle),
-                        ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SmartImage(path: AppImages.icClock, height: 16.h, width: 16.w),
+                            SizedBox(width: 2.w),
+                            SmartText(item.time, style: style.listSubTitleStyle),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -178,7 +167,7 @@ class ExhibitionTabView extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -197,10 +186,7 @@ class ExhibitionTabView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SmartText(
-                item.title,
-                style: style.listTextStyle,
-              ),
+              SmartText(item.title, style: style.listTextStyle),
               ListView.separated(
                 separatorBuilder: (context, subIndex) => const Divider(),
                 itemCount: bloc.exhibitionNameListing[index].exhibitionSubList?.length ?? 0,
@@ -214,16 +200,9 @@ class ExhibitionTabView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SmartText(
-                          item.name ?? '',
-                          maxLines: 2,
-                          style: style.listTitleStyle,
-                        ),
+                        SmartText(item.name ?? '', maxLines: 2, style: style.listTitleStyle),
                         SizedBox(height: 8.h),
-                        SmartText(
-                          item.author,
-                          style: style.listAuthorStyle,
-                        ),
+                        SmartText(item.author, style: style.listAuthorStyle),
                         SizedBox(height: 12.h),
                         if (item.status != null) _buildStatusBadge(style, item.status!),
                       ],
@@ -241,15 +220,8 @@ class ExhibitionTabView extends StatelessWidget {
   Widget _buildStatusBadge(ExhibitionListingItemStyle style, String status) {
     return Container(
       padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        border: Border.all(color: style.borderColor, width: 1.w),
-      ),
-      child: SmartText(
-        status,
-        style: style.listStatusStyle,
-        textAlign: TextAlign.center,
-      ),
+      decoration: BoxDecoration(color: style.backgroundColor, border: Border.all(color: style.borderColor, width: 1.w)),
+      child: SmartText(status, style: style.listStatusStyle, textAlign: TextAlign.center),
     );
   }
 }

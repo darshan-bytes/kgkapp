@@ -39,20 +39,23 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
     // Fetch currencies from the user repository
     await UserRepository(context).getCurrencies().then((value) async {
-      await value?.fold((l) {
-        // Show error message if API call fails
-      }, (r) async {
-        // Store currency list in local storage if API call succeeds
-        await StorageManager().setCurrencyList(r);
-        CurrencyListModel? currency = StorageManager().getSelectedCurrency();
-        if (currency == null) {
-          CurrencyListModel? defaultCurrency = r.firstWhereOrNull((element) => element.isDefault == true) ?? r.firstOrNull;
-          if (defaultCurrency != null) {
-            await StorageManager().setSelectedCurrency(defaultCurrency);
-            await StorageManager().setSelectedCurrencySymbol(defaultCurrency.symbol ?? '');
+      await value?.fold(
+        (l) {
+          // Show error message if API call fails
+        },
+        (r) async {
+          // Store currency list in local storage if API call succeeds
+          await StorageManager().setCurrencyList(r);
+          CurrencyListModel? currency = StorageManager().getSelectedCurrency();
+          if (currency == null) {
+            CurrencyListModel? defaultCurrency = r.firstWhereOrNull((element) => element.isDefault == true) ?? r.firstOrNull;
+            if (defaultCurrency != null) {
+              await StorageManager().setSelectedCurrency(defaultCurrency);
+              await StorageManager().setSelectedCurrencySymbol(defaultCurrency.symbol ?? '');
+            }
           }
-        }
-      });
+        },
+      );
     });
   }
 
@@ -60,26 +63,32 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     // Fetch language labels from the user repository
     final value = await UserRepository(context).getLanguageLabels(language: StorageManager().getLocale()?.code ?? APPStrings.languageEn);
 
-    await value?.fold((l) {
-      // Show error message if API call fails
-    }, (r) async {
-      // Store language labels in local storage if API call succeeds
-      await StorageManager().setLanguageLabels(r.responseData);
-      BlocProvider.of<AppBloc>(context).add(LanguageChangedEvent(null, context: context));
-    });
+    await value?.fold(
+      (l) {
+        // Show error message if API call fails
+      },
+      (r) async {
+        // Store language labels in local storage if API call succeeds
+        await StorageManager().setLanguageLabels(r.responseData);
+        BlocProvider.of<AppBloc>(context).add(LanguageChangedEvent(null, context: context));
+      },
+    );
   }
 
   //_frontendLinkApiCall
   Future<void> _frontendLinkApiCall(BuildContext context) async {
     await UserRepository(context).getFrontendLinks().then((value) async {
-      await value?.fold((l) {
-        // Show error message if API call fails
-      }, (r) async {
-        // Store language labels in local storage if API call succeeds
-        if (r.containsKey(AppConst.link) && AppConst.frontendLink != r[AppConst.link]) {
-          AppConst.frontendLink = r[AppConst.link];
-        }
-      });
+      await value?.fold(
+        (l) {
+          // Show error message if API call fails
+        },
+        (r) async {
+          // Store language labels in local storage if API call succeeds
+          if (r.containsKey(AppConst.link) && AppConst.frontendLink != r[AppConst.link]) {
+            AppConst.frontendLink = r[AppConst.link];
+          }
+        },
+      );
     });
   }
 

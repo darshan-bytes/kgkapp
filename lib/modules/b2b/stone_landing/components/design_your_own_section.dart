@@ -78,9 +78,7 @@ class DesignYourOwnStoneSection extends StatelessWidget {
             bannerSubTitleText: firstBannerDescription,
             bannerTitleStyle: style.designOwnEarringTextStyle,
             bannerSubTitleStyle: style.sparkleSubTitleStyle,
-            buttonList: [
-              SmartButton(onTap: firstBannerButtonCallback, title: firstBannerButtonTitle),
-            ],
+            buttonList: [SmartButton(onTap: firstBannerButtonCallback, title: firstBannerButtonTitle)],
           ),
           SizedBox(height: 24.h),
           StonesBannerView(
@@ -92,9 +90,7 @@ class DesignYourOwnStoneSection extends StatelessWidget {
             bannerSubTitleText: secondBannerDescription,
             bannerTitleStyle: style.designOwnEarringTextStyle,
             bannerSubTitleStyle: style.sparkleSubTitleStyle,
-            buttonList: [
-              SmartButton(onTap: secondBannerButtonCallback, title: secondBannerButtonTitle),
-            ],
+            buttonList: [SmartButton(onTap: secondBannerButtonCallback, title: secondBannerButtonTitle)],
           ),
         ],
       ),

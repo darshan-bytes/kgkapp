@@ -1,11 +1,5 @@
 class OrionShapeModel {
-  OrionShapeModel({
-    required this.count,
-    required this.shape,
-    required this.shapeCode,
-    required this.imgPath,
-    required this.symbolPath,
-  });
+  OrionShapeModel({required this.count, required this.shape, required this.shapeCode, required this.imgPath, required this.symbolPath});
 
   final int? count;
   final String? shape;
@@ -13,13 +7,7 @@ class OrionShapeModel {
   final String? imgPath;
   final String? symbolPath;
 
-  OrionShapeModel copyWith({
-    int? count,
-    String? shape,
-    String? shapeCode,
-    String? imgPath,
-    String? symbolPath,
-  }) {
+  OrionShapeModel copyWith({int? count, String? shape, String? shapeCode, String? imgPath, String? symbolPath}) {
     return OrionShapeModel(
       count: count ?? this.count,
       shape: shape ?? this.shape,
@@ -40,10 +28,10 @@ class OrionShapeModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "count": count,
-        "shape": shape,
-        "shape_code": shapeCode,
-        "img_path": imgPath,
-        "symbol_path": symbolPath,
-      };
+    "count": count,
+    "shape": shape,
+    "shape_code": shapeCode,
+    "img_path": imgPath,
+    "symbol_path": symbolPath,
+  };
 }

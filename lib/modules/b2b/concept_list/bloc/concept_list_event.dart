@@ -24,10 +24,10 @@ final class ConceptListLoadMoreEvent extends ConceptListEvent {
   final BuildContext context;
   final int currentPage;
 
-  const ConceptListLoadMoreEvent(this.context,this.currentPage);
+  const ConceptListLoadMoreEvent(this.context, this.currentPage);
 
   @override
-  List<Object> get props => [context,currentPage];
+  List<Object> get props => [context, currentPage];
 }
 
 final class ConceptListPullToRefreshEvent extends ConceptListEvent {

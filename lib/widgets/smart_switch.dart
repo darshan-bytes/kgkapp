@@ -1,14 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class SmartSwitch extends StatelessWidget {
-  const SmartSwitch({
-    super.key,
-    this.width,
-    this.height,
-    required this.onSwitchChange,
-    required this.value,
-    this.thumbColor,
-  });
+  const SmartSwitch({super.key, this.width, this.height, required this.onSwitchChange, required this.value, this.thumbColor});
 
   final double? height;
   final double? width;

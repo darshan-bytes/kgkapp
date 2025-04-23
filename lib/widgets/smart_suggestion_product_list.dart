@@ -67,23 +67,25 @@ class SmartSuggestionProductList extends StatelessWidget {
               direction: Axis.horizontal,
               spacing: 12.w,
               runSpacing: 12.2,
-              children: suggestedProductList.map((product) {
-                return ProductGridItem(
-                  onTap: onProductTap != null
-                      ? () {
-                          onProductTap?.call(product);
-                        }
-                      : null,
-                  margin: margin ?? EdgeInsetsDirectional.only(bottom: 17.h),
-                  onEyeTap: onEyeTap,
-                  onFavTap: onFavTap,
-                  productDetails: product,
-                  isFavourite: product.isFavourite,
-                  isCrtAndGramVisible: isCrtAndGramVisible,
-                  onAddToBagTap: onAddToBagTap,
-                  isHomeView: isHomeView,
-                );
-              }).toList(),
+              children:
+                  suggestedProductList.map((product) {
+                    return ProductGridItem(
+                      onTap:
+                          onProductTap != null
+                              ? () {
+                                onProductTap?.call(product);
+                              }
+                              : null,
+                      margin: margin ?? EdgeInsetsDirectional.only(bottom: 17.h),
+                      onEyeTap: onEyeTap,
+                      onFavTap: onFavTap,
+                      productDetails: product,
+                      isFavourite: product.isFavourite,
+                      isCrtAndGramVisible: isCrtAndGramVisible,
+                      onAddToBagTap: onAddToBagTap,
+                      isHomeView: isHomeView,
+                    );
+                  }).toList(),
             ),
           ),
         ),

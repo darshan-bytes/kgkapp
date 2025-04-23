@@ -66,9 +66,7 @@ final class StoneDiamondListLoadedState extends StoneListingState {
 final class StoneListLoadingState extends StoneListingState {
   final bool isFirst;
 
-  const StoneListLoadingState({
-    this.isFirst = false,
-  });
+  const StoneListLoadingState({this.isFirst = false});
 
   @override
   List<Object> get props => [];

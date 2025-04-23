@@ -154,13 +154,16 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     } else {
       response = await AppRepository(event.context).addProductReview(body, images: imageFileList.map((e) => e.path).toList());
     }
-    await response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (data) async {
-      event.context.pop(arguments: {RoutesData.isEdited: true});
-      await Future.delayed(const Duration(milliseconds: 500));
-      Utils.showMessage(data.message);
-    });
+    await response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (data) async {
+        event.context.pop(arguments: {RoutesData.isEdited: true});
+        await Future.delayed(const Duration(milliseconds: 500));
+        Utils.showMessage(data.message);
+      },
+    );
   }
 
   /// Download images from the server using http.get method

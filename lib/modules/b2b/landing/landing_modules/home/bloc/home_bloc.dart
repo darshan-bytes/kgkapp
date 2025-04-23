@@ -51,9 +51,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   int kgkCoutureSelectedIndex = 0;
 
-  List<String> kgkCoutureButtonsTitle = [
-    APPStrings.all,
-  ];
+  List<String> kgkCoutureButtonsTitle = [APPStrings.all];
   List<ProductDetailsModel> luminousProductViewList = [];
 
   //Create Your Own Signature piece
@@ -111,9 +109,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   static const int categoryPerPageLength = 6;
 
-  int get categoryPageLength => categoryList.length <= categoryPerPageLength
-      ? 1
-      : categoryList.length % categoryPerPageLength == 0
+  int get categoryPageLength =>
+      categoryList.length <= categoryPerPageLength
+          ? 1
+          : categoryList.length % categoryPerPageLength == 0
           ? (categoryList.length ~/ categoryPerPageLength)
           : (categoryList.length ~/ categoryPerPageLength) + 1;
 
@@ -146,18 +145,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (id.isNullOrEmpty) return;
       Either<ErrorResponse, BagListDataModel>? response;
       response = await AppRepository(context).getBagListData(id: id, isShowLoader: false);
-      response?.fold((l) {
-        //Utils.showMessage(l.message);
-      }, (r) async {
-        if (!context.mounted) context = getNavigatorKeyContext;
-        String? bagId = StorageManager().getBagId();
-        BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
-        if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
-          MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
+      response?.fold(
+        (l) {
+          //Utils.showMessage(l.message);
+        },
+        (r) async {
+          if (!context.mounted) context = getNavigatorKeyContext;
+          String? bagId = StorageManager().getBagId();
+          BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
+          if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
+            MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
 
-          await StorageManager().storeBagData(myBagDataModel);
-        }
-      });
+            await StorageManager().storeBagData(myBagDataModel);
+          }
+        },
+      );
     } catch (e) {
       // Utils.showMessage(e.toString());
     }
@@ -236,15 +238,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/tXQzK2j/Main-Banner1.jpg",
       "https://i.ibb.co/5cCtJPM/Main-Banner2.jpg",
       "https://i.ibb.co/4sSxLwF/Main-Banner3.jpg",
-      "https://i.ibb.co/pz6MHRt/Main-Banner4.jpg"
+      "https://i.ibb.co/pz6MHRt/Main-Banner4.jpg",
     ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
+    return List.generate(imageList.length, (index) => AuctionListModel(id: index.toString(), imageUrl: imageList[index]));
   }
 
   static List<AuctionListModel> _generateLatestCollection() {
@@ -254,13 +250,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/1fckq7Y/Single-Banner3.png",
       "https://i.ibb.co/GJC8rbV/Single-Banner4.png",
     ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
+    return List.generate(imageList.length, (index) => AuctionListModel(id: index.toString(), imageUrl: imageList[index]));
   }
 
   static List<AuctionListModel> _generateShopByBrands() {
@@ -280,7 +270,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "Martin Flyer",
       "Entice",
       "Gregg Ruth",
-      "Avita"
+      "Avita",
     ];
     List<String> imageList = [
       "https://i.ibb.co/NNvhL4X/Image111.png",
@@ -304,26 +294,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ];
     return List.generate(
       nameList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
+      (index) => AuctionListModel(id: index.toString(), name: nameList[index], imageUrl: imageList[index]),
     );
   }
 
   //For Shop gemstones List
   static List<AuctionListModel> _generateShopGemstones2List() {
-    List<String> nameList = [
-      "SIDE-STONE",
-      "HALO",
-      "SOLITAIRE",
-      "PAVE",
-      "THREE-STONE",
-      "VINTAGE",
-      "CHANNEL SET",
-      "TENSION",
-    ];
+    List<String> nameList = ["SIDE-STONE", "HALO", "SOLITAIRE", "PAVE", "THREE-STONE", "VINTAGE", "CHANNEL SET", "TENSION"];
     List<String> imageList = [
       "https://i.ibb.co/5M8fY0K/Ring1.png",
       "https://i.ibb.co/HnCgLGp/Ring2.png",
@@ -335,11 +312,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ];
     return List.generate(
       imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
+      (index) => AuctionListModel(id: index.toString(), name: nameList[index], imageUrl: imageList[index]),
     );
   }
 
@@ -350,15 +323,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/GHLpDkC/Shopby1.png",
       "https://i.ibb.co/pLdn2mS/Shopby2.png",
       "https://i.ibb.co/FKH9Xz8/Shopby3.png",
-      "https://i.ibb.co/vDw6mRT/Shopby4.png"
+      "https://i.ibb.co/vDw6mRT/Shopby4.png",
     ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
+    return List.generate(imageList.length, (index) => AuctionListModel(id: index.toString(), imageUrl: imageList[index]));
   }
 
   //_generateEligance2List
@@ -367,15 +334,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/2gbkgWX/Elegance1.jpg",
       "https://i.ibb.co/qDHqD5b/Elegance2.jpg",
       "https://i.ibb.co/w4CmR5w/Elegance3.jpg",
-      "https://i.ibb.co/44FBc6T/Elegance4.jpg"
+      "https://i.ibb.co/44FBc6T/Elegance4.jpg",
     ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
+    return List.generate(imageList.length, (index) => AuctionListModel(id: index.toString(), imageUrl: imageList[index]));
   }
 
   //_generateEligance2List
@@ -390,11 +351,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ];
     return List.generate(
       imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: name[index],
-        imageUrl: imageList[index],
-      ),
+      (index) => AuctionListModel(id: index.toString(), name: name[index], imageUrl: imageList[index]),
     );
   }
 
@@ -404,15 +361,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/518CBsv/Shop-By-Metal-Type1.jpg",
       "https://i.ibb.co/28DXhtX/Shop-By-Metal-Type2.jpg",
       "https://i.ibb.co/64fzTc3/Shop-By-Metal-Type3.jpg",
-      "https://i.ibb.co/FWJbb8L/Shop-By-Metal-Type4.jpg"
+      "https://i.ibb.co/FWJbb8L/Shop-By-Metal-Type4.jpg",
     ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
+    return List.generate(imageList.length, (index) => AuctionListModel(id: index.toString(), imageUrl: imageList[index]));
   }
 
   //For Tab View
@@ -436,10 +387,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     if (token.isNullOrEmpty && recentlyViewedJewellery.isNullOrEmpty) return;
 
-    Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context).getRecentlyViewedProductList(
-      page: AppConst.page1.toString(),
-      limit: AppConst.pageLimit10.toString(),
-    );
+    Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(
+      context,
+    ).getRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -447,9 +397,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       },
       (data) {
-        recentlyViewedJewelleryList = data.data.map((e) {
-          return Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: e);
-        }).toList();
+        recentlyViewedJewelleryList =
+            data.data.map((e) {
+              return Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: e);
+            }).toList();
       },
     );
   }
@@ -459,10 +410,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     String? token = StorageManager().getAuthToken();
     if (token.isNullOrEmpty && recentlyViewedDiamond.isNullOrEmpty) return;
-    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context).getDiamondRecentlyViewedProductList(
-      page: AppConst.page1.toString(),
-      limit: AppConst.pageLimit10.toString(),
-    );
+    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(
+      context,
+    ).getDiamondRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -470,9 +420,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       },
       (data) {
-        recentlyViewDiamondList = data.data.map((e) {
-          return Utils.convertDiamondDataModelToProductDetailsModel(diamond: e);
-        }).toList();
+        recentlyViewDiamondList =
+            data.data.map((e) {
+              return Utils.convertDiamondDataModelToProductDetailsModel(diamond: e);
+            }).toList();
       },
     );
   }
@@ -516,10 +467,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     String? token = StorageManager().getAuthToken();
     if (token.isNullOrEmpty && recentlyViewedGemstone.isNullOrEmpty) return;
 
-    Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context).getGemstoneRecentlyViewedProductList(
-      page: AppConst.page1.toString(),
-      limit: AppConst.pageLimit10.toString(),
-    );
+    Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(
+      context,
+    ).getGemstoneRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -527,9 +477,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       },
       (data) {
-        recentlyViewGemstoneList = data.data.map((e) {
-          return Utils.convertGemstoneDatumToProductDetailsModel(gemstone: e);
-        }).toList();
+        recentlyViewGemstoneList =
+            data.data.map((e) {
+              return Utils.convertGemstoneDatumToProductDetailsModel(gemstone: e);
+            }).toList();
       },
     );
   }
@@ -540,15 +491,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/fGQnv1D/Shop-By-Colour1.png",
       "https://i.ibb.co/cTvkXwZ/Shop-By-Colour2.png",
       "https://i.ibb.co/VQcXnTg/Shop-By-Colour3.png",
-      "https://i.ibb.co/G0Ptgz2/Shop-By-Colour4.png"
+      "https://i.ibb.co/G0Ptgz2/Shop-By-Colour4.png",
     ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
+    return List.generate(imageList.length, (index) => AuctionListModel(id: index.toString(), imageUrl: imageList[index]));
   }
 
   static List<AuctionListModel> _generateShopByStyleList() {
@@ -557,15 +502,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/zsvLW4N/Image.png",
       "https://i.ibb.co/x1q3y0C/Image11.png",
       "https://i.ibb.co/G7RH7k4/Image22.png",
-      "https://i.ibb.co/XYsTf4M/Image33.png"
+      "https://i.ibb.co/XYsTf4M/Image33.png",
     ];
     return List.generate(
       imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: titleList[index],
-        imageUrl: imageList[index],
-      ),
+      (index) => AuctionListModel(id: index.toString(), name: titleList[index], imageUrl: imageList[index]),
     );
   }
 
@@ -576,15 +517,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/zsvLW4N/Image.png",
       "https://i.ibb.co/x1q3y0C/Image11.png",
       "https://i.ibb.co/G7RH7k4/Image22.png",
-      "https://i.ibb.co/XYsTf4M/Image33.png"
+      "https://i.ibb.co/XYsTf4M/Image33.png",
     ];
     return List.generate(
       imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: titleList[index],
-        imageUrl: imageList[index],
-      ),
+      (index) => AuctionListModel(id: index.toString(), name: titleList[index], imageUrl: imageList[index]),
     );
   }
 
@@ -596,7 +533,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/zsvLW4N/Image.png",
       "https://i.ibb.co/x1q3y0C/Image11.png",
       "https://i.ibb.co/G7RH7k4/Image22.png",
-      "https://i.ibb.co/XYsTf4M/Image33.png"
+      "https://i.ibb.co/XYsTf4M/Image33.png",
     ];
     return List.generate(
       imageList.length,
@@ -618,7 +555,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       imageList.length,
       (index) => AuctionListModel(
         id: index.toString(),
-        /*name: titleList[index],*/ imageUrl: imageList[index], /*percentageOff: percentageList[index]*/
+        /*name: titleList[index],*/ imageUrl: imageList[index] /*percentageOff: percentageList[index]*/,
       ),
     );
   }
@@ -716,11 +653,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     return List.generate(
       nameList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
+      (index) => AuctionListModel(id: index.toString(), name: nameList[index], imageUrl: imageList[index]),
     );
   }
 
@@ -735,13 +668,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   /// Returns the widgets based on the [HomeSlug]
-  Widget getWidgetsForHomeSlug(
-    BuildContext context,
-    HomeSlug slug,
-    HomeBloc homeBloc,
-    HomeScreenStyle style,
-    int index,
-  ) {
+  Widget getWidgetsForHomeSlug(BuildContext context, HomeSlug slug, HomeBloc homeBloc, HomeScreenStyle style, int index) {
     List<AuctionListModel> parseDataList(dynamic data) {
       List<AuctionListModel> dataList = [];
       if (data is List) {
@@ -753,14 +680,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           String? redirectionUrl = element['redirection_url'];
 
           if (imageUrl != null) {
-            dataList.add(AuctionListModel(
-              id: element['id']?.toString(),
-              imageUrl: "${AppConst.strapiQaEnvImgBaseUrl}$imageUrl",
-              redirectTo: redirectTo,
-              redirectionType: redirectionType,
-              name: name,
-              redirectionUrl: redirectionUrl,
-            ));
+            dataList.add(
+              AuctionListModel(
+                id: element['id']?.toString(),
+                imageUrl: "${AppConst.strapiQaEnvImgBaseUrl}$imageUrl",
+                redirectTo: redirectTo,
+                redirectionType: redirectionType,
+                name: name,
+                redirectionUrl: redirectionUrl,
+              ),
+            );
           }
         }
       }
@@ -777,10 +706,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
       case HomeSlug.mobileHomeBanner:
-        return HomeWidgets.buildEngagementImageSlider(
-          homeBloc,
-          parseDataList(homeStrapiList[index].data),
-        );
+        return HomeWidgets.buildEngagementImageSlider(homeBloc, parseDataList(homeStrapiList[index].data));
 
       case HomeSlug.mobileTopSellingCategories:
         return HomeWidgets.buildTopSellingCategories(
@@ -821,22 +747,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         if (dataList.isEmpty) {
           return SizedBox.shrink();
         }
-        return HomeWidgets.buildShopByStyleSection(
-          homeBloc,
-          style,
-          dataList,
-        );
+        return HomeWidgets.buildShopByStyleSection(homeBloc, style, dataList);
 
       case HomeSlug.mobileDIYGuidance:
         final title = homeStrapiList[index].data['title'].toString();
         final subTitle = homeStrapiList[index].data['tagline'].toString();
-        return HomeWidgets.buildCreateYourOwnSignaturePiece(
-          homeBloc,
-          style,
-          context: context,
-          title: title,
-          subTitle: subTitle,
-        );
+        return HomeWidgets.buildCreateYourOwnSignaturePiece(homeBloc, style, context: context, title: title, subTitle: subTitle);
 
       case HomeSlug.kgkDiamondShape:
         return Container();
@@ -850,25 +766,45 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return HomeWidgets.buildShopDiamondSection(homeBloc, style, title);
 
       case HomeSlug.mobileShopGemstone:
-        return HomeWidgets.buildShopGemstoneSection(homeBloc, style,
-            title: homeStrapiList[index].info?.title ?? APPStrings.shopGemstones.tr);
+        return HomeWidgets.buildShopGemstoneSection(
+          homeBloc,
+          style,
+          title: homeStrapiList[index].info?.title ?? APPStrings.shopGemstones.tr,
+        );
 
       case HomeSlug.mobileKGKCouture:
         return HomeWidgets.buildKGKCoutureTabBarSection(homeBloc, style, homeStrapiList[index].info?.title, context: context);
 
       case HomeSlug.mobileRecentlyViewed:
         if (homeStrapiList[index].category == 'jewellery' && homeBloc.recentlyViewedJewelleryList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedJewellery.tr,
-              homeBloc, style, homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
-              context: context);
+          return HomeWidgets.buildRecentlyViewedSection(
+            homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedJewellery.tr,
+            homeBloc,
+            style,
+            homeBloc.recentlyViewedJewelleryList,
+            ScreenIdentifier.productForRing,
+            context: context,
+          );
         } else if (homeStrapiList[index].category == 'diamond' && homeBloc.recentlyViewDiamondList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedDiamond.tr, homeBloc,
-              style, homeBloc.recentlyViewDiamondList, ScreenIdentifier.productForDiamonds,
-              context: context, isCrtAndGramVisible: false);
+          return HomeWidgets.buildRecentlyViewedSection(
+            homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedDiamond.tr,
+            homeBloc,
+            style,
+            homeBloc.recentlyViewDiamondList,
+            ScreenIdentifier.productForDiamonds,
+            context: context,
+            isCrtAndGramVisible: false,
+          );
         } else if (homeStrapiList[index].category == 'gemstone' && homeBloc.recentlyViewGemstoneList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedGemstone.tr, homeBloc,
-              style, homeBloc.recentlyViewGemstoneList, ScreenIdentifier.productForGemstones,
-              context: context, isCrtAndGramVisible: false);
+          return HomeWidgets.buildRecentlyViewedSection(
+            homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedGemstone.tr,
+            homeBloc,
+            style,
+            homeBloc.recentlyViewGemstoneList,
+            ScreenIdentifier.productForGemstones,
+            context: context,
+            isCrtAndGramVisible: false,
+          );
         }
 
         return SizedBox.shrink();
@@ -876,13 +812,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case HomeSlug.mobileDealsOfDay:
         if (homeStrapiList[index].category == 'diamond' && homeBloc.dealOfTheDayDiamondList.isNotNullNorEmpty) {
           return HomeWidgets.buildDealOfTheDaySection(
-              homeBloc: homeBloc,
-              style: style,
-              title: homeStrapiList[index].info?.title,
-              screenIdentifier: ScreenIdentifier.productForDiamonds,
-              arrProductList: homeBloc.dealOfTheDayDiamondList,
-              context: context,
-              isCrtAndGramVisible: false);
+            homeBloc: homeBloc,
+            style: style,
+            title: homeStrapiList[index].info?.title,
+            screenIdentifier: ScreenIdentifier.productForDiamonds,
+            arrProductList: homeBloc.dealOfTheDayDiamondList,
+            context: context,
+            isCrtAndGramVisible: false,
+          );
         } else if (homeStrapiList[index].category == 'gemstone' && homeBloc.dealOfTheDayGemstoneList.isNotNullNorEmpty) {
           return HomeWidgets.buildDealOfTheDaySection(
             homeBloc: homeBloc,
@@ -930,28 +867,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case RedirectionTo.gemstone:
         if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
-        arguments = {
-          RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
-          RoutesData.filterData: redirectionData,
-        };
+        arguments = {RoutesData.isPageFor: ScreenIdentifier.productForGemstones, RoutesData.filterData: redirectionData};
         break;
 
       case RedirectionTo.diamond:
         if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.stoneListingPage;
-        arguments = {
-          RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
-          RoutesData.filterData: redirectionData,
-        };
+        arguments = {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds, RoutesData.filterData: redirectionData};
         break;
 
       case RedirectionTo.jewellery:
         if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.productListGridPage;
-        arguments = {
-          RoutesData.isPageFor: ScreenIdentifier.productForRing,
-          RoutesData.filterData: redirectionData,
-        };
+        arguments = {RoutesData.isPageFor: ScreenIdentifier.productForRing, RoutesData.filterData: redirectionData};
         break;
       case RedirectionTo.collection:
         if (redirectionData == null || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
@@ -959,13 +887,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection) && redirectionData.isNotEmpty
                 ? AppRoutes.productListGridPage
                 : AppRoutes.collectionPage;
-        arguments = (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
-            ? {
-                RoutesData.isPageFor: ScreenIdentifier.productForRing,
-                RoutesData.filterData: redirectionData,
-                RoutesData.appBarTitle: APPStrings.collection.tr,
-              }
-            : {};
+        arguments =
+            (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
+                ? {
+                  RoutesData.isPageFor: ScreenIdentifier.productForRing,
+                  RoutesData.filterData: redirectionData,
+                  RoutesData.appBarTitle: APPStrings.collection.tr,
+                }
+                : {};
         break;
 
       case RedirectionTo.unknown:
@@ -988,31 +917,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       String? kgkCollection = kgkCoutureSelectedIndex == 0 ? null : kgkCoutureButtonsTitle[kgkCoutureSelectedIndex];
       final response = await AppRepository(context).homePageKgkCoutureCollections(
-          page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString(), kgkCollection: kgkCollection, isLoadMore: true);
+        page: AppConst.page1.toString(),
+        limit: AppConst.pageLimit10.toString(),
+        kgkCollection: kgkCollection,
+        isLoadMore: true,
+      );
       response?.fold(
         (l) {
           //Utils.showMessage(l.message);
         },
         (r) {
-          kgkCoutureButtonsTitle = [
-            APPStrings.all,
-            ...(r.kgkCollectionList ?? []),
-          ];
-          luminousProductViewList = List.generate(
-            r.dataList?.length ?? 0,
-            (index) {
-              KgkCoutureDetails item = r.dataList![index];
-              return ProductDetailsModel(
-                productId: item.suid ?? '',
-                commodity: Commodity.jewellery,
-                imageUrl: item.multipleFinishedViewImage ?? '',
-                title: item.jewelleryTypeName ?? '',
-                subTitle: item.productDescription ?? '',
-                originalPrice: item.finalPrice?.toString().setCurrency ?? '-',
-                finalPrice: item.discountPrice?.toString().setCurrency ?? '',
-              );
-            },
-          );
+          kgkCoutureButtonsTitle = [APPStrings.all, ...(r.kgkCollectionList ?? [])];
+          luminousProductViewList = List.generate(r.dataList?.length ?? 0, (index) {
+            KgkCoutureDetails item = r.dataList![index];
+            return ProductDetailsModel(
+              productId: item.suid ?? '',
+              commodity: Commodity.jewellery,
+              imageUrl: item.multipleFinishedViewImage ?? '',
+              title: item.jewelleryTypeName ?? '',
+              subTitle: item.productDescription ?? '',
+              originalPrice: item.finalPrice?.toString().setCurrency ?? '-',
+              finalPrice: item.discountPrice?.toString().setCurrency ?? '',
+            );
+          });
         },
       );
     } catch (e) {
@@ -1058,10 +985,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _getJewelleryDealOfTheDayAPICall(BuildContext context) async {
-    final Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context).getJewelleryDealOfTheDayProductList(
-      page: AppConst.page1.toString(),
-      limit: AppConst.pageLimit10.toString(),
-    );
+    final Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(
+      context,
+    ).getJewelleryDealOfTheDayProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
 
     response?.fold(
       (error) {
@@ -1079,36 +1005,44 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Map<String, String> queryParams = {
       ApiKey.page: AppConst.page1.toString(),
       ApiKey.limit: AppConst.pageLimit10.toString(),
-      ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam
+      ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam,
     };
 
-    final Either<ErrorResponse, GemstoneListingModel>? response =
-        await AppRepository(context).getGemstoneDealOfTheDayProductList(query: queryParams);
+    final Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(
+      context,
+    ).getGemstoneDealOfTheDayProductList(query: queryParams);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (success) {
-      final List<GemstoneDatum> gemstoneList = success.data;
-      dealOfTheDayGemstoneList = gemstoneList.map((e) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: e)).toList();
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        final List<GemstoneDatum> gemstoneList = success.data;
+        dealOfTheDayGemstoneList = gemstoneList.map((e) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: e)).toList();
+      },
+    );
   }
 
   Future<void> _getDiamondDealOfTheDayAPICall(BuildContext context) async {
     Map<String, String> queryParams = {
       ApiKey.page: AppConst.page1.toString(),
       ApiKey.limit: AppConst.pageLimit10.toString(),
-      ApiKey.stone: AppConst.diamondsDealsOfTheDayParam
+      ApiKey.stone: AppConst.diamondsDealsOfTheDayParam,
     };
 
-    final Either<ErrorResponse, DiamondListingModel>? response =
-        await AppRepository(context).getDiamondDealOfTheDayProductList(query: queryParams);
+    final Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(
+      context,
+    ).getDiamondDealOfTheDayProductList(query: queryParams);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (success) {
-      final List<DiamondDataModel> diamondList = success.data;
-      dealOfTheDayDiamondList = diamondList.map((e) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: e)).toList();
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        final List<DiamondDataModel> diamondList = success.data;
+        dealOfTheDayDiamondList = diamondList.map((e) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: e)).toList();
+      },
+    );
   }
 
   String getTitleForDealOfTheDay(ScreenIdentifier screenIdentifier) {
@@ -1147,20 +1081,9 @@ enum HomeSlug {
   final String value;
 }
 
-enum RedirectionTo {
-  gemstone,
-  diamond,
-  jewellery,
-  collection,
-  unknown,
-}
+enum RedirectionTo { gemstone, diamond, jewellery, collection, unknown }
 
-enum RedirectionType {
-  listing,
-  details,
-  collection,
-  unknown,
-}
+enum RedirectionType { listing, details, collection, unknown }
 
 // HomeSlug getHomeSlugFromString(String slug) {
 //   switch (slug) {
@@ -1209,10 +1132,7 @@ RedirectionType getRedirectionTypeFromString(String value) {
   }
 }
 
-Map<dynamic, String> getQueryParamFromUrlForFilter(
-  String url, {
-  RedirectionType redirectionType = RedirectionType.listing,
-}) {
+Map<dynamic, String> getQueryParamFromUrlForFilter(String url, {RedirectionType redirectionType = RedirectionType.listing}) {
   if (url.isEmpty) return {};
   if (redirectionType == RedirectionType.details) {
     return {RoutesData.productId: url.split('/').last};

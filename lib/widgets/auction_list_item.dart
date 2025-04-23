@@ -7,8 +7,14 @@ class AuctionListItem extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final String? stoneTypeImage;
 
-  const AuctionListItem(
-      {super.key, this.auctionListModel, this.onTap, this.padding, this.margin = EdgeInsetsDirectional.zero, this.stoneTypeImage});
+  const AuctionListItem({
+    super.key,
+    this.auctionListModel,
+    this.onTap,
+    this.padding,
+    this.margin = EdgeInsetsDirectional.zero,
+    this.stoneTypeImage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +25,7 @@ class AuctionListItem extends StatelessWidget {
       child: Container(
         padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
         margin: margin,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.r),
-          border: Border.all(color: style.borderColor),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.r), border: Border.all(color: style.borderColor)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -52,9 +55,7 @@ class AuctionListItem extends StatelessWidget {
             SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildDetailColumn(APPStrings.bidPlacedOn.tr, model.bidPlacedOn, style)),
-              ],
+              children: [Expanded(child: _buildDetailColumn(APPStrings.bidPlacedOn.tr, model.bidPlacedOn, style))],
             ),
           ],
         ),
@@ -66,38 +67,29 @@ class AuctionListItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SmartText(
-          title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: style.titleStyle,
-        ),
+        SmartText(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.titleStyle),
         SizedBox(height: 4.h),
         isOrderStatus
             ? SmartStatusBadge(height: 28.h, currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
             : Row(
-                children: [
-                  if (stoneTypeImage != null)
-                    Flexible(
-                        child: Padding(
-                      padding: EdgeInsetsDirectional.only(end: 4.w),
-                      child: SmartImage(
-                        path: stoneTypeImage,
-                        height: 24.w,
-                        width: 24.w,
-                        color: style.primaryColor,
-                      ),
-                    )),
+              children: [
+                if (stoneTypeImage != null)
                   Flexible(
-                    child: SmartText(
-                      value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: style.valueStyle,
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.only(end: 4.w),
+                      child: SmartImage(path: stoneTypeImage, height: 24.w, width: 24.w, color: style.primaryColor),
                     ),
                   ),
-                ],
-              ),
+                Flexible(
+                  child: SmartText(
+                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: style.valueStyle,
+                  ),
+                ),
+              ],
+            ),
       ],
     );
   }

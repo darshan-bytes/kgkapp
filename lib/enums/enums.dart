@@ -1,11 +1,6 @@
 import '../kgk.dart';
 
-enum ImageType {
-  asset,
-  network,
-  file,
-  svg,
-}
+enum ImageType { asset, network, file, svg }
 
 enum ProductCustomizationType {
   image('image'),
@@ -14,8 +9,7 @@ enum ProductCustomizationType {
   metalKaratage('metal_karatage'),
   ringSize('ring_size'),
   diamondQuality('diamond_quality'),
-  other('other'),
-  ;
+  other('other');
 
   final String value;
 
@@ -56,8 +50,7 @@ enum ProjectStatus {
 enum UserType {
   b2cUser('individual'),
   b2bUser('company'),
-  internal('internal'),
-  ;
+  internal('internal');
 
   const UserType(this.value);
 
@@ -65,8 +58,7 @@ enum UserType {
 }
 
 enum AccountType {
-  customer('customer'),
-  ;
+  customer('customer');
 
   const AccountType(this.value);
 
@@ -101,8 +93,7 @@ enum B2BListingType {
 enum CalenderEventType {
   meeting('meeting'),
   task('task'),
-  undefined('undefined'),
-  ;
+  undefined('undefined');
 
   const CalenderEventType(this.value);
 
@@ -122,8 +113,7 @@ enum Commodity {
   skuLibrary('sku_library', 'product-library/sku'),
   cadLibrary('cad_library', 'product-library/cad'),
   designLibrary('design_library', 'product-library/design'),
-  diy('diy', 'diy'),
-  ;
+  diy('diy', 'diy');
 
   const Commodity(this.value, this.webPath);
 
@@ -138,8 +128,7 @@ enum FilterType {
   dateRange('date_range'),
   date('date'),
   createdBySearch('created_by_search'),
-  boolean('boolean'),
-  ;
+  boolean('boolean');
 
   const FilterType(this.value);
 
@@ -216,8 +205,7 @@ enum Priority {
 }
 
 enum BranchLinkTypeType {
-  productShare('product_share'),
-  ;
+  productShare('product_share');
 
   const BranchLinkTypeType(this.value);
 
@@ -247,8 +235,7 @@ enum FieldTypeValidationEnum {
 enum AddressTypeEnum {
   isShipping('is_shipping', APPStrings.shippingAddress),
   isBilling('is_billing', APPStrings.billingAddress),
-  both('both', APPStrings.shippingAndBillingBoth),
-  ;
+  both('both', APPStrings.shippingAndBillingBoth);
 
   const AddressTypeEnum(this.value, this.label);
 

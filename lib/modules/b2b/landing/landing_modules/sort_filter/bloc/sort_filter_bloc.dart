@@ -13,8 +13,11 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     SortOptions(name: APPStrings.mostViewed, sortKey: AppConst.sortKeyViewCount, sortValue: AppConst.sortValueDesc),
   ];
 
-  SortOptions selectedSortData =
-      SortOptions(name: AppConst.sortKeyNERPBS, sortKey: AppConst.sortKeyNERPBS, sortValue: AppConst.sortValueDesc);
+  SortOptions selectedSortData = SortOptions(
+    name: AppConst.sortKeyNERPBS,
+    sortKey: AppConst.sortKeyNERPBS,
+    sortValue: AppConst.sortValueDesc,
+  );
 
   List<FilterData> filterData = [];
   bool isLoading = false;
@@ -101,9 +104,10 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       return;
     }
     if (searchController.text.isNotEmpty) {
-      secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData!
-          .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.trim().toLowerCase()))
-          .toList();
+      secondaryFilterDataDisplay =
+          selectedFilterData!.secondaryFilterData!
+              .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.trim().toLowerCase()))
+              .toList();
     } else {
       secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
     }
@@ -279,8 +283,12 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       }
       add(SortAndFilterPriceRangeChangedEvent(values, isFromTextField: true, isMin: true)); // Trigger an event to update the price range.
     } else {
-      Utils.showMessage(APPStrings.pleaseEnterValidPriceRangeX.tr
-          .interpolate([selectedFilterData?.minMaxValues?.start, selectedFilterData?.minMaxValues?.end]));
+      Utils.showMessage(
+        APPStrings.pleaseEnterValidPriceRangeX.tr.interpolate([
+          selectedFilterData?.minMaxValues?.start,
+          selectedFilterData?.minMaxValues?.end,
+        ]),
+      );
       minPriceController.text =
           '${selectedFilterData?.rangeValues?.start.toString()}'; // Reset the text field if the value is out of range.
     }
@@ -308,8 +316,10 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     }
     if (max >= selectedFilterData?.minMaxValues?.start && max <= selectedFilterData?.minMaxValues?.end) {
       // Check if the parsed value is within the valid range.
-      SfRangeValues values =
-          SfRangeValues(selectedFilterData?.rangeValues?.start, max); // Create a new range with the updated maximum value.
+      SfRangeValues values = SfRangeValues(
+        selectedFilterData?.rangeValues?.start,
+        max,
+      ); // Create a new range with the updated maximum value.
       if (max <= selectedFilterData?.rangeValues?.start) {
         // Adjust the minimum value if the new maximum is less than or equal to the current minimum.
         values = SfRangeValues(max, max);
@@ -317,8 +327,12 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       add(SortAndFilterPriceRangeChangedEvent(values, isFromTextField: true, isMin: false)); // Trigger an event to update the price range.
     } else {
       // add String with Amount
-      Utils.showMessage(APPStrings.pleaseEnterValidPriceRangeX.tr
-          .interpolate([selectedFilterData?.minMaxValues?.start, selectedFilterData?.minMaxValues?.end]));
+      Utils.showMessage(
+        APPStrings.pleaseEnterValidPriceRangeX.tr.interpolate([
+          selectedFilterData?.minMaxValues?.start,
+          selectedFilterData?.minMaxValues?.end,
+        ]),
+      );
       maxPriceController.text = '${selectedFilterData?.rangeValues?.end.toString()}'; // Reset the text field if the value is out of range.
     }
   }

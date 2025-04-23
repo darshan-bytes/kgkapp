@@ -91,34 +91,30 @@ class CalendarScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           BlocBuilder<CalendarBloc, CalendarState>(
-            buildWhen: (previous, current) =>
-                previous != current && current is CalendarLoadedState || current is CalendarOnViewChangedState,
+            buildWhen:
+                (previous, current) => previous != current && current is CalendarLoadedState || current is CalendarOnViewChangedState,
             builder: (context, state) {
               return InkWell(
                 onTap: () {
                   Utils.showSmartModalBottomSheet(
-                      context: context,
-                      isScrollControlled: false,
-                      builder: (context) {
-                        return CustomMonthYearPicker(
-                            initialDate: bloc.selectedMonth,
-                            onDateChanged: (date) {
-                              bloc.add(InitialCalendarEvent(context, selectedDate: date));
-                            });
-                      });
+                    context: context,
+                    isScrollControlled: false,
+                    builder: (context) {
+                      return CustomMonthYearPicker(
+                        initialDate: bloc.selectedMonth,
+                        onDateChanged: (date) {
+                          bloc.add(InitialCalendarEvent(context, selectedDate: date));
+                        },
+                      );
+                    },
+                  );
                 },
                 borderRadius: BorderRadius.circular(4.r),
                 child: Row(
                   children: [
-                    SmartText(
-                      bloc.selectedMonth.monthNameShort,
-                      style: style.currentMonthHeaderStyle,
-                    ),
+                    SmartText(bloc.selectedMonth.monthNameShort, style: style.currentMonthHeaderStyle),
                     SizedBox(width: 4.w),
-                    SmartImage(
-                      path: AppImages.icArrowDown,
-                      color: style.dropDownArrowColor,
-                    ),
+                    SmartImage(path: AppImages.icArrowDown, color: style.dropDownArrowColor),
                   ],
                 ),
               );
@@ -203,11 +199,7 @@ class CalendarScreen extends StatelessWidget {
               appointmentDisplayCount: 3,
               appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
             ),
-            timeSlotViewSettings: const TimeSlotViewSettings(
-              startHour: 0,
-              endHour: 24,
-              minimumAppointmentDuration: Duration(seconds: 30),
-            ),
+            timeSlotViewSettings: const TimeSlotViewSettings(startHour: 0, endHour: 24, minimumAppointmentDuration: Duration(seconds: 30)),
             todayHighlightColor: style.primary,
             firstDayOfWeek: 7,
             headerStyle: const CalendarHeaderStyle(),
@@ -226,38 +218,36 @@ class CalendarScreen extends StatelessWidget {
   void _showEventTypeSelectPopup(BuildContext context, CalendarBloc bloc) {
     OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-        ),
-        builder: (subContext) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-              color: orderPopupStyle.whiteColor,
-            ),
-            child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: List.generate(
-                  bloc.calendarEventTypeList.length,
-                  (index) {
-                    CalendarEventTypeModel eventType = bloc.calendarEventTypeList[index];
-                    return _buildPopupOption(
-                      subContext,
-                      text: eventType.title ?? '-',
-                      style: orderPopupStyle.optionTextStyle,
-                      onTap: () async {
-                        bloc.add(CalendarEventTypeChangeEvent(eventType, context));
-                        subContext.pop();
-                      },
-                    );
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      builder: (subContext) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+            color: orderPopupStyle.whiteColor,
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(bloc.calendarEventTypeList.length, (index) {
+                CalendarEventTypeModel eventType = bloc.calendarEventTypeList[index];
+                return _buildPopupOption(
+                  subContext,
+                  text: eventType.title ?? '-',
+                  style: orderPopupStyle.optionTextStyle,
+                  onTap: () async {
+                    bloc.add(CalendarEventTypeChangeEvent(eventType, context));
+                    subContext.pop();
                   },
-                ),
-              ),
+                );
+              }),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildPopupOption(

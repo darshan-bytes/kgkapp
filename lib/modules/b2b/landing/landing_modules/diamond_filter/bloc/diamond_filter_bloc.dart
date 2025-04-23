@@ -69,11 +69,13 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
         SecondaryFilterData(name: "three", code: "three"),
       ];
 
-      emit(SecondaryFilterDataFetchedState([
-        SecondaryFilterModel(value: "one", label: 'ONE'),
-        SecondaryFilterModel(value: "two", label: 'TWO'),
-        SecondaryFilterModel(value: "three", label: 'THREE'),
-      ]));
+      emit(
+        SecondaryFilterDataFetchedState([
+          SecondaryFilterModel(value: "one", label: 'ONE'),
+          SecondaryFilterModel(value: "two", label: 'TWO'),
+          SecondaryFilterModel(value: "three", label: 'THREE'),
+        ]),
+      );
       await Future.delayed(const Duration(seconds: 2));
       isLoading = false;
 
@@ -103,9 +105,10 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
     secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
     if (selectedFilterData != null) {
       if (searchController.text.isNotEmpty) {
-        secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData!
-            .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.trim().toLowerCase()))
-            .toList();
+        secondaryFilterDataDisplay =
+            selectedFilterData!.secondaryFilterData!
+                .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.trim().toLowerCase()))
+                .toList();
       } else {
         secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData ?? [];
       }
@@ -135,12 +138,7 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
   Future<void> _addFilterDataEvent(AddFilterDataEvent event, Emitter<DiamondFilterState> emit) async {
     filterData.clear();
     for (var gemstone in event.gemstoneFilterList) {
-      filterData.add(FilterData(
-        name: gemstone.name,
-        code: gemstone.slug,
-        inputType: gemstone.inputType,
-        secondaryFilterData: [],
-      ));
+      filterData.add(FilterData(name: gemstone.name, code: gemstone.slug, inputType: gemstone.inputType, secondaryFilterData: []));
     }
     if (filterData.isNotEmpty) {
       selectedFilterData = filterData.first;
@@ -161,22 +159,25 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
         SecondaryFilterData(name: "three", code: "three"),
       ];
 
-      emit(SecondaryFilterDataFetchedState([
-        SecondaryFilterModel(value: "one", label: 'ONE'),
-        SecondaryFilterModel(value: "two", label: 'TWO'),
-        SecondaryFilterModel(value: "three", label: 'THREE'),
-      ]));
+      emit(
+        SecondaryFilterDataFetchedState([
+          SecondaryFilterModel(value: "one", label: 'ONE'),
+          SecondaryFilterModel(value: "two", label: 'TWO'),
+          SecondaryFilterModel(value: "three", label: 'THREE'),
+        ]),
+      );
     }
   }
 
   // created getter for input type
   bool get isCheckbox => selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox;
 
-  Future<void> fetchSecondaryFilterData(
-      {required BuildContext context,
-      required Emitter<DiamondFilterState> emit,
-      required String slug,
-      required bool needToFetchData}) async {
+  Future<void> fetchSecondaryFilterData({
+    required BuildContext context,
+    required Emitter<DiamondFilterState> emit,
+    required String slug,
+    required bool needToFetchData,
+  }) async {
     if (!needToFetchData) {
       return;
     }
@@ -188,27 +189,20 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
 
     final response = await AppRepository(context).getSecondaryFilterData(slug: slug, codes: codes);
 
-    response?.fold(
-      (l) => Utils.showMessage(l.message),
-      (r) async {
-        final filteredData = filterData.where((item) => item.code == slug).toList();
+    response?.fold((l) => Utils.showMessage(l.message), (r) async {
+      final filteredData = filterData.where((item) => item.code == slug).toList();
 
-        if (filteredData.isNotEmpty) {
-          for (final item in r) {
-            filteredData.first.secondaryFilterData?.add(
-              SecondaryFilterData(
-                name: item.value,
-                code: item.label,
-                image: 'https://i.ibb.co/80xk2MK/Frame-1410088948-5.png',
-              ),
-            );
-          }
+      if (filteredData.isNotEmpty) {
+        for (final item in r) {
+          filteredData.first.secondaryFilterData?.add(
+            SecondaryFilterData(name: item.value, code: item.label, image: 'https://i.ibb.co/80xk2MK/Frame-1410088948-5.png'),
+          );
         }
+      }
 
-        isLoading = false;
-        emit(SecondaryFilterDataFetchedState(r));
-      },
-    );
+      isLoading = false;
+      emit(SecondaryFilterDataFetchedState(r));
+    });
   }
 
   void _onFilterPriceRangeChangedEvent(FilterPriceRangeChangedEvent event, Emitter<DiamondFilterState> emit) {

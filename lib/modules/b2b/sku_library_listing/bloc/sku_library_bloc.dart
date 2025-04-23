@@ -118,18 +118,22 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
       ApiKey.sortValue: sortValue,
     };
 
-    Either<ErrorResponse, PaginationData<SkuLibraryListItemDataModel>>? response =
-        await AppRepository(context).getSkuLibraryList(query: params);
+    Either<ErrorResponse, PaginationData<SkuLibraryListItemDataModel>>? response = await AppRepository(
+      context,
+    ).getSkuLibraryList(query: params);
 
-    response?.fold((error) {
-      if (error.message.isNotNullNorEmpty) {
-        Utils.showMessage(error.message);
-      }
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      final localList = success.dataList ?? [];
-      skuLibraryList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
-    });
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        final localList = success.dataList ?? [];
+        skuLibraryList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
+      },
+    );
     paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     emit(const SkuLibraryLoadedState());
   }
@@ -171,8 +175,11 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   }
 
   /// Handles applying a filter to the SKU library.
-  Future<void> _handleApplyFilter(
-      {required BuildContext context, required Emitter<SkuLibraryState> emit, required List<FilterData> appliedFilterData}) async {
+  Future<void> _handleApplyFilter({
+    required BuildContext context,
+    required Emitter<SkuLibraryState> emit,
+    required List<FilterData> appliedFilterData,
+  }) async {
     emit(const SkuLibraryLoadingState());
     paginationScrollController.pullToRefresh();
     skuLibraryList.clear();
@@ -199,10 +206,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   }
 
   Future<void> onTapSortOption(BuildContext context) async {
-    final result = await Utils.showSmartModalBottomSheet(
-      context: context,
-      builder: (context) => SortScreen(sortData: sortOptions),
-    );
+    final result = await Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: sortOptions));
 
     if (result != null) {
       add(SkuLibrarySortEvent(context: context, sortData: result[RoutesData.sortData]));
@@ -210,8 +214,9 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   }
 
   Future<void> _setupFilters(BuildContext context) async {
-    final List<FilterOptionModel> tempFilterData =
-        await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.skuLibrary);
+    final List<FilterOptionModel> tempFilterData = await BlocProvider.of<AppBloc>(
+      context,
+    ).getFilterOptionList(context, AppConst.skuLibrary);
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {
       FilterData filter = FilterData(

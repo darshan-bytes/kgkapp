@@ -4,20 +4,14 @@ class CategoryTile extends StatelessWidget {
   final CategoriesModel category;
   final bool isSelected;
 
-  const CategoryTile({
-    super.key,
-    required this.category,
-    required this.isSelected,
-  });
+  const CategoryTile({super.key, required this.category, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     final CategoryTileStyle categoryTileStyle = AppTheme.of(context).categoryTileStyle;
     return Container(
       margin: EdgeInsetsDirectional.only(top: 6.0.h, bottom: 6.0.h, end: 6.0.w, start: 6.0.w),
-      decoration: BoxDecoration(
-        color: categoryTileStyle.whiteColor,
-      ),
+      decoration: BoxDecoration(color: categoryTileStyle.whiteColor),
       child: Stack(
         children: [
           SmartImage(
@@ -41,14 +35,8 @@ class CategoryTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                SizedBox(
-                  width: 4.w,
-                ),
-                if (category.isExpanded)
-                  Icon(
-                    isSelected ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                    size: 16.w,
-                  ),
+                SizedBox(width: 4.w),
+                if (category.isExpanded) Icon(isSelected ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, size: 16.w),
               ],
             ),
           ),

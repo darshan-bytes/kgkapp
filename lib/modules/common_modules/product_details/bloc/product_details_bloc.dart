@@ -317,8 +317,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           id: productCustomizations.length.toString(),
           name: APPStrings.head.tr,
           type: ProductCustomizationType.head.value,
-          selectedValue:
-              ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
+          selectedValue: ProductCustomizationOptionValues(
+            id: '1',
+            value: 'Four Prong',
+            image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png',
+          ),
           values: [
             ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
             ProductCustomizationOptionValues(id: '2', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
@@ -386,8 +389,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
     if (isClosed) return;
-    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context)
-        .getDiamondYouMayLike(productId, limit: AppConst.pageLimit10.toString(), page: AppConst.page1.toString(), isShowLoader: false);
+    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(
+      context,
+    ).getDiamondYouMayLike(productId, limit: AppConst.pageLimit10.toString(), page: AppConst.page1.toString(), isShowLoader: false);
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
@@ -405,8 +409,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getGemstoneYouMayLike(BuildContext context, String productId) async {
     if (isClosed) return;
-    final Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context)
-        .getGemstoneYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
+    final Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(
+      context,
+    ).getGemstoneYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
 
     response?.fold(
       (error) {
@@ -423,8 +428,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getProductYouMayLike(BuildContext context, String productId) async {
     if (isClosed) return;
-    Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context)
-        .getJewelleryYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
+    Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(
+      context,
+    ).getJewelleryYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
@@ -492,9 +498,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             name: productName,
             jewelleryType: designLibraryData.jewelleryType,
             productSku: designLibraryData.contractNoSkuNo,
-            imageUrl: designLibraryData.multipleFinishedViewImage.isNullOrEmpty
-                ? ''
-                : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
+            imageUrl:
+                designLibraryData.multipleFinishedViewImage.isNullOrEmpty
+                    ? ''
+                    : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
             commodity: Commodity.jewellery,
             components: designLibraryData.components,
           );
@@ -539,9 +546,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             name: productName,
             jewelleryType: designLibraryData.jewelleryType,
             productSku: designLibraryData.contractNoSkuNo,
-            imageUrl: designLibraryData.multipleFinishedViewImage.isNullOrEmpty
-                ? ''
-                : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
+            imageUrl:
+                designLibraryData.multipleFinishedViewImage.isNullOrEmpty
+                    ? ''
+                    : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
             components: designLibraryData.components,
           );
         },
@@ -590,18 +598,19 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
-  Future<void> productReviewsFilter(BuildContext context, String productId, Emitter<ProductDetailsState> emit,
-      {bool isLoadMore = false}) async {
+  Future<void> productReviewsFilter(
+    BuildContext context,
+    String productId,
+    Emitter<ProductDetailsState> emit, {
+    bool isLoadMore = false,
+  }) async {
     if (isClosed) return;
     emit(const ReloadProductDetailsState());
-    Map<String, String> query = {
-      ApiKey.productId_: productId,
-      ApiKey.limit: "6",
-      ApiKey.page: "1",
-    };
+    Map<String, String> query = {ApiKey.productId_: productId, ApiKey.limit: "6", ApiKey.page: "1"};
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
-    Either<ErrorResponse, ProductReviewWrapperModel>? response =
-        await AppRepository(context).productReviewsFilter(query: query, isLoadMore: isLoadMore);
+    Either<ErrorResponse, ProductReviewWrapperModel>? response = await AppRepository(
+      context,
+    ).productReviewsFilter(query: query, isLoadMore: isLoadMore);
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -616,12 +625,16 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           data.dataList?.removeWhere((element) => element.id == myReview?.id);
           data.dataList?.insert(0, myReview!);
         }
-        reviewList = (data.dataList)?.map((e) {
+        reviewList =
+            (data.dataList)?.map((e) {
               return ReviewDataModel(
                 id: e.id,
                 userName: e.userIdDetails?.fullName ?? '',
-                date: e.createdAt?.changeDateFormat(
-                        inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
+                date:
+                    e.createdAt?.changeDateFormat(
+                      inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
+                      outputDateFormat: DateFormatter.dateFormatDDMMYYYY,
+                    ) ??
                     '',
                 rating: e.rating ?? 0,
                 title: e.title ?? '',
@@ -641,17 +654,19 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getProductRecentlyViewed(BuildContext context, String productId) async {
     if (isClosed) return;
-    Either<ErrorResponse, JewelleryListingModel>? response =
-        await AppRepository(context).getRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
+    Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(
+      context,
+    ).getRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
       },
       (JewelleryListingModel jewelleryListingModel) {
         if (isClosed) return;
-        recentlyViewedProductList = jewelleryListingModel.data
-            .map((jewellery) => Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: jewellery))
-            .toList();
+        recentlyViewedProductList =
+            jewelleryListingModel.data
+                .map((jewellery) => Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: jewellery))
+                .toList();
         if (!isClosed) add(const ProductDetailsReviewsLoadedEvent());
       },
     );
@@ -659,8 +674,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getDiamondsRecentlyViewed(BuildContext context, String productId) async {
     if (isClosed) return;
-    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context)
-        .getDiamondRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
+    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(
+      context,
+    ).getDiamondRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
@@ -675,8 +691,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getGemstoneRecentlyViewed(BuildContext context, String productId) async {
     if (isClosed) return;
-    Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context)
-        .getGemstoneRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
+    Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(
+      context,
+    ).getGemstoneRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
@@ -705,22 +722,20 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           completer = Completer<bool>();
           BlocProvider.of<CompareProductBloc>(event.context!).add(
             CompareProductAddProductEvent(
-                context: event.context!,
-                product: productDetails!,
-                onProductAdded: () {
-                  isCompare = true;
-                  emit(ProductCompareToggleState(isCompare));
-                  completer?.complete(true);
-                }),
+              context: event.context!,
+              product: productDetails!,
+              onProductAdded: () {
+                isCompare = true;
+                emit(ProductCompareToggleState(isCompare));
+                completer?.complete(true);
+              },
+            ),
           );
         } else {
           isCompare = false;
-          BlocProvider.of<CompareProductBloc>(event.context!).add(
-            CompareProductRemoveProductEvent(
-              context: event.context!,
-              productId: productDetails?.suid ?? '',
-            ),
-          );
+          BlocProvider.of<CompareProductBloc>(
+            event.context!,
+          ).add(CompareProductRemoveProductEvent(context: event.context!, productId: productDetails?.suid ?? ''));
         }
         emit(ProductCompareToggleState(isCompare));
       } else if (event.isCompare != null) {
@@ -736,9 +751,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   void _onOnProductCustomizationChange(ProductCustomizationChangeEvent event, Emitter<ProductDetailsState> emit) {
-    int oldChildIndex = productCustomizations[event.index].selectedValue != null
-        ? (productCustomizations[event.index].values?.indexOf(productCustomizations[event.index].selectedValue!) ?? 0)
-        : -1;
+    int oldChildIndex =
+        productCustomizations[event.index].selectedValue != null
+            ? (productCustomizations[event.index].values?.indexOf(productCustomizations[event.index].selectedValue!) ?? 0)
+            : -1;
     productCustomizations[event.index].selectedValue = productCustomizations[event.index].values?[event.childIndex];
     emit(ProductCustomizationChangeState(event.index, event.childIndex, oldChildIndex));
   }
@@ -787,34 +803,48 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         return;
       }
     }
-    await context.pushNamed(AppRoutes.writeReviewPage, arguments: {
-      RoutesData.productId: productDetails?.productId,
-      RoutesData.commodity: productDetails?.commodity,
-      RoutesData.myReview: myReview,
-    }).then((val) async {
-      if (val != null && val[RoutesData.isEdited] == true) {
-        await productReviewsFilter(context, productId, emit, isLoadMore: true);
-      }
-    });
+    await context
+        .pushNamed(
+          AppRoutes.writeReviewPage,
+          arguments: {
+            RoutesData.productId: productDetails?.productId,
+            RoutesData.commodity: productDetails?.commodity,
+            RoutesData.myReview: myReview,
+          },
+        )
+        .then((val) async {
+          if (val != null && val[RoutesData.isEdited] == true) {
+            await productReviewsFilter(context, productId, emit, isLoadMore: true);
+          }
+        });
   }
 
-  void navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(BuildContext context,
-      {required String productNavigation, String productId = ''}) {
+  void navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(
+    BuildContext context, {
+    required String productNavigation,
+    String productId = '',
+  }) {
     switch (screenIdentifier) {
       case ScreenIdentifier.productForRing:
-        context.pushNamed(AppRoutes.productListGridPage, arguments: {
-          RoutesData.isPageFor: ScreenIdentifier.productForRing,
-          RoutesData.productId: productId,
-          RoutesData.productNavigation: productNavigation,
-        });
+        context.pushNamed(
+          AppRoutes.productListGridPage,
+          arguments: {
+            RoutesData.isPageFor: ScreenIdentifier.productForRing,
+            RoutesData.productId: productId,
+            RoutesData.productNavigation: productNavigation,
+          },
+        );
         break;
       case ScreenIdentifier.productForGemstones:
       case ScreenIdentifier.productForDiamonds:
-        context.pushNamed(AppRoutes.stoneListingPage, arguments: {
-          RoutesData.isPageFor: screenIdentifier,
-          RoutesData.productId: productDetails?.productId,
-          RoutesData.productNavigation: productNavigation,
-        });
+        context.pushNamed(
+          AppRoutes.stoneListingPage,
+          arguments: {
+            RoutesData.isPageFor: screenIdentifier,
+            RoutesData.productId: productDetails?.productId,
+            RoutesData.productNavigation: productNavigation,
+          },
+        );
         break;
       default:
         break;
@@ -831,7 +861,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
-// Handle wishlist update events
+  // Handle wishlist update events
   void _handleWishlistUpdate(WishlistUpdaterServiceState state) {
     if (state is WishListUpdateProductState) {
       try {
@@ -844,7 +874,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
-// Update the appropriate product list based on the screen identifier
+  // Update the appropriate product list based on the screen identifier
   void _updateProductList(WishListUpdateProductState state) {
     List<dynamic> targetList;
     switch (screenIdentifier) {
@@ -868,7 +898,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
-// Update product details based on wishlist status
+  // Update product details based on wishlist status
   void _updateProductDetails(String productId, String wishlistId) {
     if (productId == productDetails?.suid) {
       productDetails?.isFavourite = wishlistId.isNotEmpty;
@@ -876,13 +906,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
-// Update the suggested product list
+  // Update the suggested product list
   void _updateSuggestedProductList(int index, dynamic product) {
     suggestedProductList[index].isFavourite = product.isFavorite;
     suggestedProductList[index].wishlistId = product.wishlistID.isNotNullNorEmpty ? product.wishlistID : null;
   }
 
-// Update the recently viewed product list
+  // Update the recently viewed product list
   void _updateRecentlyViewedList(WishListUpdateProductState state) {
     final recentlyIndex = recentlyViewedProductList.indexWhere((element) => element.productId == state.productId);
     if (recentlyIndex != -1) {
@@ -945,13 +975,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           body: SafeArea(
             child: Stack(
               children: [
-                ModelViewer(
-                  backgroundColor: Colors.white,
-                  src: the3DFile ?? '',
-                  alt: productName,
-                  autoRotate: true,
-                  cameraControls: true,
-                ),
+                ModelViewer(backgroundColor: Colors.white, src: the3DFile ?? '', alt: productName, autoRotate: true, cameraControls: true),
                 PositionedDirectional(
                   top: 16.h,
                   start: 16.w,
@@ -982,13 +1006,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         startingBidPrice = data.startingPrice?.setCurrency ?? '';
         isBidPlaced = data.showPlaceBid ?? false;
         isMyBidPlaced = data.bids.any((bid) => bid.isMyBid == true);
-        recentBidList = data.bids.map((bid) {
-          return {
-            AppConst.dateTimeKey: bid.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
-            AppConst.priceKey: bid.bidAmount?.setCurrency,
-            AppConst.isMyBidKey: bid.isMyBid,
-          };
-        }).toList();
+        recentBidList =
+            data.bids.map((bid) {
+              return {
+                AppConst.dateTimeKey: bid.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+                AppConst.priceKey: bid.bidAmount?.setCurrency,
+                AppConst.isMyBidKey: bid.isMyBid,
+              };
+            }).toList();
         auctionEndDuration = DateTime.parse(data.endDate.toString()).difference(DateTime.now());
         add(const ProductDetailsAuctionStartTimerEvent());
       });
@@ -1034,18 +1059,17 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     if (productDetails?.auctionId == null) return;
     Map<String, dynamic> body = {ApiKey.auctionId: int.parse(productDetails!.auctionId!), ApiKey.bidAmount: bidAmountController.text};
     Either<ErrorResponse, CommonResponse<dynamic>>? response = await AppRepository(context).createBidForAuction(body);
-    await response?.fold((error) async {
-      Utils.showMessage(error.message);
-    }, (data) async {
-      isBidPlaced = true;
-      Utils.showMessage(data.message);
-      bidAmountController.clear();
-      Scrollable.ensureVisible(
-        targetKey.currentContext!,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.fastOutSlowIn,
-      );
-    });
+    await response?.fold(
+      (error) async {
+        Utils.showMessage(error.message);
+      },
+      (data) async {
+        isBidPlaced = true;
+        Utils.showMessage(data.message);
+        bidAmountController.clear();
+        Scrollable.ensureVisible(targetKey.currentContext!, duration: const Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+      },
+    );
     await _getDiamondAuctionDetails(context, emit);
   }
 

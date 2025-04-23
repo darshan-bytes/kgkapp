@@ -34,11 +34,7 @@ class ShareOptionSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (title.isNotEmpty)
-                  SmartText(
-                    title,
-                    style: style.titleStyle,
-                  ),
+                if (title.isNotEmpty) SmartText(title, style: style.titleStyle),
                 SizedBox(height: 24.h),
                 _buildShareButtonsRow(style),
                 SizedBox(height: 32.h),

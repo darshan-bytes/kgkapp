@@ -15,13 +15,7 @@ class LanguageListModel {
   final int? limit;
   final int? page;
 
-  LanguageListModel copyWith({
-    int? filteredRecords,
-    int? totalRecords,
-    List<LanguageDatum>? languageData,
-    int? limit,
-    int? page,
-  }) {
+  LanguageListModel copyWith({int? filteredRecords, int? totalRecords, List<LanguageDatum>? languageData, int? limit, int? page}) {
     return LanguageListModel(
       filteredRecords: filteredRecords ?? this.filteredRecords,
       totalRecords: totalRecords ?? this.totalRecords,
@@ -42,12 +36,12 @@ class LanguageListModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "filteredRecords": filteredRecords,
-        "totalRecords": totalRecords,
-        "data": languageData.map((x) => x.toJson()).toList(),
-        "limit": limit,
-        "page": page,
-      };
+    "filteredRecords": filteredRecords,
+    "totalRecords": totalRecords,
+    "data": languageData.map((x) => x.toJson()).toList(),
+    "limit": limit,
+    "page": page,
+  };
 
   @override
   String toString() {
@@ -111,22 +105,22 @@ class LanguageDatum {
   }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "slug": slug,
-        "code": code,
-        "text_direction": textDirection,
-        "date_format": dateFormat,
-        "created_by": createdBy,
-        "updated_by": updatedBy,
-        "status": status,
-        "is_default": isDefault,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "id": id,
-        "flag_icon": flagIcon,
-        "created_by_details": createdByDetails?.toJson(),
-        "updated_by_details": updatedByDetails?.toJson(),
-      };
+    "name": name,
+    "slug": slug,
+    "code": code,
+    "text_direction": textDirection,
+    "date_format": dateFormat,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "status": status,
+    "is_default": isDefault,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "id": id,
+    "flag_icon": flagIcon,
+    "created_by_details": createdByDetails?.toJson(),
+    "updated_by_details": updatedByDetails?.toJson(),
+  };
 
   @override
   String toString() {
@@ -151,6 +145,6 @@ class LanguageDatum {
       name.hashCode ^ slug.hashCode ^ code.hashCode ^ textDirection.hashCode ^ dateFormat.hashCode ^ status.hashCode ^ id.hashCode;
 
   String get mobileSymbol {
-    return code.isNotNullNorEmpty ? (/*code!.toLowerCase().contains('zh') ? code! :*/ code!.split('-').firstOrNull ?? 'en') : 'en';
+    return code.isNotNullNorEmpty ? ( /*code!.toLowerCase().contains('zh') ? code! :*/ code!.split('-').firstOrNull ?? 'en') : 'en';
   }
 }

@@ -61,19 +61,21 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   Completer<bool> isPhoneNumberUsed = Completer<bool>();
 
   List<Country> selectedCountryCodes = [
-    Country.from(json: {
-      "e164_cc": "91",
-      "iso2_cc": "IN",
-      "e164_sc": 0,
-      "geographic": true,
-      "level": 1,
-      "name": "India",
-      "example": "9123456789",
-      "display_name": "India (IN) [+91]",
-      "full_example_with_plus_sign": "+919123456789",
-      "display_name_no_e164_cc": "India (IN)",
-      "e164_key": "91-IN-0",
-    })
+    Country.from(
+      json: {
+        "e164_cc": "91",
+        "iso2_cc": "IN",
+        "e164_sc": 0,
+        "geographic": true,
+        "level": 1,
+        "name": "India",
+        "example": "9123456789",
+        "display_name": "India (IN) [+91]",
+        "full_example_with_plus_sign": "+919123456789",
+        "display_name_no_e164_cc": "India (IN)",
+        "e164_key": "91-IN-0",
+      },
+    ),
   ];
   late Country selectedCountry;
   List<BusinessType> businessTypes = [];
@@ -163,21 +165,22 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(20.r), topEnd: Radius.circular(20.r)),
       ),
-      builder: (context) => Padding(
-        padding: EdgeInsetsDirectional.all(8.0.h),
-        child: ConfirmationDialog(
-          title: APPStrings.areYouSureChangeAccountType.tr,
-          onApproved: () {
-            context.pop();
-            clearField();
-            isIndividual = event.isIndividual;
-            emit(SignUpChangeAccountTypeState(isIndividual));
-          },
-          onDenied: () => context.pop(),
-          onApprovedText: APPStrings.yes.tr,
-          onDeniedText: APPStrings.no.tr,
-        ),
-      ),
+      builder:
+          (context) => Padding(
+            padding: EdgeInsetsDirectional.all(8.0.h),
+            child: ConfirmationDialog(
+              title: APPStrings.areYouSureChangeAccountType.tr,
+              onApproved: () {
+                context.pop();
+                clearField();
+                isIndividual = event.isIndividual;
+                emit(SignUpChangeAccountTypeState(isIndividual));
+              },
+              onDenied: () => context.pop(),
+              onApprovedText: APPStrings.yes.tr,
+              onDeniedText: APPStrings.no.tr,
+            ),
+          ),
     );
   }
 
@@ -240,19 +243,21 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     companyNameController.clear();
     officeLocationController.clear();
     selectedCountryCodes = [
-      Country.from(json: {
-        "e164_cc": "91",
-        "iso2_cc": "IN",
-        "e164_sc": 0,
-        "geographic": true,
-        "level": 1,
-        "name": "India",
-        "example": "9123456789",
-        "display_name": "India (IN) [+91]",
-        "full_example_with_plus_sign": "+919123456789",
-        "display_name_no_e164_cc": "India (IN)",
-        "e164_key": "91-IN-0",
-      })
+      Country.from(
+        json: {
+          "e164_cc": "91",
+          "iso2_cc": "IN",
+          "e164_sc": 0,
+          "geographic": true,
+          "level": 1,
+          "name": "India",
+          "example": "9123456789",
+          "display_name": "India (IN) [+91]",
+          "full_example_with_plus_sign": "+919123456789",
+          "display_name_no_e164_cc": "India (IN)",
+          "e164_key": "91-IN-0",
+        },
+      ),
     ];
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
     for (BusinessType element in businessTypes) {
@@ -488,8 +493,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       (r) async {
         add(const SignUpResetEvent());
         if (isIndividual) {
-          event.context.pushNamedAndRemoveUntil(AppRoutes.otpVerificationPage, (route) => route.settings.name == AppRoutes.signInPage,
-              arguments: {RoutesData.email: emailController.text.trim(), RoutesData.isFromSignIn: false});
+          event.context.pushNamedAndRemoveUntil(
+            AppRoutes.otpVerificationPage,
+            (route) => route.settings.name == AppRoutes.signInPage,
+            arguments: {RoutesData.email: emailController.text.trim(), RoutesData.isFromSignIn: false},
+          );
         } else {
           event.context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
         }
@@ -509,15 +517,18 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         Either<ErrorResponse, CommonResponse>? emailValidationResponse = await UserRepository(event.context).validateEmail(params);
 
         if (!emit.isDone) {
-          await emailValidationResponse?.fold((l) {
-            Utils.showMessage(l.message);
-          }, (r) async {
-            if (isEmailUsed.isCompleted) {
-              isEmailUsed = Completer<bool>();
-            }
-            isEmailUsed.complete(r.responseData['isEmailUsed']);
-            emit(SignUpEmailValidationState(emailValidationFieldType: ValidationFieldType.email, isError: await isEmailUsed.future));
-          });
+          await emailValidationResponse?.fold(
+            (l) {
+              Utils.showMessage(l.message);
+            },
+            (r) async {
+              if (isEmailUsed.isCompleted) {
+                isEmailUsed = Completer<bool>();
+              }
+              isEmailUsed.complete(r.responseData['isEmailUsed']);
+              emit(SignUpEmailValidationState(emailValidationFieldType: ValidationFieldType.email, isError: await isEmailUsed.future));
+            },
+          );
         }
       }
     }
@@ -530,27 +541,37 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (!emit.isDone) {
       emit(SignUpReloadState());
       if (event.phoneNumber.isNotEmpty && CountryUtils.validatePhoneNumber(event.phoneNumber.trim(), "+${selectedCountry.phoneCode}")) {
-        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse =
-            await UserRepository(event.context).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: event.phoneNumber);
+        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse = await UserRepository(
+          event.context,
+        ).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: event.phoneNumber);
 
         if (!emit.isDone) {
-          await phoneNumberValidationResponse?.fold((l) {
-            Utils.showMessage(l.message);
-          }, (r) async {
-            if (isPhoneNumberUsed.isCompleted) {
-              isPhoneNumberUsed = Completer<bool>();
-            }
-            isPhoneNumberUsed.complete(r.responseData);
-            emit(SignUpPhoneNumberValidationState(
-                phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: await isPhoneNumberUsed.future));
-          });
+          await phoneNumberValidationResponse?.fold(
+            (l) {
+              Utils.showMessage(l.message);
+            },
+            (r) async {
+              if (isPhoneNumberUsed.isCompleted) {
+                isPhoneNumberUsed = Completer<bool>();
+              }
+              isPhoneNumberUsed.complete(r.responseData);
+              emit(
+                SignUpPhoneNumberValidationState(
+                  phoneNumberValidationFieldType: ValidationFieldType.phoneNumber,
+                  isError: await isPhoneNumberUsed.future,
+                ),
+              );
+            },
+          );
         }
       } else {
-        emit(SignUpPhoneNumberValidationState(
-          phoneNumberValidationFieldType: ValidationFieldType.phoneNumber,
-          isError: true,
-          errorMessage: APPStrings.errorContactNumberValid.tr,
-        ));
+        emit(
+          SignUpPhoneNumberValidationState(
+            phoneNumberValidationFieldType: ValidationFieldType.phoneNumber,
+            isError: true,
+            errorMessage: APPStrings.errorContactNumberValid.tr,
+          ),
+        );
       }
     }
   }
@@ -639,19 +660,21 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     stateController.clear();
     zipcodeController.clear();
     selectedCountryCodes = [
-      Country.from(json: {
-        "e164_cc": "91",
-        "iso2_cc": "IN",
-        "e164_sc": 0,
-        "geographic": true,
-        "level": 1,
-        "name": "India",
-        "example": "9123456789",
-        "display_name": "India (IN) [+91]",
-        "full_example_with_plus_sign": "+919123456789",
-        "display_name_no_e164_cc": "India (IN)",
-        "e164_key": "91-IN-0",
-      })
+      Country.from(
+        json: {
+          "e164_cc": "91",
+          "iso2_cc": "IN",
+          "e164_sc": 0,
+          "geographic": true,
+          "level": 1,
+          "name": "India",
+          "example": "9123456789",
+          "display_name": "India (IN) [+91]",
+          "full_example_with_plus_sign": "+919123456789",
+          "display_name_no_e164_cc": "India (IN)",
+          "e164_key": "91-IN-0",
+        },
+      ),
     ];
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
     selectFirstBusinessLocation();

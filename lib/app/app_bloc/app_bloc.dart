@@ -61,7 +61,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
     _connectivityStream = _connectivity.onConnectivityChanged;
     _connectivityStream.listen((result) {
-      bool isConnected = result.contains(ConnectivityResult.mobile) ||
+      bool isConnected =
+          result.contains(ConnectivityResult.mobile) ||
           result.contains(ConnectivityResult.wifi) ||
           result.contains(ConnectivityResult.ethernet);
       add(ConnectivityChangedEvent(isConnected));
@@ -142,14 +143,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _languageLabelApiCall(BuildContext context) async {
-    await UserRepository(context)
-        .getLanguageLabels(showLoader: true, language: StorageManager().getLocale()?.code ?? APPStrings.languageEn)
-        .then((value) async {
-      await value?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (r) async {
-        StorageManager().setLanguageLabels(r.responseData);
-      });
+    await UserRepository(
+      context,
+    ).getLanguageLabels(showLoader: true, language: StorageManager().getLocale()?.code ?? APPStrings.languageEn).then((value) async {
+      await value?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (r) async {
+          StorageManager().setLanguageLabels(r.responseData);
+        },
+      );
     });
   }
 
@@ -164,10 +168,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapWatchList(
-    context, {
-    required ProductDetailsModel productDetails,
-  }) {
+  void onTapWatchList(context, {required ProductDetailsModel productDetails}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       add(ProductAddToWatchListEvent(productDetails, context));
@@ -198,47 +199,42 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     emit(AppReloadState());
     Map<String, dynamic> body = {ApiKey.productId_: event.productDetails.suid, ApiKey.commodity: event.productDetails.commodity?.value};
-    await AppRepository(event.context).createWishList(body: body).then(
-      (response) {
-        response?.fold(
-          (l) {},
-          (data) {
-            Utils.showMessage(data.message);
-            WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
-            event.productDetails.wishlistId = model.id;
-            event.productDetails.isFavourite = true;
-            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
-                .add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: model.id ?? ''));
+    await AppRepository(event.context).createWishList(body: body).then((response) {
+      response?.fold((l) {}, (data) {
+        Utils.showMessage(data.message);
+        WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
+        event.productDetails.wishlistId = model.id;
+        event.productDetails.isFavourite = true;
+        BlocProvider.of<WishlistUpdaterServiceBloc>(
+          event.context.mounted ? event.context : getNavigatorKeyContext,
+        ).add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: model.id ?? ''));
 
-            event.onFavTap?.call();
-            emit(const ProductAddToFavoriteState());
-          },
-        );
-      },
-    );
+        event.onFavTap?.call();
+        emit(const ProductAddToFavoriteState());
+      });
+    });
   }
 
   ///for remove product from wishlist
   Future<void> _onProductRemoveFromWishlist(ProductRemoveFromFavoriteEvent event, Emitter<AppState> emit) async {
     emit(AppReloadState());
-    await AppRepository(event.context).deleteWishList(event.productDetails.wishlistId ?? '').then(
-      (response) {
-        response?.fold(
-          (l) {
-            Utils.showMessage(l.message);
-          },
-          (data) {
-            Utils.showMessage(data.message);
-            event.productDetails.isFavourite = false;
-            event.productDetails.wishlistId = "";
-            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
-                .add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: ''));
-            event.onFavTap?.call();
-            emit(const ProductRemoveFromFavoriteState());
-          },
-        );
-      },
-    );
+    await AppRepository(event.context).deleteWishList(event.productDetails.wishlistId ?? '').then((response) {
+      response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (data) {
+          Utils.showMessage(data.message);
+          event.productDetails.isFavourite = false;
+          event.productDetails.wishlistId = "";
+          BlocProvider.of<WishlistUpdaterServiceBloc>(
+            event.context.mounted ? event.context : getNavigatorKeyContext,
+          ).add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: ''));
+          event.onFavTap?.call();
+          emit(const ProductRemoveFromFavoriteState());
+        },
+      );
+    });
   }
 
   // Add to bag event
@@ -290,25 +286,23 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
 
     await AppRepository(event.context.mounted ? event.context : getNavigatorKeyContext).addToBag(body: body).then((response) {
-      response?.fold(
-        (l) => Utils.showMessage(l.message),
-        (data) async {
-          event.productDetails.isAddedToCart = true;
-          MyBagDataModel myBagDataModel = data.responseData;
-          if (myBagDataModel.products.isNotNullNorEmpty) {
-            BlocProvider.of<LandingBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
-                .add(LandingChangeMyBagCountEvent(myBagDataModel.products!.length));
-          }
-          await StorageManager().storeBagData(myBagDataModel);
-          await StorageManager().setBagId(myBagDataModel.sId ?? '');
-          Utils.showMessage(data.message);
-          if (event.isBuyNow) {
-            BuildContext context = event.context.mounted ? event.context : getNavigatorKeyContext;
-            BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
-            context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
-          }
-        },
-      );
+      response?.fold((l) => Utils.showMessage(l.message), (data) async {
+        event.productDetails.isAddedToCart = true;
+        MyBagDataModel myBagDataModel = data.responseData;
+        if (myBagDataModel.products.isNotNullNorEmpty) {
+          BlocProvider.of<LandingBloc>(
+            event.context.mounted ? event.context : getNavigatorKeyContext,
+          ).add(LandingChangeMyBagCountEvent(myBagDataModel.products!.length));
+        }
+        await StorageManager().storeBagData(myBagDataModel);
+        await StorageManager().setBagId(myBagDataModel.sId ?? '');
+        Utils.showMessage(data.message);
+        if (event.isBuyNow) {
+          BuildContext context = event.context.mounted ? event.context : getNavigatorKeyContext;
+          BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+          context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+        }
+      });
     });
   }
 
@@ -320,13 +314,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Map<String, dynamic> body = {ApiKey.id: bagId, ApiKey.suid: suid};
 
     await AppRepository(event.context).deleteBag(body: body).then((response) {
-      response?.fold(
-        (l) => Utils.showMessage(l.message),
-        (data) async {
-          await StorageManager().clearBagData();
-          BlocProvider.of<LandingBloc>(event.context.mounted ? event.context : getNavigatorKeyContext).add(LandingChangeMyBagCountEvent(0));
-        },
-      );
+      response?.fold((l) => Utils.showMessage(l.message), (data) async {
+        await StorageManager().clearBagData();
+        BlocProvider.of<LandingBloc>(event.context.mounted ? event.context : getNavigatorKeyContext).add(LandingChangeMyBagCountEvent(0));
+      });
     });
   }
 
@@ -361,11 +352,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     List<FilterOptionModel> filterList = [];
     Either<ErrorResponse, List<FilterOptionModel>>? response;
     response = await AppRepository(context).fetchFilterOptionList(listType: listType, type: type, subTypeCode: subTypeCode);
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (r) {
-      filterList = r.where((e) => e.filterType != FilterType.undefined).toList();
-    });
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        filterList = r.where((e) => e.filterType != FilterType.undefined).toList();
+      },
+    );
     return filterList;
   }
 
@@ -373,11 +367,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (countryList.isEmpty) {
       Either<ErrorResponse, List<CountryStateModel>>? response;
       response = await AppRepository(context).fetchCountryList();
-      response?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (r) {
-        countryList = r;
-      });
+      response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          countryList = r;
+        },
+      );
     }
     return countryList;
   }
@@ -390,44 +387,57 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     Either<ErrorResponse, List<CountryStateModel>>? response;
     response = await AppRepository(context).fetchStateByCountry(countryCode: countryCode, isShowLoader: isShowLoader);
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (r) {
-      stateList = r;
-      countryStateMap[countryCode] = r;
-    });
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        stateList = r;
+        countryStateMap[countryCode] = r;
+      },
+    );
     return stateList;
   }
 
   Future<List<AddressDetails>> fetchAddressList(BuildContext context, {bool isShowLoader = true, bool isForceFetch = false}) async {
     if (savedAddressList.isEmpty || isForceFetch) {
       Either<ErrorResponse, List<AddressDetails>>? response = await AppRepository(context).fetchAddressList();
-      response?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (r) {
-        savedAddressList = r;
-      });
+      response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          savedAddressList = r;
+        },
+      );
     }
     return savedAddressList;
   }
 
-  Future<List<ShapeMasterDetails>> fetchShapeMasterFilters(BuildContext context,
-      {bool isShowLoader = true, bool isForceFetch = false}) async {
+  Future<List<ShapeMasterDetails>> fetchShapeMasterFilters(
+    BuildContext context, {
+    bool isShowLoader = true,
+    bool isForceFetch = false,
+  }) async {
     List<ShapeMasterDetails> shapeMasterDetails = [];
     try {
       final Map<String, dynamic> body = {
         ApiKey.filters: {ApiKey.dynamicObject: {}},
         ApiKey.pagination: {ApiKey.limit: 100, ApiKey.page: 1},
         ApiKey.search: "",
-        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()},
       };
-      Either<ErrorResponse, PaginationData<ShapeMasterDetails>>? response =
-          await AppRepository(context).shapeMasterFilters(body: body, isShowLoader: isShowLoader);
-      response?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (PaginationData<ShapeMasterDetails> r) {
-        shapeMasterDetails = r.dataList ?? [];
-      });
+      Either<ErrorResponse, PaginationData<ShapeMasterDetails>>? response = await AppRepository(
+        context,
+      ).shapeMasterFilters(body: body, isShowLoader: isShowLoader);
+      response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (PaginationData<ShapeMasterDetails> r) {
+          shapeMasterDetails = r.dataList ?? [];
+        },
+      );
     } catch (e) {
       printWrapped(e.toString());
     }
@@ -438,11 +448,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     List<HomeNewLanuchesDatum> newLaunchedList = [];
     try {
       Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>? response = await AppRepository(context).homePageNewlyLaunches();
-      response?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (PaginationData<HomeNewLanuchesDatum> r) {
-        newLaunchedList = r.dataList ?? [];
-      });
+      response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (PaginationData<HomeNewLanuchesDatum> r) {
+          newLaunchedList = r.dataList ?? [];
+        },
+      );
     } catch (e) {
       printWrapped(e.toString());
     }
@@ -456,24 +469,25 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ApiKey.filters: {ApiKey.dynamicObject: {}},
         ApiKey.pagination: {ApiKey.limit: 10, ApiKey.page: 1},
         ApiKey.search: "",
-        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()},
       };
-      Either<ErrorResponse, PaginationData<HomeGemstonesModel>>? response =
-          await AppRepository(context).homePageShopGemstones(body: body, isShowLoader: isShowLoader);
-      response?.fold(
-        (l) {},
-        (PaginationData<HomeGemstonesModel> r) {
-          commodityMasterDetails = r.dataList ?? [];
-        },
-      );
+      Either<ErrorResponse, PaginationData<HomeGemstonesModel>>? response = await AppRepository(
+        context,
+      ).homePageShopGemstones(body: body, isShowLoader: isShowLoader);
+      response?.fold((l) {}, (PaginationData<HomeGemstonesModel> r) {
+        commodityMasterDetails = r.dataList ?? [];
+      });
     } catch (e) {
       printWrapped(e.toString());
     }
     return commodityMasterDetails;
   }
 
-  Future<String?> handleShareProduct(
-      {required BuildContext context, required ProductDetailsModel productDetails, bool isShowLoading = false}) async {
+  Future<String?> handleShareProduct({
+    required BuildContext context,
+    required ProductDetailsModel productDetails,
+    bool isShowLoading = false,
+  }) async {
     if (isShowLoading) {
       context.setAppLoading(true);
     }
@@ -514,22 +528,25 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Either<ErrorResponse, List<SortOptionsModel>>? response;
     response = await AppRepository(context).getSortingOptions();
 
-    response?.fold((error) {
-      // Utils.showMessage(error.message);
-    }, (sortingOptions) async {
-      /// Create a temporary Map to store sorting data by type
-      Map<String, List<SortOptions>> sortingData = {};
+    response?.fold(
+      (error) {
+        // Utils.showMessage(error.message);
+      },
+      (sortingOptions) async {
+        /// Create a temporary Map to store sorting data by type
+        Map<String, List<SortOptions>> sortingData = {};
 
-      /// Populate the map
-      for (final option in sortingOptions) {
-        if (option.commodity != null) {
-          sortingData[option.commodity!] = option.data;
+        /// Populate the map
+        for (final option in sortingOptions) {
+          if (option.commodity != null) {
+            sortingData[option.commodity!] = option.data;
+          }
         }
-      }
 
-      /// Store the entire map in local storage
-      await StorageManager().setSortingData(sortingData);
-    });
+        /// Store the entire map in local storage
+        await StorageManager().setSortingData(sortingData);
+      },
+    );
   }
 }
 

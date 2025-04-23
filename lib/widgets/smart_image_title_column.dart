@@ -75,10 +75,7 @@ class SmartImageTitleColumn extends StatelessWidget {
         height: height,
         width: width,
         alignment: alignment,
-        decoration: BoxDecoration(
-          borderRadius: borderRadius,
-          color: backgroundColor,
-        ),
+        decoration: BoxDecoration(borderRadius: borderRadius, color: backgroundColor),
         child: Column(
           crossAxisAlignment: crossAxisAlignment,
           children: [
@@ -114,11 +111,7 @@ class SmartImageTitleColumn extends StatelessWidget {
       return topWidget!;
     } else if (imageUrl != null) {
       return Container(
-        decoration: BoxDecoration(
-          border: imageBorder,
-          borderRadius: imageBorderRadius,
-          color: imageColor,
-        ),
+        decoration: BoxDecoration(border: imageBorder, borderRadius: imageBorderRadius, color: imageColor),
         child: SmartImage(
           path: imageUrl!,
           width: imageWidth,

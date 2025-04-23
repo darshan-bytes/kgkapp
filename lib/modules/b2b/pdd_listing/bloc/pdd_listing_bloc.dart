@@ -70,28 +70,39 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
   Future<void> _onPddListReviewStateEvent(PddListReviewStateEvent event, Emitter<PddListingState> emit) async {
     emit(PddListingReloadState());
-    await apiCallForPresentationStatus(emit,
-        context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
+    await apiCallForPresentationStatus(
+      emit,
+      context: event.context,
+      presentationNumber: event.presentationNumber,
+      isApproved: event.isApproved,
+    );
     emit(PddListingLoadedState());
   }
 
-  Future<void> apiCallForPresentationStatus(Emitter<PddListingState> emit,
-      {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
+  Future<void> apiCallForPresentationStatus(
+    Emitter<PddListingState> emit, {
+    required BuildContext context,
+    required String presentationNumber,
+    required bool isApproved,
+  }) async {
     emit(PddListingReloadState());
 
     Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
     Either<ErrorResponse, CommonResponse>? response = await AppRepository(context).apiCallForPresentationStatus(body: body);
-    response?.fold((l) {
-      if (l.code == 403) {
-        Utils.showMessage(l.message);
-      }
-    }, (r) {
-      Presentation presentation = Presentation.fromJson(r.responseData);
-      presentationList[presentationList.indexWhere((element) => element.strPresentationNumber == presentation.presentationNumber)].status =
-          getOrderStatus(orderStatus: presentation.status!);
-      Utils.showMessage(r.message);
-      emit(PddListingLoadedState());
-    });
+    response?.fold(
+      (l) {
+        if (l.code == 403) {
+          Utils.showMessage(l.message);
+        }
+      },
+      (r) {
+        Presentation presentation = Presentation.fromJson(r.responseData);
+        presentationList[presentationList.indexWhere((element) => element.strPresentationNumber == presentation.presentationNumber)]
+            .status = getOrderStatus(orderStatus: presentation.status!);
+        Utils.showMessage(r.message);
+        emit(PddListingLoadedState());
+      },
+    );
     context.pop();
   }
 
@@ -107,23 +118,26 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchPddListingFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? []) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? []) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Get secondary filter data
@@ -170,7 +184,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -204,17 +218,19 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueAsc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()},
     });
     return query;
   }
 
   /// Fetch digital catalogue data
-  Future<void> fetchPresentationList(BuildContext context, Emitter<PddListingState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query, String searchString = ''}) async {
+  Future<void> fetchPresentationList(
+    BuildContext context,
+    Emitter<PddListingState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+    String searchString = '',
+  }) async {
     /// Build the query dynamically
     query = buildQuery(
       filterData: filterData,
@@ -223,18 +239,22 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
       pageLimit: AppConst.pageLimit,
     );
 
-    Either<ErrorResponse, PaginationData<PddDataModel>>? response =
-        await AppRepository(context).getPresentationFilters(body: query, isLoadMore: isLoadMore);
+    Either<ErrorResponse, PaginationData<PddDataModel>>? response = await AppRepository(
+      context,
+    ).getPresentationFilters(body: query, isLoadMore: isLoadMore);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (PaginationData<PddDataModel> success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<PddDataModel> dataList = success.dataList ?? [];
-      presentationList.addAll(_populateDigitalCatalogueList(dataList));
-      gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
-      emit(PddListingLoadedState());
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (PaginationData<PddDataModel> success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        List<PddDataModel> dataList = success.dataList ?? [];
+        presentationList.addAll(_populateDigitalCatalogueList(dataList));
+        gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
+        emit(PddListingLoadedState());
+      },
+    );
   }
 
   ProjectStatus getOrderStatus({required String orderStatus}) {
@@ -291,19 +311,13 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
       String fullName = detail.fullName;
       String imageUrl = detail.profilePic ?? '';
 
-      return B2BItemField(
-        label: APPStrings.assignTo.tr,
-        value: fullName,
-        imageUrl: imageUrl,
-      );
+      return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();
   }
 
   void _navigateToPreview(NavigateToPddPreviewEvent event, Emitter<PddListingState> emit) {
     final presentationNumber = presentationList[event.index].strPresentationNumber;
-    event.context.pushNamed(AppRoutes.presentationPreviewPage, arguments: {
-      RoutesData.presentationId: presentationNumber,
-    });
+    event.context.pushNamed(AppRoutes.presentationPreviewPage, arguments: {RoutesData.presentationId: presentationNumber});
   }
 
   Future<void> _onPddListLoadMoreEvent(PddListLoadMoreEvent event, Emitter<PddListingState> emit) async {
@@ -334,15 +348,19 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
   Future<void> _onPddListDeleteEvent(PddListDeleteEvent event, Emitter<PddListingState> emit) async {
     emit(PddListingReloadState());
-    Either<ErrorResponse, CommonResponse>? response =
-        await AppRepository(event.context).deletePresentationByPresentationNumber(presentationNumber: event.presentationNumber);
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (r) {
-      presentationList.removeWhere((element) => element.strPresentationNumber == event.presentationNumber);
-      event.context.pop();
-      Utils.showMessage(r.message);
-      emit(PddListingLoadedState());
-    });
+    Either<ErrorResponse, CommonResponse>? response = await AppRepository(
+      event.context,
+    ).deletePresentationByPresentationNumber(presentationNumber: event.presentationNumber);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        presentationList.removeWhere((element) => element.strPresentationNumber == event.presentationNumber);
+        event.context.pop();
+        Utils.showMessage(r.message);
+        emit(PddListingLoadedState());
+      },
+    );
   }
 }

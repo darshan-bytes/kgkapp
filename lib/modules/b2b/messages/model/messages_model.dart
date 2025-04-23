@@ -10,8 +10,16 @@ class MessagesModel {
   String? fullMessage;
   List<MessagesDetailsModel>? details = [];
 
-  MessagesModel(
-      {this.id, this.userName, this.userImageUrl, this.message, this.timeAgo, this.isFavorite = false, this.fullMessage, this.details});
+  MessagesModel({
+    this.id,
+    this.userName,
+    this.userImageUrl,
+    this.message,
+    this.timeAgo,
+    this.isFavorite = false,
+    this.fullMessage,
+    this.details,
+  });
 
   @override
   bool operator ==(Object other) {
@@ -50,16 +58,17 @@ class MessagesDetailsModel {
   String? fullMessage;
   GlobalKey<SmartExpansionTileState> messageDetailsKey;
 
-  MessagesDetailsModel(
-      {this.id,
-      this.userName,
-      this.userImageUrl,
-      this.timeAgo,
-      this.toUserName,
-      this.isExpanded = false,
-      this.toMe = false,
-      this.fullMessage,
-      required this.messageDetailsKey});
+  MessagesDetailsModel({
+    this.id,
+    this.userName,
+    this.userImageUrl,
+    this.timeAgo,
+    this.toUserName,
+    this.isExpanded = false,
+    this.toMe = false,
+    this.fullMessage,
+    required this.messageDetailsKey,
+  });
 
   @override
   bool operator ==(Object other) {

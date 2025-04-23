@@ -51,18 +51,10 @@ class SmartRadioButton<T> extends StatelessWidget {
             SizedBox(
               height: 24.w,
               width: 24.w,
-              child: SmartImage(
-                path: isSelected ? AppImages.icRadioSelected : AppImages.icRadio,
-                height: 24.w,
-                width: 24.w,
-              ),
+              child: SmartImage(path: isSelected ? AppImages.icRadioSelected : AppImages.icRadio, height: 24.w, width: 24.w),
             ),
             if (label != null) SizedBox(width: 4.w),
-            if (label != null)
-              SmartText(
-                label,
-                style: style.textStyle.merge(textStyle),
-              ),
+            if (label != null) SmartText(label, style: style.textStyle.merge(textStyle)),
           ],
         ),
       ),

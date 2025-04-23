@@ -140,7 +140,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
         ApiKey.shape: selectedDiamondShape!.shapeCode ?? '',
         ApiKey.min: minPriceController.text.replaceAll(getCurrencySymbol, ''),
         ApiKey.max: maxPriceController.text.replaceAll(getCurrencySymbol, ''),
-        ApiKey.limit: AppConst.pageLimit10000.toString()
+        ApiKey.limit: AppConst.pageLimit10000.toString(),
       };
       await fetchOrionList(event.context, emit, body, isLoadMore: false);
     }
@@ -156,42 +156,46 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     emit(const OrionProductLoadedState());
   }
 
-  Future<void> fetchDiamondList(BuildContext context, Emitter<OrionState> emit,
-      {bool isLoadMore = false, Map<String, String>? query}) async {
+  Future<void> fetchDiamondList(
+    BuildContext context,
+    Emitter<OrionState> emit, {
+    bool isLoadMore = false,
+    Map<String, String>? query,
+  }) async {
     Either<ErrorResponse, DiamondListingModel>? response;
     query ??= {};
-    response = await AppRepository(context).fetchDiamondList(
-      page: AppConst.page1.toString(),
-      limit: AppConst.pageLimit50.toString(),
-      isLoadMore: isLoadMore,
-      query: query,
-    );
+    response = await AppRepository(
+      context,
+    ).fetchDiamondList(page: AppConst.page1.toString(), limit: AppConst.pageLimit50.toString(), isLoadMore: isLoadMore, query: query);
 
     await _handleDiamondListResponse(emit: emit, response: response);
   }
 
   /// Handle diamond list response
-  Future<void> _handleDiamondListResponse(
-      {required Either<ErrorResponse, DiamondListingModel>? response, required Emitter<OrionState> emit}) async {
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      final diamondList = success.data;
+  Future<void> _handleDiamondListResponse({
+    required Either<ErrorResponse, DiamondListingModel>? response,
+    required Emitter<OrionState> emit,
+  }) async {
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        final diamondList = success.data;
 
-      /// Show the total number of records in the UI side
-      totalFilteredRecords = success.filteredRecords;
-      productList.addAll(
-        diamondList.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
-      );
+        /// Show the total number of records in the UI side
+        totalFilteredRecords = success.filteredRecords;
+        productList.addAll(diamondList.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList());
 
-      /// Here sometime the pagination is not completed and called multiple times so we have managed it
-      if (paginationScrollController.isPageLoaded.isCompleted) {
-        paginationScrollController.isPageLoaded = Completer<bool>();
-      }
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(const OrionDiamondListLoadedState());
-    });
+        /// Here sometime the pagination is not completed and called multiple times so we have managed it
+        if (paginationScrollController.isPageLoaded.isCompleted) {
+          paginationScrollController.isPageLoaded = Completer<bool>();
+        }
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(const OrionDiamondListLoadedState());
+      },
+    );
   }
 
   /// Helper Function: Convert Gemstone Data to ProductDetailsModel
@@ -239,21 +243,25 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
 
   Future<void> fetchUniqueShapes(context, Emitter<OrionState> emit) async {
     Either<ErrorResponse, List<OrionShapeModel>>? response = await AppRepository(context).fetchUniqueShapes();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (r) async {
-      List<OrionShapeModel> shapeList = r;
-      for (int i = 0; i < shapeList.length; i++) {
-        ProductCustomizationOptionValues value = ProductCustomizationOptionValues(
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        List<OrionShapeModel> shapeList = r;
+        for (int i = 0; i < shapeList.length; i++) {
+          ProductCustomizationOptionValues value = ProductCustomizationOptionValues(
             id: i.toString(),
             value: shapeList[i].shape.isNotNullNorEmpty ? shapeList[i].shape : '-',
             shapeCode: shapeList[i].shapeCode.isNotNullNorEmpty ? shapeList[i].shapeCode : '',
             image: shapeList[i].imgPath?.setMediaUrl,
-            availableProductCount: shapeList[i].count != null ? shapeList[i].count!.toInt() : 0);
-        diamondShapeList.add(value);
-      }
-      if (diamondShapeList.isNotEmpty) selectedDiamondShape = diamondShapeList.first;
-    });
+            availableProductCount: shapeList[i].count != null ? shapeList[i].count!.toInt() : 0,
+          );
+          diamondShapeList.add(value);
+        }
+        if (diamondShapeList.isNotEmpty) selectedDiamondShape = diamondShapeList.first;
+      },
+    );
   }
 
   Future<void> fetchOrionList(context, Emitter<OrionState> emit, Map<String, String> body, {bool isLoadMore = true}) async {
@@ -317,14 +325,16 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
         // );
 
         // Add the data to chartData
-        chartData.add(ChartDataModel(
-          size,
-          double.parse(item.discountPrice!.replaceAll(',', '')),
-          orionDataModel: item,
-          // cutModel: cutModel,
-          // clarityModel: clarityModel,
-          // colorModel: colorModel,
-        ));
+        chartData.add(
+          ChartDataModel(
+            size,
+            double.parse(item.discountPrice!.replaceAll(',', '')),
+            orionDataModel: item,
+            // cutModel: cutModel,
+            // clarityModel: clarityModel,
+            // colorModel: colorModel,
+          ),
+        );
       }
 
       // Adjust maximum X axis after processing all items
@@ -379,7 +389,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
         ApiKey.shape: selectedDiamondShape!.shapeCode ?? '',
         ApiKey.min: minPriceController.text.replaceAll(getCurrencySymbol, ''),
         ApiKey.max: maxPriceController.text.replaceAll(getCurrencySymbol, ''),
-        ApiKey.limit: AppConst.pageLimit10000.toString()
+        ApiKey.limit: AppConst.pageLimit10000.toString(),
       };
       await fetchOrionList(event.context, emit, body);
       add(OrionDiamondCalculateDotPositionsEvent(context: event.context));
@@ -477,10 +487,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       final Size size = renderBox.size;
 
       // Constrain the pin position within the chart area
-      newPosition = Offset(
-        newPosition.dx.clamp(0, size.width),
-        newPosition.dy.clamp(0, size.height - 44.w),
-      );
+      newPosition = Offset(newPosition.dx.clamp(0, size.width), newPosition.dy.clamp(0, size.height - 44.w));
     }
 
     // Calculate the current price based on the pin position
@@ -583,9 +590,10 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   Future<void> calculateDotPositions(BuildContext context, Emitter<OrionState> emit) async {
     dotPositions.clear();
     if (chartSeriesController != null) {
-      dotPositions = chartData.map((point) {
-        return chartSeriesController!.pointToPixel(CartesianChartPoint<num>(x: point.x, y: point.y ?? 0));
-      }).toList();
+      dotPositions =
+          chartData.map((point) {
+            return chartSeriesController!.pointToPixel(CartesianChartPoint<num>(x: point.x, y: point.y ?? 0));
+          }).toList();
 
       if (chartData.isNotEmpty) {
         currentPrice = chartData[pointIndex ?? 0].y ?? 0;
@@ -612,29 +620,25 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   /// _getOrionDetails
   Future<void> _getOrionDetails(BuildContext context, int? myIndex) async {
     Either<ErrorResponse, CommonResponse<OrionDetailModel>>? response = await AppRepository(context).fetchOrionDetails(
-        discountPrice: chartData[myIndex ?? 0].orionDataModel?.rate.toString() ?? "0.0",
-        caratWeight: chartData[myIndex ?? 0].orionDataModel?.ctsOrGms.toString() ?? "0.0");
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (r) async {
-      // Handle the response
+      discountPrice: chartData[myIndex ?? 0].orionDataModel?.rate.toString() ?? "0.0",
+      caratWeight: chartData[myIndex ?? 0].orionDataModel?.ctsOrGms.toString() ?? "0.0",
+    );
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        // Handle the response
 
-      selectedCutModel = CutModel(
-        id: 0,
-        name: r.responseData.first.cuts.first.toString(),
-        description: 'Very sparkly',
-      );
-      selectedColorModel = ColorModel(
-        id: 0,
-        name: r.responseData.first.colors.first.toString(),
-        description: 'Colorless',
-      );
-      selectedClarityModel = ClarityModel(
-        id: 0,
-        name: r.responseData.first.clarity.first.toString(),
-        description: 'Very slightly included',
-      );
-    });
+        selectedCutModel = CutModel(id: 0, name: r.responseData.first.cuts.first.toString(), description: 'Very sparkly');
+        selectedColorModel = ColorModel(id: 0, name: r.responseData.first.colors.first.toString(), description: 'Colorless');
+        selectedClarityModel = ClarityModel(
+          id: 0,
+          name: r.responseData.first.clarity.first.toString(),
+          description: 'Very slightly included',
+        );
+      },
+    );
   }
 
   Future<void> _onOrionDiamondCalculateDotPositionsEvent(OrionDiamondCalculateDotPositionsEvent event, Emitter<OrionState> emit) async {
@@ -664,8 +668,13 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     if (pointIndex != null && chartSeriesController != null) {
       CartesianChartPoint<dynamic> dragPoint = chartSeriesController!.pixelToPoint(event.tapArgs.position);
 
-      chartData[pointIndex!] = ChartDataModel(dragPoint.x, dragPoint.y as double?,
-          cutModel: selectedCutModel, clarityModel: selectedClarityModel, colorModel: selectedColorModel);
+      chartData[pointIndex!] = ChartDataModel(
+        dragPoint.x,
+        dragPoint.y as double?,
+        cutModel: selectedCutModel,
+        clarityModel: selectedClarityModel,
+        colorModel: selectedColorModel,
+      );
     }
 
     // Todo : Add logic to update the chart
@@ -681,7 +690,9 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   }
 
   Future<void> _onOrionDiamondChartTouchInteractionDownEvent(
-      OrionDiamondChartTouchInteractionDownEvent event, Emitter<OrionState> emit) async {
+    OrionDiamondChartTouchInteractionDownEvent event,
+    Emitter<OrionState> emit,
+  ) async {
     emit(const OrionReloadedState());
 
     pinPosition = event.tapArgs.position;
@@ -695,8 +706,13 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     if (pointIndex != null && chartSeriesController != null) {
       CartesianChartPoint<dynamic> dragPoint = chartSeriesController!.pixelToPoint(event.tapArgs.position);
 
-      chartData[pointIndex!] = ChartDataModel(dragPoint.x, dragPoint.y as double?,
-          cutModel: selectedCutModel, clarityModel: selectedClarityModel, colorModel: selectedColorModel);
+      chartData[pointIndex!] = ChartDataModel(
+        dragPoint.x,
+        dragPoint.y as double?,
+        cutModel: selectedCutModel,
+        clarityModel: selectedClarityModel,
+        colorModel: selectedColorModel,
+      );
     }
     //_getOrionDetails(event.context);
     emit(const OrionDiamondMovedState());
@@ -722,9 +738,12 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
 
   Future<void> _onOrionDiamondOnPointTapEvent(OrionDiamondOnPointTapEvent event, Emitter<OrionState> emit) async {
     emit(const OrionReloadedState());
-    pinPosition = chartSeriesController!.pointToPixel(CartesianChartPoint<num>(
+    pinPosition = chartSeriesController!.pointToPixel(
+      CartesianChartPoint<num>(
         x: event.pointDetails.dataPoints?[(event.pointDetails.viewportPointIndex ?? 0).toInt()].x,
-        y: event.pointDetails.dataPoints?[(event.pointDetails.viewportPointIndex ?? 0).toInt()].y ?? 0));
+        y: event.pointDetails.dataPoints?[(event.pointDetails.viewportPointIndex ?? 0).toInt()].y ?? 0,
+      ),
+    );
 
     snapPinToNearestPoint(event.context, emit);
     await _getOrionDetails(event.context, event.index);

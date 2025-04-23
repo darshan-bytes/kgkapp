@@ -58,7 +58,9 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
   }
 
   Future<void> _onManufacturerOrderListLoadMoreEvent(
-      ManufacturerOrderListLoadMoreEvent event, Emitter<ManufacturerOrderListingState> emit) async {
+    ManufacturerOrderListLoadMoreEvent event,
+    Emitter<ManufacturerOrderListingState> emit,
+  ) async {
     emit(const ManufacturerOrderListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     manufacturerOrderList.addAll(_generateManufacturerOrderList());
@@ -75,7 +77,9 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
   }
 
   Future<void> _onManufacturerOrderListPullToRefreshEvent(
-      ManufacturerOrderListPullToRefreshEvent event, Emitter<ManufacturerOrderListingState> emit) async {
+    ManufacturerOrderListPullToRefreshEvent event,
+    Emitter<ManufacturerOrderListingState> emit,
+  ) async {
     emit(const ManufacturerOrderListReloadState());
     await Future.delayed(const Duration(seconds: 2));
     paginationScrollController.pullToRefresh();

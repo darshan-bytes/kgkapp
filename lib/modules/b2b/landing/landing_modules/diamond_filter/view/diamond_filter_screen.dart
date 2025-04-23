@@ -35,26 +35,26 @@ class DiamondFilterScreen extends StatelessWidget {
                   padding: EdgeInsetsDirectional.all(16.w),
                   color: style.backgroundColor,
                   child: BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-                    buildWhen: (previous, current) =>
-                        current is DiamondFilterDataLoadedState ||
-                        current is DiamondFilterDataSelectedState ||
-                        current is SecondaryFilterDataFetchedState,
+                    buildWhen:
+                        (previous, current) =>
+                            current is DiamondFilterDataLoadedState ||
+                            current is DiamondFilterDataSelectedState ||
+                            current is SecondaryFilterDataFetchedState,
                     builder: (context, state) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           if (diamondFilterBloc.isCheckbox) ...[
                             SmartTextField.search(
-                              hintText:
-                                  APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
+                              hintText: APPStrings.searchByX.tr.interpolate([
+                                diamondFilterBloc.selectedFilterData?.name?.toLowerCase() ?? '',
+                              ]),
                               controller: diamondFilterBloc.searchController,
                               enabledBorderRadius: 8.r,
                             ),
                             SizedBox(height: 16.h),
                           ],
-                          Expanded(
-                            child: _buildSubFilterList(context, diamondFilterBloc, style),
-                          ),
+                          Expanded(child: _buildSubFilterList(context, diamondFilterBloc, style)),
                         ],
                       );
                     },
@@ -68,14 +68,7 @@ class DiamondFilterScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
-          decoration: BoxDecoration(
-            color: style.backgroundColor,
-            border: BorderDirectional(
-              top: BorderSide(
-                color: style.itemBorderColor,
-              ),
-            ),
-          ),
+          decoration: BoxDecoration(color: style.backgroundColor, border: BorderDirectional(top: BorderSide(color: style.itemBorderColor))),
           child: Row(
             children: [
               Expanded(
@@ -120,20 +113,17 @@ class DiamondFilterScreen extends StatelessWidget {
               bool isSelected = diamondFilterBloc.selectedFilterData == filterData;
               bool isAdvanceFilter = filterData.isAdvanceFilter ?? false;
               return InkWell(
-                onTap: isAdvanceFilter
-                    ? null
-                    : () {
-                        diamondFilterBloc.add(SelectDiamondFilterDataEvent(context: context, filterData: filterData));
-                      },
+                onTap:
+                    isAdvanceFilter
+                        ? null
+                        : () {
+                          diamondFilterBloc.add(SelectDiamondFilterDataEvent(context: context, filterData: filterData));
+                        },
                 child: Container(
                   padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 16.w),
                   decoration: BoxDecoration(
                     color: isAdvanceFilter ? style.advancedFilterBackgroundColor : (isSelected ? style.selectedBackgroundColor : null),
-                    border: BorderDirectional(
-                      bottom: BorderSide(
-                        color: style.itemBorderColor,
-                      ),
-                    ),
+                    border: BorderDirectional(bottom: BorderSide(color: style.itemBorderColor)),
                   ),
                   child: SmartText(
                     filterData.name,
@@ -150,10 +140,11 @@ class DiamondFilterScreen extends StatelessWidget {
 
   Widget _buildSubFilterList(BuildContext context, DiamondFilterBloc diamondFilterBloc, FilterStyle style) {
     return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-      buildWhen: (previous, current) =>
-          current is SearchDiamondFilterDataState ||
-          current is DiamondFilterDataSelectedState ||
-          current is SecondaryFilterDataFetchedState,
+      buildWhen:
+          (previous, current) =>
+              current is SearchDiamondFilterDataState ||
+              current is DiamondFilterDataSelectedState ||
+              current is SecondaryFilterDataFetchedState,
       builder: (context, state) {
         if (diamondFilterBloc.isLoading) {
           return const SmartCircularProgressIndicator();
@@ -206,18 +197,15 @@ class DiamondFilterScreen extends StatelessWidget {
               },
               child: Container(
                 padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 16.w),
-                decoration: BoxDecoration(
-                  border: BorderDirectional(
-                    bottom: BorderSide(color: style.itemBorderColor),
-                  ),
-                ),
+                decoration: BoxDecoration(border: BorderDirectional(bottom: BorderSide(color: style.itemBorderColor))),
                 child: Row(
                   children: [
                     SmartCheckbox(
-                        value: secondaryFilterData.isSelected,
-                        onChanged: (value) {
-                          handleOnChange(diamondFilterBloc, secondaryFilterData);
-                        }),
+                      value: secondaryFilterData.isSelected,
+                      onChanged: (value) {
+                        handleOnChange(diamondFilterBloc, secondaryFilterData);
+                      },
+                    ),
                     SizedBox(width: 8.w),
                     if (secondaryFilterData.image.isNotNullNorEmpty) ...[
                       Padding(

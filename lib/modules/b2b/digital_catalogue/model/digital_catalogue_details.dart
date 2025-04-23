@@ -77,53 +77,43 @@ class DigitalCatalogueDetails {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "name": name,
-        "catalogue_type": catalogueType,
-        "csc_code": cscCode,
-        "valid_from": validFrom?.toIso8601String(),
-        "valid_to": validTo?.toIso8601String(),
-        "is_public": isPublic,
-        "created_by": createdBy,
-        "updated_by": updatedBy,
-        "status": status,
-        "template_id": templateId,
-        "products": products.map((x) => x.toJson()).toList(),
-        "deleted": deleted,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "shared_with": sharedWith.map((x) => x).toList(),
-        "__v": v,
-        "catalogue_cover_image": catalogueCoverImage,
-        "is_viewer": isViewer,
-        "is_editable": isEditable,
-        "created_by_details": createdByDetails?.toJson(),
-        "updated_by_details": updatedByDetails?.toJson(),
-      };
+    "_id": id,
+    "name": name,
+    "catalogue_type": catalogueType,
+    "csc_code": cscCode,
+    "valid_from": validFrom?.toIso8601String(),
+    "valid_to": validTo?.toIso8601String(),
+    "is_public": isPublic,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "status": status,
+    "template_id": templateId,
+    "products": products.map((x) => x.toJson()).toList(),
+    "deleted": deleted,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "shared_with": sharedWith.map((x) => x).toList(),
+    "__v": v,
+    "catalogue_cover_image": catalogueCoverImage,
+    "is_viewer": isViewer,
+    "is_editable": isEditable,
+    "created_by_details": createdByDetails?.toJson(),
+    "updated_by_details": updatedByDetails?.toJson(),
+  };
 }
 
 class CatalogueProduct {
-  CatalogueProduct({
-    required this.productId,
-  });
+  CatalogueProduct({required this.productId});
 
   final String? productId;
 
-  CatalogueProduct copyWith({
-    String? productId,
-  }) {
-    return CatalogueProduct(
-      productId: productId ?? this.productId,
-    );
+  CatalogueProduct copyWith({String? productId}) {
+    return CatalogueProduct(productId: productId ?? this.productId);
   }
 
   factory CatalogueProduct.fromJson(Map<String, dynamic> json) {
-    return CatalogueProduct(
-      productId: json["product_id"],
-    );
+    return CatalogueProduct(productId: json["product_id"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "product_id": productId,
-      };
+  Map<String, dynamic> toJson() => {"product_id": productId};
 }

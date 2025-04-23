@@ -4,11 +4,7 @@ class SizeReportingWidget extends StatefulWidget {
   final Widget child;
   final ValueChanged<Size> onSizeChange;
 
-  const SizeReportingWidget({
-    super.key,
-    required this.child,
-    required this.onSizeChange,
-  });
+  const SizeReportingWidget({super.key, required this.child, required this.onSizeChange});
 
   @override
   SizeReportingWidgetState createState() => SizeReportingWidgetState();
@@ -26,12 +22,7 @@ class SizeReportingWidgetState extends State<SizeReportingWidget> {
         WidgetsBinding.instance.addPostFrameCallback((_) => _notifySize());
         return true;
       },
-      child: SizeChangedLayoutNotifier(
-        child: Container(
-          key: _widgetKey,
-          child: widget.child,
-        ),
-      ),
+      child: SizeChangedLayoutNotifier(child: Container(key: _widgetKey, child: widget.child)),
     );
   }
 

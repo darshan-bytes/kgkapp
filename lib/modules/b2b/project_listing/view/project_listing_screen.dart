@@ -23,10 +23,7 @@ class ProjectListingScreen extends StatelessWidget {
               if (state is ProjectListingLoadedState) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildSearchTextField(projectListingBloc),
-                    _buildProjectList(projectListingBloc),
-                  ],
+                  children: [_buildSearchTextField(projectListingBloc), _buildProjectList(projectListingBloc)],
                 );
               } else {
                 return const SmartCircularProgressIndicator();
@@ -100,12 +97,7 @@ class ProjectListingScreen extends StatelessWidget {
             child: FilterBottomActionBar(
               controller: projectListingBloc.paginationScrollController.controller,
               onFilterTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
-                );
+                Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
               },
             ),
           );

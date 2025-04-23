@@ -64,8 +64,12 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildManufacturerOrderListItem(ManufacturerOrderDetailsBloc bloc, BuildContext context, int index,
-      {bool showDeleteButton = true}) {
+  Widget _buildManufacturerOrderListItem(
+    ManufacturerOrderDetailsBloc bloc,
+    BuildContext context,
+    int index, {
+    bool showDeleteButton = true,
+  }) {
     final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
     ManufacturerOrderDetailsModel model = bloc.orderList[index];
     return GestureDetector(
@@ -89,21 +93,10 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                     SmartImage(path: model.orderProductImage ?? '', height: 32.w, width: 32.w),
                     SizedBox(width: 8.w),
                     Expanded(
-                      child: SmartText(
-                        model.orderId ?? '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: style.headingStyle,
-                      ),
+                      child: SmartText(model.orderId ?? '', maxLines: 1, overflow: TextOverflow.ellipsis, style: style.headingStyle),
                     ),
                     SizedBox(width: 8.w),
-                    if (showDeleteButton)
-                      SmartImage(
-                        path: AppImages.icDelete,
-                        onTap: () {},
-                        height: 18.w,
-                        width: 18.w,
-                      ),
+                    if (showDeleteButton) SmartImage(path: AppImages.icDelete, onTap: () {}, height: 18.w, width: 18.w),
                   ],
                 ),
                 SizedBox(height: 16.h),
@@ -112,8 +105,12 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                   children: [
                     Expanded(child: _buildManufacturerDetailColumn(APPStrings.shape.tr, model.orderProductShape ?? '', style)),
                     Expanded(
-                        child: _buildManufacturerDetailColumn(
-                            APPStrings.certificateNumber.tr, model.orderProductCertificateNumber ?? '', style)),
+                      child: _buildManufacturerDetailColumn(
+                        APPStrings.certificateNumber.tr,
+                        model.orderProductCertificateNumber ?? '',
+                        style,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 16.h),
@@ -121,7 +118,8 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        child: _buildManufacturerDetailColumn(APPStrings.measurements.tr, model.orderProductMeasurements ?? '', style)),
+                      child: _buildManufacturerDetailColumn(APPStrings.measurements.tr, model.orderProductMeasurements ?? '', style),
+                    ),
                     Expanded(child: _buildManufacturerDetailColumn(APPStrings.lab.tr, model.orderProductLab ?? '', style)),
                   ],
                 ),
@@ -152,54 +150,78 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                 ),
                 bloc.orderList[index].isShowMore ? SizedBox(height: 16.h) : const SizedBox.shrink(),
                 AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
-                    child: bloc.orderList[index].isShowMore
-                        ? Column(children: [
-                            const Divider(),
-                            SizedBox(height: 16.h),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(child: _buildManufacturerDetailColumn(APPStrings.ct.tr, model.orderProductCt ?? '', style)),
-                                Expanded(
-                                    child: _buildManufacturerDetailColumn(APPStrings.colour.tr, model.orderProductColour ?? '', style)),
-                                Expanded(
-                                    child: _buildManufacturerDetailColumn(APPStrings.clarity.tr, model.orderProductClarity ?? '', style)),
-                                Expanded(child: _buildManufacturerDetailColumn(APPStrings.cut.tr, model.orderProductCut ?? '', style)),
-                              ],
-                            ),
-                            SizedBox(height: 16.h),
-                            const Divider(),
-                            SizedBox(height: 16.h),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(child: _buildManufacturerDetailColumn(APPStrings.rap.tr, model.orderProductRap ?? '', style)),
-                                Expanded(
-                                    child: _buildManufacturerDetailColumn(APPStrings.discount.tr, model.orderProductDiscount ?? '', style,
-                                        isDiscount: true)),
-                                Expanded(
-                                    child:
-                                        _buildManufacturerDetailColumn(APPStrings.kgkAmount.tr, model.orderProductKgkAmount ?? '', style)),
-                              ],
-                            ),
-                            SizedBox(height: 16.h),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
+                  duration: const Duration(milliseconds: 300),
+                  child:
+                      bloc.orderList[index].isShowMore
+                          ? Column(
+                            children: [
+                              const Divider(),
+                              SizedBox(height: 16.h),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(child: _buildManufacturerDetailColumn(APPStrings.ct.tr, model.orderProductCt ?? '', style)),
+                                  Expanded(
+                                    child: _buildManufacturerDetailColumn(APPStrings.colour.tr, model.orderProductColour ?? '', style),
+                                  ),
+                                  Expanded(
+                                    child: _buildManufacturerDetailColumn(APPStrings.clarity.tr, model.orderProductClarity ?? '', style),
+                                  ),
+                                  Expanded(child: _buildManufacturerDetailColumn(APPStrings.cut.tr, model.orderProductCut ?? '', style)),
+                                ],
+                              ),
+                              SizedBox(height: 16.h),
+                              const Divider(),
+                              SizedBox(height: 16.h),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(child: _buildManufacturerDetailColumn(APPStrings.rap.tr, model.orderProductRap ?? '', style)),
+                                  Expanded(
                                     child: _buildManufacturerDetailColumn(
-                                        APPStrings.yourPercentage.tr, model.orderProductYourPercentage ?? '', style,
-                                        isTextFormField: true)),
-                                Expanded(
-                                    child: _buildManufacturerDetailColumn(APPStrings.yourRate.tr, model.orderProductYourRate ?? '', style)),
-                                Expanded(
-                                    child:
-                                        _buildManufacturerDetailColumn(APPStrings.yourValue.tr, model.orderProductYourValue ?? '', style)),
-                              ],
-                            ),
-                          ])
-                        : const SizedBox.shrink()),
+                                      APPStrings.discount.tr,
+                                      model.orderProductDiscount ?? '',
+                                      style,
+                                      isDiscount: true,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: _buildManufacturerDetailColumn(
+                                      APPStrings.kgkAmount.tr,
+                                      model.orderProductKgkAmount ?? '',
+                                      style,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16.h),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: _buildManufacturerDetailColumn(
+                                      APPStrings.yourPercentage.tr,
+                                      model.orderProductYourPercentage ?? '',
+                                      style,
+                                      isTextFormField: true,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: _buildManufacturerDetailColumn(APPStrings.yourRate.tr, model.orderProductYourRate ?? '', style),
+                                  ),
+                                  Expanded(
+                                    child: _buildManufacturerDetailColumn(
+                                      APPStrings.yourValue.tr,
+                                      model.orderProductYourValue ?? '',
+                                      style,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                          : const SizedBox.shrink(),
+                ),
               ],
             );
           },
@@ -208,42 +230,42 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildManufacturerDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
-      {bool isTextFormField = false, bool isDiscount = false}) {
+  Widget _buildManufacturerDetailColumn(
+    String title,
+    String? value,
+    MyBagDiamondItemStyle style, {
+    bool isTextFormField = false,
+    bool isDiscount = false,
+  }) {
     return Padding(
       padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartText(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: style.titleStyle,
-          ),
+          SmartText(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.titleStyle),
           SizedBox(height: 4.h),
           isTextFormField && value != null
               ? SizedBox(
-                  width: 56.w,
-                  child: SmartTextField(
-                    height: 32.h,
-                    contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
-                    isEnabled: false,
-                    cursorHeight: 16.h,
-                    controller: TextEditingController(text: value),
-                    disabledBorderColor: style.borderColor,
-                    textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
-                    keyboardType: TextInputType.number,
-                    onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-                    style: style.subTitleStyle,
-                  ),
-                )
-              : SmartText(
-                  value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: isDiscount ? style.richTextStyle : style.subTitleStyle,
+                width: 56.w,
+                child: SmartTextField(
+                  height: 32.h,
+                  contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
+                  isEnabled: false,
+                  cursorHeight: 16.h,
+                  controller: TextEditingController(text: value),
+                  disabledBorderColor: style.borderColor,
+                  textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.number,
+                  onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+                  style: style.subTitleStyle,
                 ),
+              )
+              : SmartText(
+                value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: isDiscount ? style.richTextStyle : style.subTitleStyle,
+              ),
         ],
       ),
     );
@@ -264,14 +286,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
             ),
           ),
           SizedBox(width: 16.0.w),
-          SelectionButton(
-            width: 48.w,
-            imageHeight: 24.5.w,
-            imageWidth: 24.5.w,
-            isSelected: false,
-            image: AppImages.icMenu,
-            onTap: () {},
-          ),
+          SelectionButton(width: 48.w, imageHeight: 24.5.w, imageWidth: 24.5.w, isSelected: false, image: AppImages.icMenu, onTap: () {}),
         ],
       ),
     );
@@ -292,15 +307,9 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SmartText(
-                      '#14567',
-                      style: style.orderIdStyle,
-                    ),
+                    SmartText('#14567', style: style.orderIdStyle),
                     SizedBox(height: 4.h),
-                    SmartText(
-                      "Ordered on: 17/03/23 10:00 PM",
-                      style: style.orderDateStyle,
-                    )
+                    SmartText("Ordered on: 17/03/23 10:00 PM", style: style.orderDateStyle),
                   ],
                 ),
               ),
@@ -329,49 +338,63 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildManufacturerOrderCreatorDetailsInfoCard(
-      ManufacturerOrderDetailsBloc bloc, BuildContext context, OrderDetailScreenStyle style) {
+    ManufacturerOrderDetailsBloc bloc,
+    BuildContext context,
+    OrderDetailScreenStyle style,
+  ) {
     return Padding(
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildCreatorDetailItem(
-              title: APPStrings.customerName.tr, iconImage: "https://i.ibb.co/MRrjy5G/image-466.png", value: "Entice", style: style),
+            title: APPStrings.customerName.tr,
+            iconImage: "https://i.ibb.co/MRrjy5G/image-466.png",
+            value: "Entice",
+            style: style,
+          ),
           SizedBox(height: 24.h),
           _buildCreatorDetailItem(title: APPStrings.mobileNumber.tr, iconImage: AppImages.icPhone, value: "(406) 555-0120", style: style),
           SizedBox(height: 24.h),
           _buildCreatorDetailItem(
-              title: APPStrings.billingAddress.tr, value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ", style: style),
+            title: APPStrings.billingAddress.tr,
+            value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ",
+            style: style,
+          ),
           SizedBox(height: 12.h),
           _buildCreatorDetailItem(
-              title: APPStrings.shippingAddress.tr, value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ", style: style),
+            title: APPStrings.shippingAddress.tr,
+            value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ",
+            style: style,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildDetailColumn(String title, String? value, OrderDetailScreenStyle style,
-      {bool isStatus = false, bool totalAmount = false, CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start}) {
+  Widget _buildDetailColumn(
+    String title,
+    String? value,
+    OrderDetailScreenStyle style, {
+    bool isStatus = false,
+    bool totalAmount = false,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start,
+  }) {
     return Padding(
       padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: crossAxisAlignment,
         children: [
-          SmartText(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: style.orderItemLabelStyle,
-          ),
+          SmartText(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.orderItemLabelStyle),
           SizedBox(height: 4.h),
           isStatus
               ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
               : SmartText(
-                  value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
-                ),
+                value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
+              ),
         ],
       ),
     );
@@ -382,16 +405,8 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 120.w,
-          child: SmartText(
-            title,
-            style: style.orderItemLabelStyle,
-          ),
-        ),
-        SizedBox(
-          width: 16.w,
-        ),
+        SizedBox(width: 120.w, child: SmartText(title, style: style.orderItemLabelStyle)),
+        SizedBox(width: 16.w),
         Expanded(
           child: Row(
             children: [
@@ -402,22 +417,12 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50.r),
                     child: Container(
                       alignment: AlignmentDirectional.center,
-                      child: SmartImage(
-                        path: iconImage,
-                        fit: BoxFit.fill,
-                        height: 24.w,
-                        width: 24.w,
-                      ),
+                      child: SmartImage(path: iconImage, fit: BoxFit.fill, height: 24.w, width: 24.w),
                     ),
                   ),
                 ),
               if (value != null)
-                Flexible(
-                  child: SmartText(
-                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                    style: style.orderItemValueStyle,
-                  ),
-                ),
+                Flexible(child: SmartText(value.isNullOrEmpty ? APPStrings.dash.tr : value, style: style.orderItemValueStyle)),
             ],
           ),
         ),
@@ -443,16 +448,30 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                _showTrackBottomSheet(context, bloc);
-              }),
-              _buildPopupOption(context,
-                  text: APPStrings.orderTimeline.tr.toLowerCase().capitalizeFirst, style: orderPopupStyle.optionTextStyle, onTap: () {
-                context.popAndPushNamed(AppRoutes.orderTimelinePage);
-              }),
-              _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
-                _showCancelBottomSheet(context, bloc);
-              }),
+              _buildPopupOption(
+                context,
+                text: APPStrings.trackOrder.tr,
+                style: orderPopupStyle.optionTextStyle,
+                onTap: () {
+                  _showTrackBottomSheet(context, bloc);
+                },
+              ),
+              _buildPopupOption(
+                context,
+                text: APPStrings.orderTimeline.tr.toLowerCase().capitalizeFirst,
+                style: orderPopupStyle.optionTextStyle,
+                onTap: () {
+                  context.popAndPushNamed(AppRoutes.orderTimelinePage);
+                },
+              ),
+              _buildPopupOption(
+                context,
+                text: APPStrings.cancelOrder.tr,
+                style: orderPopupStyle.cancelTextStyle,
+                onTap: () {
+                  _showCancelBottomSheet(context, bloc);
+                },
+              ),
             ],
           ),
         );
@@ -467,10 +486,11 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => BlocProvider<ManufacturerOrderDetailsBloc>(
-        create: (context) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
-        child: const TrackManufacturerOrderBottomSheet(),
-      ),
+      builder:
+          (context) => BlocProvider<ManufacturerOrderDetailsBloc>(
+            create: (context) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
+            child: const TrackManufacturerOrderBottomSheet(),
+          ),
     );
   }
 
@@ -499,8 +519,13 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     return const RetailerOrderCancelBottomSheet();
   }
 
-  Widget _buildPopupOption(BuildContext context,
-      {required String text, required TextStyle style, EdgeInsetsGeometry? padding, required VoidCallback onTap}) {
+  Widget _buildPopupOption(
+    BuildContext context, {
+    required String text,
+    required TextStyle style,
+    EdgeInsetsGeometry? padding,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -521,9 +546,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SmartText(APPStrings.cancelItemList.tr, style: style.cancelListTextStyle),
-          SizedBox(
-            height: 22.h,
-          ),
+          SizedBox(height: 22.h),
           BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
             buildWhen: (prev, current) => current is ManufacturerOrderDataFetchedState,
             builder: (context, state) {
@@ -549,7 +572,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
             children: [
               _buildTextInfoColumn(APPStrings.totalStones.tr, '15', style),
               SizedBox(width: 12.w),
-              _buildTextInfoColumn(APPStrings.origTotalDiscount.tr, '-0.45%', style)
+              _buildTextInfoColumn(APPStrings.origTotalDiscount.tr, '-0.45%', style),
             ],
           ),
           SizedBox(height: 12.h),
@@ -584,17 +607,9 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SmartText(
-          title,
-          style: style.bottomBarTotalTextStyle,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        SmartText(title, style: style.bottomBarTotalTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
         SizedBox(height: 8.h),
-        SmartText(
-          value,
-          style: style.textInfoValueStyle,
-        ),
+        SmartText(value, style: style.textInfoValueStyle),
       ],
     );
     return isExpanded ? Expanded(child: view) : view;

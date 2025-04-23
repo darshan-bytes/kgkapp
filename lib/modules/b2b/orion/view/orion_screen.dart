@@ -62,12 +62,13 @@ class OrionScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: BlocBuilder<OrionBloc, OrionState>(
-        buildWhen: (previous, current) =>
-            current is OrionDiamondListLoadedState ||
-            current is OrionProductLoadedState ||
-            current is OrionChangeListingTypeState ||
-            current is OrionListLoadingMoreState ||
-            current is OrionListLoadedMoreState,
+        buildWhen:
+            (previous, current) =>
+                current is OrionDiamondListLoadedState ||
+                current is OrionProductLoadedState ||
+                current is OrionChangeListingTypeState ||
+                current is OrionListLoadingMoreState ||
+                current is OrionListLoadedMoreState,
         builder: (context, state) {
           if (orionBloc.productList.isEmpty &&
               (state is StoneDiamondListLoadedState || state is StoneProductLoadedState || state is StoneChangeListingTypeState)) {
@@ -82,23 +83,28 @@ class OrionScreen extends StatelessWidget {
                     SizedBox(height: 24.h),
                   ],
                   SmartGridView(
-                      items: orionBloc.productList.map((ProductDetailsModel productDetails) {
-                    return ProductGridItem(
-                      productDetails: productDetails,
-                      isCrtAndGramVisible: false,
-                      onTap: () {
-                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                          RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
-                          RoutesData.productId: productDetails.productId
-                        });
-                      },
-                      onEyeTap: () {},
-                      isFavourite: productDetails.isFavourite,
-                      onFavTap: () {},
-                    );
-                  }).toList()),
+                    items:
+                        orionBloc.productList.map((ProductDetailsModel productDetails) {
+                          return ProductGridItem(
+                            productDetails: productDetails,
+                            isCrtAndGramVisible: false,
+                            onTap: () {
+                              context.pushNamed(
+                                AppRoutes.productDetailsPage,
+                                arguments: {
+                                  RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
+                                  RoutesData.productId: productDetails.productId,
+                                },
+                              );
+                            },
+                            onEyeTap: () {},
+                            isFavourite: productDetails.isFavourite,
+                            onFavTap: () {},
+                          );
+                        }).toList(),
+                  ),
                   if (state is OrionListLoadingMoreState) const SmartCircularProgressIndicator(),
-                  SizedBox(height: 17.h)
+                  SizedBox(height: 17.h),
                 ],
               );
             } else {
@@ -118,11 +124,8 @@ class OrionScreen extends StatelessWidget {
                       final product = orionBloc.productList[index];
 
                       /// Attributes list for stone info
-                      List<String> attributes = [
-                        product.color,
-                        product.clarity,
-                        product.cut,
-                      ].where((attr) => attr != null).map((attr) => attr!).toList();
+                      List<String> attributes =
+                          [product.color, product.clarity, product.cut].where((attr) => attr != null).map((attr) => attr!).toList();
 
                       return ProductInfoItem(
                         isFromBag: false,
@@ -167,16 +170,15 @@ class OrionScreen extends StatelessWidget {
                         onTapMenuButton: () {
                           Utils.showSmartModalBottomSheet(
                             context: context,
-                            builder: (_) => ProductMenuBottomSheet(
-                              mainContext: context,
-                              productDetails: product,
-                            ),
+                            builder: (_) => ProductMenuBottomSheet(mainContext: context, productDetails: product),
                           );
                         },
                         isSelectedBackground: (index % 2 != 0),
                         onTap: () {
-                          context.pushNamed(AppRoutes.productDetailsPage,
-                              arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+                          context.pushNamed(
+                            AppRoutes.productDetailsPage,
+                            arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds},
+                          );
                         },
                         productDetails: ProductDetailsModel(
                           suid: product.suid,
@@ -220,7 +222,7 @@ class OrionScreen extends StatelessWidget {
                     separatorBuilder: (context, index) => SizedBox(height: 17.h),
                   ),
                   if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
-                  SizedBox(height: 17.h)
+                  SizedBox(height: 17.h),
                 ],
               );
             }
@@ -239,8 +241,10 @@ class OrionScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([orionBloc.totalFilteredRecords]),
-                  style: style.filterProductCountTextStyle),
+              SmartText(
+                APPStrings.showingListLengthX.tr.interpolate([orionBloc.totalFilteredRecords]),
+                style: style.filterProductCountTextStyle,
+              ),
               Row(
                 children: [
                   SelectionButton(
@@ -277,7 +281,7 @@ class OrionScreen extends StatelessWidget {
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         );
@@ -298,8 +302,11 @@ class OrionScreen extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
       itemBuilder: (context, index) {
         return BlocBuilder<OrionBloc, OrionState>(
-          buildWhen: (previous, current) =>
-              previous != current && current is OrionDiamondShapeChangedState && (current.newIndex == index || current.oldIndex == index),
+          buildWhen:
+              (previous, current) =>
+                  previous != current &&
+                  current is OrionDiamondShapeChangedState &&
+                  (current.newIndex == index || current.oldIndex == index),
           builder: (context, state) {
             ProductCustomizationOptionValues value = bloc.diamondShapeList[index];
             bool isSelected = bloc.selectedDiamondShape == value;
@@ -320,13 +327,17 @@ class OrionScreen extends StatelessWidget {
                   children: [
                     SmartImage(path: value.image ?? '', height: 48.h, width: 48.w, fit: BoxFit.contain),
                     SizedBox(height: 8.h),
-                    SmartText(value.value,
-                        style: isSelected ? style.selectedDiamondSelectionTitleStyle : style.diamondSelectionTitleStyle,
-                        textAlign: TextAlign.center),
+                    SmartText(
+                      value.value,
+                      style: isSelected ? style.selectedDiamondSelectionTitleStyle : style.diamondSelectionTitleStyle,
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(height: 4.h),
-                    SmartText(value.availableProductCount.toString(),
-                        style: isSelected ? style.selectedDiamondSelectionValueStyle : style.diamondSelectionValueStyle,
-                        textAlign: TextAlign.center),
+                    SmartText(
+                      value.availableProductCount.toString(),
+                      style: isSelected ? style.selectedDiamondSelectionValueStyle : style.diamondSelectionValueStyle,
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               ),
@@ -396,7 +407,7 @@ class OrionScreen extends StatelessWidget {
                           textInputAction: TextInputAction.done,
                           maxLength: 5,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -445,10 +456,7 @@ class OrionScreen extends StatelessWidget {
                       maximum: bloc.maximumXAxis,
                       interval: 1,
                       axisLabelFormatter: (AxisLabelRenderDetails details) {
-                        return ChartAxisLabel(
-                          '${details.value.toInt()} ct',
-                          const TextStyle(color: Colors.black),
-                        );
+                        return ChartAxisLabel('${details.value.toInt()} ct', const TextStyle(color: Colors.black));
                       },
                       axisLine: const AxisLine(width: 0),
                       majorGridLines: const MajorGridLines(width: 0),
@@ -520,11 +528,7 @@ class OrionScreen extends StatelessWidget {
                         onPanEnd: (details) {
                           bloc.add(OrionDiamondSnapNearestPoint(context: context));
                         },
-                        child: SmartImage(
-                          path: AppImages.icDiamond,
-                          width: 40.w,
-                          height: 40.w,
-                        ),
+                        child: SmartImage(path: AppImages.icDiamond, width: 40.w, height: 40.w),
                       ),
                     ),
                   ),
@@ -546,15 +550,12 @@ class OrionScreen extends StatelessWidget {
                     "${APPStrings.price.tr}: ${bloc.currentPrice.toStringAsFixed(2).setCurrency}",
                     style: style.selectionTitleStyle,
                   ),
-                  SmartText(
-                    "${APPStrings.carat.tr}: ${bloc.currentCarat.toStringAsFixed(2)} ct",
-                    style: style.selectionTitleStyle,
-                  ),
+                  SmartText("${APPStrings.carat.tr}: ${bloc.currentCarat.toStringAsFixed(2)} ct", style: style.selectionTitleStyle),
                 ],
               ),
             );
           },
-        )
+        ),
       ],
     );
   }

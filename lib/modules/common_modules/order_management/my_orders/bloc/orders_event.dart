@@ -73,6 +73,7 @@ final class OrdersListSearchEvent extends OrdersEvent {
 final class NavigateToOrderDetailsEvent extends OrdersEvent {
   final String uniqueId;
   final BuildContext context;
+
   const NavigateToOrderDetailsEvent({required this.context, required this.uniqueId});
 
   @override

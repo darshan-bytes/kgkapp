@@ -13,10 +13,7 @@ class ChangePasswordBottomSheet extends StatelessWidget {
         padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w, vertical: 16.h),
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(12.r),
-            topEnd: Radius.circular(12.r),
-          ),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
         ),
         child: SafeArea(
           child: Column(
@@ -38,10 +35,7 @@ class ChangePasswordBottomSheet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SmartText(
-          APPStrings.changePassword.tr,
-          style: style.bottomTitleStyle,
-        ),
+        SmartText(APPStrings.changePassword.tr, style: style.bottomTitleStyle),
         SmartImage(
           path: AppImages.icCross,
           height: 24.w,
@@ -67,8 +61,8 @@ class ChangePasswordBottomSheet extends StatelessWidget {
 
   Widget _buildCurrentPasswordField(ProfileBloc profileBloc) {
     return BlocBuilder<ProfileBloc, ProfileState>(
-      buildWhen: (previous, current) =>
-          current is ChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.currentPassword,
+      buildWhen:
+          (previous, current) => current is ChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.currentPassword,
       builder: (context, state) {
         return SmartTextField(
           errorText: profileBloc.currentPasswordError,
@@ -116,8 +110,8 @@ class ChangePasswordBottomSheet extends StatelessWidget {
 
   Widget _buildConfirmPasswordField(ProfileBloc profileBloc) {
     return BlocBuilder<ProfileBloc, ProfileState>(
-      buildWhen: (previous, current) =>
-          current is ChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.confirmPassword,
+      buildWhen:
+          (previous, current) => current is ChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.confirmPassword,
       builder: (context, state) {
         return SmartTextField(
           errorText: profileBloc.confirmPasswordError,

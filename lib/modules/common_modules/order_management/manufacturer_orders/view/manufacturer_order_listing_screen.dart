@@ -32,10 +32,7 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
               if (state is ManufacturerOrderListingLoadedState) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildSearchTextField(bloc, context),
-                    Expanded(child: _buildManufacturerOrderList(bloc)),
-                  ],
+                  children: [_buildSearchTextField(bloc, context), Expanded(child: _buildManufacturerOrderList(bloc))],
                 );
               } else {
                 return const SmartCircularProgressIndicator();
@@ -78,14 +75,7 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
           ),
         ),
         SizedBox(width: 16.0.w),
-        SelectionButton(
-          width: 48.w,
-          imageHeight: 24.5.w,
-          imageWidth: 24.5.w,
-          isSelected: false,
-          image: AppImages.icMenu,
-          onTap: () {},
-        ),
+        SelectionButton(width: 48.w, imageHeight: 24.5.w, imageWidth: 24.5.w, isSelected: false, image: AppImages.icMenu, onTap: () {}),
       ],
     );
   }
@@ -102,34 +92,38 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
             await bloc.pullToRefresh();
           },
           child: ListView.builder(
-              shrinkWrap: true,
-              controller: bloc.paginationScrollController.scrollController,
-              itemCount: bloc.manufacturerOrderList.length,
-              itemBuilder: (context, index) {
-                B2BCustomListingDataModel orderItem = bloc.manufacturerOrderList[index];
-                return BlocBuilder<ManufacturerOrderListingBloc, ManufacturerOrderListingState>(
-                  buildWhen: (previous, current) =>
-                      current is ManufacturerOrderListLoadedMoreState || current is ManufacturerOrderListLoadingMoreState,
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        B2BListingItem(
-                          margin: EdgeInsetsDirectional.only(bottom: 16.0.h),
-                          type: B2BListingType.manufacturerOrderListingType,
-                          listingItemModel: orderItem,
-                          onTapMenuButton: () {},
-                          onTap: () {
-                            context.pushNamed(AppRoutes.manufacturerOrderDetailsPage,
-                                arguments: {RoutesData.isPageFor: ScreenIdentifier.cancelOrderForManufacturer});
-                          },
-                        ),
-                        if (index == bloc.manufacturerOrderList.length - 1 && state is ManufacturerOrderListLoadingMoreState)
-                          const SmartCircularProgressIndicator(),
-                      ],
-                    );
-                  },
-                );
-              }),
+            shrinkWrap: true,
+            controller: bloc.paginationScrollController.scrollController,
+            itemCount: bloc.manufacturerOrderList.length,
+            itemBuilder: (context, index) {
+              B2BCustomListingDataModel orderItem = bloc.manufacturerOrderList[index];
+              return BlocBuilder<ManufacturerOrderListingBloc, ManufacturerOrderListingState>(
+                buildWhen:
+                    (previous, current) =>
+                        current is ManufacturerOrderListLoadedMoreState || current is ManufacturerOrderListLoadingMoreState,
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      B2BListingItem(
+                        margin: EdgeInsetsDirectional.only(bottom: 16.0.h),
+                        type: B2BListingType.manufacturerOrderListingType,
+                        listingItemModel: orderItem,
+                        onTapMenuButton: () {},
+                        onTap: () {
+                          context.pushNamed(
+                            AppRoutes.manufacturerOrderDetailsPage,
+                            arguments: {RoutesData.isPageFor: ScreenIdentifier.cancelOrderForManufacturer},
+                          );
+                        },
+                      ),
+                      if (index == bloc.manufacturerOrderList.length - 1 && state is ManufacturerOrderListLoadingMoreState)
+                        const SmartCircularProgressIndicator(),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         );
       },
     );
@@ -143,16 +137,15 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
           width: 120.w,
           child: SmartDropDown<ManufacturerOrderModel>(
             border: BorderDirectional(
-                end: BorderSide(color: style.dividerColor),
-                top: BorderSide(color: style.dividerColor),
-                bottom: BorderSide(color: style.dividerColor)),
+              end: BorderSide(color: style.dividerColor),
+              top: BorderSide(color: style.dividerColor),
+              bottom: BorderSide(color: style.dividerColor),
+            ),
             borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
-            items: bloc.orderTypeList.map((ManufacturerOrderModel type) {
-              return SmartDropDownItem<ManufacturerOrderModel>(
-                value: type,
-                title: type.name,
-              );
-            }).toList(),
+            items:
+                bloc.orderTypeList.map((ManufacturerOrderModel type) {
+                  return SmartDropDownItem<ManufacturerOrderModel>(value: type, title: type.name);
+                }).toList(),
             onChanged: (type) {
               if (type != null) {
                 bloc.add(ManufacturerChangeOrdersTypeEvent(type));
@@ -171,17 +164,13 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is ManufacturerOrderListingLoadedState) {
           return SafeArea(
-              child: FilterBottomActionBar(
-            controller: bloc.paginationScrollController.controller,
-            onFilterTap: () {
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => FilterScreen(
-                  onApply: () {},
-                ),
-              );
-            },
-          ));
+            child: FilterBottomActionBar(
+              controller: bloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
+              },
+            ),
+          );
         } else {
           return const SizedBox.shrink();
         }

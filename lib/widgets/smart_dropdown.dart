@@ -55,13 +55,7 @@ class SmartDropDown<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: isExpanded ? CrossAxisAlignment.stretch : CrossAxisAlignment.start,
       children: [
-        if (labelText != null) ...[
-          SmartText(
-            labelText!,
-            style: style.labelStyle,
-          ),
-          SizedBox(height: 8.h),
-        ],
+        if (labelText != null) ...[SmartText(labelText!, style: style.labelStyle), SizedBox(height: 8.h)],
         InkWell(
           focusNode: focusNode,
           onTap: () {
@@ -84,9 +78,7 @@ class SmartDropDown<T> extends StatelessWidget {
             Utils.showSmartModalBottomSheet(
               context: context,
               // isScrollControlled: scrollDirection == Axis.horizontal,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(16.0.r)),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(16.0.r))),
 
               builder: (context) {
                 return view;
@@ -99,26 +91,19 @@ class SmartDropDown<T> extends StatelessWidget {
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
-              border: border ??
-                  Border.all(
-                    color: style.enabledTextFieldBorderColor,
-                  ),
+              border: border ?? Border.all(color: style.enabledTextFieldBorderColor),
             ),
             child: _getTitleView(textFieldStyle: style, isIcArrowDropDown: isIcArrowDropDown, title: title, hintText: hintText),
           ),
         ),
         AnimatedSize(
-            duration: Duration(milliseconds: 200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: errorText.isNotNullNorEmpty
-                  ? [
-                      SizedBox(height: 8.h),
-                      SmartText(errorText!, style: style.errorStyle),
-                    ]
-                  : [],
-            )),
+          duration: Duration(milliseconds: 200),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: errorText.isNotNullNorEmpty ? [SizedBox(height: 8.h), SmartText(errorText!, style: style.errorStyle)] : [],
+          ),
+        ),
       ],
     );
   }
@@ -187,14 +172,13 @@ class SmartDropDownView<T> extends StatelessWidget {
     return Padding(
       padding: EdgeInsetsDirectional.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
       child: Container(
-        constraints:
-            BoxConstraints(maxHeight: context.height * 0.75, minHeight: (context.height * 0.75) - MediaQuery.viewInsetsOf(context).bottom),
+        constraints: BoxConstraints(
+          maxHeight: context.height * 0.75,
+          minHeight: (context.height * 0.75) - MediaQuery.viewInsetsOf(context).bottom,
+        ),
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(6.r),
-            topEnd: Radius.circular(6.r),
-          ),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r)),
         ),
         padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 24.h),
         child: SafeArea(
@@ -202,10 +186,7 @@ class SmartDropDownView<T> extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (hintText.isNotNullNorEmpty) ...[
-                SmartText(hintText!, style: style.labelStyle),
-                SizedBox(height: 16.h),
-              ],
+              if (hintText.isNotNullNorEmpty) ...[SmartText(hintText!, style: style.labelStyle), SizedBox(height: 16.h)],
               // Conditionally display the search field
               if (canSearch) ...[
                 SmartTextField.search(
@@ -225,11 +206,9 @@ class SmartDropDownView<T> extends StatelessWidget {
                   return filteredItems.isNotEmpty
                       ? Flexible(child: _buildItemList(filteredItems, style, context))
                       : SizedBox(
-                          height: 200.h,
-                          child: NoDataFoundWidget(
-                            text: noDataFoundText.isNotNullNorEmpty ? noDataFoundText : APPStrings.noDataFound.tr,
-                          ),
-                        );
+                        height: 200.h,
+                        child: NoDataFoundWidget(text: noDataFoundText.isNotNullNorEmpty ? noDataFoundText : APPStrings.noDataFound.tr),
+                      );
                 },
               ),
             ],
@@ -259,10 +238,7 @@ class SmartDropDownView<T> extends StatelessWidget {
             alignment: AlignmentDirectional.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),
-              border: Border.all(
-                color: isSelected ? style.selectedBorderColor : style.unSelectedBorderColor,
-                width: 1.w,
-              ),
+              border: Border.all(color: isSelected ? style.selectedBorderColor : style.unSelectedBorderColor, width: 1.w),
             ),
             padding: EdgeInsetsDirectional.all(12.w),
             child: Row(
@@ -275,39 +251,24 @@ class SmartDropDownView<T> extends StatelessWidget {
         );
 
         if (scrollDirection == Axis.horizontal) {
-          child = ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: 50.w,
-              maxHeight: 50.h,
-            ),
-            child: child,
-          );
+          child = ConstrainedBox(constraints: BoxConstraints(minWidth: 50.w, maxHeight: 50.h), child: child);
         }
 
         return child;
       },
-      separatorBuilder: (context, index) => SizedBox(
-        height: scrollDirection == Axis.vertical ? 8.h : 0,
-        width: scrollDirection == Axis.horizontal ? 8.w : 0,
-      ),
+      separatorBuilder:
+          (context, index) =>
+              SizedBox(height: scrollDirection == Axis.vertical ? 8.h : 0, width: scrollDirection == Axis.horizontal ? 8.w : 0),
     );
 
     return Scrollbar(
       thumbVisibility: true,
       controller: _scrollController,
       scrollbarOrientation: scrollDirection == Axis.horizontal ? ScrollbarOrientation.bottom : ScrollbarOrientation.right,
-      child: scrollDirection == Axis.horizontal
-          ? Padding(
-              padding: EdgeInsetsDirectional.only(bottom: 16.h),
-              child: SizedBox(
-                height: 50.w,
-                child: child,
-              ),
-            )
-          : Padding(
-              padding: EdgeInsetsDirectional.only(end: 10.w),
-              child: child,
-            ),
+      child:
+          scrollDirection == Axis.horizontal
+              ? Padding(padding: EdgeInsetsDirectional.only(bottom: 16.h), child: SizedBox(height: 50.w, child: child))
+              : Padding(padding: EdgeInsetsDirectional.only(end: 10.w), child: child),
     );
   }
 }
@@ -317,9 +278,5 @@ class SmartDropDownItem<T> {
   final T? value;
   final bool enabled;
 
-  const SmartDropDownItem({
-    required this.title,
-    this.value,
-    this.enabled = true,
-  });
+  const SmartDropDownItem({required this.title, this.value, this.enabled = true});
 }

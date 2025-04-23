@@ -4,11 +4,7 @@ class ProductSelectedSettings extends StatelessWidget {
   final VoidCallback onTap;
   final SelectedSettings selectedSettings;
 
-  const ProductSelectedSettings({
-    super.key,
-    required this.onTap,
-    required this.selectedSettings,
-  });
+  const ProductSelectedSettings({super.key, required this.onTap, required this.selectedSettings});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +12,7 @@ class ProductSelectedSettings extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SmartImage(
-          path: selectedSettings.image ?? '',
-          height: 24.w,
-          width: 24.w,
-          color: selectedSettings.imageColor,
-        ),
+        SmartImage(path: selectedSettings.image ?? '', height: 24.w, width: 24.w, color: selectedSettings.imageColor),
         SizedBox(width: 12.w),
         Expanded(
           child: Column(

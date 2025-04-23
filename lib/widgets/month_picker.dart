@@ -40,30 +40,25 @@ class SmartMonthYearPicker extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (labelText != null) ...[
-          SmartText(
-            labelText!,
-            style: textFieldStyle.labelStyle,
-          ),
-          SizedBox(height: 8.h),
-        ],
+        if (labelText != null) ...[SmartText(labelText!, style: textFieldStyle.labelStyle), SizedBox(height: 8.h)],
         InkWell(
           focusNode: focusNode,
           onTap: () {
             Utils.showSmartModalBottomSheet(
-                context: context,
-                isScrollControlled: false,
-                builder: (context) {
-                  return CustomMonthYearPicker(
-                    initialDate: selectedDate.value ?? DateTime.now(),
-                    onDateChanged: (date) {
-                      selectedDate.value = date;
-                      onDateChanged(date);
-                    },
-                    maxYear: maxYear,
-                    minYear: minYear,
-                  );
-                });
+              context: context,
+              isScrollControlled: false,
+              builder: (context) {
+                return CustomMonthYearPicker(
+                  initialDate: selectedDate.value ?? DateTime.now(),
+                  onDateChanged: (date) {
+                    selectedDate.value = date;
+                    onDateChanged(date);
+                  },
+                  maxYear: maxYear,
+                  minYear: minYear,
+                );
+              },
+            );
           },
           child: Container(
             height: buttonHeight ?? 48.w,
@@ -71,24 +66,22 @@ class SmartMonthYearPicker extends StatelessWidget {
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
-              border: border ??
-                  Border.all(
-                    color: textFieldStyle.enabledTextFieldBorderColor,
-                  ),
+              border: border ?? Border.all(color: textFieldStyle.enabledTextFieldBorderColor),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: ValueListenableBuilder(
-                      valueListenable: selectedDate,
-                      builder: (context, value, child) {
-                        return SmartText(
-                          selectedDate.value != null
-                              ? "${selectedDate.value!.month}/${selectedDate.value!.year}"
-                              : hintText ?? APPStrings.select.tr,
-                          style: selectedDate.value != null ? textFieldStyle.textStyle : textFieldStyle.hintStyle,
-                        );
-                      }),
+                    valueListenable: selectedDate,
+                    builder: (context, value, child) {
+                      return SmartText(
+                        selectedDate.value != null
+                            ? "${selectedDate.value!.month}/${selectedDate.value!.year}"
+                            : hintText ?? APPStrings.select.tr,
+                        style: selectedDate.value != null ? textFieldStyle.textStyle : textFieldStyle.hintStyle,
+                      );
+                    },
+                  ),
                 ),
                 const SmartImage(path: AppImages.icArrowDropDown),
               ],
@@ -108,13 +101,7 @@ class CustomMonthYearPicker extends StatelessWidget {
   final ValueNotifier<int> selectedMonth = ValueNotifier<int>(0);
   final ValueNotifier<int> selectedYear = ValueNotifier<int>(0);
 
-  CustomMonthYearPicker({
-    super.key,
-    required this.initialDate,
-    required this.onDateChanged,
-    this.minYear = 1900,
-    this.maxYear = 2100,
-  }) {
+  CustomMonthYearPicker({super.key, required this.initialDate, required this.onDateChanged, this.minYear = 1900, this.maxYear = 2100}) {
     selectedMonth.value = initialDate.month;
     selectedYear.value = initialDate.year;
   }
@@ -148,22 +135,26 @@ class CustomMonthYearPicker extends StatelessWidget {
                             SizedBox(
                               height: 250.h,
                               child: ValueListenableBuilder(
-                                  valueListenable: selectedMonth,
-                                  builder: (context, value, child) {
-                                    return CupertinoPicker(
-                                      scrollController: FixedExtentScrollController(initialItem: selectedMonth.value - 1),
-                                      itemExtent: 32.h,
-                                      looping: true,
-                                      onSelectedItemChanged: (int value) {
-                                        selectedMonth.value = value + 1;
-                                      },
-                                      children: List<Widget>.generate(12, (int index) {
-                                        return Center(
-                                            child: SmartText(DateTime(selectedYear.value, index + 1, 1).monthNameFull,
-                                                style: TextStyle(fontSize: 20.sp)));
-                                      }),
-                                    );
-                                  }),
+                                valueListenable: selectedMonth,
+                                builder: (context, value, child) {
+                                  return CupertinoPicker(
+                                    scrollController: FixedExtentScrollController(initialItem: selectedMonth.value - 1),
+                                    itemExtent: 32.h,
+                                    looping: true,
+                                    onSelectedItemChanged: (int value) {
+                                      selectedMonth.value = value + 1;
+                                    },
+                                    children: List<Widget>.generate(12, (int index) {
+                                      return Center(
+                                        child: SmartText(
+                                          DateTime(selectedYear.value, index + 1, 1).monthNameFull,
+                                          style: TextStyle(fontSize: 20.sp),
+                                        ),
+                                      );
+                                    }),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -175,20 +166,21 @@ class CustomMonthYearPicker extends StatelessWidget {
                             SizedBox(
                               height: 250.h,
                               child: ValueListenableBuilder(
-                                  valueListenable: selectedYear,
-                                  builder: (context, value, child) {
-                                    return CupertinoPicker(
-                                      scrollController: FixedExtentScrollController(initialItem: selectedYear.value - minYear),
-                                      itemExtent: 32.h,
-                                      looping: false,
-                                      onSelectedItemChanged: (int value) {
-                                        selectedYear.value = minYear + value;
-                                      },
-                                      children: List<Widget>.generate(maxYear - minYear, (int index) {
-                                        return Center(child: SmartText("${minYear + index}", style: TextStyle(fontSize: 20.sp)));
-                                      }),
-                                    );
-                                  }),
+                                valueListenable: selectedYear,
+                                builder: (context, value, child) {
+                                  return CupertinoPicker(
+                                    scrollController: FixedExtentScrollController(initialItem: selectedYear.value - minYear),
+                                    itemExtent: 32.h,
+                                    looping: false,
+                                    onSelectedItemChanged: (int value) {
+                                      selectedYear.value = minYear + value;
+                                    },
+                                    children: List<Widget>.generate(maxYear - minYear, (int index) {
+                                      return Center(child: SmartText("${minYear + index}", style: TextStyle(fontSize: 20.sp)));
+                                    }),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -197,22 +189,24 @@ class CustomMonthYearPicker extends StatelessWidget {
                   ),
                   SizedBox(height: 16.h),
                   SmartButton(
-                      onTap: () {
-                        onDateChanged(DateTime(selectedYear.value, selectedMonth.value, 1));
-                        context.pop();
-                      },
-                      title: APPStrings.ok.tr),
+                    onTap: () {
+                      onDateChanged(DateTime(selectedYear.value, selectedMonth.value, 1));
+                      context.pop();
+                    },
+                    title: APPStrings.ok.tr,
+                  ),
                 ],
               ),
               Align(
                 alignment: AlignmentDirectional.topEnd,
                 child: SmartImage(
-                    path: AppImages.icCross,
-                    width: 24.w,
-                    height: 24.w,
-                    onTap: () {
-                      context.pop();
-                    }),
+                  path: AppImages.icCross,
+                  width: 24.w,
+                  height: 24.w,
+                  onTap: () {
+                    context.pop();
+                  },
+                ),
               ),
             ],
           ),

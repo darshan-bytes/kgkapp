@@ -26,24 +26,23 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
 
     emit(ForgotPasswordLoadingState());
 
-    Map<String, dynamic> params = {
-      ApiKey.email: emailController.text.trim(),
-    };
+    Map<String, dynamic> params = {ApiKey.email: emailController.text.trim()};
 
-    await UserRepository(event.context).forgotPassword(params).then(
-      (result) {
-        result?.fold((l) {
+    await UserRepository(event.context).forgotPassword(params).then((result) {
+      result?.fold(
+        (l) {
           Utils.showMessage(l.message);
-        }, (r) async {
+        },
+        (r) async {
           emit(ForgotPasswordSuccessState());
           if (!event.isFromResend) {
             event.context.pushNamed(AppRoutes.emailSentPage);
             await Future.delayed(const Duration(milliseconds: 500));
           }
           Utils.showMessage(r.message);
-        });
-      },
-    );
+        },
+      );
+    });
   }
 
   /// Check email & password validations as needed

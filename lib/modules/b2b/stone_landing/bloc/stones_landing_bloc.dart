@@ -86,9 +86,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       return ProductDetailsModel(
         productId: item.suid ?? '',
         subTitle: item.productDescription ?? '',
-        imageUrl: item.multipleFinishedViewImage.isNotEmpty && item.multipleFinishedViewImage.first.imageAvailable == "Yes"
-            ? (item.multipleFinishedViewImage.first.imageUrl ?? '')
-            : '',
+        imageUrl:
+            item.multipleFinishedViewImage.isNotEmpty && item.multipleFinishedViewImage.first.imageAvailable == "Yes"
+                ? (item.multipleFinishedViewImage.first.imageUrl ?? '')
+                : '',
         originalPrice: item.finalPrice?.toStringAsFixed(2).setCurrency,
         finalPrice: item.discountPrice?.toStringAsFixed(2).setCurrency,
       );
@@ -147,12 +148,15 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   // Fetch Strapi data
   Future<void> fetchStrapiDataForDiamond(BuildContext context, Emitter<StonesLandingState> emit) async {
     await AppRepository(context).fetchStrapiDiamondLandingData().then((value) {
-      value.fold((l) {
-        emit(DiamondStrapiDataErrorState(errorResponse: l));
-        Utils.showMessage(l.message);
-      }, (r) {
-        diamondStrapiList = r;
-      });
+      value.fold(
+        (l) {
+          emit(DiamondStrapiDataErrorState(errorResponse: l));
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          diamondStrapiList = r;
+        },
+      );
     });
     emit(const DiamondStrapiDataFetchedState());
   }
@@ -160,12 +164,15 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   // Fetch Strapi data for Gemstones
   Future<void> fetchStrapiDataForGemstones(BuildContext context, Emitter<StonesLandingState> emit) async {
     await AppRepository(context).fetchStrapiGemstoneLandingData().then((value) {
-      value.fold((l) {
-        emit(GemstoneStrapiDataErrorState(errorResponse: l));
-        Utils.showMessage(l.message);
-      }, (r) {
-        gemstoneStrapiList = r;
-      });
+      value.fold(
+        (l) {
+          emit(GemstoneStrapiDataErrorState(errorResponse: l));
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          gemstoneStrapiList = r;
+        },
+      );
     });
     emit(const GemstoneStrapiDataFetchedState());
   }
@@ -173,13 +180,16 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   // Fetch Strapi data for Jewellery
   Future<void> fetchStrapiDataForJewellery(BuildContext context, Emitter<StonesLandingState> emit) async {
     await AppRepository(context).fetchStrapiJewelleryLandingData().then((value) {
-      value.fold((l) {
-        emit(JewelleryStrapiDataErrorState(errorResponse: l));
-        Utils.showMessage(l.message);
-      }, (r) {
-        jewelleryStrapiList.clear();
-        jewelleryStrapiList = r;
-      });
+      value.fold(
+        (l) {
+          emit(JewelleryStrapiDataErrorState(errorResponse: l));
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          jewelleryStrapiList.clear();
+          jewelleryStrapiList = r;
+        },
+      );
     });
     emit(const JewelleryStrapiDataFetchedState());
   }
@@ -229,29 +239,30 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       "https://i.ibb.co/zsvLW4N/Image.png",
       "https://i.ibb.co/syzfTzT/Bracelets.png",
       "https://i.ibb.co/zsvLW4N/Image.png",
-      "https://i.ibb.co/syzfTzT/Bracelets.png"
+      "https://i.ibb.co/syzfTzT/Bracelets.png",
     ];
     List<String> shopByStyleImage = [
       "https://i.ibb.co/zsvLW4N/Image.png",
       "https://i.ibb.co/x1q3y0C/Image11.png",
       "https://i.ibb.co/G7RH7k4/Image22.png",
-      "https://i.ibb.co/XYsTf4M/Image33.png"
+      "https://i.ibb.co/XYsTf4M/Image33.png",
     ];
 
     List<String> diamondImageList = [
       "https://i.ibb.co/30MXHMT/Image5.png",
       "https://i.ibb.co/yRy2w21/Image1.png",
       "https://i.ibb.co/dmtHjL6/Image2.png",
-      "https://i.ibb.co/VN2fDKh/Image4.png"
+      "https://i.ibb.co/VN2fDKh/Image4.png",
     ];
     return List.generate(
       imageList.length,
       (index) => AuctionListModel(
         id: index.toString(),
         name: titleList[index],
-        imageUrl: isForDiamond
-            ? diamondImageList[index]
-            : isGemstone
+        imageUrl:
+            isForDiamond
+                ? diamondImageList[index]
+                : isGemstone
                 ? shopByStyleImage[index]
                 : imageList[index],
       ),
@@ -262,34 +273,43 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   static List<FAQ> _generateDiamondFAQS() {
     return [
       FAQ(
-          question: "How can you tell if a diamond is real?",
-          answer: "The best way to tell if a diamond is real is to check for any imperfections or inclusions within the diamond. "
-              "Real diamonds, whether they are formed naturally or in the lab, will likely have some internal flaws. You can also "
-              "perform the fog test by breathing on the diamond, as real diamonds disperse heat quickly and will not fog up for more "
-              "than a few short seconds. If you have a mounted diamond, you can take it to a jeweler who can examine it with a loupe, "
-              "microscope, or diamond tester, which uses electrical conductivity to differentiate between real and fake diamonds. "
-              "Learn more in our guide."),
+        question: "How can you tell if a diamond is real?",
+        answer:
+            "The best way to tell if a diamond is real is to check for any imperfections or inclusions within the diamond. "
+            "Real diamonds, whether they are formed naturally or in the lab, will likely have some internal flaws. You can also "
+            "perform the fog test by breathing on the diamond, as real diamonds disperse heat quickly and will not fog up for more "
+            "than a few short seconds. If you have a mounted diamond, you can take it to a jeweler who can examine it with a loupe, "
+            "microscope, or diamond tester, which uses electrical conductivity to differentiate between real and fake diamonds. "
+            "Learn more in our guide.",
+      ),
       FAQ(
-          question: "How are diamonds made?",
-          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
-              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+        question: "How are diamonds made?",
+        answer:
+            "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+            "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
       FAQ(
-          question: "What are the 4Cs of diamonds?",
-          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
-              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+        question: "What are the 4Cs of diamonds?",
+        answer:
+            "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+            "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
       FAQ(
         question: "What are the different kinds of diamond shapes?",
-        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+        answer:
+            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
             "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
       ),
       FAQ(
         question: "Which diamonds are the most popular?",
-        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+        answer:
+            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
             "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
       ),
       FAQ(
         question: "What jewelry looks best with diamonds?",
-        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal,"
+        answer:
+            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal,"
             " diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
       ),
     ];
@@ -299,33 +319,43 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   static List<FAQ> _generateGemstoneFAQS() {
     return [
       FAQ(
-          question: "What is a gemstone?",
-          answer: "A gemstone is a mineral or rock that is cut and polished for use in jewelry or other decorative items."
-              "There are hundreds of types of gemstones, but the most common are diamonds, rubies, emeralds, sapphires, and pearls. "
-              "Gemstones are formed deep within the Earth's crust under extreme heat and pressure. "
-              "They are found in a variety of locations around the world, including mines, riverbeds, and volcanic areas."),
+        question: "What is a gemstone?",
+        answer:
+            "A gemstone is a mineral or rock that is cut and polished for use in jewelry or other decorative items."
+            "There are hundreds of types of gemstones, but the most common are diamonds, rubies, emeralds, sapphires, and pearls. "
+            "Gemstones are formed deep within the Earth's crust under extreme heat and pressure. "
+            "They are found in a variety of locations around the world, including mines, riverbeds, and volcanic areas.",
+      ),
       FAQ(
-          question: "What is the rarest gemstone?",
-          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
-              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+        question: "What is the rarest gemstone?",
+        answer:
+            "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+            "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
       FAQ(
-          question: "How are gemstones cut?",
-          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
-              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+        question: "How are gemstones cut?",
+        answer:
+            "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+            "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
       FAQ(
-          question: "What are the different kinds of diamond shapes?",
-          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
-              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+        question: "What are the different kinds of diamond shapes?",
+        answer:
+            "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+            "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
       FAQ(
         question: "Which diamonds are the most popular?",
-        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, "
+        answer:
+            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, "
             "diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
       ),
       FAQ(
         question: "What jewelry looks best with diamonds?",
-        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, "
+        answer:
+            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, "
             "diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
-      )
+      ),
     ];
   }
 
@@ -354,15 +384,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       "https://i.ibb.co/mXxkBC7/Necklaces.png",
       "https://i.ibb.co/syzfTzT/Bracelets.png",
       "https://i.ibb.co/GvyRJtx/Earrings.png",
-      "https://i.ibb.co/2yNzxBw/Rings.png"
+      "https://i.ibb.co/2yNzxBw/Rings.png",
     ];
     return List.generate(
       imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
+      (index) => AuctionListModel(id: index.toString(), name: nameList[index], imageUrl: imageList[index]),
     );
   }
 
@@ -380,25 +406,29 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.landingBanner:
         String title = diamondStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString(diamondStrapiList[index].poster?.description ?? '');
-        String? image = (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
-            : '';
+        String? image =
+            (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
+                ? diamondStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
+                : '';
 
         List<Widget> buttonList = [];
         for (int i = 0; i < diamondStrapiList[index].button.length; i++) {
-          buttonList.add(SmartButton(
-            margin: i != diamondStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
-            onTap: () {
-              handleRedirection(
-                context: context,
-                redirectTo: getRedirectionToFromString(diamondStrapiList[index].button[i].redirectTo ?? ""),
-                redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
-              );
-            },
+          buttonList.add(
+            SmartButton(
+              margin:
+                  i != diamondStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
+              onTap: () {
+                handleRedirection(
+                  context: context,
+                  redirectTo: getRedirectionToFromString(diamondStrapiList[index].button[i].redirectTo ?? ""),
+                  redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
+                );
+              },
 
-            /// Todo : fix in next strapi update
-            title: diamondStrapiList[index].button[i]['label'],
-          ));
+              /// Todo : fix in next strapi update
+              title: diamondStrapiList[index].button[i]['label'],
+            ),
+          );
         }
         return StoneBannerView(
           imagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
@@ -423,9 +453,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
       case LandingSlug.jewelstonePoster || LandingSlug.diamondLandingPoster:
         String buttonTitle = diamondStrapiList[index].button['label'] ?? '';
-        String backgroundImage = (diamondStrapiList[index].backgroundImage?.mobileImage?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].backgroundImage?.mobileImage?.data.first.attributes?.url ?? ''
-            : '';
+        String backgroundImage =
+            (diamondStrapiList[index].backgroundImage?.mobileImage?.data).isNotNullNorEmpty
+                ? diamondStrapiList[index].backgroundImage?.mobileImage?.data.first.attributes?.url ?? ''
+                : '';
         String title = diamondStrapiList[index].title ?? '';
         String description = Utils.parseHtmlString((diamondStrapiList[index].description ?? ''));
         return CraftedForYourSpecialMomentSection(
@@ -455,9 +486,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             AuctionListModel(
               id: i.toString(),
               name: diamondStrapiList[index].country[i].title ?? '',
-              imageUrl: (diamondStrapiList[index].country[i].mobileImage?.data).isNotNullNorEmpty
-                  ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}'
-                  : "",
+              imageUrl:
+                  (diamondStrapiList[index].country[i].mobileImage?.data).isNotNullNorEmpty
+                      ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}'
+                      : "",
               redirectTo: diamondStrapiList[index].country[i].redirecTo ?? '',
               redirectionType: diamondStrapiList[index].country[i].redirectionType ?? '',
             ),
@@ -489,20 +521,24 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         List<Widget> buttonList = [];
 
         for (int i = 0; i < diamondStrapiList[index].button.length; i++) {
-          buttonList.add(SmartButton(
-            margin: i != diamondStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
-            onTap: () {
-              handleRedirection(
-                context: context,
-                redirectTo: getRedirectionToFromString(diamondStrapiList[index].button[i].redirectTo ?? ""),
-                redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
-              );
-            },
-            title: diamondStrapiList[index].button[i]['label'],
-          ));
+          buttonList.add(
+            SmartButton(
+              margin:
+                  i != diamondStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
+              onTap: () {
+                handleRedirection(
+                  context: context,
+                  redirectTo: getRedirectionToFromString(diamondStrapiList[index].button[i].redirectTo ?? ""),
+                  redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
+                );
+              },
+              title: diamondStrapiList[index].button[i]['label'],
+            ),
+          );
         }
 
-        stonesBannerView.add(StonesBannerView(
+        stonesBannerView.add(
+          StonesBannerView(
             padding: EdgeInsetsDirectional.zero,
             foregroundImagePath: mainBannerForegroundImagePath,
             spaceBetweenImageAndTitle: 16.h,
@@ -511,28 +547,33 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             bannerSubTitleText: mainBannerDescription,
             bannerSubTitleStyle: style.originSectionSubTitleStyle,
             margin: EdgeInsetsDirectional.only(bottom: 24.h),
-            buttonList: buttonList));
+            buttonList: buttonList,
+          ),
+        );
 
         for (int i = 0; i < diamondStrapiList[index].banner.length; i++) {
           String title = diamondStrapiList[index].banner[i].title ?? '';
           String description = Utils.parseHtmlString(diamondStrapiList[index].banner[i].description ?? '');
-          String? image = (diamondStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
-              ? diamondStrapiList[index].banner[i].image?.data.first.attributes?.url
-              : '';
+          String? image =
+              (diamondStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
+                  ? diamondStrapiList[index].banner[i].image?.data.first.attributes?.url
+                  : '';
           String buttonTitle = diamondStrapiList[index].banner[i].buttonLabel ?? '';
 
-          stonesBannerView.add(StonesBannerView(
-            padding: EdgeInsetsDirectional.all(16.w),
-            margin: i != diamondStrapiList[index].banner.length - 1 ? EdgeInsetsDirectional.only(bottom: 24.h) : EdgeInsetsDirectional.zero,
-            backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
-            backgroundImageHeight: 200.h,
-            spaceBetweenTitleAndSubTitle: 4.h,
-            bannerTitleText: title,
-            bannerSubTitleText: description,
-            bannerTitleStyle: style.designOwnEarringTextStyle,
-            bannerSubTitleStyle: style.sparkleSubTitleStyle,
-            buttonList: [
-              SmartButton(
+          stonesBannerView.add(
+            StonesBannerView(
+              padding: EdgeInsetsDirectional.all(16.w),
+              margin:
+                  i != diamondStrapiList[index].banner.length - 1 ? EdgeInsetsDirectional.only(bottom: 24.h) : EdgeInsetsDirectional.zero,
+              backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
+              backgroundImageHeight: 200.h,
+              spaceBetweenTitleAndSubTitle: 4.h,
+              bannerTitleText: title,
+              bannerSubTitleText: description,
+              bannerTitleStyle: style.designOwnEarringTextStyle,
+              bannerSubTitleStyle: style.sparkleSubTitleStyle,
+              buttonList: [
+                SmartButton(
                   onTap: () {
                     handleRedirection(
                       context: context,
@@ -540,25 +581,26 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                       redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
                     );
                   },
-                  title: buttonTitle),
-            ],
-          ));
+                  title: buttonTitle,
+                ),
+              ],
+            ),
+          );
         }
 
         return Container(
           color: style.designYourOwnStoneBgColor,
           padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
-          child: Column(
-            children: stonesBannerView,
-          ),
+          child: Column(children: stonesBannerView),
         );
 
       case LandingSlug.aboutEntity:
         String title = diamondStrapiList[index].about?.title ?? '';
         String description = Utils.parseHtmlString(diamondStrapiList[index].about?.description ?? '');
-        String? image = (diamondStrapiList[index].about?.image?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].about?.image?.data.first.attributes?.url
-            : '';
+        String? image =
+            (diamondStrapiList[index].about?.image?.data).isNotNullNorEmpty
+                ? diamondStrapiList[index].about?.image?.data.first.attributes?.url
+                : '';
         return AboutOurStoneSection(
           style: style,
           learnMore: () {
@@ -573,17 +615,12 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         diamondFAQS.clear();
         String title = diamondStrapiList[index].title ?? '';
         for (int i = 0; i < diamondStrapiList[index].faQs.length; i++) {
-          diamondFAQS.add(FAQ(
-            question: diamondStrapiList[index].faQs[i].question ?? '',
-            answer: diamondStrapiList[index].faQs[i].answer ?? '',
-          ));
+          diamondFAQS.add(
+            FAQ(question: diamondStrapiList[index].faQs[i].question ?? '', answer: diamondStrapiList[index].faQs[i].answer ?? ''),
+          );
         }
 
-        return StonesFAQSection(
-          title: title,
-          style: style,
-          faqs: diamondFAQS,
-        );
+        return StonesFAQSection(title: title, style: style, faqs: diamondFAQS);
 
       case LandingSlug.unknown:
       default:
@@ -604,23 +641,26 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.landingBanner:
         String title = gemstoneStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString(gemstoneStrapiList[index].poster?.description ?? '');
-        String? image = (gemstoneStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
-            ? gemstoneStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
-            : '';
+        String? image =
+            (gemstoneStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
+                ? gemstoneStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
+                : '';
         List<Widget> buttonList = [];
         for (int i = 0; i < gemstoneStrapiList[index].button.length; i++) {
-          buttonList.add(SmartButton(
-            margin:
-                i != gemstoneStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
-            onTap: () {
-              handleRedirection(
-                context: context,
-                redirectTo: getRedirectionToFromString(gemstoneStrapiList[index].button[i].redirectTo ?? ""),
-                redirectionType: getRedirectionTypeFromString(gemstoneStrapiList[index].button[i].redirectionType ?? ""),
-              );
-            },
-            title: gemstoneStrapiList[index].button[i]['label'] ?? '',
-          ));
+          buttonList.add(
+            SmartButton(
+              margin:
+                  i != gemstoneStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
+              onTap: () {
+                handleRedirection(
+                  context: context,
+                  redirectTo: getRedirectionToFromString(gemstoneStrapiList[index].button[i].redirectTo ?? ""),
+                  redirectionType: getRedirectionTypeFromString(gemstoneStrapiList[index].button[i].redirectionType ?? ""),
+                );
+              },
+              title: gemstoneStrapiList[index].button[i]['label'] ?? '',
+            ),
+          );
         }
         return StoneBannerView(
           imagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
@@ -635,9 +675,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
       case LandingSlug.jewelstonePoster:
         String buttonTitle = gemstoneStrapiList[index].button.first.label ?? '';
-        String backgroundImage = (gemstoneStrapiList[index].poster?.image?.data).isNotNullNorEmpty
-            ? gemstoneStrapiList[index].poster?.image?.data.first.attributes?.url ?? ''
-            : '';
+        String backgroundImage =
+            (gemstoneStrapiList[index].poster?.image?.data).isNotNullNorEmpty
+                ? gemstoneStrapiList[index].poster?.image?.data.first.attributes?.url ?? ''
+                : '';
         String title = gemstoneStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString((gemstoneStrapiList[index].poster?.description ?? ''));
         return CraftedForYourSpecialMomentSection(
@@ -666,9 +707,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             AuctionListModel(
               id: i.toString(),
               name: gemstoneStrapiList[index].country[i].title ?? '',
-              imageUrl: (gemstoneStrapiList[index].country[i].mobileImage?.data).isNotNullNorEmpty
-                  ? '${AppConst.strapiQaEnvImgBaseUrl}${gemstoneStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}'
-                  : "",
+              imageUrl:
+                  (gemstoneStrapiList[index].country[i].mobileImage?.data).isNotNullNorEmpty
+                      ? '${AppConst.strapiQaEnvImgBaseUrl}${gemstoneStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}'
+                      : "",
               redirectTo: gemstoneStrapiList[index].country[i].redirecTo ?? '',
               redirectionType: gemstoneStrapiList[index].country[i].redirectionType ?? '',
             ),
@@ -701,21 +743,26 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
           List<Widget> buttonList = [];
 
           for (int i = 0; i < gemstoneStrapiList[index].button.length; i++) {
-            buttonList.add(SmartButton(
-              margin:
-                  i != gemstoneStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
-              onTap: () {
-                handleRedirection(
-                  context: context,
-                  redirectTo: getRedirectionToFromString(gemstoneStrapiList[index].button[i].redirectTo ?? ""),
-                  redirectionType: getRedirectionTypeFromString(gemstoneStrapiList[index].button[i].redirectionType ?? ""),
-                );
-              },
-              title: gemstoneStrapiList[index].button[i]['label'] ?? '',
-            ));
+            buttonList.add(
+              SmartButton(
+                margin:
+                    i != gemstoneStrapiList[index].button.length - 1
+                        ? EdgeInsetsDirectional.only(bottom: 16.h)
+                        : EdgeInsetsDirectional.zero,
+                onTap: () {
+                  handleRedirection(
+                    context: context,
+                    redirectTo: getRedirectionToFromString(gemstoneStrapiList[index].button[i].redirectTo ?? ""),
+                    redirectionType: getRedirectionTypeFromString(gemstoneStrapiList[index].button[i].redirectionType ?? ""),
+                  );
+                },
+                title: gemstoneStrapiList[index].button[i]['label'] ?? '',
+              ),
+            );
           }
 
-          stonesBannerView.add(StonesBannerView(
+          stonesBannerView.add(
+            StonesBannerView(
               padding: EdgeInsetsDirectional.zero,
               foregroundImagePath: mainBannerForegroundImagePath,
               spaceBetweenImageAndTitle: 16.h,
@@ -724,31 +771,37 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
               bannerSubTitleText: mainBannerDescription,
               bannerSubTitleStyle: style.originSectionSubTitleStyle,
               margin: EdgeInsetsDirectional.only(bottom: 24.h),
-              buttonList: buttonList));
+              buttonList: buttonList,
+            ),
+          );
         }
 
         if (gemstoneStrapiList[index].banner.isNotNullNorEmpty) {
           for (int i = 0; i < gemstoneStrapiList[index].banner.length; i++) {
             String title = gemstoneStrapiList[index].banner[i].title ?? '';
             String description = Utils.parseHtmlString(gemstoneStrapiList[index].banner[i].description ?? '');
-            String? image = (gemstoneStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
-                ? gemstoneStrapiList[index].banner[i].image?.data.first.attributes?.url
-                : '';
+            String? image =
+                (gemstoneStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
+                    ? gemstoneStrapiList[index].banner[i].image?.data.first.attributes?.url
+                    : '';
             String buttonTitle = gemstoneStrapiList[index].banner[i].buttonLabel ?? '';
 
-            stonesBannerView.add(StonesBannerView(
-              padding: EdgeInsetsDirectional.all(16.w),
-              margin:
-                  i != gemstoneStrapiList[index].banner.length - 1 ? EdgeInsetsDirectional.only(bottom: 24.h) : EdgeInsetsDirectional.zero,
-              backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
-              backgroundImageHeight: 200.h,
-              spaceBetweenTitleAndSubTitle: 4.h,
-              bannerTitleText: title,
-              bannerSubTitleText: description,
-              bannerTitleStyle: style.designOwnEarringTextStyle,
-              bannerSubTitleStyle: style.sparkleSubTitleStyle,
-              buttonList: [
-                SmartButton(
+            stonesBannerView.add(
+              StonesBannerView(
+                padding: EdgeInsetsDirectional.all(16.w),
+                margin:
+                    i != gemstoneStrapiList[index].banner.length - 1
+                        ? EdgeInsetsDirectional.only(bottom: 24.h)
+                        : EdgeInsetsDirectional.zero,
+                backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
+                backgroundImageHeight: 200.h,
+                spaceBetweenTitleAndSubTitle: 4.h,
+                bannerTitleText: title,
+                bannerSubTitleText: description,
+                bannerTitleStyle: style.designOwnEarringTextStyle,
+                bannerSubTitleStyle: style.sparkleSubTitleStyle,
+                buttonList: [
+                  SmartButton(
                     onTap: () {
                       handleRedirection(
                         context: context,
@@ -756,28 +809,29 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                         redirectionType: getRedirectionTypeFromString(gemstoneStrapiList[index].button[i].redirectionType ?? ""),
                       );
                     },
-                    title: buttonTitle),
-              ],
-            ));
+                    title: buttonTitle,
+                  ),
+                ],
+              ),
+            );
           }
         }
 
         return stonesBannerView.isNotNullNorEmpty
             ? Container(
-                color: style.designYourOwnStoneBgColor,
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
-                child: Column(
-                  children: stonesBannerView,
-                ),
-              )
+              color: style.designYourOwnStoneBgColor,
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
+              child: Column(children: stonesBannerView),
+            )
             : const SizedBox.shrink();
 
       case LandingSlug.aboutEntity:
         String title = gemstoneStrapiList[index].about?.title ?? '';
         String description = Utils.parseHtmlString(gemstoneStrapiList[index].about?.description ?? '');
-        String? image = (gemstoneStrapiList[index].about?.image?.data).isNotNullNorEmpty
-            ? gemstoneStrapiList[index].about?.image?.data.first.attributes?.url
-            : '';
+        String? image =
+            (gemstoneStrapiList[index].about?.image?.data).isNotNullNorEmpty
+                ? gemstoneStrapiList[index].about?.image?.data.first.attributes?.url
+                : '';
         return AboutOurStoneSection(
           style: style,
           learnMore: () {
@@ -792,17 +846,12 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         diamondFAQS.clear();
         String title = gemstoneStrapiList[index].title ?? '';
         for (int i = 0; i < gemstoneStrapiList[index].faQs.length; i++) {
-          diamondFAQS.add(FAQ(
-            question: gemstoneStrapiList[index].faQs[i].question ?? '',
-            answer: gemstoneStrapiList[index].faQs[i].answer ?? '',
-          ));
+          diamondFAQS.add(
+            FAQ(question: gemstoneStrapiList[index].faQs[i].question ?? '', answer: gemstoneStrapiList[index].faQs[i].answer ?? ''),
+          );
         }
 
-        return StonesFAQSection(
-          title: title,
-          style: style,
-          faqs: diamondFAQS,
-        );
+        return StonesFAQSection(title: title, style: style, faqs: diamondFAQS);
 
       case LandingSlug.shopByGemstones:
         return ShopStoneByShapeSection(
@@ -833,23 +882,26 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.landingBanner:
         String title = jewelleryStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString(jewelleryStrapiList[index].poster?.description ?? '');
-        String? image = (jewelleryStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
-            ? jewelleryStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
-            : '';
+        String? image =
+            (jewelleryStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
+                ? jewelleryStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
+                : '';
         List<Widget> buttonList = [];
         for (int i = 0; i < jewelleryStrapiList[index].button.length; i++) {
-          buttonList.add(SmartButton(
-            margin:
-                i != jewelleryStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
-            onTap: () {
-              handleRedirection(
-                context: context,
-                redirectTo: getRedirectionToFromString(jewelleryStrapiList[index].button[i].redirectTo ?? ""),
-                redirectionType: getRedirectionTypeFromString(jewelleryStrapiList[index].button[i].redirectionType ?? ""),
-              );
-            },
-            title: jewelleryStrapiList[index].button[i]['label'] ?? '',
-          ));
+          buttonList.add(
+            SmartButton(
+              margin:
+                  i != jewelleryStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
+              onTap: () {
+                handleRedirection(
+                  context: context,
+                  redirectTo: getRedirectionToFromString(jewelleryStrapiList[index].button[i].redirectTo ?? ""),
+                  redirectionType: getRedirectionTypeFromString(jewelleryStrapiList[index].button[i].redirectionType ?? ""),
+                );
+              },
+              title: jewelleryStrapiList[index].button[i]['label'] ?? '',
+            ),
+          );
         }
         return StoneBannerView(
           imagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
@@ -909,22 +961,28 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
             String title = jewelleryStrapiList[index].banner[i].title ?? '';
             String description = Utils.parseHtmlString(jewelleryStrapiList[index].banner[i].description ?? '');
-            String? image = (jewelleryStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
-                ? jewelleryStrapiList[index].banner[i].image?.data.first.attributes?.url
-                : '';
+            String? image =
+                (jewelleryStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
+                    ? jewelleryStrapiList[index].banner[i].image?.data.first.attributes?.url
+                    : '';
             String buttonTitle = jewelleryStrapiList[index].banner[i].buttonLabel ?? '';
-            stonesBannerView.add(StonesBannerView(
-              margin: EdgeInsetsDirectional.only(
-                  top: 24.h, start: 17.w, end: 17.w, bottom: i == jewelleryStrapiList[index].banner.length - 1 ? 24.h : 0),
-              backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
-              backgroundImageHeight: 200.h,
-              spaceBetweenTitleAndSubTitle: 4.h,
-              bannerTitleText: title,
-              bannerSubTitleText: description,
-              bannerTitleStyle: style.designOwnEarringTextStyle,
-              bannerSubTitleStyle: style.sparkleSubTitleStyle,
-              buttonList: [
-                SmartButton(
+            stonesBannerView.add(
+              StonesBannerView(
+                margin: EdgeInsetsDirectional.only(
+                  top: 24.h,
+                  start: 17.w,
+                  end: 17.w,
+                  bottom: i == jewelleryStrapiList[index].banner.length - 1 ? 24.h : 0,
+                ),
+                backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
+                backgroundImageHeight: 200.h,
+                spaceBetweenTitleAndSubTitle: 4.h,
+                bannerTitleText: title,
+                bannerSubTitleText: description,
+                bannerTitleStyle: style.designOwnEarringTextStyle,
+                bannerSubTitleStyle: style.sparkleSubTitleStyle,
+                buttonList: [
+                  SmartButton(
                     onTap: () {
                       if (jewelleryStrapiList[index].button.isEmpty) return;
                       handleRedirection(
@@ -933,9 +991,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                         redirectionType: getRedirectionTypeFromString(jewelleryStrapiList[index].button[i].redirectionType ?? ""),
                       );
                     },
-                    title: "buttonTitle"),
-              ],
-            ));
+                    title: "buttonTitle",
+                  ),
+                ],
+              ),
+            );
           }
         }
 
@@ -948,50 +1008,45 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
           for (int i = 0; i < jewelleryStrapiList[index].button.length; i++) {
             if (i > 0) {
-              buttonList.add(
-                SmartText(
-                  APPStrings.or.tr,
-                  optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
-                ),
-              );
+              buttonList.add(SmartText(APPStrings.or.tr, optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h)));
             }
-            buttonList.add(SmartButton(
-              onTap: () {
-                handleRedirection(
-                  context: context,
-                  redirectTo: getRedirectionToFromString(jewelleryStrapiList[index].button[i].redirectTo ?? ""),
-                  redirectionType: getRedirectionTypeFromString(jewelleryStrapiList[index].button[i].redirectionType ?? ""),
-                );
-              },
-              title: jewelleryStrapiList[index].button[i].label ?? '',
-            ));
+            buttonList.add(
+              SmartButton(
+                onTap: () {
+                  handleRedirection(
+                    context: context,
+                    redirectTo: getRedirectionToFromString(jewelleryStrapiList[index].button[i].redirectTo ?? ""),
+                    redirectionType: getRedirectionTypeFromString(jewelleryStrapiList[index].button[i].redirectionType ?? ""),
+                  );
+                },
+                title: jewelleryStrapiList[index].button[i].label ?? '',
+              ),
+            );
           }
 
-          stonesBannerView.add(Container(
-            color: style.designYourOwnStoneBgColor,
-            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
-            child: StonesBannerView(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              titleTextAlign: TextAlign.center,
-              subTitleTextAlign: TextAlign.center,
-              backgroundImagePath: mainBannerForegroundImagePath,
-              bannerTitleText: mainBannerTitle,
-              bannerSubTitleText: mainBannerDescription,
-              bannerTitleStyle: style.sectionLabelStyle,
-              bannerSubTitleStyle: style.jewelleryCreateOwnSubTitleStyle,
-              padding: EdgeInsetsDirectional.all(16.w),
-              backgroundImageHeight: 448.h,
-              spaceBetweenTitleAndSubTitle: 4.h,
-              buttonList: buttonList,
+          stonesBannerView.add(
+            Container(
+              color: style.designYourOwnStoneBgColor,
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
+              child: StonesBannerView(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                titleTextAlign: TextAlign.center,
+                subTitleTextAlign: TextAlign.center,
+                backgroundImagePath: mainBannerForegroundImagePath,
+                bannerTitleText: mainBannerTitle,
+                bannerSubTitleText: mainBannerDescription,
+                bannerTitleStyle: style.sectionLabelStyle,
+                bannerSubTitleStyle: style.jewelleryCreateOwnSubTitleStyle,
+                padding: EdgeInsetsDirectional.all(16.w),
+                backgroundImageHeight: 448.h,
+                spaceBetweenTitleAndSubTitle: 4.h,
+                buttonList: buttonList,
+              ),
             ),
-          ));
+          );
         }
 
-        return stonesBannerView.isNotNullNorEmpty
-            ? Column(
-                children: stonesBannerView,
-              )
-            : const SizedBox.shrink();
+        return stonesBannerView.isNotNullNorEmpty ? Column(children: stonesBannerView) : const SizedBox.shrink();
 
       case LandingSlug.kgkDiamondShape:
         return ShopStoneByShapeSection(
@@ -1040,12 +1095,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
       case RedirectionTo.collection:
         routeName = (redirectionType == RedirectionType.listing) ? AppRoutes.productListGridPage : AppRoutes.collectionPage;
-        arguments = (redirectionType == RedirectionType.listing)
-            ? {
-                RoutesData.isPageFor: ScreenIdentifier.productForRing,
-                RoutesData.filterData: {},
-              }
-            : {};
+        arguments =
+            (redirectionType == RedirectionType.listing)
+                ? {RoutesData.isPageFor: ScreenIdentifier.productForRing, RoutesData.filterData: {}}
+                : {};
         break;
 
       case RedirectionTo.unknown:
@@ -1094,15 +1147,18 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     final image = (item.poster?.image?.data).isNotNullNorEmpty ? item.poster?.image?.data.first.attributes?.url : '';
 
     // Create a list of SmartButton widgets
-    final buttonList = item.button
-        .asMap()
-        .entries
-        .map<Widget>((entry) => SmartButton(
-              margin: entry.key != item.button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
-              onTap: () => printWrapped("Button ${entry.key} clicked"),
-              title: entry.value.label ?? '',
-            ))
-        .toList();
+    final buttonList =
+        item.button
+            .asMap()
+            .entries
+            .map<Widget>(
+              (entry) => SmartButton(
+                margin: entry.key != item.button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
+                onTap: () => printWrapped("Button ${entry.key} clicked"),
+                title: entry.value.label ?? '',
+              ),
+            )
+            .toList();
 
     return StoneBannerView(
       imagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
@@ -1159,15 +1215,18 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     final description = Utils.parseHtmlString(item.description ?? '');
 
     // Create a list of SmartButton widgets
-    final buttonList = item.button
-        .asMap()
-        .entries
-        .map<Widget>((entry) => SmartButton(
-              margin: entry.key != item.button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
-              onTap: () => printWrapped("Button ${entry.key} clicked"),
-              title: entry.value.label ?? '',
-            ))
-        .toList();
+    final buttonList =
+        item.button
+            .asMap()
+            .entries
+            .map<Widget>(
+              (entry) => SmartButton(
+                margin: entry.key != item.button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
+                onTap: () => printWrapped("Button ${entry.key} clicked"),
+                title: entry.value.label ?? '',
+              ),
+            )
+            .toList();
 
     return DesignYourOwnStoneSection(
       style: style,
@@ -1193,12 +1252,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     final title = item.about?.title ?? '';
     final description = Utils.parseHtmlString(item.about?.description ?? '');
 
-    return AboutOurStoneSection(
-      style: style,
-      title: title,
-      imagePath: "https://i.ibb.co/M6TZT3y/image-304.png",
-      subTitle: description,
-    );
+    return AboutOurStoneSection(style: style, title: title, imagePath: "https://i.ibb.co/M6TZT3y/image-304.png", subTitle: description);
   }
 
   /// Builds the FAQ section widget.
@@ -1208,11 +1262,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     // Create a list of FAQ objects
     final faqs = item.faQs.map<FAQ>((faq) => FAQ(question: faq.question ?? '', answer: faq.answer ?? '')).toList();
 
-    return StonesFAQSection(
-      title: title,
-      style: style,
-      faqs: faqs,
-    );
+    return StonesFAQSection(title: title, style: style, faqs: faqs);
   }
 
   Widget _buildJewelleryCreateOwnSection({required StonesLandingScreenStyle style}) {
@@ -1233,29 +1283,34 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         spaceBetweenTitleAndSubTitle: 4.h,
         buttonList: [
           SmartButton(onTap: () {}, title: APPStrings.startWithSetting.tr),
-          SmartText(
-            APPStrings.or.tr,
-            optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
-          ),
-          SmartButton(onTap: () {}, title: APPStrings.startWithDiamond.tr)
+          SmartText(APPStrings.or.tr, optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h)),
+          SmartButton(onTap: () {}, title: APPStrings.startWithDiamond.tr),
         ],
       ),
     );
   }
 
   Widget _buildOriginOfDiamondsSection(
-      StonesLandingBloc bloc, StonesLandingScreenStyle style, BuildContext context, HomeScreenStyle homeScreenStyle, int index) {
+    StonesLandingBloc bloc,
+    StonesLandingScreenStyle style,
+    BuildContext context,
+    HomeScreenStyle homeScreenStyle,
+    int index,
+  ) {
     String title = diamondStrapiList[index].details?.title ?? '';
     String description = Utils.parseHtmlString(diamondStrapiList[index].details?.description ?? '');
     bloc.originOfDiamondsList.clear();
     for (int i = 0; i < diamondStrapiList[index].country.length; i++) {
-      bloc.originOfDiamondsList.add(AuctionListModel(
-        id: i.toString(),
-        name: diamondStrapiList[index].country[i].title ?? '',
-        imageUrl: (diamondStrapiList[index].country[i].image?.data).isNotNullNorEmpty
-            ? "${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].image?.data.first.attributes?.url ?? ''}"
-            : "",
-      ));
+      bloc.originOfDiamondsList.add(
+        AuctionListModel(
+          id: i.toString(),
+          name: diamondStrapiList[index].country[i].title ?? '',
+          imageUrl:
+              (diamondStrapiList[index].country[i].image?.data).isNotNullNorEmpty
+                  ? "${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].image?.data.first.attributes?.url ?? ''}"
+                  : "",
+        ),
+      );
     }
     return SmartHorizontalItemBuilder(
       title: title,
@@ -1278,10 +1333,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
           width: 88.w,
           title: item.name ?? '',
           titleStyle: homeScreenStyle.shopGemstoneTitleStyle,
-          margin: EdgeInsetsDirectional.only(
-            start: index == 0 ? 17.w : 0,
-            end: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0,
-          ),
+          margin: EdgeInsetsDirectional.only(start: index == 0 ? 17.w : 0, end: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0),
           titleMaxLines: 1,
           fit: BoxFit.fill,
           imageUrl: item.imageUrl ?? '',
@@ -1327,10 +1379,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   Widget buildNewlyLaunchedSection(StonesLandingScreenStyle style) {
     return Container(
       color: style.newlyLaunchedBackgroundColor,
-      padding: EdgeInsetsDirectional.symmetric(
-        vertical: 32.h,
-        horizontal: 17.w,
-      ),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 32.h, horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1343,19 +1392,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
               newlyLaunchedItemsList.length > 4
                   ? 4
                   : (newlyLaunchedItemsList.length % 2 == 0 ? newlyLaunchedItemsList.length : newlyLaunchedItemsList.length - 1),
-              (index) => ProductGridItem(
-                productDetails: newlyLaunchedItemsList[index],
-                onEyeTap: () {},
-                onFavTap: () {},
-                onTap: () {},
-              ),
+              (index) => ProductGridItem(productDetails: newlyLaunchedItemsList[index], onEyeTap: () {}, onFavTap: () {}, onTap: () {}),
             ),
           ),
           SizedBox(height: 24.h),
-          SmartButton(
-            onTap: () {},
-            title: APPStrings.exploreNow.tr,
-          )
+          SmartButton(onTap: () {}, title: APPStrings.exploreNow.tr),
         ],
       ),
     );

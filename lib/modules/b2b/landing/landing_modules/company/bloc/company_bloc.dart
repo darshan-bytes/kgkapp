@@ -54,11 +54,14 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
 
   Future<void> loadCompanyList(BuildContext context, Emitter<CompanyState> emit) async {
     final response = await UserRepository(context).getCscMastersList();
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (companyList) {
-      this.companyList = companyList;
-      emit(CompanyListLoadedState(companyList: companyList, selectedData: selectData));
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (companyList) {
+        this.companyList = companyList;
+        emit(CompanyListLoadedState(companyList: companyList, selectedData: selectData));
+      },
+    );
   }
 }

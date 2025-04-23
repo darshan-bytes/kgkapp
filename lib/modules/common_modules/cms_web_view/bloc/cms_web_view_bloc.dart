@@ -25,19 +25,22 @@ class CmsWebViewBloc extends Bloc<CmsWebViewEvent, CmsWebViewState> {
       appBarTitle = webViewData.title ?? '';
       String url = webViewData.url ?? '';
 
-      webViewController = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..setNavigationDelegate(NavigationDelegate(
-          onPageStarted: (url) {
-            event.context.setAppLoading(true);
-          },
-          onPageFinished: (url) {
-            event.context.setAppLoading(false);
-          },
-          onNavigationRequest: (request) {
-            return NavigationDecision.navigate;
-          },
-        ));
+      webViewController =
+          WebViewController()
+            ..setJavaScriptMode(JavaScriptMode.unrestricted)
+            ..setNavigationDelegate(
+              NavigationDelegate(
+                onPageStarted: (url) {
+                  event.context.setAppLoading(true);
+                },
+                onPageFinished: (url) {
+                  event.context.setAppLoading(false);
+                },
+                onNavigationRequest: (request) {
+                  return NavigationDecision.navigate;
+                },
+              ),
+            );
       if (url.isNotNullNorEmpty) {
         await webViewController.loadRequest(Uri.parse(url));
         emit(CmsWebViewLoadedState(controller: webViewController));

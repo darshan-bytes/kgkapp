@@ -74,13 +74,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
 
   void _initializeB2CUser(BuildContext context) {
     currentIndex = homeIndex;
-    pages = [
-      const HomeScreen(),
-      const CategoriesScreen(),
-      const MyBagScreen(),
-      const SupportScreen(),
-      const ProfileScreen(),
-    ];
+    pages = [const HomeScreen(), const CategoriesScreen(), const MyBagScreen(), const SupportScreen(), const ProfileScreen()];
 
     blocList = [
       BlocProvider.of<HomeBloc>(context),
@@ -91,27 +85,15 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     ];
 
     bottomNavigationBarDataModel = [
-      BottomNavigationBarDataModel(
-        icon: AppImages.icHome,
-        activeIcon: AppImages.icHomeActive,
-        label: APPStrings.home,
-      ),
-      BottomNavigationBarDataModel(
-        icon: AppImages.icCategories,
-        activeIcon: AppImages.icCategoriesActive,
-        label: APPStrings.menu,
-      ),
+      BottomNavigationBarDataModel(icon: AppImages.icHome, activeIcon: AppImages.icHomeActive, label: APPStrings.home),
+      BottomNavigationBarDataModel(icon: AppImages.icCategories, activeIcon: AppImages.icCategoriesActive, label: APPStrings.menu),
       BottomNavigationBarDataModel(
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
         label: APPStrings.bag,
         notificationCount: 0,
       ),
-      BottomNavigationBarDataModel(
-        icon: AppImages.icSupport,
-        activeIcon: AppImages.icSupportActive,
-        label: APPStrings.support,
-      ),
+      BottomNavigationBarDataModel(icon: AppImages.icSupport, activeIcon: AppImages.icSupportActive, label: APPStrings.support),
       BottomNavigationBarDataModel(
         icon: StorageManager().getUserData()?.profilePicUrl?.setMediaUrl ?? AppImages.icProfilePic,
         activeIcon: "",
@@ -123,13 +105,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
 
   void _initializeB2BUser(BuildContext context) {
     currentIndex = homeIndex;
-    pages = [
-      const HomeScreen(),
-      const CategoriesScreen(),
-      const MyBagScreen(),
-      const CompanyScreen(),
-      const ProfileScreen(),
-    ];
+    pages = [const HomeScreen(), const CategoriesScreen(), const MyBagScreen(), const CompanyScreen(), const ProfileScreen()];
 
     blocList = [
       BlocProvider.of<HomeBloc>(context),
@@ -140,27 +116,15 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     ];
 
     bottomNavigationBarDataModel = [
-      BottomNavigationBarDataModel(
-        icon: AppImages.icHome,
-        activeIcon: AppImages.icHomeActive,
-        label: APPStrings.home,
-      ),
-      BottomNavigationBarDataModel(
-        icon: AppImages.icCategories,
-        activeIcon: AppImages.icCategoriesActive,
-        label: APPStrings.menu,
-      ),
+      BottomNavigationBarDataModel(icon: AppImages.icHome, activeIcon: AppImages.icHomeActive, label: APPStrings.home),
+      BottomNavigationBarDataModel(icon: AppImages.icCategories, activeIcon: AppImages.icCategoriesActive, label: APPStrings.menu),
       BottomNavigationBarDataModel(
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
         label: APPStrings.bag,
         notificationCount: 0,
       ),
-      BottomNavigationBarDataModel(
-        icon: AppImages.icCompanyBottomNavbar,
-        activeIcon: AppImages.icCompanyActive,
-        label: APPStrings.company,
-      ),
+      BottomNavigationBarDataModel(icon: AppImages.icCompanyBottomNavbar, activeIcon: AppImages.icCompanyActive, label: APPStrings.company),
       BottomNavigationBarDataModel(
         icon: StorageManager().getUserData()?.profilePicUrl?.setMediaUrl ?? AppImages.icProfilePic,
         activeIcon: "",
@@ -173,10 +137,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
   ///[_onLandingChangeTabEvent] is a method that is called when the [LandingChangeTabEvent] is dispatched
   /// to the bloc and it changes  the current index of the bottom navigation bar and emits the
   /// [LandingChangeTabState] with the new index to the UI.
-  void _onLandingChangeTabEvent(
-    LandingChangeTabEvent event,
-    Emitter<LandingState> emit,
-  ) {
+  void _onLandingChangeTabEvent(LandingChangeTabEvent event, Emitter<LandingState> emit) {
     if (currentIndex != event.index || event.isForce) {
       currentIndex = event.index;
       if (userType == UserType.b2cUser) {
@@ -253,10 +214,13 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     _deepLinkSubscription = BranchService().deepLinkStream.listen((BranchLinkDataModel branchLinkData) {
       switch (branchLinkData.branchLinkType) {
         case BranchLinkTypeType.productShare:
-          context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-            RoutesData.productId: branchLinkData.id,
-            RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(branchLinkData.commodityEnum)
-          });
+          context.pushNamed(
+            AppRoutes.productDetailsPage,
+            arguments: {
+              RoutesData.productId: branchLinkData.id,
+              RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(branchLinkData.commodityEnum),
+            },
+          );
           break;
         //TODO: Add more cases for different link types
         default:

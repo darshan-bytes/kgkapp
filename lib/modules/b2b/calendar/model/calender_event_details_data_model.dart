@@ -19,24 +19,25 @@ class CalenderEventDetailsDataModel {
   List<UserIdDetails>? assignedToDetails;
   UserIdDetails? createdByDetails;
 
-  CalenderEventDetailsDataModel(
-      {this.id,
-      this.createdOn,
-      this.updatedOn,
-      this.categoryId,
-      this.name,
-      this.slug,
-      this.description,
-      this.startDate,
-      this.endDate,
-      this.priority,
-      this.assignedTo,
-      this.status,
-      this.createdBy,
-      this.notifyBeforeTaskDue,
-      this.categoryName,
-      this.assignedToDetails,
-      this.createdByDetails});
+  CalenderEventDetailsDataModel({
+    this.id,
+    this.createdOn,
+    this.updatedOn,
+    this.categoryId,
+    this.name,
+    this.slug,
+    this.description,
+    this.startDate,
+    this.endDate,
+    this.priority,
+    this.assignedTo,
+    this.status,
+    this.createdBy,
+    this.notifyBeforeTaskDue,
+    this.categoryName,
+    this.assignedToDetails,
+    this.createdByDetails,
+  });
 
   CalenderEventDetailsDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -97,26 +98,26 @@ class NotifyBeforeTaskDue {
   });
 
   factory NotifyBeforeTaskDue.fromJson(Map<String, dynamic> json) => NotifyBeforeTaskDue(
-        id: json["_id"],
-        taskId: json["task_id"],
-        day: json["day"],
-        time: json["time"],
-        isDeleted: json["isDeleted"],
-        deletedAt: json["deletedAt"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        v: json["__v"]?.toString() ?? "",
-      );
+    id: json["_id"],
+    taskId: json["task_id"],
+    day: json["day"],
+    time: json["time"],
+    isDeleted: json["isDeleted"],
+    deletedAt: json["deletedAt"],
+    createdAt: DateTime.parse(json["createdAt"]),
+    updatedAt: DateTime.parse(json["updatedAt"]),
+    v: json["__v"]?.toString() ?? "",
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "task_id": taskId,
-        "day": day,
-        "time": time,
-        "isDeleted": isDeleted,
-        "deletedAt": deletedAt.toIso8601String(),
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "__v": v,
-      };
+    "_id": id,
+    "task_id": taskId,
+    "day": day,
+    "time": time,
+    "isDeleted": isDeleted,
+    "deletedAt": deletedAt.toIso8601String(),
+    "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
+    "__v": v,
+  };
 }

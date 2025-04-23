@@ -23,8 +23,9 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
   }
 
   /// Generates a map of column widths for a table
-  Map<int, FixedColumnWidth> generateTableColumnWidths(int length, double width) =>
-      {for (int i = 0; i < length; i++) i: FixedColumnWidth(width)};
+  Map<int, FixedColumnWidth> generateTableColumnWidths(int length, double width) => {
+    for (int i = 0; i < length; i++) i: FixedColumnWidth(width),
+  };
 
   /// Handles adding a product to the comparison list
   Future<void> _onCompareProductAddProduct(CompareProductAddProductEvent event, Emitter<CompareProductState> emit) async {
@@ -41,17 +42,16 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     if (isDisplayError) {
       final result = await Utils.showSmartModalBottomSheet(
         context: event.context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(16.r)),
-        ),
-        builder: (context) => ConfirmationDialog(
-          title: APPStrings.differentCommoditiesSelected.tr,
-          message: APPStrings.cantCompareDifferentCommodities.tr,
-          onApproved: () => context.pop(arguments: {RoutesData.isContinueClearCompare: true}),
-          onDenied: () => context.pop(),
-          onApprovedText: APPStrings.strContinue.tr,
-          onDeniedText: APPStrings.cancel.tr,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(16.r))),
+        builder:
+            (context) => ConfirmationDialog(
+              title: APPStrings.differentCommoditiesSelected.tr,
+              message: APPStrings.cantCompareDifferentCommodities.tr,
+              onApproved: () => context.pop(arguments: {RoutesData.isContinueClearCompare: true}),
+              onDenied: () => context.pop(),
+              onApprovedText: APPStrings.strContinue.tr,
+              onDeniedText: APPStrings.cancel.tr,
+            ),
       );
 
       if (result?[RoutesData.isContinueClearCompare] == true) {

@@ -38,7 +38,6 @@ final class ManufacturerCancellationReasonsChangeState extends ManufacturerOrder
 }
 
 final class ManufacturerOrderDetailsShowMoreState extends ManufacturerOrderDetailsState {
-
   const ManufacturerOrderDetailsShowMoreState();
 
   @override

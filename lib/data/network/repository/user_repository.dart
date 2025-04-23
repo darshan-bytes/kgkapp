@@ -48,8 +48,12 @@ class UserRepository extends ApiService {
     if (showLoader) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<Map<String, dynamic>>(ApiClient.languageLabels,
-        headers: {ApiKey.acceptLanguage: language ?? APPStrings.languageEn}, query: {ApiKey.fromMobile: true}, withFullResponse: true);
+    var response = await getMethod<Map<String, dynamic>>(
+      ApiClient.languageLabels,
+      headers: {ApiKey.acceptLanguage: language ?? APPStrings.languageEn},
+      query: {ApiKey.fromMobile: true},
+      withFullResponse: true,
+    );
     if (showLoader) {
       context.setAppLoading(false);
     }
@@ -84,8 +88,11 @@ class UserRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse>?> validatePhoneNumber(
-      {required String code, required String phoneNumber, String? userId}) async {
+  Future<Either<ErrorResponse, CommonResponse>?> validatePhoneNumber({
+    required String code,
+    required String phoneNumber,
+    String? userId,
+  }) async {
     var response = await getMethod<Map<String, dynamic>>(
       ApiClient.checkDuplicationPhoneNumber(code, phoneNumber),
       query: userId.isNotNullNorEmpty ? {ApiKey.userId: userId} : null,
@@ -101,11 +108,17 @@ class UserRepository extends ApiService {
     return response?.fold((error) => Left(error), (cscMastersList) => Right(cscMastersList as List<CscDetails>));
   }
 
-  Future<Either<ErrorResponse, CommonResponse<UserIdDetails>>?> editUserProfile(Map<String, dynamic> params,
-      {required List<String> images}) async {
+  Future<Either<ErrorResponse, CommonResponse<UserIdDetails>>?> editUserProfile(
+    Map<String, dynamic> params, {
+    required List<String> images,
+  }) async {
     context.setAppLoading(true);
-    var response = await putMultipartMethod<UserIdDetails>(ApiClient.editUserProfile, params,
-        withFullResponse: true, files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList());
+    var response = await putMultipartMethod<UserIdDetails>(
+      ApiClient.editUserProfile,
+      params,
+      withFullResponse: true,
+      files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList(),
+    );
     context.setAppLoading(false);
     return response?.fold((ErrorResponse l) => Left(l), (r) => Right(r));
   }

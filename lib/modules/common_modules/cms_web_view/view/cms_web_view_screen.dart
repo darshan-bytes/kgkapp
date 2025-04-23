@@ -26,9 +26,7 @@ class CmsWebViewScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is CmsWebViewLoadedState,
         builder: (context, state) {
           if (state is CmsWebViewLoadedState) {
-            return WebViewWidget(
-              controller: cmsWebViewBloc.webViewController,
-            );
+            return WebViewWidget(controller: cmsWebViewBloc.webViewController);
           } else {
             return const Center(child: CircularProgressIndicator());
           }

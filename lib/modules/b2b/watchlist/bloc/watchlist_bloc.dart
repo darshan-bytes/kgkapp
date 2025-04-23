@@ -93,7 +93,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
           if (element.dateRange != null) {
             filters[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ].join(',');
           }
           break;
@@ -140,22 +140,28 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
         }
         watchlistDataList.addAll(dataList);
 
-        watchListingList.addAll(dataList.map((e) => B2BCustomListingDataModel(
+        watchListingList.addAll(
+          dataList.map(
+            (e) => B2BCustomListingDataModel(
               id: e.sId ?? "",
               strName: e.name ?? "",
               status: e.displayStatus,
               strFrom: e.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
               strTo: e.expiresAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
               strNumberOfProduct: e.products?.length.toString() ?? "0",
-              strRemainingTime: ValueNotifier<String>((e.expiresAt?.isAfter(DateTime.now()) == true)
-                  ? (e.expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")
-                  : APPStrings.expired.tr),
+              strRemainingTime: ValueNotifier<String>(
+                (e.expiresAt?.isAfter(DateTime.now()) == true)
+                    ? (e.expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")
+                    : APPStrings.expired.tr,
+              ),
 
               /// Below code is commented as it is currently not available in API
               // strConceptNumber: e.strConceptNumber ?? "",
               // strSalesman: e.strSales,
               // strSalesmanImageUrl: e.strSalesmanImageUrl,
-            )));
+            ),
+          ),
+        );
         paginationScrollController.hasNextPage = currentPage < totalNumberOfPages!;
         paginationScrollController.isPageLoaded.complete(currentPage == totalNumberOfPages);
         if (currentPage == 1) {
@@ -168,9 +174,10 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   void startTimerForDurationDecrement() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       for (int i = 0; i < watchlistDataList.length; i++) {
-        watchListingList[i].strRemainingTime?.value = (watchlistDataList[i].expiresAt?.isAfter(DateTime.now()) == true)
-            ? (watchlistDataList[i].expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")
-            : APPStrings.expired.tr;
+        watchListingList[i].strRemainingTime?.value =
+            (watchlistDataList[i].expiresAt?.isAfter(DateTime.now()) == true)
+                ? (watchlistDataList[i].expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")
+                : APPStrings.expired.tr;
       }
     });
   }
@@ -258,12 +265,9 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     if (allWatchlistFull.isCompleted) {
       allWatchlistFull = Completer<List<WatchlistData>>();
     }
-    Either<ErrorResponse, PaginationData<WatchlistData>>? response = await AppRepository(event.context).getWatchList(
-      page: "1",
-      limit: AppConst.pageLimit.toString(),
-      isLoadMore: false,
-      isFullList: true,
-    );
+    Either<ErrorResponse, PaginationData<WatchlistData>>? response = await AppRepository(
+      event.context,
+    ).getWatchList(page: "1", limit: AppConst.pageLimit.toString(), isLoadMore: false, isFullList: true);
     if (allWatchlistFull.isCompleted) {
       allWatchlistFull = Completer<List<WatchlistData>>();
     }
@@ -321,23 +325,26 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
 
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response = await AppRepository(context).fetchWatchListingFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? <Filters>[]) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? <Filters>[]) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Get secondary filter data

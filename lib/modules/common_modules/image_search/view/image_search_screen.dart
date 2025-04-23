@@ -18,14 +18,8 @@ class ImageSearchScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 70.h,
-                  ),
-                  SmartImage(
-                    path: AppImages.icSearchImgThumbnail,
-                    height: 300.w,
-                    width: 300.w,
-                  ),
+                  SizedBox(height: 70.h),
+                  SmartImage(path: AppImages.icSearchImgThumbnail, height: 300.w, width: 300.w),
                   SmartText("Search with your photos", style: style.titleStyle),
                   SizedBox(height: 8.h),
                   SmartText("Upload/Capture a photo to search for similar images", style: style.subTitleStyle),
@@ -53,81 +47,65 @@ class ImageSearchScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                          child: GestureDetector(
-                        onTap: () {
-                          bloc.add(const ImageSelectionToggleEvent(isCameraSelected: true));
-                        },
-                        child: Container(
-                          padding: EdgeInsetsDirectional.symmetric(vertical: 8.w),
-                          decoration: bloc.isCameraSelected
-                              ? BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: BorderDirectional(
-                                    top: BorderSide(
-                                      color: style.selectedColor,
-                                      width: 6.0.w,
-                                    ),
-                                  ),
-                                )
-                              : const BoxDecoration(
-                                  color: Colors.transparent,
+                        child: GestureDetector(
+                          onTap: () {
+                            bloc.add(const ImageSelectionToggleEvent(isCameraSelected: true));
+                          },
+                          child: Container(
+                            padding: EdgeInsetsDirectional.symmetric(vertical: 8.w),
+                            decoration:
+                                bloc.isCameraSelected
+                                    ? BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: BorderDirectional(top: BorderSide(color: style.selectedColor, width: 6.0.w)),
+                                    )
+                                    : const BoxDecoration(color: Colors.transparent),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 24.w,
+                                  color: bloc.isCameraSelected ? style.selectedColor : style.unSelectedColor,
                                 ),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.camera_alt_outlined,
-                                size: 24.w,
-                                color: bloc.isCameraSelected ? style.selectedColor : style.unSelectedColor,
-                              ),
-                              SmartText(
-                                "Camera",
-                                style: bloc.isCameraSelected ? style.selectedItemStyle : style.unSelectedItemStyle,
-                              ),
-                            ],
+                                SmartText("Camera", style: bloc.isCameraSelected ? style.selectedItemStyle : style.unSelectedItemStyle),
+                              ],
+                            ),
                           ),
                         ),
-                      )),
+                      ),
                       Expanded(
-                          child: GestureDetector(
-                        onTap: () {
-                          bloc.add(const ImageSelectionToggleEvent(isCameraSelected: false));
-                        },
-                        child: Container(
-                          alignment: AlignmentDirectional.center,
-                          decoration: bloc.isCameraSelected
-                              ? const BoxDecoration(
-                                  color: Colors.transparent,
-                                )
-                              : BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: BorderDirectional(
-                                    top: BorderSide(
-                                      color: style.selectedColor,
-                                      width: 6.0.w,
+                        child: GestureDetector(
+                          onTap: () {
+                            bloc.add(const ImageSelectionToggleEvent(isCameraSelected: false));
+                          },
+                          child: Container(
+                            alignment: AlignmentDirectional.center,
+                            decoration:
+                                bloc.isCameraSelected
+                                    ? const BoxDecoration(color: Colors.transparent)
+                                    : BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: BorderDirectional(top: BorderSide(color: style.selectedColor, width: 6.0.w)),
                                     ),
-                                  ),
+                            padding: EdgeInsetsDirectional.symmetric(vertical: 8.w),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.image_outlined,
+                                  size: 24.w,
+                                  color: bloc.isCameraSelected ? style.unSelectedColor : style.selectedColor,
                                 ),
-                          padding: EdgeInsetsDirectional.symmetric(vertical: 8.w),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.image_outlined,
-                                size: 24.w,
-                                color: bloc.isCameraSelected ? style.unSelectedColor : style.selectedColor,
-                              ),
-                              SmartText(
-                                "Gallery",
-                                style: bloc.isCameraSelected ? style.unSelectedItemStyle : style.selectedItemStyle,
-                              ),
-                            ],
+                                SmartText("Gallery", style: bloc.isCameraSelected ? style.unSelectedItemStyle : style.selectedItemStyle),
+                              ],
+                            ),
                           ),
                         ),
-                      )),
+                      ),
                     ],
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),

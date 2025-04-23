@@ -54,20 +54,20 @@ class MetalShapeModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "reference_id": referenceId,
-        "product_description": productDescription,
-        "lot_code": lotCode,
-        "image": image,
-        "color_name": colorName,
-        "raw_material_name": rawMaterialName,
-        "sorting_no": sortingNo,
-        "karatage": karatage,
-        "imported_from": importedFrom,
-        "suid": suid,
-        "subarea_code": subareaCode,
-        "ref_suid": refSuid,
-        "subarea_name": subareaName,
-        "commodity_name": commodityName,
-      };
+    "_id": id,
+    "reference_id": referenceId,
+    "product_description": productDescription,
+    "lot_code": lotCode,
+    "image": image,
+    "color_name": colorName,
+    "raw_material_name": rawMaterialName,
+    "sorting_no": sortingNo,
+    "karatage": karatage,
+    "imported_from": importedFrom,
+    "suid": suid,
+    "subarea_code": subareaCode,
+    "ref_suid": refSuid,
+    "subarea_name": subareaName,
+    "commodity_name": commodityName,
+  };
 }

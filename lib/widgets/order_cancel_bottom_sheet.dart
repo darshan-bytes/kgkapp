@@ -26,28 +26,22 @@ class OrderCancelBottomSheet extends StatelessWidget {
                       padding: EdgeInsetsDirectional.all(18.w),
                       child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
                         bloc: orderDetailBloc,
-                        buildWhen: (previous, current) =>
-                            current is CancellationFieldErrorState && current.fieldType == FieldTypeValidationEnum.firstName,
+                        buildWhen:
+                            (previous, current) =>
+                                current is CancellationFieldErrorState && current.fieldType == FieldTypeValidationEnum.firstName,
                         builder: (context, state) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              SmartText(
-                                APPStrings.areYouSure.tr,
-                                style: style.headerTitleStyle,
-                              ),
-                              SizedBox(
-                                height: 4.h,
-                              ),
+                              SmartText(APPStrings.areYouSure.tr, style: style.headerTitleStyle),
+                              SizedBox(height: 4.h),
                               SmartText(
                                 APPStrings.orderWillBeCancelledX.tr.interpolate([orderDetailBloc.placeOrderResponse?.uniqueId]),
                                 style: style.subTitleStyle,
                               ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
+                              SizedBox(height: 20.h),
                               Container(
                                 width: context.width,
                                 padding: EdgeInsetsDirectional.all(14.w),
@@ -56,13 +50,8 @@ class OrderCancelBottomSheet extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SmartText(
-                                      APPStrings.refundAmount.tr,
-                                      style: style.refundTitleStyle,
-                                    ),
-                                    SizedBox(
-                                      height: 6.w,
-                                    ),
+                                    SmartText(APPStrings.refundAmount.tr, style: style.refundTitleStyle),
+                                    SizedBox(height: 6.w),
                                     SmartText(
                                       orderDetailBloc.placeOrderResponse?.totalPrice?.setCurrency ?? '',
                                       style: style.amountTitleStyle,
@@ -95,16 +84,9 @@ class OrderCancelBottomSheet extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              SmartText(
-                                APPStrings.cancellationReason.tr,
-                                style: style.cancelReasonTitleStyle,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
+                              SizedBox(height: 20.h),
+                              SmartText(APPStrings.cancellationReason.tr, style: style.cancelReasonTitleStyle),
+                              SizedBox(height: 10.h),
                               SmartTextField(
                                 controller: orderDetailBloc.cancellationOrderController,
                                 errorText: orderDetailBloc.cancelOrderError,
@@ -117,9 +99,7 @@ class OrderCancelBottomSheet extends StatelessWidget {
                                 },
                               ),
 
-                              SizedBox(
-                                height: 10.h,
-                              ),
+                              SizedBox(height: 10.h),
 
                               /// TODO : temporarily unused
                               // BlocBuilder<OrderDetailBloc, OrderDetailState>(
@@ -158,15 +138,19 @@ class OrderCancelBottomSheet extends StatelessWidget {
                               //         : const SizedBox.shrink();
                               //   },
                               // ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
+                              SizedBox(height: 20.h),
                               SmartButton(
-                                  onTap: () {
-                                    orderDetailBloc.add(OrderCancellationEvent(
-                                        context: context, placeOrderResponse: orderDetailBloc.placeOrderResponse!, isFromFullOrder: true));
-                                  },
-                                  title: APPStrings.submit.tr)
+                                onTap: () {
+                                  orderDetailBloc.add(
+                                    OrderCancellationEvent(
+                                      context: context,
+                                      placeOrderResponse: orderDetailBloc.placeOrderResponse!,
+                                      isFromFullOrder: true,
+                                    ),
+                                  );
+                                },
+                                title: APPStrings.submit.tr,
+                              ),
                             ],
                           );
                         },
@@ -179,14 +163,9 @@ class OrderCancelBottomSheet extends StatelessWidget {
                         onTap: () {
                           context.pop();
                         },
-                        child: SmartImage(
-                          path: AppImages.icCross,
-                          height: 24.w,
-                          width: 24.w,
-                          color: style.crossColor,
-                        ),
+                        child: SmartImage(path: AppImages.icCross, height: 24.w, width: 24.w, color: style.crossColor),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

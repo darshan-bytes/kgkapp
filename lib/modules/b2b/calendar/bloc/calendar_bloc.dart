@@ -158,29 +158,30 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         ApiKey.formatType: calendarView.name,
       };
       Either<ErrorResponse, List<CalendarDataModel>>? response = await AppRepository(context).getCalenderEvent(body: body);
-      response?.fold((l) {
-        dataList = [];
-        Utils.showMessage(l.message);
-      }, (success) {
-        dataList.clear();
-        final CalendarStyle style = AppTheme.of(context).calendarStyle;
+      response?.fold(
+        (l) {
+          dataList = [];
+          Utils.showMessage(l.message);
+        },
+        (success) {
+          dataList.clear();
+          final CalendarStyle style = AppTheme.of(context).calendarStyle;
 
-        dataList = success;
-        calendarDataList.clear();
-        calendarDataList = List.generate(
-          dataList.length,
-          (index) {
+          dataList = success;
+          calendarDataList.clear();
+          calendarDataList = List.generate(dataList.length, (index) {
             return CalendarData(
-                id: dataList[index].id ?? '',
-                title: dataList[index].title,
-                type: dataList[index].type,
-                start: dataList[index].startDate.toString(),
-                end: dataList[index].endDate.toString());
-          },
-        );
-        meetingList = _convertToMeeting(style);
-        meetingDataSource = MeetingDataSource(meetingList);
-      });
+              id: dataList[index].id ?? '',
+              title: dataList[index].title,
+              type: dataList[index].type,
+              start: dataList[index].startDate.toString(),
+              end: dataList[index].endDate.toString(),
+            );
+          });
+          meetingList = _convertToMeeting(style);
+          meetingDataSource = MeetingDataSource(meetingList);
+        },
+      );
     } catch (e) {
       printWrapped(e.toString());
     }
@@ -224,16 +225,17 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   ///Data Class Wrapper method to convert data received from api to required data model type Meeting.
   List<CalenderEvent<CalendarData>> _convertToMeeting(CalendarStyle style) {
     return calendarDataList
-        .map((e) => CalenderEvent<CalendarData>(
-              value: e,
-              eventName: e.title ?? '',
-              from: e.start!.stringToDateTime() ?? DateTime.now(),
-              to: e.end!.stringToDateTime() ?? DateTime.now(),
-              background: e.calenderEventType == CalenderEventType.meeting
-                  ? style.meetEventCellBackgroundColor
-                  : style.taskEventCellBackgroundColor,
-              isAllDay: false,
-            ))
+        .map(
+          (e) => CalenderEvent<CalendarData>(
+            value: e,
+            eventName: e.title ?? '',
+            from: e.start!.stringToDateTime() ?? DateTime.now(),
+            to: e.end!.stringToDateTime() ?? DateTime.now(),
+            background:
+                e.calenderEventType == CalenderEventType.meeting ? style.meetEventCellBackgroundColor : style.taskEventCellBackgroundColor,
+            isAllDay: false,
+          ),
+        )
         .toList();
   }
 

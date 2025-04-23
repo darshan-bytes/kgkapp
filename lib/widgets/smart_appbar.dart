@@ -70,12 +70,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget leadingIcon(BuildContext context, CustomAppBarStyle style) {
     if (!isBack && leadingImage?.isNotEmpty == true) {
-      return SmartImage(
-        key: ValueKey(leadingImage!),
-        path: leadingImage!,
-        height: 40.w,
-        width: 40.w,
-      );
+      return SmartImage(key: ValueKey(leadingImage!), path: leadingImage!, height: 40.w, width: 40.w);
     } else if (isBack) {
       return GestureDetector(
         onTap: onBack ?? () => context.pop(),
@@ -107,62 +102,55 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
           leadingIcon(context, style),
           SizedBox(width: 12.w),
           Expanded(
-              child: SmartTextField(
-            height: 40.w,
-            hintText: APPStrings.search.tr,
-            onTapOutside: (event) {},
-            controller: searchController,
-            borderRadius: BorderRadius.all(Radius.circular(6.r)),
-            style: style.searchBarTextStyle,
-            textInputAction: TextInputAction.search,
-            onFieldSubmitted: (value) {
-              if (onTapSuffixIconWithSearchBar != null) {
-                onTapSuffixIconWithSearchBar!();
-              }
-              if (onTapSuffixIconWithImageSearch != null) {
-                onTapSuffixIconWithImageSearch!();
-              }
-            },
-            suffixIcon: FittedBox(
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      if (onTapSuffixIconWithImageSearch != null) {
-                        onTapSuffixIconWithImageSearch!();
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 8.w),
-                      padding: EdgeInsetsDirectional.zero,
-                      child: SmartImage(
-                        path: AppImages.icImgSearch,
-                        height: 16.w,
-                        width: 16.w,
+            child: SmartTextField(
+              height: 40.w,
+              hintText: APPStrings.search.tr,
+              onTapOutside: (event) {},
+              controller: searchController,
+              borderRadius: BorderRadius.all(Radius.circular(6.r)),
+              style: style.searchBarTextStyle,
+              textInputAction: TextInputAction.search,
+              onFieldSubmitted: (value) {
+                if (onTapSuffixIconWithSearchBar != null) {
+                  onTapSuffixIconWithSearchBar!();
+                }
+                if (onTapSuffixIconWithImageSearch != null) {
+                  onTapSuffixIconWithImageSearch!();
+                }
+              },
+              suffixIcon: FittedBox(
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (onTapSuffixIconWithImageSearch != null) {
+                          onTapSuffixIconWithImageSearch!();
+                        }
+                      },
+                      child: Container(
+                        margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 8.w),
+                        padding: EdgeInsetsDirectional.zero,
+                        child: SmartImage(path: AppImages.icImgSearch, height: 16.w, width: 16.w),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (onTapSuffixIconWithSearchBar != null) {
-                        onTapSuffixIconWithSearchBar!();
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 10.w),
-                      padding: EdgeInsetsDirectional.zero,
-                      child: SmartImage(
-                        path: AppImages.icSearchThin,
-                        height: 16.w,
-                        width: 16.w,
+                    GestureDetector(
+                      onTap: () {
+                        if (onTapSuffixIconWithSearchBar != null) {
+                          onTapSuffixIconWithSearchBar!();
+                        }
+                      },
+                      child: Container(
+                        margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 10.w),
+                        padding: EdgeInsetsDirectional.zero,
+                        child: SmartImage(path: AppImages.icSearchThin, height: 16.w, width: 16.w),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              contentPadding: EdgeInsetsDirectional.symmetric(vertical: 10.h, horizontal: 16.w),
             ),
-            contentPadding: EdgeInsetsDirectional.symmetric(vertical: 10.h, horizontal: 16.w),
-          )),
+          ),
         ],
       );
     } else {
@@ -189,28 +177,40 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> _buildActions(BuildContext context) {
     final List<Widget> actionsList = [];
     if (onScan != null && !(StorageManager.instance.getIsSkipLogin())) {
-      actionsList.add(_buildIconButton(() {
-        context.pushNamed(AppRoutes.qrScannerPage);
-      }, AppImages.icScanner, size: 24.w));
+      actionsList.add(
+        _buildIconButton(
+          () {
+            context.pushNamed(AppRoutes.qrScannerPage);
+          },
+          AppImages.icScanner,
+          size: 24.w,
+        ),
+      );
     }
     if (onSearch != null) actionsList.add(_buildIconButton(onSearch!, AppImages.icSearch, size: 24.w));
     if (onFavorite != null) {
-      actionsList.add(_buildIconButton(() async {
-        // First check if the user is logged in or not
-        if (StorageManager().getIsSkipLogin()) {
-          bool isApproved = false;
-          await Utils.showLoginRequiredDialog(
-            context,
-            onApproved: () {
-              isApproved = true;
-            },
-          );
-          if (!isApproved) {
-            return;
-          }
-        }
-        onFavorite!();
-      }, AppImages.icHeart, size: 24.w));
+      actionsList.add(
+        _buildIconButton(
+          () async {
+            // First check if the user is logged in or not
+            if (StorageManager().getIsSkipLogin()) {
+              bool isApproved = false;
+              await Utils.showLoginRequiredDialog(
+                context,
+                onApproved: () {
+                  isApproved = true;
+                },
+              );
+              if (!isApproved) {
+                return;
+              }
+            }
+            onFavorite!();
+          },
+          AppImages.icHeart,
+          size: 24.w,
+        ),
+      );
     }
     if (onNotification != null) actionsList.add(_getNotificationIcon());
     if (actions != null) actionsList.add(SizedBox(width: 17.w));
@@ -227,14 +227,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: SizedBox(
           height: size?.w,
           width: size?.w,
-          child: Center(
-            child: SmartImage(
-              path: assetPath,
-              height: size?.w,
-              width: size?.w,
-              matchTextDirection: true,
-            ),
-          ),
+          child: Center(child: SmartImage(path: assetPath, height: size?.w, width: size?.w, matchTextDirection: true)),
         ),
       ),
     );

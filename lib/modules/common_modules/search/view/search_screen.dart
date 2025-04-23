@@ -13,10 +13,10 @@ class SearchScreen extends StatelessWidget {
         searchController: searchBloc.searchController,
         onTapSuffixIconWithSearchBar: () {
           if (searchBloc.searchController.text.trim().isNotEmpty) {
-            context.pushNamed(AppRoutes.searchResultPage, arguments: {
-              RoutesData.searchResultData: searchBloc.searchController.text,
-              RoutesData.isNoDataFound: true,
-            });
+            context.pushNamed(
+              AppRoutes.searchResultPage,
+              arguments: {RoutesData.searchResultData: searchBloc.searchController.text, RoutesData.isNoDataFound: true},
+            );
           }
         },
         onTapSuffixIconWithImageSearch: () {
@@ -58,11 +58,7 @@ class SearchScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SmartText(
-          title,
-          style: style.titleStyle,
-          optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 16.w),
-        ),
+        SmartText(title, style: style.titleStyle, optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 16.w)),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -74,13 +70,7 @@ class SearchScreen extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Expanded(
-                      child: SmartText(
-                    searchList[index],
-                    style: style.searchItemStyle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )),
+                  Expanded(child: SmartText(searchList[index], style: style.searchItemStyle, maxLines: 1, overflow: TextOverflow.ellipsis)),
                   const SmartImage(path: AppImages.icArrowUpLeft),
                 ],
               ),

@@ -8,14 +8,7 @@ class OrderTimelineDataModel {
   String? time;
   String dateTime;
 
-  OrderTimelineDataModel({
-    this.id,
-    this.title,
-    this.description,
-    this.date,
-    this.time,
-    required this.dateTime,
-  });
+  OrderTimelineDataModel({this.id, this.title, this.description, this.date, this.time, required this.dateTime});
 
   @override
   bool operator ==(Object other) {

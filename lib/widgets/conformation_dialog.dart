@@ -11,17 +11,18 @@ class ConfirmationDialog extends StatelessWidget {
   final VoidCallback? onDenied;
   final VoidCallback onApproved;
 
-  const ConfirmationDialog(
-      {super.key,
-      this.title,
-      this.message,
-      this.height,
-      this.rightPosition,
-      this.topPosition,
-      required this.onDeniedText,
-      required this.onApprovedText,
-      this.onDenied,
-      required this.onApproved});
+  const ConfirmationDialog({
+    super.key,
+    this.title,
+    this.message,
+    this.height,
+    this.rightPosition,
+    this.topPosition,
+    required this.onDeniedText,
+    required this.onApprovedText,
+    this.onDenied,
+    required this.onApproved,
+  });
 
   @override
   Widget build(BuildContext context) {

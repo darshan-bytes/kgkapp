@@ -317,12 +317,7 @@ class CheckboxStyle {
   final Color borderColor;
   final TextStyle textStyle;
 
-  CheckboxStyle({
-    required this.activeColor,
-    required this.checkColor,
-    required this.borderColor,
-    required this.textStyle,
-  });
+  CheckboxStyle({required this.activeColor, required this.checkColor, required this.borderColor, required this.textStyle});
 }
 
 class TabBarStyle {
@@ -348,11 +343,7 @@ class SplashScreenStyle {
   final Color activeBackgroundColor;
   final TextStyle skipTextStyle;
 
-  SplashScreenStyle({
-    required this.titleStyle,
-    required this.skipTextStyle,
-    required this.activeBackgroundColor,
-  });
+  SplashScreenStyle({required this.titleStyle, required this.skipTextStyle, required this.activeBackgroundColor});
 }
 
 class CustomAppBarStyle {
@@ -402,11 +393,7 @@ class ForgotPasswordScreenStyle {
   final TextStyle resendTextStyle;
   final TextStyle didNotGetEmailTextStyle;
 
-  ForgotPasswordScreenStyle({
-    required this.richSubTextStyle,
-    required this.resendTextStyle,
-    required this.didNotGetEmailTextStyle,
-  });
+  ForgotPasswordScreenStyle({required this.richSubTextStyle, required this.resendTextStyle, required this.didNotGetEmailTextStyle});
 }
 
 class CategoryTileStyle {
@@ -434,11 +421,7 @@ class NotificationScreenStyle {
   final Color selectedTabColor;
   final Color unselectedTabColor;
 
-  NotificationScreenStyle({
-    required this.tabTitleStyle,
-    required this.selectedTabColor,
-    required this.unselectedTabColor,
-  });
+  NotificationScreenStyle({required this.tabTitleStyle, required this.selectedTabColor, required this.unselectedTabColor});
 }
 
 class AllNotificationViewStyle {
@@ -465,12 +448,7 @@ class SettingViewStyle {
   final Color thumbColor;
   final Color dividerColor;
 
-  SettingViewStyle({
-    required this.titleStyle,
-    required this.descStyle,
-    required this.thumbColor,
-    required this.dividerColor,
-  });
+  SettingViewStyle({required this.titleStyle, required this.descStyle, required this.thumbColor, required this.dividerColor});
 }
 
 class CollectionViewStyle {
@@ -531,12 +509,7 @@ class RadioButtonStyle {
   final Color borderColor;
   final TextStyle textStyle;
 
-  RadioButtonStyle({
-    required this.activeColor,
-    required this.checkColor,
-    required this.borderColor,
-    required this.textStyle,
-  });
+  RadioButtonStyle({required this.activeColor, required this.checkColor, required this.borderColor, required this.textStyle});
 }
 
 class CustomPageIndicatorStyle {
@@ -627,12 +600,7 @@ class SortStyle {
   final TextStyle titleStyle;
   final TextStyle itemTitleStyle;
 
-  SortStyle({
-    required this.backgroundColor,
-    required this.selectedBorderColor,
-    required this.titleStyle,
-    required this.itemTitleStyle,
-  });
+  SortStyle({required this.backgroundColor, required this.selectedBorderColor, required this.titleStyle, required this.itemTitleStyle});
 }
 
 class FilterStyle {
@@ -783,12 +751,7 @@ class InquiryWidgetStyle {
   final TextStyle phoneStyle;
   final TextStyle emailStyle;
 
-  InquiryWidgetStyle({
-    required this.haveAQuestionStyle,
-    required this.reachOutStyle,
-    required this.phoneStyle,
-    required this.emailStyle,
-  });
+  InquiryWidgetStyle({required this.haveAQuestionStyle, required this.reachOutStyle, required this.phoneStyle, required this.emailStyle});
 }
 
 class SelectionButtonStyle {
@@ -842,11 +805,7 @@ class FilterBottomActionBarStyle {
   final Color transparentColor;
   final Color dividerColor;
 
-  const FilterBottomActionBarStyle({
-    required this.borderColor,
-    required this.transparentColor,
-    required this.dividerColor,
-  });
+  const FilterBottomActionBarStyle({required this.borderColor, required this.transparentColor, required this.dividerColor});
 }
 
 class CompleteProductStyle {
@@ -879,22 +838,14 @@ class SelectedSettingsStyle {
   final TextStyle specialityStyle;
   final TextStyle changeTextStyle;
 
-  SelectedSettingsStyle({
-    required this.iconColor,
-    required this.titleStyle,
-    required this.specialityStyle,
-    required this.changeTextStyle,
-  });
+  SelectedSettingsStyle({required this.iconColor, required this.titleStyle, required this.specialityStyle, required this.changeTextStyle});
 }
 
 class ImageCarouselStyle {
   final Color dotColor;
   final Color selectedDotColor;
 
-  ImageCarouselStyle({
-    required this.dotColor,
-    required this.selectedDotColor,
-  });
+  ImageCarouselStyle({required this.dotColor, required this.selectedDotColor});
 }
 
 class CompareProductStyle {
@@ -921,10 +872,7 @@ class RatingbarStyle {
   final Color fillStarColor;
   final Color emptyStarColor;
 
-  RatingbarStyle({
-    required this.fillStarColor,
-    required this.emptyStarColor,
-  });
+  RatingbarStyle({required this.fillStarColor, required this.emptyStarColor});
 }
 
 class AddAddressScreenStyle {
@@ -969,18 +917,13 @@ class WishListStyle {
   final TextStyle numberOfItemsStyle;
   final TextStyle totalAmountStyle;
 
-  WishListStyle({
-    required this.numberOfItemsStyle,
-    required this.totalAmountStyle,
-  });
+  WishListStyle({required this.numberOfItemsStyle, required this.totalAmountStyle});
 }
 
 class CheckOutStyle {
   final Color dividerColor;
 
-  CheckOutStyle({
-    required this.dividerColor,
-  });
+  CheckOutStyle({required this.dividerColor});
 }
 
 class MyBagScreenStyle {
@@ -1102,12 +1045,13 @@ class ReviewDetailsStyle {
   final TextStyle titleStyle;
   final TextStyle readMoreStyle;
 
-  ReviewDetailsStyle(
-      {required this.userNameStyle,
-      required this.dotColor,
-      required this.createdDateStyle,
-      required this.titleStyle,
-      required this.readMoreStyle});
+  ReviewDetailsStyle({
+    required this.userNameStyle,
+    required this.dotColor,
+    required this.createdDateStyle,
+    required this.titleStyle,
+    required this.readMoreStyle,
+  });
 }
 
 class OrderConfirmationStyle {
@@ -1213,11 +1157,7 @@ class WriteReviewScreenStyle {
   final Color borderColor;
   final TextStyle labelStyle;
 
-  WriteReviewScreenStyle({
-    required this.whiteColor,
-    required this.labelStyle,
-    required this.borderColor,
-  });
+  WriteReviewScreenStyle({required this.whiteColor, required this.labelStyle, required this.borderColor});
 }
 
 class ProductMenuBottomSheetStyle {
@@ -1303,11 +1243,7 @@ class QuotationRequestConfirmationStyle {
   final TextStyle detailsTextStyle;
   final Color primaryColor;
 
-  QuotationRequestConfirmationStyle({
-    required this.titleStyle,
-    required this.detailsTextStyle,
-    required this.primaryColor,
-  });
+  QuotationRequestConfirmationStyle({required this.titleStyle, required this.detailsTextStyle, required this.primaryColor});
 }
 
 class ShowDoubleActionDialogStyle {
@@ -1315,11 +1251,7 @@ class ShowDoubleActionDialogStyle {
   final TextStyle contentStyle;
   final TextStyle okButtonStyle;
 
-  ShowDoubleActionDialogStyle({
-    required this.titleStyle,
-    required this.contentStyle,
-    required this.okButtonStyle,
-  });
+  ShowDoubleActionDialogStyle({required this.titleStyle, required this.contentStyle, required this.okButtonStyle});
 }
 
 class SmartTabBarStyle {
@@ -1399,11 +1331,7 @@ class OrderPopupStyle {
   final TextStyle cancelTextStyle;
   final Color whiteColor;
 
-  OrderPopupStyle({
-    required this.optionTextStyle,
-    required this.cancelTextStyle,
-    required this.whiteColor,
-  });
+  OrderPopupStyle({required this.optionTextStyle, required this.cancelTextStyle, required this.whiteColor});
 }
 
 class OrderDetailScreenStyle {
@@ -1493,20 +1421,21 @@ class ProfileScreenStyle {
   final TextStyle logoutTextStyle;
   final TextStyle bottomTitleStyle;
 
-  ProfileScreenStyle(
-      {required this.backgroundColor,
-      required this.primaryColor,
-      required this.dividerColor,
-      required this.arrowRightColor,
-      required this.transparentColor,
-      required this.titleStyle,
-      required this.subTitleStyle,
-      required this.subTextStyle,
-      required this.listTitleStyle,
-      required this.expandTitleStyle,
-      required this.fontTextStyle,
-      required this.logoutTextStyle,
-      required this.bottomTitleStyle});
+  ProfileScreenStyle({
+    required this.backgroundColor,
+    required this.primaryColor,
+    required this.dividerColor,
+    required this.arrowRightColor,
+    required this.transparentColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.subTextStyle,
+    required this.listTitleStyle,
+    required this.expandTitleStyle,
+    required this.fontTextStyle,
+    required this.logoutTextStyle,
+    required this.bottomTitleStyle,
+  });
 }
 
 class SmartOptionTileStyle {
@@ -1551,12 +1480,7 @@ class LogoutPopupStyle {
   final Color whiteColor;
   final TextStyle cancelTextStyle;
 
-  LogoutPopupStyle({
-    required this.titleStyle,
-    required this.subTitleStyle,
-    required this.whiteColor,
-    required this.cancelTextStyle,
-  });
+  LogoutPopupStyle({required this.titleStyle, required this.subTitleStyle, required this.whiteColor, required this.cancelTextStyle});
 }
 
 class PresentationGridItemStyle {
@@ -1577,10 +1501,7 @@ class MakeInquiryStyle {
   final TextStyle titleStyle;
   final Color whiteColor;
 
-  MakeInquiryStyle({
-    required this.titleStyle,
-    required this.whiteColor,
-  });
+  MakeInquiryStyle({required this.titleStyle, required this.whiteColor});
 }
 
 class SearchScreenStyle {
@@ -1606,21 +1527,14 @@ class SupportScreenStyle {
   final TextStyle questionStyle;
   final TextStyle answerStyle;
 
-  SupportScreenStyle({
-    required this.frequentlyAskedQuestionStyle,
-    required this.questionStyle,
-    required this.answerStyle,
-  });
+  SupportScreenStyle({required this.frequentlyAskedQuestionStyle, required this.questionStyle, required this.answerStyle});
 }
 
 class QrScannerStyle {
   final TextStyle titleStyle;
   final Color overLayColor;
 
-  QrScannerStyle({
-    required this.titleStyle,
-    required this.overLayColor,
-  });
+  QrScannerStyle({required this.titleStyle, required this.overLayColor});
 }
 
 class SearchResultScreenStyle {
@@ -1685,11 +1599,7 @@ class CompanyScreenStyle {
   final TextStyle textStyle;
   final Color primaryColor;
 
-  CompanyScreenStyle({
-    required this.titleStyle,
-    required this.textStyle,
-    required this.primaryColor,
-  });
+  CompanyScreenStyle({required this.titleStyle, required this.textStyle, required this.primaryColor});
 }
 
 class SwitchStyle {
@@ -1729,9 +1639,7 @@ class FAQStyle {
 class PreferencesStyle {
   final TextStyle titleStyle;
 
-  PreferencesStyle({
-    required this.titleStyle,
-  });
+  PreferencesStyle({required this.titleStyle});
 }
 
 class ContactUsStyle {
@@ -1777,29 +1685,20 @@ class ConceptInfoPopupScreenStyle {
   final TextStyle detailsTextStyle;
   final Color iconColor;
 
-  ConceptInfoPopupScreenStyle({
-    required this.titleStyle,
-    required this.detailsTextStyle,
-    required this.iconColor,
-  });
+  ConceptInfoPopupScreenStyle({required this.titleStyle, required this.detailsTextStyle, required this.iconColor});
 }
 
 class NoDataFoundStyle {
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
 
-  NoDataFoundStyle({
-    required this.titleStyle,
-    required this.subTitleStyle,
-  });
+  NoDataFoundStyle({required this.titleStyle, required this.subTitleStyle});
 }
 
 class PddListingItemStyle {
   final Color borderColor;
 
-  PddListingItemStyle({
-    required this.borderColor,
-  });
+  PddListingItemStyle({required this.borderColor});
 }
 
 class SavedAddressStyle {
@@ -1916,22 +1815,14 @@ class DigitalCatalogueStyle {
   final Color borderColor;
   final Color whiteColor;
 
-  DigitalCatalogueStyle({
-    required this.titleStyle,
-    required this.subTitleStyle,
-    required this.borderColor,
-    required this.whiteColor,
-  });
+  DigitalCatalogueStyle({required this.titleStyle, required this.subTitleStyle, required this.borderColor, required this.whiteColor});
 }
 
 class DesignListingGridItemStyle {
   final TextStyle dbfNumberTextStyle;
   final TextStyle salesManTextStyle;
 
-  DesignListingGridItemStyle({
-    required this.dbfNumberTextStyle,
-    required this.salesManTextStyle,
-  });
+  DesignListingGridItemStyle({required this.dbfNumberTextStyle, required this.salesManTextStyle});
 }
 
 class ProductInfoItemStyle {
@@ -1972,10 +1863,7 @@ class PddVersionHistoryStyle {
   final Color whiteColor;
   final Color backgroundColor;
 
-  PddVersionHistoryStyle({
-    required this.whiteColor,
-    required this.backgroundColor,
-  });
+  PddVersionHistoryStyle({required this.whiteColor, required this.backgroundColor});
 }
 
 class CadLibraryListingItemStyle {
@@ -2040,11 +1928,7 @@ class DurationPickerStyle {
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
 
-  DurationPickerStyle({
-    required this.backgroundColor,
-    required this.titleStyle,
-    required this.subTitleStyle,
-  });
+  DurationPickerStyle({required this.backgroundColor, required this.titleStyle, required this.subTitleStyle});
 }
 
 class DesignLibraryFeedbackStyle {
@@ -2222,10 +2106,7 @@ class SmartSuggestionProductListStyle {
   final TextStyle titleStyle;
   final TextStyle viewAllStyle;
 
-  SmartSuggestionProductListStyle({
-    required this.titleStyle,
-    required this.viewAllStyle,
-  });
+  SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
 }
 
 class OrionStyle {
@@ -2341,16 +2222,17 @@ class ReturnOrderStyle {
   final TextStyle quantityStyle;
   final TextStyle cancelReasonTitleStyle;
 
-  ReturnOrderStyle(
-      {required this.orderInfoBackgroundColor,
-      required this.crossColor,
-      required this.whiteColor,
-      required this.titleStyle,
-      required this.orderIdStyle,
-      required this.imageSubTitleStyle,
-      required this.imageTitleStyle,
-      required this.quantityStyle,
-      required this.cancelReasonTitleStyle});
+  ReturnOrderStyle({
+    required this.orderInfoBackgroundColor,
+    required this.crossColor,
+    required this.whiteColor,
+    required this.titleStyle,
+    required this.orderIdStyle,
+    required this.imageSubTitleStyle,
+    required this.imageTitleStyle,
+    required this.quantityStyle,
+    required this.cancelReasonTitleStyle,
+  });
 }
 
 class ConfirmCancelPopupStyle {
@@ -2427,10 +2309,7 @@ class NoInternetScreenStyle {
   final TextStyle noInternetTitleStyle;
   final TextStyle noInternetSubtitleStyle;
 
-  NoInternetScreenStyle({
-    required this.noInternetTitleStyle,
-    required this.noInternetSubtitleStyle,
-  });
+  NoInternetScreenStyle({required this.noInternetTitleStyle, required this.noInternetSubtitleStyle});
 }
 
 class QRCodeDialogStyle {
@@ -2457,22 +2336,14 @@ class StyleDesignListStyle {
   final Color borderColor;
   final Color primaryColor;
 
-  StyleDesignListStyle({
-    required this.titleStyle,
-    required this.subTitleStyle,
-    required this.borderColor,
-    required this.primaryColor,
-  });
+  StyleDesignListStyle({required this.titleStyle, required this.subTitleStyle, required this.borderColor, required this.primaryColor});
 }
 
 class ConceptListingStyle {
   final Color borderColor;
   final TextStyle titleStyle;
 
-  ConceptListingStyle({
-    required this.borderColor,
-    required this.titleStyle,
-  });
+  ConceptListingStyle({required this.borderColor, required this.titleStyle});
 }
 
 class ApplyPromoCodeStyle {

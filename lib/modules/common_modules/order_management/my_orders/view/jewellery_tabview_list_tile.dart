@@ -66,11 +66,12 @@ class JewelleryTabView extends StatelessWidget {
           SizedBox(height: 24.h),
           Expanded(
             child: BlocBuilder<OrdersBloc, OrdersState>(
-              buildWhen: (previous, current) =>
-                  current is OrdersListLoadedState ||
-                  current is OrdersListLoadedMoreState ||
-                  current is OrdersLoadingMoreState ||
-                  current is OrdersLoadingState,
+              buildWhen:
+                  (previous, current) =>
+                      current is OrdersListLoadedState ||
+                      current is OrdersListLoadedMoreState ||
+                      current is OrdersLoadingMoreState ||
+                      current is OrdersLoadingState,
               builder: (context, state) {
                 if (state is OrdersLoadingState) {
                   return Center(child: const SmartCircularProgressIndicator());
@@ -83,10 +84,7 @@ class JewelleryTabView extends StatelessWidget {
                   ordersList: ordersBloc.filteredOrderList,
                   onTap: (index) {
                     /// Navigates to the order details page
-                    ordersBloc.add(NavigateToOrderDetailsEvent(
-                      context: context,
-                      uniqueId: ordersBloc.filteredOrderList[index].id ?? "",
-                    ));
+                    ordersBloc.add(NavigateToOrderDetailsEvent(context: context, uniqueId: ordersBloc.filteredOrderList[index].id ?? ""));
                   },
                   bloc: ordersBloc,
                 );
@@ -99,33 +97,33 @@ class JewelleryTabView extends StatelessWidget {
   }
 
   /// TODO: selected stone type for filter is currently not in use as discussed with JD.
-// Widget _buildStoneDropDownField(OrdersBloc ordersBloc, FilterBottomActionBarStyle style) {
-//   return BlocBuilder<OrdersBloc, OrdersState>(
-//     buildWhen: (previous, current) => current is ChangeOrdersStoneTypeState,
-//     builder: (context, state) {
-//       return SizedBox(
-//         width: 120.w,
-//         child: SmartDropDown<OrderStoneTypeModel>(
-//           border: BorderDirectional(
-//               end: BorderSide(color: style.dividerColor),
-//               top: BorderSide(color: style.dividerColor),
-//               bottom: BorderSide(color: style.dividerColor)),
-//           borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
-//           items: ordersBloc.arrStoneType.map((OrderStoneTypeModel type) {
-//             return SmartDropDownItem<OrderStoneTypeModel>(
-//               value: type,
-//               title: type.name,
-//             );
-//           }).toList(),
-//           onChanged: (type) {
-//             if (type != null) {
-//               ordersBloc.add(ChangeOrdersStoneTypeEvent(type));
-//             }
-//           },
-//           selectedItem: ordersBloc.selectedStoneType,
-//         ),
-//       );
-//     },
-//   );
-// }
+  // Widget _buildStoneDropDownField(OrdersBloc ordersBloc, FilterBottomActionBarStyle style) {
+  //   return BlocBuilder<OrdersBloc, OrdersState>(
+  //     buildWhen: (previous, current) => current is ChangeOrdersStoneTypeState,
+  //     builder: (context, state) {
+  //       return SizedBox(
+  //         width: 120.w,
+  //         child: SmartDropDown<OrderStoneTypeModel>(
+  //           border: BorderDirectional(
+  //               end: BorderSide(color: style.dividerColor),
+  //               top: BorderSide(color: style.dividerColor),
+  //               bottom: BorderSide(color: style.dividerColor)),
+  //           borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
+  //           items: ordersBloc.arrStoneType.map((OrderStoneTypeModel type) {
+  //             return SmartDropDownItem<OrderStoneTypeModel>(
+  //               value: type,
+  //               title: type.name,
+  //             );
+  //           }).toList(),
+  //           onChanged: (type) {
+  //             if (type != null) {
+  //               ordersBloc.add(ChangeOrdersStoneTypeEvent(type));
+  //             }
+  //           },
+  //           selectedItem: ordersBloc.selectedStoneType,
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }
