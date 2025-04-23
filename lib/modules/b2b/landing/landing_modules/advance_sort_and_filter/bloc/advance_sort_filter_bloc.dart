@@ -12,9 +12,7 @@ class AdvanceSortFilterBloc extends Bloc<AdvanceSortFilterEvent, AdvanceSortFilt
   FilterData? selectedFilterData;
 
   /// sort data list
-  List<SortOptions> sortData = [
-    SortOptions(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc),
-  ];
+  List<SortOptions> sortData = [SortOptions(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc)];
 
   /// filter data list
   List<FilterData> filterData = [];
@@ -88,9 +86,10 @@ class AdvanceSortFilterBloc extends Bloc<AdvanceSortFilterEvent, AdvanceSortFilt
     emit(AdvanceSortReloadState());
 
     if (event.searchQuery.isNotEmpty) {
-      secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData!
-          .where((element) => (element.name ?? '').toLowerCase().contains(event.searchQuery.trim().toLowerCase()))
-          .toList();
+      secondaryFilterDataDisplay =
+          selectedFilterData!.secondaryFilterData!
+              .where((element) => (element.name ?? '').toLowerCase().contains(event.searchQuery.trim().toLowerCase()))
+              .toList();
     } else {
       secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
     }

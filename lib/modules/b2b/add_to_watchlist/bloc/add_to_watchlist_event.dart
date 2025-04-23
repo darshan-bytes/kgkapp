@@ -12,9 +12,7 @@ final class AddToWatchlistInitialEvent extends AddToWatchlistEvent {
   final BuildContext context;
   final WatchlistData? watchlistData;
 
-  const AddToWatchlistInitialEvent.add(this.productDetails, this.context)
-      : actionType = WatchlistActionType.add,
-        watchlistData = null;
+  const AddToWatchlistInitialEvent.add(this.productDetails, this.context) : actionType = WatchlistActionType.add, watchlistData = null;
 
   const AddToWatchlistInitialEvent.edit(this.productDetails, this.context, this.watchlistData) : actionType = WatchlistActionType.edit;
 

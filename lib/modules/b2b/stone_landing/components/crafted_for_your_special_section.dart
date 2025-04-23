@@ -25,12 +25,7 @@ class CraftedForYourSpecialMomentSection extends StatelessWidget {
       backgroundImagePath: backgroundImage,
       bannerTitleText: title,
       bannerSubTitleText: description,
-      buttonList: [
-        SmartButton(
-          onTap: buttonCallBack,
-          title: buttonTitle,
-        )
-      ],
+      buttonList: [SmartButton(onTap: buttonCallBack, title: buttonTitle)],
       bannerTitleStyle: style.craftedSectionTitleStyle,
     );
   }

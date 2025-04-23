@@ -35,11 +35,7 @@ class DesignBriefsBloc extends Bloc<DesignBriefsEvent, DesignBriefsState> {
         strCreatedBy: 'Jenny Wilson',
         strCreatedByImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
         strCreatedOn: '23/03/2023',
-        fields:[B2BItemField(
-          label: APPStrings.assignTo.tr,
-          value: "Jenny Wilson",
-          imageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
-        )] ,
+        fields: [B2BItemField(label: APPStrings.assignTo.tr, value: "Jenny Wilson", imageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png")],
         holdStatus: ProjectStatus.released,
       );
     });

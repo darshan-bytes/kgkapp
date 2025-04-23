@@ -1,20 +1,11 @@
 class SortOptionsModel {
-  SortOptionsModel({
-    required this.commodity,
-    required this.data,
-  });
+  SortOptionsModel({required this.commodity, required this.data});
 
   final String? commodity;
   final List<SortOptions> data;
 
-  SortOptionsModel copyWith({
-    String? commodity,
-    List<SortOptions>? data,
-  }) {
-    return SortOptionsModel(
-      commodity: commodity ?? this.commodity,
-      data: data ?? this.data,
-    );
+  SortOptionsModel copyWith({String? commodity, List<SortOptions>? data}) {
+    return SortOptionsModel(commodity: commodity ?? this.commodity, data: data ?? this.data);
   }
 
   factory SortOptionsModel.fromJson(Map<String, dynamic> json) {
@@ -24,10 +15,7 @@ class SortOptionsModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "commodity": commodity,
-        "data": data.map((x) => x.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() => {"commodity": commodity, "data": data.map((x) => x.toJson()).toList()};
 }
 
 class SortOptions {

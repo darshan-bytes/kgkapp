@@ -33,10 +33,7 @@ class ProductPhotoViewGallery extends StatelessWidget {
       top: 10.w,
       start: 10.w,
       child: Container(
-        decoration: BoxDecoration(
-          color: style.blackColor.withValues(alpha: 0.5),
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: style.blackColor.withValues(alpha: 0.5), shape: BoxShape.circle),
         child: IconButton(
           onPressed: () {
             context.pop();
@@ -53,20 +50,20 @@ class ProductPhotoViewGallery extends StatelessWidget {
       itemCount: imageUrls.length,
       pageController: controller,
       scrollPhysics: const BouncingScrollPhysics(),
-      builder: (context, index) => PhotoViewGalleryPageOptions(
-        gestureDetectorBehavior: HitTestBehavior.opaque,
-        imageProvider: CachedNetworkImageProvider(imageUrls[index]),
-        heroAttributes: PhotoViewHeroAttributes(tag: imageUrls[index]),
-        minScale: PhotoViewComputedScale.contained * 0.8,
-        maxScale: PhotoViewComputedScale.covered * 2.0,
-      ),
+      builder:
+          (context, index) => PhotoViewGalleryPageOptions(
+            gestureDetectorBehavior: HitTestBehavior.opaque,
+            imageProvider: CachedNetworkImageProvider(imageUrls[index]),
+            heroAttributes: PhotoViewHeroAttributes(tag: imageUrls[index]),
+            minScale: PhotoViewComputedScale.contained * 0.8,
+            maxScale: PhotoViewComputedScale.covered * 2.0,
+          ),
       backgroundDecoration: BoxDecoration(color: style.blackColor),
       onPageChanged: (index) => currentPage.value = index,
-      loadingBuilder: (context, event) => Center(
-        child: CircularProgressIndicator(
-          value: event == null ? null : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1),
-        ),
-      ),
+      loadingBuilder:
+          (context, event) => Center(
+            child: CircularProgressIndicator(value: event == null ? null : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1)),
+          ),
     );
   }
 
@@ -80,14 +77,8 @@ class ProductPhotoViewGallery extends StatelessWidget {
         builder: (context, index, child) {
           return Container(
             padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 5.h),
-            decoration: BoxDecoration(
-              color: style.blackColor.withValues(alpha: 0.5),
-              borderRadius: BorderRadius.circular(15.r),
-            ),
-            child: SmartText(
-              "${index + 1} / ${imageUrls.length}",
-              style: TextStyle(color: style.whiteColor, fontSize: 14.sp),
-            ),
+            decoration: BoxDecoration(color: style.blackColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(15.r)),
+            child: SmartText("${index + 1} / ${imageUrls.length}", style: TextStyle(color: style.whiteColor, fontSize: 14.sp)),
           );
         },
       ),
@@ -133,19 +124,8 @@ class ProductPhotoViewGallery extends StatelessWidget {
       height: 80.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(
-          color: isSelected ? style.blueAccentColor : style.transparentColor,
-          width: 2.w,
-        ),
-        boxShadow: isSelected
-            ? [
-                BoxShadow(
-                  color: Colors.blueAccent.withValues(alpha: 0.5),
-                  blurRadius: 10.r,
-                  spreadRadius: 2.r,
-                ),
-              ]
-            : [],
+        border: Border.all(color: isSelected ? style.blueAccentColor : style.transparentColor, width: 2.w),
+        boxShadow: isSelected ? [BoxShadow(color: Colors.blueAccent.withValues(alpha: 0.5), blurRadius: 10.r, spreadRadius: 2.r)] : [],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.r),

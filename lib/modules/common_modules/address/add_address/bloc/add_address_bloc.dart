@@ -44,19 +44,21 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   String? zipCodeError;
   String? phoneError;
 
-  Country selectedCountryCodes = Country.from(json: {
-    "e164_cc": "91",
-    "iso2_cc": "IN",
-    "e164_sc": 0,
-    "geographic": true,
-    "level": 1,
-    "name": "India",
-    "example": "9123456789",
-    "display_name": "India (IN) [+91]",
-    "full_example_with_plus_sign": "+919123456789",
-    "display_name_no_e164_cc": "India (IN)",
-    "e164_key": "91-IN-0",
-  });
+  Country selectedCountryCodes = Country.from(
+    json: {
+      "e164_cc": "91",
+      "iso2_cc": "IN",
+      "e164_sc": 0,
+      "geographic": true,
+      "level": 1,
+      "name": "India",
+      "example": "9123456789",
+      "display_name": "India (IN) [+91]",
+      "full_example_with_plus_sign": "+919123456789",
+      "display_name_no_e164_cc": "India (IN)",
+      "e164_key": "91-IN-0",
+    },
+  );
 
   List<CountryStateModel> countryList = [];
 
@@ -105,19 +107,21 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
       phoneController.clear();
       cityController.clear();
       selectedState = null;
-      selectedCountry = Country.from(json: {
-        "e164_cc": "91",
-        "iso2_cc": "IN",
-        "e164_sc": 0,
-        "geographic": true,
-        "level": 1,
-        "name": "India",
-        "example": "9123456789",
-        "display_name": "India (IN) [+91]",
-        "full_example_with_plus_sign": "+919123456789",
-        "display_name_no_e164_cc": "India (IN)",
-        "e164_key": "91-IN-0",
-      });
+      selectedCountry = Country.from(
+        json: {
+          "e164_cc": "91",
+          "iso2_cc": "IN",
+          "e164_sc": 0,
+          "geographic": true,
+          "level": 1,
+          "name": "India",
+          "example": "9123456789",
+          "display_name": "India (IN) [+91]",
+          "full_example_with_plus_sign": "+919123456789",
+          "display_name_no_e164_cc": "India (IN)",
+          "e164_key": "91-IN-0",
+        },
+      );
       if (selectedCountry != null) {
         add(AddAddressChangeCountryEvent(context: event.context, selectedCountry: selectedCountry!));
       }
@@ -134,8 +138,9 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         phoneController.text = address!.phone.first.phoneNumber ?? "";
         selectedCountryCodes = CountryParser.tryParsePhoneCode(address!.phone.first.phoneCode ?? '') ?? selectedCountryCodes;
       }
-      CountryStateModel? countryStateModel =
-          countryList.firstWhereOrNull((element) => element.name == address!.country || element.code == address!.country);
+      CountryStateModel? countryStateModel = countryList.firstWhereOrNull(
+        (element) => element.name == address!.country || element.code == address!.country,
+      );
       if (countryStateModel != null) {
         selectedCountry = Country.tryParse(countryStateModel.code ?? '');
         if (selectedCountry != null) {
@@ -220,19 +225,21 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     phoneController.clear();
     cityController.clear();
     selectedState = null;
-    selectedCountry = Country.from(json: {
-      "e164_cc": "91",
-      "iso2_cc": "IN",
-      "e164_sc": 0,
-      "geographic": true,
-      "level": 1,
-      "name": "India",
-      "example": "9123456789",
-      "display_name": "India (IN) [+91]",
-      "full_example_with_plus_sign": "+919123456789",
-      "display_name_no_e164_cc": "India (IN)",
-      "e164_key": "91-IN-0",
-    });
+    selectedCountry = Country.from(
+      json: {
+        "e164_cc": "91",
+        "iso2_cc": "IN",
+        "e164_sc": 0,
+        "geographic": true,
+        "level": 1,
+        "name": "India",
+        "example": "9123456789",
+        "display_name": "India (IN) [+91]",
+        "full_example_with_plus_sign": "+919123456789",
+        "display_name_no_e164_cc": "India (IN)",
+        "e164_key": "91-IN-0",
+      },
+    );
   }
 
   void _onAddAddressChangeCountryCodeEvent(AddAddressChangeCountryCodeEvent event, Emitter<AddAddressState> emit) {
@@ -351,10 +358,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         ApiKey.country: selectedCountry?.name,
         ApiKey.zipCode: zipCodeController.text.trim(),
         ApiKey.phone: [
-          {
-            ApiKey.phoneCode: selectedCountryCodes.phoneCode,
-            ApiKey.phoneNumber: phoneController.text.trim(),
-          }
+          {ApiKey.phoneCode: selectedCountryCodes.phoneCode, ApiKey.phoneNumber: phoneController.text.trim()},
         ],
         ApiKey.type: isShippingAddress.value,
         //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
@@ -387,38 +391,33 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         ApiKey.country: selectedCountry?.countryCode,
         ApiKey.zipCode: zipCodeController.text.trim(),
         ApiKey.phone: [
-          {
-            ApiKey.phoneCode: selectedCountryCodes.phoneCode,
-            ApiKey.phoneNumber: phoneController.text.trim(),
-          }
+          {ApiKey.phoneCode: selectedCountryCodes.phoneCode, ApiKey.phoneNumber: phoneController.text.trim()},
         ],
         ApiKey.type: isShippingAddress.value,
       };
 
       final response = await AppRepository(context).updateAddress(addressId, body: body);
-      return response?.fold((l) {
-        Utils.showMessage(l.message);
+      return response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
 
-        return null;
-      }, (CommonResponse r) {
-        address = address?.copyWith(
-          firstName: firstNameController.text.trim(),
-          lastName: lastNameController.text.trim(),
-          apartment: apartmentController.text.trim(),
-          streetAddress: streetAddressController.text.trim(),
-          city: cityController.text.trim(),
-          state: selectedState?.name,
-          country: selectedCountry?.countryCode,
-          zipCode: zipCodeController.text.trim(),
-          phone: [
-            CustomerPhoneNumber(
-              phoneCode: selectedCountryCodes.phoneCode,
-              phoneNumber: phoneController.text.trim(),
-            ),
-          ],
-        );
-        return CommonResponse<AddressDetails>(message: r.message, responseData: address, statusCode: r.statusCode);
-      });
+          return null;
+        },
+        (CommonResponse r) {
+          address = address?.copyWith(
+            firstName: firstNameController.text.trim(),
+            lastName: lastNameController.text.trim(),
+            apartment: apartmentController.text.trim(),
+            streetAddress: streetAddressController.text.trim(),
+            city: cityController.text.trim(),
+            state: selectedState?.name,
+            country: selectedCountry?.countryCode,
+            zipCode: zipCodeController.text.trim(),
+            phone: [CustomerPhoneNumber(phoneCode: selectedCountryCodes.phoneCode, phoneNumber: phoneController.text.trim())],
+          );
+          return CommonResponse<AddressDetails>(message: r.message, responseData: address, statusCode: r.statusCode);
+        },
+      );
     } catch (e) {
       Utils.showMessage(e.toString());
     }

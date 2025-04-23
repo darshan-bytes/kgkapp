@@ -24,18 +24,21 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
 
   Future<void> getFaqList(BuildContext context) async {
     await AppRepository(context).fetchStrapiFaqData().then((value) {
-      value.fold((l) {
-        Utils.showMessage(l.message);
-      }, (r) {
-        FaqAttributes? faqStrapiModel = r;
-        if (faqStrapiModel == null) return;
-        List<FaqData> faqStrapiList = faqStrapiModel.faqs;
-        List<Map<String, dynamic>> faqData = faqStrapiList.map((e) => e.toJson()).toList();
-        List<FaqWrapper> faqWrappers = parseFaqs(faqData);
-        support = faqStrapiModel.support;
-        stillNeedHelp = faqStrapiModel.supportTitle?.toString() ?? '';
-        faq.addAll(faqWrappers);
-      });
+      value.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          FaqAttributes? faqStrapiModel = r;
+          if (faqStrapiModel == null) return;
+          List<FaqData> faqStrapiList = faqStrapiModel.faqs;
+          List<Map<String, dynamic>> faqData = faqStrapiList.map((e) => e.toJson()).toList();
+          List<FaqWrapper> faqWrappers = parseFaqs(faqData);
+          support = faqStrapiModel.support;
+          stillNeedHelp = faqStrapiModel.supportTitle?.toString() ?? '';
+          faq.addAll(faqWrappers);
+        },
+      );
     });
   }
 

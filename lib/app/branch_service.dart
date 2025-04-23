@@ -82,10 +82,7 @@ class BranchService {
         feature: 'sharing',
       );
 
-      BranchResponse response = await FlutterBranchSdk.getShortUrl(
-        buo: buo,
-        linkProperties: linkProperties,
-      );
+      BranchResponse response = await FlutterBranchSdk.getShortUrl(buo: buo, linkProperties: linkProperties);
       kgk_logger.log('Branch link created: ${response.result}');
       return response;
     } catch (e) {

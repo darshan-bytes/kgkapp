@@ -42,10 +42,7 @@ class OtpVerificationBloc extends Bloc<OtpVerificationEvent, OtpVerificationStat
   Future<void> _onOtpVerificationVerifyEvent(OtpVerificationVerifyEvent event, Emitter<OtpVerificationState> emit) async {
     emit(const OtpVerificationReloadState());
     if (_validateField(emit)) {
-      Map<String, dynamic> body = {
-        ApiKey.email: _email,
-        ApiKey.otpPasscode: otpController.text.trim(),
-      };
+      Map<String, dynamic> body = {ApiKey.email: _email, ApiKey.otpPasscode: otpController.text.trim()};
       final response = await UserRepository(event.context).verifyEmailOtp(body: body);
 
       await response?.fold(
@@ -89,27 +86,24 @@ class OtpVerificationBloc extends Bloc<OtpVerificationEvent, OtpVerificationStat
   void _startTimer() {
     _remainingTime = _resendOtpDuration.inSeconds;
 
-    _resendOtpTimer = Timer.periodic(
-      const Duration(seconds: 1),
-      (timer) {
-        // Decrement the remaining time
-        _remainingTime--;
-        Duration remainingDuration = Duration(seconds: _remainingTime);
-        String minutes = remainingDuration.inMinutes.remainder(60).toString().padLeft(2, '0');
-        String seconds = remainingDuration.inSeconds.remainder(60).toString().padLeft(2, '0');
-        displayDuration = "$minutes:$seconds";
+    _resendOtpTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      // Decrement the remaining time
+      _remainingTime--;
+      Duration remainingDuration = Duration(seconds: _remainingTime);
+      String minutes = remainingDuration.inMinutes.remainder(60).toString().padLeft(2, '0');
+      String seconds = remainingDuration.inSeconds.remainder(60).toString().padLeft(2, '0');
+      displayDuration = "$minutes:$seconds";
 
-        // Stop the timer when time runs out
-        if (_remainingTime <= 0) {
-          displayDuration = null;
-          _resendOtpTimer?.cancel();
-        }
-        // Trigger event with the updated time
-        if (!isClosed) {
-          add(OtpVerificationTimerEvent(remainingTime: _remainingTime));
-        }
-      },
-    );
+      // Stop the timer when time runs out
+      if (_remainingTime <= 0) {
+        displayDuration = null;
+        _resendOtpTimer?.cancel();
+      }
+      // Trigger event with the updated time
+      if (!isClosed) {
+        add(OtpVerificationTimerEvent(remainingTime: _remainingTime));
+      }
+    });
   }
 
   @override

@@ -14,10 +14,11 @@ class ExhibitionDetailsScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       body: SafeArea(
         child: BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-          buildWhen: (previous, current) =>
-              current is ExhibitionDetailsLoadedState ||
-              current is ExhibitionChangeListingTypeState ||
-              current is ExhibitionChangeTabsState,
+          buildWhen:
+              (previous, current) =>
+                  current is ExhibitionDetailsLoadedState ||
+                  current is ExhibitionChangeListingTypeState ||
+                  current is ExhibitionChangeTabsState,
           builder: (context, state) {
             if (state is ExhibitionDetailsLoadedState || state is ExhibitionChangeTabsState || state is ExhibitionChangeListingTypeState) {
               return SmartSingleChildScrollView(
@@ -37,7 +38,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
                       onTapTab: (int index) => bloc.add(ExhibitionChangeTabsEvent(index: index, context: context)),
                       tabs: bloc.tabs,
                       tabBarView: _buildTabBarView(bloc),
-                    )
+                    ),
                   ],
                 ),
               );
@@ -51,8 +52,11 @@ class ExhibitionDetailsScreen extends StatelessWidget {
 
   Widget _buildImageAndText(ExhibitionDetailsBloc bloc, ExhibitionDetailsItemStyle style) {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-      buildWhen: (previous, current) =>
-          current is ExhibitionDetailsLoadedState || current is ExhibitionChangeListingTypeState || current is ExhibitionChangeTabsState,
+      buildWhen:
+          (previous, current) =>
+              current is ExhibitionDetailsLoadedState ||
+              current is ExhibitionChangeListingTypeState ||
+              current is ExhibitionChangeTabsState,
       builder: (context, state) {
         if (state is ExhibitionDetailsLoadedState || state is ExhibitionChangeTabsState || state is ExhibitionChangeListingTypeState) {
           return Container(
@@ -101,10 +105,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
 
   /// Here we are building the tab bar view with specific tabs
   List<Widget> _buildTabBarView(ExhibitionDetailsBloc bloc) {
-    return [
-      ExhibitionDetailsProductsTabViewList(bloc: bloc),
-      ExhibitionDetailsOrdersScreen(bloc: bloc),
-    ];
+    return [ExhibitionDetailsProductsTabViewList(bloc: bloc), ExhibitionDetailsOrdersScreen(bloc: bloc)];
   }
 
   /// Here we are building the appbar view
@@ -137,13 +138,14 @@ class ExhibitionDetailsScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => AdvanceFilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        bloc.add(ExhibitionOrdersListFilterEvent(filterData: value, context: context));
-                      }
-                    },
-                  ),
+                  builder:
+                      (context) => AdvanceFilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            bloc.add(ExhibitionOrdersListFilterEvent(filterData: value, context: context));
+                          }
+                        },
+                      ),
                 );
               },
             ),
@@ -157,8 +159,11 @@ class ExhibitionDetailsScreen extends StatelessWidget {
   /// Here we are building the floating action button
   Widget _buildFloatingActionButton(ExhibitionDetailsBloc bloc) {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-      buildWhen: (previous, current) =>
-          current is ExhibitionChangeListingTypeState || current is ExhibitionChangeTabsState || current is ExhibitionDetailsLoadedState,
+      buildWhen:
+          (previous, current) =>
+              current is ExhibitionChangeListingTypeState ||
+              current is ExhibitionChangeTabsState ||
+              current is ExhibitionDetailsLoadedState,
       builder: (context, state) {
         return ScrollToTopFAB(
           canScrollToTop: bloc.paginationScrollController.canScrollToTop,

@@ -5,12 +5,7 @@ class StonesFAQSection extends StatelessWidget {
   final String title;
   final StonesLandingScreenStyle style;
 
-  const StonesFAQSection({
-    super.key,
-    required this.faqs,
-    required this.title,
-    required this.style,
-  });
+  const StonesFAQSection({super.key, required this.faqs, required this.title, required this.style});
 
   @override
   Widget build(BuildContext context) {

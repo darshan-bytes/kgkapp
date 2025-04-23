@@ -13,11 +13,7 @@ final class CompareProductAddProductEvent extends CompareProductEvent {
   const CompareProductAddProductEvent({required this.context, required this.product, this.onProductAdded});
 
   @override
-  List<Object?> get props => [
-        context,
-        product,
-        onProductAdded,
-      ];
+  List<Object?> get props => [context, product, onProductAdded];
 }
 
 final class CompareProductRemoveProductEvent extends CompareProductEvent {
@@ -25,18 +21,10 @@ final class CompareProductRemoveProductEvent extends CompareProductEvent {
   final bool isFromCompareScreen;
   final BuildContext context;
 
-  const CompareProductRemoveProductEvent({
-    required this.context,
-    required this.productId,
-    this.isFromCompareScreen = false,
-  });
+  const CompareProductRemoveProductEvent({required this.context, required this.productId, this.isFromCompareScreen = false});
 
   @override
-  List<Object> get props => [
-        context,
-        productId,
-        isFromCompareScreen,
-      ];
+  List<Object> get props => [context, productId, isFromCompareScreen];
 }
 
 final class CompareProductClearEvent extends CompareProductEvent {

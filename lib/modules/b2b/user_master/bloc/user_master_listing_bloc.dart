@@ -74,7 +74,9 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
   }
 
   Future<void> _onUserMasterListingPullToRefreshEvent(
-      UserMasterListingPullToRefreshEvent event, Emitter<UserMasterListingState> emit) async {
+    UserMasterListingPullToRefreshEvent event,
+    Emitter<UserMasterListingState> emit,
+  ) async {
     await _handlePullToRefresh(event.context, emit);
   }
 
@@ -137,7 +139,7 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -171,17 +173,19 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
 
   /// Fetch digital catalogue data
-  Future<void> _fetchUserMasterList(BuildContext context, Emitter<UserMasterListingState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query, String searchString = ''}) async {
+  Future<void> _fetchUserMasterList(
+    BuildContext context,
+    Emitter<UserMasterListingState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+    String searchString = '',
+  }) async {
     /// Build the query dynamically
     query = buildQuery(
       filterData: filterData,
@@ -190,17 +194,21 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
       pageLimit: AppConst.pageLimit,
     );
 
-    Either<ErrorResponse, PaginationData<UserMasterListingModelClass>>? response =
-        await AppRepository(context).staffUserMasterListApiCall(body: query, isLoadMore: isLoadMore);
+    Either<ErrorResponse, PaginationData<UserMasterListingModelClass>>? response = await AppRepository(
+      context,
+    ).staffUserMasterListApiCall(body: query, isLoadMore: isLoadMore);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (PaginationData<UserMasterListingModelClass> success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      userMasterDataList = success.dataList ?? [];
-      userMasterList = _populateUserMasterList(userMasterDataList);
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (PaginationData<UserMasterListingModelClass> success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        userMasterDataList = success.dataList ?? [];
+        userMasterList = _populateUserMasterList(userMasterDataList);
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+      },
+    );
     emit(UserMasterListingLoadedState());
   }
 

@@ -22,8 +22,11 @@ class NewsletterCategoriesTabView extends StatelessWidget {
           ),
           Expanded(
             child: BlocBuilder<NewsletterBloc, NewsletterState>(
-              buildWhen: (previous, current) =>
-                  current is NewsletterListLoadedState || current is NewsletterListLoadedMoreState || current is NewsletterLoadingMoreState,
+              buildWhen:
+                  (previous, current) =>
+                      current is NewsletterListLoadedState ||
+                      current is NewsletterListLoadedMoreState ||
+                      current is NewsletterLoadingMoreState,
               builder: (context, state) {
                 if (bloc.categoryList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
@@ -43,12 +46,14 @@ class NewsletterCategoriesTabView extends StatelessWidget {
                           return Column(
                             children: [
                               _buildCategoryItem(
-                                  context: context,
-                                  listingItemModel: item,
-                                  onTapMenuButton: () {},
-                                  onTap: () {},
-                                  margin: EdgeInsetsDirectional.only(
-                                      bottom: (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1) ? 0 : 16.h)),
+                                context: context,
+                                listingItemModel: item,
+                                onTapMenuButton: () {},
+                                onTap: () {},
+                                margin: EdgeInsetsDirectional.only(
+                                  bottom: (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1) ? 0 : 16.h,
+                                ),
+                              ),
                               if (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1)
                                 const SmartCircularProgressIndicator(),
                             ],
@@ -82,10 +87,7 @@ class NewsletterCategoriesTabView extends StatelessWidget {
           Container(
             margin: margin,
             padding: EdgeInsetsDirectional.all(16.0.w),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0.r),
-              border: Border.all(color: style.borderColor),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0.r), border: Border.all(color: style.borderColor)),
             child: Column(
               children: [
                 B2BColumnDetailItem(field: B2BItemField(label: APPStrings.name.tr, value: listingItemModel.strName)),
@@ -102,15 +104,10 @@ class NewsletterCategoriesTabView extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: B2BColumnDetailItem(
-                        field: B2BItemField(
-                          label: APPStrings.createdOn.tr,
-                          value: listingItemModel.strCreatedOn,
-                        ),
-                      ),
+                      child: B2BColumnDetailItem(field: B2BItemField(label: APPStrings.createdOn.tr, value: listingItemModel.strCreatedOn)),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

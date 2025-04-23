@@ -10,9 +10,7 @@ class TokenExpireDialog extends StatelessWidget {
       canPop: false,
       child: Container(
         padding: EdgeInsetsDirectional.all(16.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.r)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,11 +21,12 @@ class TokenExpireDialog extends StatelessWidget {
             SmartText(APPStrings.sessionExpiredDesc.tr, style: style.subTitleStyle),
             SizedBox(height: 20.h),
             SmartButton(
-                onTap: () {
-                  context.pop();
-                  context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
-                },
-                title: APPStrings.login.tr),
+              onTap: () {
+                context.pop();
+                context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+              },
+              title: APPStrings.login.tr,
+            ),
             SizedBox(height: 16.h),
           ],
         ),

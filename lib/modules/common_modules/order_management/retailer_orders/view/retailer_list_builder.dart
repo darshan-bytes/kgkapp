@@ -29,8 +29,9 @@ class RetailerOrderListBuilder extends StatelessWidget {
         controller: currentScrollController.scrollController,
         itemBuilder: (context, index) {
           return BlocBuilder<RetailerOrderListingBloc, RetailerOrderListingState>(
-            buildWhen: (previous, current) =>
-                current is RetailerOrderListingListLoadedMoreState || current is RetailerOrderListingLoadingMoreState,
+            buildWhen:
+                (previous, current) =>
+                    current is RetailerOrderListingListLoadedMoreState || current is RetailerOrderListingLoadingMoreState,
             builder: (context, state) {
               return Column(
                 children: [
@@ -40,7 +41,8 @@ class RetailerOrderListBuilder extends StatelessWidget {
                     },
                     onTapMenuButton: onTapMenuButton != null ? () => onTapMenuButton!(index) : null,
                     margin: EdgeInsetsDirectional.only(
-                        bottom: (state is RetailerOrderListingLoadingMoreState && index == ordersList.length - 1) ? 0 : 16.h),
+                      bottom: (state is RetailerOrderListingLoadingMoreState && index == ordersList.length - 1) ? 0 : 16.h,
+                    ),
                     listingItemModel: ordersList[index],
                     type: currentListType,
                   ),

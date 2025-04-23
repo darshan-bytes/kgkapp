@@ -33,14 +33,17 @@ class ProductListScreen extends StatelessWidget {
           }
           if (state is ProductListLoadedState) {
             return ScrollToTopFAB(
-                canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop);
+              canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+              onTap: bloc.paginationScrollController.scrollToTop,
+            );
           }
           return SizedBox.shrink();
         },
       ),
       bottomNavigationBar: BlocBuilder<ProductListBloc, ProductListState>(
-        buildWhen: (previous, current) =>
-            current is ProductListLoadedState || current is ProductListLoadingState || current is ProductListFilterLoadedState,
+        buildWhen:
+            (previous, current) =>
+                current is ProductListLoadedState || current is ProductListLoadingState || current is ProductListFilterLoadedState,
         builder: (context, state) {
           if (state is ProductListLoadingState) {
             return SizedBox.shrink();
@@ -52,20 +55,20 @@ class ProductListScreen extends StatelessWidget {
                 BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (_) => FilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        bloc.add(ProductFilterEvent(context: context, filterData: value));
-                      }
-                    },
-                  ),
+                  builder:
+                      (_) => FilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            bloc.add(ProductFilterEvent(context: context, filterData: value));
+                          }
+                        },
+                      ),
                 );
               },
               onSortTap: () async {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => SortScreen(sortData: bloc.sortOptions),
-                ).then((onValue) {
+                Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: bloc.sortOptions)).then((
+                  onValue,
+                ) {
                   if (onValue != null) {
                     bloc.add(ProductSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
                   }
@@ -123,8 +126,10 @@ class ProductListScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
-                  style: style.filterProductCountTextStyle),
+              SmartText(
+                APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
+                style: style.filterProductCountTextStyle,
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -161,7 +166,7 @@ class ProductListScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -171,14 +176,15 @@ class ProductListScreen extends StatelessWidget {
 
   Widget _buildProductList(DiamondListingStyle style, ProductListBloc bloc) {
     return BlocBuilder<ProductListBloc, ProductListState>(
-      buildWhen: (previous, current) =>
-          current is ProductChangeListingTypeState ||
-          current is ProductListInitial ||
-          current is ProductListLoadedMoreState ||
-          current is ProductListLoadingMoreState ||
-          current is ProductListLoadedState ||
-          current is ProductAddToFavoriteState ||
-          current is ProductRemoveFromFavoriteState,
+      buildWhen:
+          (previous, current) =>
+              current is ProductChangeListingTypeState ||
+              current is ProductListInitial ||
+              current is ProductListLoadedMoreState ||
+              current is ProductListLoadingMoreState ||
+              current is ProductListLoadedState ||
+              current is ProductAddToFavoriteState ||
+              current is ProductRemoveFromFavoriteState,
       builder: (context, state) {
         return bloc.isGrid ? _buildGridView(bloc, state, context: context) : _buildListView(bloc, state);
       },
@@ -189,24 +195,25 @@ class ProductListScreen extends StatelessWidget {
     return Column(
       children: [
         SmartGridView(
-          items: bloc.productList.map((productDetails) {
-            return ProductGridItem(
-              key: ValueKey(productDetails.suid),
-              productDetails: productDetails,
-              isCustomisable: _isCustomisable(bloc, productDetails),
-              isOutOfStock: productDetails.isOutOfStock,
-              onAddToBagTap: _getAddToBagTap(bloc),
-              onEyeTap: () => {},
-              isFavourite: productDetails.isFavourite,
-              onFavTap: () {
-                /// We have implemented this feature in the ProductGridItem
-                /// so that we can use the same widget for both grid and list view and here we don't need to implement it
-              },
-              prefixImage: AppImages.icShoppingBag,
-              imageSize: 16.w,
-              onTap: () => _onProductTap(context, bloc, productDetails),
-            );
-          }).toList(),
+          items:
+              bloc.productList.map((productDetails) {
+                return ProductGridItem(
+                  key: ValueKey(productDetails.suid),
+                  productDetails: productDetails,
+                  isCustomisable: _isCustomisable(bloc, productDetails),
+                  isOutOfStock: productDetails.isOutOfStock,
+                  onAddToBagTap: _getAddToBagTap(bloc),
+                  onEyeTap: () => {},
+                  isFavourite: productDetails.isFavourite,
+                  onFavTap: () {
+                    /// We have implemented this feature in the ProductGridItem
+                    /// so that we can use the same widget for both grid and list view and here we don't need to implement it
+                  },
+                  prefixImage: AppImages.icShoppingBag,
+                  imageSize: 16.w,
+                  onTap: () => _onProductTap(context, bloc, productDetails),
+                );
+              }).toList(),
         ),
         if (state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
         SizedBox(height: 17.h),
@@ -280,17 +287,15 @@ class ProductListScreen extends StatelessWidget {
 
   void _onProductTap(BuildContext context, ProductListBloc bloc, ProductDetailsModel productDetails) {
     if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-      context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-        RoutesData.productId: productDetails.suid ?? '',
-        RoutesData.isPageFor: bloc.screenIdentifier,
-      });
+      context.pushNamed(
+        AppRoutes.productDetailsPage,
+        arguments: {RoutesData.productId: productDetails.suid ?? '', RoutesData.isPageFor: bloc.screenIdentifier},
+      );
     } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
         bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
       // Navigation to product details page
     } else {
-      context.pushNamed(AppRoutes.stoneDetailPage, arguments: {
-        RoutesData.isPageFor: bloc.screenIdentifier,
-      });
+      context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
     }
   }
 }

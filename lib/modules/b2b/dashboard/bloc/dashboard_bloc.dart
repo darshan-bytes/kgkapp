@@ -30,7 +30,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     statisticsList = [
       DashboardStatisticsDataModel(
-          title: 'Total purchase', value: '\$83,000.00', subTitle: '+\$1,000.00 today', variation: '12%', isNegative: true),
+        title: 'Total purchase',
+        value: '\$83,000.00',
+        subTitle: '+\$1,000.00 today',
+        variation: '12%',
+        isNegative: true,
+      ),
       DashboardStatisticsDataModel(title: 'Orders received', value: '4587', subTitle: '+124 today', variation: '6%', isNegative: true),
       DashboardStatisticsDataModel(title: 'Total sell', value: '\$97,451.00', subTitle: '+\$1,578.00 today', variation: '5%'),
       DashboardStatisticsDataModel(title: 'Lead conversion', value: '654', subTitle: '+8 today', variation: '2%'),

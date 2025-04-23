@@ -38,9 +38,10 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
       appBarTitle = APPStrings.editWatchlist.tr;
       nameController.text = watchlistData?.name ?? '';
       duration = Duration(
-          days: watchlistData?.duration?.days ?? 0,
-          hours: watchlistData?.duration?.hours ?? 0,
-          minutes: watchlistData?.duration?.minutes ?? 0);
+        days: watchlistData?.duration?.days ?? 0,
+        hours: watchlistData?.duration?.hours ?? 0,
+        minutes: watchlistData?.duration?.minutes ?? 0,
+      );
     } else {
       watchlistData = null;
       appBarTitle = APPStrings.createWatchlist.tr;
@@ -79,20 +80,18 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
       if (isEdit) ApiKey.watchlistId: watchlistData?.sId,
     };
 
-    final Either<ErrorResponse, CommonResponse>? response = isEdit
-        ? await AppRepository(event.context).editWatchlist(body: body)
-        : await AppRepository(event.context).createWatchlist(body: body);
+    final Either<ErrorResponse, CommonResponse>? response =
+        isEdit
+            ? await AppRepository(event.context).editWatchlist(body: body)
+            : await AppRepository(event.context).createWatchlist(body: body);
 
-    response?.fold(
-      (error) => Utils.showMessage(error.message),
-      (data) {
-        nameController.clear();
-        final Map<RoutesData, bool> popArguments = isEdit ? {RoutesData.isWatchlistUpdated: true} : {RoutesData.isWatchlistCreated: true};
+    response?.fold((error) => Utils.showMessage(error.message), (data) {
+      nameController.clear();
+      final Map<RoutesData, bool> popArguments = isEdit ? {RoutesData.isWatchlistUpdated: true} : {RoutesData.isWatchlistCreated: true};
 
-        event.context.pop(arguments: popArguments);
-        Utils.showMessage(data.message);
-      },
-    );
+      event.context.pop(arguments: popArguments);
+      Utils.showMessage(data.message);
+    });
   }
 
   void _onEditWatchlistNameChangedEvent(EditWatchlistNameChangedEvent event, Emitter<EditWatchlistState> emit) {

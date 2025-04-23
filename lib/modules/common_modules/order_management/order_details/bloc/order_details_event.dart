@@ -37,8 +37,12 @@ final class OrderCancellationEvent extends OrderDetailEvent {
   final String productSuid;
   final bool isFromFullOrder;
 
-  const OrderCancellationEvent(
-      {required this.context, required this.placeOrderResponse, this.productSuid = "", this.isFromFullOrder = false});
+  const OrderCancellationEvent({
+    required this.context,
+    required this.placeOrderResponse,
+    this.productSuid = "",
+    this.isFromFullOrder = false,
+  });
 
   @override
   List<Object> get props => [context, placeOrderResponse, productSuid, isFromFullOrder];

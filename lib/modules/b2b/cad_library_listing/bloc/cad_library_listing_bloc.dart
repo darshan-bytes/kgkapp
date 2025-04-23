@@ -84,30 +84,32 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       ApiKey.limit: AppConst.pageLimit.toString(),
       ApiKey.page: gridPaginationScrollController.currentPage.toString(),
       ApiKey.sortValue: sortValue,
-      ApiKey.sortKey: sortKey
+      ApiKey.sortKey: sortKey,
     };
 
     /// Build the query based on filters
-    buildFilterQuery(params, filterData).forEach(
-      (key, value) {
-        if (params.containsKey(key) == false) {
-          params[key] = value;
+    buildFilterQuery(params, filterData).forEach((key, value) {
+      if (params.containsKey(key) == false) {
+        params[key] = value;
+      }
+    });
+
+    Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response = await AppRepository(
+      context,
+    ).getCadLibraryList(query: params, isLoadMore: isLoadMore);
+
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
         }
       },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        final localList = success.dataList ?? [];
+        cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
+      },
     );
-
-    Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
-        await AppRepository(context).getCadLibraryList(query: params, isLoadMore: isLoadMore);
-
-    response?.fold((error) {
-      if (error.message.isNotNullNorEmpty) {
-        Utils.showMessage(error.message);
-      }
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      final localList = success.dataList ?? [];
-      cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
-    });
     gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
   }
 
@@ -116,30 +118,35 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       ApiKey.limit: AppConst.pageLimit,
       ApiKey.page: gridPaginationScrollController.currentPage,
       ApiKey.sortValue: sortValue,
-      ApiKey.sortKey: sortKey
+      ApiKey.sortKey: sortKey,
     };
-    Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
-        await AppRepository(context).getStyleLibraryList(query: params, isLoadMore: isLoadMore);
+    Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response = await AppRepository(
+      context,
+    ).getStyleLibraryList(query: params, isLoadMore: isLoadMore);
 
-    response?.fold((error) {
-      if (error.message.isNotNullNorEmpty) {
-        Utils.showMessage(error.message);
-      }
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      final localList = success.dataList ?? [];
-      cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
-    });
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        final localList = success.dataList ?? [];
+        cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
+      },
+    );
     gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
   }
 
   B2BCustomListingDataModel convertToB2BCustomListingDataModel({required CadLibraryListItemDataModel sourceModel}) {
     return B2BCustomListingDataModel(
       id: sourceModel.suid,
-      strCADLibraryImageUrl: ((sourceModel.multipleFinishedViewImage).isNotNullNorEmpty &&
-              sourceModel.multipleFinishedViewImage?.firstOrNull?.imageAvailable?.toLowerCase() == 'yes')
-          ? sourceModel.multipleFinishedViewImage?.firstOrNull?.imageUrl
-          : (sourceModel.imageCad ?? sourceModel.imageSketch),
+      strCADLibraryImageUrl:
+          ((sourceModel.multipleFinishedViewImage).isNotNullNorEmpty &&
+                  sourceModel.multipleFinishedViewImage?.firstOrNull?.imageAvailable?.toLowerCase() == 'yes')
+              ? sourceModel.multipleFinishedViewImage?.firstOrNull?.imageUrl
+              : (sourceModel.imageCad ?? sourceModel.imageSketch),
       strCADLibraryNumber: sourceModel.designCreatedDt,
       strCADLibraryProductName: sourceModel.autoDescription,
     );
@@ -220,23 +227,23 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   }
 
   Map<String, String> buildFilterQuery(Map<String, String> query, List<FilterData> filterData) {
-    filterData.where((element) {
-      return (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
-          (element.filterType == FilterType.range && element.rangeValues != null);
-    }).forEach(
-      (element) {
-        if (element.filterType == FilterType.range) {
-          query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
-          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
-        } else if (element.filterType == FilterType.boolean &&
-            (element.secondaryFilterData ?? []).isNotEmpty &&
-            element.secondaryFilterData!.any((e) => e.isSelected)) {
-          query[element.code ?? ''] = AppConst.filterBoolYesValue;
-        } else {
-          query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
-        }
-      },
-    );
+    filterData
+        .where((element) {
+          return (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+              (element.filterType == FilterType.range && element.rangeValues != null);
+        })
+        .forEach((element) {
+          if (element.filterType == FilterType.range) {
+            query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+            query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+          } else if (element.filterType == FilterType.boolean &&
+              (element.secondaryFilterData ?? []).isNotEmpty &&
+              element.secondaryFilterData!.any((e) => e.isSelected)) {
+            query[element.code ?? ''] = AppConst.filterBoolYesValue;
+          } else {
+            query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+          }
+        });
     return query;
   }
 

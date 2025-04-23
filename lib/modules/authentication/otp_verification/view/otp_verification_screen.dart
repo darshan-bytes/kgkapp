@@ -14,25 +14,15 @@ class OtpVerificationScreen extends StatelessWidget {
           return const SizedBox.shrink();
         }
         return Scaffold(
-          appBar: SmartAppBar(
-            appBarHeight: 52.h,
-            isBorder: false,
-            backgroundColor: style.backgroundColor,
-          ),
+          appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor),
           body: SafeArea(
             child: SmartSingleChildScrollView(
               padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SmartText(
-                    APPStrings.verifyYourAccount.tr,
-                    style: style.titleTextStyle,
-                  ),
-                  SmartText(
-                    APPStrings.verifyYourAccountDesc.tr,
-                    style: style.subTitleStyle,
-                  ),
+                  SmartText(APPStrings.verifyYourAccount.tr, style: style.titleTextStyle),
+                  SmartText(APPStrings.verifyYourAccountDesc.tr, style: style.subTitleStyle),
                   SizedBox(height: 32.h),
                   _buildOtpField(context, style, bloc),
                   SizedBox(height: 16.h),
@@ -81,10 +71,7 @@ class OtpVerificationScreen extends StatelessWidget {
           },
           child: Align(
             alignment: AlignmentDirectional.centerEnd,
-            child: SmartText(
-              bloc.displayDuration ?? APPStrings.resendCode.tr,
-              style: style.forgotPasswordStyle,
-            ),
+            child: SmartText(bloc.displayDuration ?? APPStrings.resendCode.tr, style: style.forgotPasswordStyle),
           ),
         );
       },

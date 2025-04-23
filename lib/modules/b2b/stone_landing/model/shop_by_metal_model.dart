@@ -1,21 +1,13 @@
 import 'package:kgk/kgk.dart';
 
 class NewLaunchedModel {
-  NewLaunchedModel({
-    required this.totalRecords,
-    required this.filteredRecords,
-    required this.data,
-  });
+  NewLaunchedModel({required this.totalRecords, required this.filteredRecords, required this.data});
 
   final int? totalRecords;
   final int? filteredRecords;
   final List<ShopByMetalDatum> data;
 
-  NewLaunchedModel copyWith({
-    int? totalRecords,
-    int? filteredRecords,
-    List<ShopByMetalDatum>? data,
-  }) {
+  NewLaunchedModel copyWith({int? totalRecords, int? filteredRecords, List<ShopByMetalDatum>? data}) {
     return NewLaunchedModel(
       totalRecords: totalRecords ?? this.totalRecords,
       filteredRecords: filteredRecords ?? this.filteredRecords,
@@ -32,10 +24,10 @@ class NewLaunchedModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "totalRecords": totalRecords,
-        "filteredRecords": filteredRecords,
-        "data": data.map((x) => x.toJson()).toList(),
-      };
+    "totalRecords": totalRecords,
+    "filteredRecords": filteredRecords,
+    "data": data.map((x) => x.toJson()).toList(),
+  };
 
   @override
   String toString() {
@@ -147,39 +139,42 @@ class ShopByMetalDatum {
       cscCode: json["csc_code"],
       customerCode: json["customer_code"],
       productDescription: json["product_description"],
-      componentDetails: json["component_details"] == null
-          ? []
-          : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
-      multipleFinishedViewImage: json["multiple_finished_view_image"] == null
-          ? []
-          : List<MultipleFinishedViewImageShopByMetal>.from(
-              json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImageShopByMetal.fromJson(x))),
+      componentDetails:
+          json["component_details"] == null
+              ? []
+              : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
+      multipleFinishedViewImage:
+          json["multiple_finished_view_image"] == null
+              ? []
+              : List<MultipleFinishedViewImageShopByMetal>.from(
+                json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImageShopByMetal.fromJson(x)),
+              ),
       finalPrice: json["final_price"],
       discountPrice: json["discount_price"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "suid": suid,
-        "exclusive": exclusive,
-        "business_category": businessCategory,
-        "contract_no_sku_no": contractNoSkuNo,
-        "guest_user": guestUser,
-        "jewelllery_type-code": jewellleryTypeCode,
-        "style_no": styleNo,
-        "kgk_collection": kgkCollection,
-        "csc_name": cscName,
-        "product_price_int_currency": productPriceIntCurrency,
-        "subarea_name": subareaName,
-        "csc_code": cscCode,
-        "customer_code": customerCode,
-        "product_description": productDescription,
-        "component_details": componentDetails.map((x) => x.toJson()).toList(),
-        "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
-        "final_price": finalPrice,
-        "discount_price": discountPrice,
-      };
+    "_id": id,
+    "suid": suid,
+    "exclusive": exclusive,
+    "business_category": businessCategory,
+    "contract_no_sku_no": contractNoSkuNo,
+    "guest_user": guestUser,
+    "jewelllery_type-code": jewellleryTypeCode,
+    "style_no": styleNo,
+    "kgk_collection": kgkCollection,
+    "csc_name": cscName,
+    "product_price_int_currency": productPriceIntCurrency,
+    "subarea_name": subareaName,
+    "csc_code": cscCode,
+    "customer_code": customerCode,
+    "product_description": productDescription,
+    "component_details": componentDetails.map((x) => x.toJson()).toList(),
+    "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
+    "final_price": finalPrice,
+    "discount_price": discountPrice,
+  };
 
   @override
   String toString() {
@@ -304,27 +299,27 @@ class ComponentDetailShopByMetal {
   }
 
   Map<String, dynamic> toJson() => {
-        "BrokenQty1": brokenQty1,
-        "Commodity": commodity,
-        "CommodityNameRefSuid": commodityNameRefSuid,
-        "CommodityNameSuid": commodityNameSuid,
-        "ConsumedQty1": consumedQty1,
-        "ConsumedQty2": consumedQty2,
-        "LossQty1": lossQty1,
-        "LotCode": lotCode,
-        "LotId": lotId,
-        "RMName": rmName,
-        "RMNameRefSuid": rmNameRefSuid,
-        "RMNameSuid": rmNameSuid,
-        "Shape": shape,
-        "ShapeRefSuid": shapeRefSuid,
-        "ShapeSuid": shapeSuid,
-        "TotalQty1": totalQty1,
-        "TotalQty2": totalQty2,
-        "UOM1": uom1,
-        "UOM2": uom2,
-        "Karatage": karatage,
-      };
+    "BrokenQty1": brokenQty1,
+    "Commodity": commodity,
+    "CommodityNameRefSuid": commodityNameRefSuid,
+    "CommodityNameSuid": commodityNameSuid,
+    "ConsumedQty1": consumedQty1,
+    "ConsumedQty2": consumedQty2,
+    "LossQty1": lossQty1,
+    "LotCode": lotCode,
+    "LotId": lotId,
+    "RMName": rmName,
+    "RMNameRefSuid": rmNameRefSuid,
+    "RMNameSuid": rmNameSuid,
+    "Shape": shape,
+    "ShapeRefSuid": shapeRefSuid,
+    "ShapeSuid": shapeSuid,
+    "TotalQty1": totalQty1,
+    "TotalQty2": totalQty2,
+    "UOM1": uom1,
+    "UOM2": uom2,
+    "Karatage": karatage,
+  };
 
   @override
   String toString() {
@@ -399,25 +394,26 @@ class MultipleFinishedViewImageShopByMetal {
       highRes2: json["high_res2"],
       highRes3: json["high_res3"],
       highRes4: json["high_res4"],
-      multiAngleUrl: json["MULTI_ANGLE_URL"] == null
-          ? []
-          : List<MultiAngleUrlShopByMetal>.from(json["MULTI_ANGLE_URL"]!.map((x) => MultiAngleUrlShopByMetal.fromJson(x))),
+      multiAngleUrl:
+          json["MULTI_ANGLE_URL"] == null
+              ? []
+              : List<MultiAngleUrlShopByMetal>.from(json["MULTI_ANGLE_URL"]!.map((x) => MultiAngleUrlShopByMetal.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "ContractNo": contractNo,
-        "ContractImage": contractImage,
-        "StyleImage": styleImage,
-        "IMAGE_AVAILABLE": imageAvailable,
-        "IMAGE_AVAILABLE_MA": imageAvailableMa,
-        "IMAGE_URL": imageUrl,
-        "high_res1": highRes1,
-        "high_res2": highRes2,
-        "high_res3": highRes3,
-        "high_res4": highRes4,
-        "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
-      };
+    "ContractNo": contractNo,
+    "ContractImage": contractImage,
+    "StyleImage": styleImage,
+    "IMAGE_AVAILABLE": imageAvailable,
+    "IMAGE_AVAILABLE_MA": imageAvailableMa,
+    "IMAGE_URL": imageUrl,
+    "high_res1": highRes1,
+    "high_res2": highRes2,
+    "high_res3": highRes3,
+    "high_res4": highRes4,
+    "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
+  };
 
   @override
   String toString() {
@@ -426,29 +422,19 @@ class MultipleFinishedViewImageShopByMetal {
 }
 
 class MultiAngleUrlShopByMetal {
-  MultiAngleUrlShopByMetal({
-    required this.url,
-  });
+  MultiAngleUrlShopByMetal({required this.url});
 
   final String? url;
 
-  MultiAngleUrlShopByMetal copyWith({
-    String? url,
-  }) {
-    return MultiAngleUrlShopByMetal(
-      url: url ?? this.url,
-    );
+  MultiAngleUrlShopByMetal copyWith({String? url}) {
+    return MultiAngleUrlShopByMetal(url: url ?? this.url);
   }
 
   factory MultiAngleUrlShopByMetal.fromJson(Map<String, dynamic> json) {
-    return MultiAngleUrlShopByMetal(
-      url: json["url"],
-    );
+    return MultiAngleUrlShopByMetal(url: json["url"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "url": url,
-      };
+  Map<String, dynamic> toJson() => {"url": url};
 
   @override
   String toString() {

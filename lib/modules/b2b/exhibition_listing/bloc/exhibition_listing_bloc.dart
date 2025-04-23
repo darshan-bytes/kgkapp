@@ -33,10 +33,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   int currentTab = -1;
 
   /// List of tabs
-  final List<Widget> tabs = <Widget>[
-    Tab(text: APPStrings.all.tr),
-    Tab(text: APPStrings.byVenues.tr),
-  ];
+  final List<Widget> tabs = <Widget>[Tab(text: APPStrings.all.tr), Tab(text: APPStrings.byVenues.tr)];
 
   ExhibitionListingBloc() : super(ExhibitionListingInitialState()) {
     on<InitialExhibitionListingEvent>(_onInitialExhibitionListingEvent);
@@ -62,7 +59,9 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   }
 
   Future<void> _onExhibitionListingPullToRefreshEvent(
-      ExhibitionListingPullToRefreshEvent event, Emitter<ExhibitionListingState> emit) async {
+    ExhibitionListingPullToRefreshEvent event,
+    Emitter<ExhibitionListingState> emit,
+  ) async {
     await _handlePullToRefresh(event.context, emit);
   }
 
@@ -111,7 +110,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -141,16 +140,17 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
 
-  Future<void> fetchExhibitionListingData(BuildContext context, Emitter<ExhibitionListingState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
+  Future<void> fetchExhibitionListingData(
+    BuildContext context,
+    Emitter<ExhibitionListingState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+  }) async {
     query = buildQuery(
       filterData: filterData,
       searchString: searchController.text,
@@ -158,18 +158,22 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
       pageLimit: AppConst.pageLimit,
     );
 
-    Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>? response =
-        await AppRepository(context).getExhibitionListing(body: query);
+    Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>? response = await AppRepository(
+      context,
+    ).getExhibitionListing(body: query);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (PaginationData<ExhibitionListDataModel> success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<ExhibitionListDataModel> dataList = success.dataList ?? [];
-      exhibitionCatalogueList.addAll(_populateExhibitionCatalogueList(dataList));
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(ExhibitionListingLoadedState());
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (PaginationData<ExhibitionListDataModel> success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        List<ExhibitionListDataModel> dataList = success.dataList ?? [];
+        exhibitionCatalogueList.addAll(_populateExhibitionCatalogueList(dataList));
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        emit(ExhibitionListingLoadedState());
+      },
+    );
   }
 
   Future<void> _handleLoadMore(BuildContext context, Emitter<ExhibitionListingState> emit, int currentPage) async {
@@ -222,8 +226,12 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   }
 
   /// Fetches the order list data from the API
-  Future<void> fetchOrderListData(BuildContext context, Emitter<ExhibitionListingState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
+  Future<void> fetchOrderListData(
+    BuildContext context,
+    Emitter<ExhibitionListingState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+  }) async {
     if (tabController.index == 0) {
       /// Build the query base on the current tab applied filters data
       query = buildQuery(
@@ -233,31 +241,38 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
         pageLimit: AppConst.pageLimit,
       );
 
-      Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>? response =
-          await AppRepository(context).getExhibitionListing(body: query);
+      Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>? response = await AppRepository(
+        context,
+      ).getExhibitionListing(body: query);
 
-      response?.fold((error) {
-        Utils.showMessage(error.message);
-      }, (PaginationData<ExhibitionListDataModel> success) {
-        exhibitionCatalogueList.clear();
-        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-        List<ExhibitionListDataModel> dataList = success.dataList ?? [];
-        exhibitionCatalogueList.addAll(_populateExhibitionCatalogueList(dataList));
-        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      });
+      response?.fold(
+        (error) {
+          Utils.showMessage(error.message);
+        },
+        (PaginationData<ExhibitionListDataModel> success) {
+          exhibitionCatalogueList.clear();
+          totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+          List<ExhibitionListDataModel> dataList = success.dataList ?? [];
+          exhibitionCatalogueList.addAll(_populateExhibitionCatalogueList(dataList));
+          paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        },
+      );
     } else {
       Either<ErrorResponse, PaginationData<ExhibitionListLocationDataModel>>? response =
           await AppRepository(context).getExhibitionListingByLocations();
 
-      response?.fold((error) {
-        Utils.showMessage(error.message);
-      }, (PaginationData<ExhibitionListLocationDataModel> success) {
-        exhibitionNameListing.clear();
-        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-        List<ExhibitionListLocationDataModel> dataList = success.dataList ?? [];
-        exhibitionNameListing.addAll(_populateExhibitionList(dataList));
-        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      });
+      response?.fold(
+        (error) {
+          Utils.showMessage(error.message);
+        },
+        (PaginationData<ExhibitionListLocationDataModel> success) {
+          exhibitionNameListing.clear();
+          totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+          List<ExhibitionListLocationDataModel> dataList = success.dataList ?? [];
+          exhibitionNameListing.addAll(_populateExhibitionList(dataList));
+          paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        },
+      );
     }
     emit(ExhibitionListingLoadedState());
   }
@@ -265,15 +280,16 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   List<ExhibitionListingModel> _populateExhibitionCatalogueList(List<ExhibitionListDataModel> dataList) {
     return dataList.map((data) {
       return ExhibitionListingModel(
-          image: data.fileUrl?.setMediaUrl,
-          name: data.name,
-          author: data.description,
-          date: data.fullDate,
-          time: data.fullTime,
-          status: data.status?.toUpperCamelCase,
-          location: data.venue,
-          onTap: () {},
-          id: data.id.toString());
+        image: data.fileUrl?.setMediaUrl,
+        name: data.name,
+        author: data.description,
+        date: data.fullDate,
+        time: data.fullTime,
+        status: data.status?.toUpperCamelCase,
+        location: data.venue,
+        onTap: () {},
+        id: data.id.toString(),
+      );
     }).toList();
   }
 
@@ -281,14 +297,15 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     return dataList.map((e) {
       return ExhibitionListingModel(
         title: e.location,
-        exhibitionSubList: e.data?.map((data) {
-          return ExhibitionSubListingModel(
-            id: data.id,
-            name: data.title,
-            author: data.createdBy,
-            status: data.status?.toUpperCamelCase,
-          );
-        }).toList(),
+        exhibitionSubList:
+            e.data?.map((data) {
+              return ExhibitionSubListingModel(
+                id: data.id,
+                name: data.title,
+                author: data.createdBy,
+                status: data.status?.toUpperCamelCase,
+              );
+            }).toList(),
       );
     }).toList();
   }
@@ -296,24 +313,27 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   Future<void> _setupFilters(BuildContext context, Emitter<ExhibitionListingState> emit) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchExhibitionListingFilterOptionList();
-    await response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) async {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? []) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
+    await response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) async {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? []) {
+            FilterData filter = FilterData(
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+            );
+            filterData.add(filter);
+          }
+          emit(ExhibitionFilterListLoadedState());
         }
-        emit(ExhibitionFilterListLoadedState());
-      }
-    });
+      },
+    );
   }
 
   List<SecondaryFilterData> _getSecondaryFilterData({required Filters filterOption}) {

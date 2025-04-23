@@ -1,11 +1,5 @@
 class SecondaryFilterModel {
-  SecondaryFilterModel({
-    required this.value,
-    required this.label,
-    this.imgReferenceId,
-    this.stoneType,
-    this.imgPath,
-  });
+  SecondaryFilterModel({required this.value, required this.label, this.imgReferenceId, this.stoneType, this.imgPath});
 
   final String? value;
   final String? label;
@@ -24,12 +18,12 @@ class SecondaryFilterModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "value": value,
-        "label": label,
-        "img_reference_id": imgReferenceId,
-        "stone_type": stoneType,
-        "img_path": imgPath,
-      };
+    "value": value,
+    "label": label,
+    "img_reference_id": imgReferenceId,
+    "stone_type": stoneType,
+    "img_path": imgPath,
+  };
 
   @override
   String toString() {

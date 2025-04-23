@@ -104,23 +104,24 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   static List<StyleDesignModel> _generateDesignNewList() {
     return List.generate(10, (index) {
       return StyleDesignModel(
-          id: index.toString(),
-          designId: "903405",
-          numberOfProduct: "3",
-          styleId: "01AA6545",
-          productName: "Ring",
-          productImageUrl: 'https://i.ibb.co/HgjT1rt/Image.png',
-          userImageUrl: "https://i.ibb.co/1Lq3YpF/Frame-3977.png",
-          userName: "John",
-          diamondType: "Diamond classic",
-          diamondShape: "Moncao",
-          status: ProjectStatus.onHold,
-          firstType: "M",
-          secondType: "D",
-          thirdType: "C",
-          firstGram: "18K/0.75 g",
-          secondGram: "0.167cts/3",
-          thirdGram: "0.54/2");
+        id: index.toString(),
+        designId: "903405",
+        numberOfProduct: "3",
+        styleId: "01AA6545",
+        productName: "Ring",
+        productImageUrl: 'https://i.ibb.co/HgjT1rt/Image.png',
+        userImageUrl: "https://i.ibb.co/1Lq3YpF/Frame-3977.png",
+        userName: "John",
+        diamondType: "Diamond classic",
+        diamondShape: "Moncao",
+        status: ProjectStatus.onHold,
+        firstType: "M",
+        secondType: "D",
+        thirdType: "C",
+        firstGram: "18K/0.75 g",
+        secondGram: "0.167cts/3",
+        thirdGram: "0.54/2",
+      );
     });
   }
 

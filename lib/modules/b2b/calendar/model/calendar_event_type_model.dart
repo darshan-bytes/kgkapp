@@ -2,10 +2,7 @@ class CalendarEventTypeModel {
   String? title;
   String? key;
 
-  CalendarEventTypeModel({
-    this.title,
-    this.key,
-  });
+  CalendarEventTypeModel({this.title, this.key});
 
   @override
   bool operator ==(Object other) {

@@ -96,68 +96,68 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   }
 
   /// Fetches the order list data from the API
-  Future<void> fetchOrderDetailsData(
-      {required BuildContext context, required Emitter<OrderDetailState> emit, required String orderNumber}) async {
+  Future<void> fetchOrderDetailsData({
+    required BuildContext context,
+    required Emitter<OrderDetailState> emit,
+    required String orderNumber,
+  }) async {
     emit(const OrderDetailReloadState());
     Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>? response = await AppRepository(context).orderDetailsApiCall(id: orderNumber);
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-      emit(const OrderDetailsLoadedState());
-    }, (CommonResponse<PlaceOrderResponse> success) {
-      final responseData = success.responseData as List<PlaceOrderResponse>?;
-      if (responseData.isNotNullNorEmpty) {
-        placeOrderResponse = responseData?.first;
-        if (userType == UserType.b2bUser) {
-          orderProductDetailsList = _generateOrderDetailsProductListForB2B(orderProductList: placeOrderResponse?.products ?? []);
-        } else {
-          orderProductList = _generateOrderDetailsListForB2C(orderProductList: placeOrderResponse?.products ?? []);
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+        emit(const OrderDetailsLoadedState());
+      },
+      (CommonResponse<PlaceOrderResponse> success) {
+        final responseData = success.responseData as List<PlaceOrderResponse>?;
+        if (responseData.isNotNullNorEmpty) {
+          placeOrderResponse = responseData?.first;
+          if (userType == UserType.b2bUser) {
+            orderProductDetailsList = _generateOrderDetailsProductListForB2B(orderProductList: placeOrderResponse?.products ?? []);
+          } else {
+            orderProductList = _generateOrderDetailsListForB2C(orderProductList: placeOrderResponse?.products ?? []);
+          }
         }
-      }
-      emit(const OrderDetailsLoadedState());
-    });
+        emit(const OrderDetailsLoadedState());
+      },
+    );
   }
 
   /// Generate a list of product details for B2C users.
   List<ProductDetailsModel> _generateOrderDetailsListForB2C({required List<OrderProduct> orderProductList}) {
-    return List.generate(
-      orderProductList.length,
-      (index) {
-        final OrderProduct product = orderProductList[index];
-        return ProductDetailsModel(
-          productId: product.productProductId,
-          imageUrl: product.image,
-          name: product.productDescription,
-          productSku: product.productProductId,
-          quantity: product.quantity,
-          ctsOrGms: product.ctsOrGms,
-          yourRate: product.yourRate,
-          yourAmount: product.yourAmount,
-          finalPrice: product.yourAmount?.setCurrency,
-          originalPrice: product.yourAmount?.setCurrency,
-          cts: product.ctsOrGms?.toString(),
-          suid: product.suid,
-        );
-      },
-    );
+    return List.generate(orderProductList.length, (index) {
+      final OrderProduct product = orderProductList[index];
+      return ProductDetailsModel(
+        productId: product.productProductId,
+        imageUrl: product.image,
+        name: product.productDescription,
+        productSku: product.productProductId,
+        quantity: product.quantity,
+        ctsOrGms: product.ctsOrGms,
+        yourRate: product.yourRate,
+        yourAmount: product.yourAmount,
+        finalPrice: product.yourAmount?.setCurrency,
+        originalPrice: product.yourAmount?.setCurrency,
+        cts: product.ctsOrGms?.toString(),
+        suid: product.suid,
+      );
+    });
   }
 
   /// Generate a list of product details for B2B users.
   List<OrderDetailsProductModel> _generateOrderDetailsProductListForB2B({required List<OrderProduct> orderProductList}) {
-    return List.generate(
-      orderProductList.length,
-      (index) {
-        final product = orderProductList[index];
-        return OrderDetailsProductModel(
-          id: product.productProductId,
-          image: product.image,
-          name: product.productDescription,
-          price: product.originalAmount?.setCurrency,
-          quantity: product.quantity?.toString(),
-          sku: product.productProductId,
-          suid: product.suid,
-        );
-      },
-    );
+    return List.generate(orderProductList.length, (index) {
+      final product = orderProductList[index];
+      return OrderDetailsProductModel(
+        id: product.productProductId,
+        image: product.image,
+        name: product.productDescription,
+        price: product.originalAmount?.setCurrency,
+        quantity: product.quantity?.toString(),
+        sku: product.productProductId,
+        suid: product.suid,
+      );
+    });
   }
 
   Future<void> _cancelOrderEvent(OrderCancellationEvent event, Emitter<OrderDetailState> emit) async {
@@ -172,29 +172,22 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
         }
         response = await AppRepository(bottomSheetContext).orderCancelApiCall(
           id: placeOrderResponse?.uniqueId ?? "-",
-          body: {
-            ApiKey.comment: cancellationOrderController.text.trim(),
-            ApiKey.status: AppConst.cancelled,
-          },
+          body: {ApiKey.comment: cancellationOrderController.text.trim(), ApiKey.status: AppConst.cancelled},
         );
       }
     } else {
-      response = await AppRepository(event.context).cancelProductFromOrderDetailsApiCall(
-        id: placeOrderResponse?.uniqueId ?? "-",
-        body: {ApiKey.suid: event.productSuid},
-      );
+      response = await AppRepository(
+        event.context,
+      ).cancelProductFromOrderDetailsApiCall(id: placeOrderResponse?.uniqueId ?? "-", body: {ApiKey.suid: event.productSuid});
     }
 
-    await response?.fold(
-      (error) => Utils.showMessage(error.message),
-      (success) async {
-        /// Order details api call.
-        await fetchOrderDetailsData(context: event.context, emit: emit, orderNumber: orderNumber);
+    await response?.fold((error) => Utils.showMessage(error.message), (success) async {
+      /// Order details api call.
+      await fetchOrderDetailsData(context: event.context, emit: emit, orderNumber: orderNumber);
 
-        /// here we have refresh order list
-        orderListBloc.add(OrdersListPullToRefreshEvent(context: event.context));
-      },
-    );
+      /// here we have refresh order list
+      orderListBloc.add(OrdersListPullToRefreshEvent(context: event.context));
+    });
     emit(const OrderDetailsLoadedState());
   }
 

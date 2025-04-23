@@ -7,11 +7,5 @@ class SelectedSettings {
   String? image;
   Color? imageColor;
 
-  SelectedSettings({
-    this.name,
-    this.specification,
-    this.price,
-    this.image,
-    this.imageColor,
-  });
+  SelectedSettings({this.name, this.specification, this.price, this.image, this.imageColor});
 }

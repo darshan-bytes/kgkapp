@@ -103,37 +103,41 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   Future<void> _onEditAddressEvent(EditAddressEvent event, Emitter<AddressListState> emit) async {
-    await event.context.pushNamed(AppRoutes.addAddressPage,
-        arguments: {RoutesData.addressDetails: (event.isBilling ? billingAddressList : shippingAddressList)[event.index]}).then(
-      (value) async {
-        if (value != null) {
-          try {
-            AddressDetails? addressDetails = value[RoutesData.addressDetails];
+    await event.context
+        .pushNamed(
+          AppRoutes.addAddressPage,
+          arguments: {RoutesData.addressDetails: (event.isBilling ? billingAddressList : shippingAddressList)[event.index]},
+        )
+        .then((value) async {
+          if (value != null) {
+            try {
+              AddressDetails? addressDetails = value[RoutesData.addressDetails];
 
-            if (addressDetails != null) {
-              int index = _addressList.indexWhere((element) => element.id == addressDetails.id);
-              _addressList[index] = addressDetails;
+              if (addressDetails != null) {
+                int index = _addressList.indexWhere((element) => element.id == addressDetails.id);
+                _addressList[index] = addressDetails;
+              }
+              selectedShippingAddress = _addressList[event.index];
+              if (isBillingAndShippingSame) {
+                selectedBillingAddress = _addressList[event.index];
+              }
+              emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
+              if (selectedShippingAddress != null) {
+                await updateSelectedAddressAPI(event.context);
+                myBagBloc.add(FetchOrderSummaryDataEvent(event.context));
+              }
+            } catch (e) {
+              printWrapped('Error in updating address: $e');
             }
-            selectedShippingAddress = _addressList[event.index];
-            if (isBillingAndShippingSame) {
-              selectedBillingAddress = _addressList[event.index];
-            }
-            emit(AddressListLoadedState(_addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
-            if (selectedShippingAddress != null) {
-              await updateSelectedAddressAPI(event.context);
-              myBagBloc.add(FetchOrderSummaryDataEvent(event.context));
-            }
-          } catch (e) {
-            printWrapped('Error in updating address: $e');
           }
-        }
-      },
-    );
+        });
   }
 
   Future<void> _onAddNewAddressEvent(AddNewAddressEvent event, Emitter<AddressListState> emit) async {
-    final Map<RoutesData, dynamic>? result =
-        await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isFromCheckout: true});
+    final Map<RoutesData, dynamic>? result = await event.context.pushNamed(
+      AppRoutes.addAddressPage,
+      arguments: {RoutesData.isFromCheckout: true},
+    );
     if (result != null && result.containsKey(RoutesData.addressDetails) && result[RoutesData.addressDetails] is AddressDetails) {
       AddressDetails addressDetails = result[RoutesData.addressDetails];
       _addressList.add(addressDetails);
@@ -247,9 +251,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     context.pushNamedAndRemoveUntil(
       AppRoutes.orderConfirmationPage,
       (route) => route.settings.name != AppRoutes.landingPage,
-      arguments: {
-        RoutesData.orderNumber: uniqueId,
-      },
+      arguments: {RoutesData.orderNumber: uniqueId},
     );
   }
 

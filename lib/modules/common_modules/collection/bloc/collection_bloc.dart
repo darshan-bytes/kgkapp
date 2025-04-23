@@ -69,13 +69,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
     final currentDate = DateTime.now();
     for (int i = 0; i < AppConst.noOfMonths; i++) {
       final monthDate = currentDate.addMonth(-i);
-      tabs.add(
-        CollectionMonthTab(
-          month: monthDate.month,
-          year: monthDate.year,
-          child: MonthTabWidget(monthDate: monthDate),
-        ),
-      );
+      tabs.add(CollectionMonthTab(month: monthDate.month, year: monthDate.year, child: MonthTabWidget(monthDate: monthDate)));
     }
   }
 
@@ -98,20 +92,24 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
       ApiKey.page: paginationScrollController.currentPage,
       ApiKey.limit: AppConst.pageLimit,
       ApiKey.month: currentMonth,
-      ApiKey.year: currentYear
+      ApiKey.year: currentYear,
     };
 
-    Either<ErrorResponse, PaginationData<CollectionDataItemsModel>>? response =
-        await AppRepository(context).collectionMasterList(body: params, isLoadMore: isLoadMore);
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (PaginationData<CollectionDataItemsModel> success) {
-      if (success.dataList != null) {
-        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-        final localList = success.dataList ?? [];
-        collectionMasterList.addAll(localList);
-      }
-    });
+    Either<ErrorResponse, PaginationData<CollectionDataItemsModel>>? response = await AppRepository(
+      context,
+    ).collectionMasterList(body: params, isLoadMore: isLoadMore);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (PaginationData<CollectionDataItemsModel> success) {
+        if (success.dataList != null) {
+          totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+          final localList = success.dataList ?? [];
+          collectionMasterList.addAll(localList);
+        }
+      },
+    );
     if (!paginationScrollController.isPageLoaded.isCompleted) {
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     }
@@ -151,8 +149,10 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
 
   /// Navigates to the Jewellery Listing screen with the selected collection name.
   void navigateToJewelleryListingScreen({required String collectionName, required BuildContext context}) {
-    context.pushNamed(AppRoutes.productListGridPage,
-        arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing, RoutesData.collectionName: collectionName});
+    context.pushNamed(
+      AppRoutes.productListGridPage,
+      arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing, RoutesData.collectionName: collectionName},
+    );
   }
 
   /// Disposes the pagination scroll controller when the bloc is closed.

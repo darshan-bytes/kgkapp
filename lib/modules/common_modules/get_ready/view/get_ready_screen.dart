@@ -34,14 +34,7 @@ class GetReadyScreen extends StatelessWidget {
                         textAlign: TextAlign.end,
                       ),
                       Expanded(
-                        child: Center(
-                          child: SmartImage(
-                            path: AppImages.icSplashLogo,
-                            height: 112.w,
-                            width: 112.w,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                        child: Center(child: SmartImage(path: AppImages.icSplashLogo, height: 112.w, width: 112.w, fit: BoxFit.fill)),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,8 +42,10 @@ class GetReadyScreen extends StatelessWidget {
                           Expanded(
                             child: SmartButton(
                               onTap: () {
-                                Navigator.pushNamed(context, AppRoutes.signInPage)
-                                    .then((value) => getReadyBloc.add(LoadGetReadyEvent(context: context)));
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.signInPage,
+                                ).then((value) => getReadyBloc.add(LoadGetReadyEvent(context: context)));
                               },
                               activeBackgroundColor: style.activeBackgroundColor,
                               titleStyle: style.titleStyle,
@@ -61,8 +56,10 @@ class GetReadyScreen extends StatelessWidget {
                           Expanded(
                             child: SmartButton(
                               onTap: () {
-                                Navigator.pushNamed(context, AppRoutes.signUpPage)
-                                    .then((value) => getReadyBloc.add(LoadGetReadyEvent(context: context)));
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.signUpPage,
+                                ).then((value) => getReadyBloc.add(LoadGetReadyEvent(context: context)));
                               },
                               activeBackgroundColor: style.activeBackgroundColor,
                               titleStyle: style.titleStyle,

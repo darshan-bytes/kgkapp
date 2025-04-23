@@ -64,18 +64,19 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
         return SizeTransition(
           sizeFactor: animation,
           child: _buildSmartStep(
-              style: style,
-              title: step.title,
-              content: step.content,
-              isActive: isActive,
-              isCompleted: isCompleted,
-              isUpcoming: isUpcoming,
-              activeColor: widget.activeColor,
-              completedColor: widget.completedColor,
-              upcomingColor: widget.upcomingColor,
-              index: index,
-              showDivider: index < (widget.steps.length - 1),
-              stepItem: step),
+            style: style,
+            title: step.title,
+            content: step.content,
+            isActive: isActive,
+            isCompleted: isCompleted,
+            isUpcoming: isUpcoming,
+            activeColor: widget.activeColor,
+            completedColor: widget.completedColor,
+            upcomingColor: widget.upcomingColor,
+            index: index,
+            showDivider: index < (widget.steps.length - 1),
+            stepItem: step,
+          ),
         );
       },
     );
@@ -102,8 +103,15 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildIcon(isActive, isCompleted, isUpcoming, style,
-                  activeColor: activeColor, completedColor: completedColor, upcomingColor: upcomingColor),
+              _buildIcon(
+                isActive,
+                isCompleted,
+                isUpcoming,
+                style,
+                activeColor: activeColor,
+                completedColor: completedColor,
+                upcomingColor: upcomingColor,
+              ),
               if (showDivider) _buildDivider(style),
             ],
           ),
@@ -124,8 +132,15 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
     );
   }
 
-  Widget _buildIcon(bool isActive, bool isCompleted, bool isUpcoming, SmartTileLineStepperStyle style,
-      {Color? activeColor, Color? completedColor, Color? upcomingColor}) {
+  Widget _buildIcon(
+    bool isActive,
+    bool isCompleted,
+    bool isUpcoming,
+    SmartTileLineStepperStyle style, {
+    Color? activeColor,
+    Color? completedColor,
+    Color? upcomingColor,
+  }) {
     Color getColor() {
       if (isCompleted) return completedColor ?? style.completedIndicatorColor;
       if (isActive) return activeColor ?? style.completedIndicatorColor;
@@ -141,25 +156,14 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
           margin: EdgeInsetsDirectional.all(2.w),
           decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: getColor(), width: 1.w)),
           alignment: AlignmentDirectional.center,
-          child: Container(
-            height: 12.w,
-            width: 12.w,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: getColor()),
-          ),
+          child: Container(height: 12.w, width: 12.w, decoration: BoxDecoration(shape: BoxShape.circle, color: getColor())),
         );
       }
       return Container(
         height: 24.w,
         width: 24.w,
         alignment: AlignmentDirectional.center,
-        child: Container(
-          height: 12.w,
-          width: 12.w,
-          decoration: BoxDecoration(
-            color: getColor(),
-            shape: BoxShape.circle,
-          ),
-        ),
+        child: Container(height: 12.w, width: 12.w, decoration: BoxDecoration(color: getColor(), shape: BoxShape.circle)),
       );
     }
 
@@ -170,9 +174,7 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
     return Expanded(
       child: Padding(
         padding: EdgeInsetsDirectional.symmetric(vertical: 6.h),
-        child: CustomPaint(
-          painter: DashedLinePainter(color: style.completedIndicatorColor),
-        ),
+        child: CustomPaint(painter: DashedLinePainter(color: style.completedIndicatorColor)),
       ),
     );
   }
@@ -185,9 +187,10 @@ class DashedLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.w;
+    var paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = 1.w;
 
     var max = size.height;
     var dashWidth = 4.w;

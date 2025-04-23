@@ -79,12 +79,7 @@ class SecondaryFilterData {
   String? image;
   bool isSelected;
 
-  SecondaryFilterData({
-    this.name,
-    this.code,
-    this.image,
-    this.isSelected = false,
-  });
+  SecondaryFilterData({this.name, this.code, this.image, this.isSelected = false});
 
   @override
   bool operator ==(Object other) {

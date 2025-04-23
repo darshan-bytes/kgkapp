@@ -12,116 +12,119 @@ class CompareProductScreen extends StatelessWidget {
         bloc.setInitialized(false);
       },
       child: Scaffold(
-          appBar: SmartAppBar(
-            title: APPStrings.compareProduct.tr,
-            onBack: () {
-              bloc.setInitialized(false);
-              context.pop();
-            },
-          ),
-          body: BlocBuilder<CompareProductBloc, CompareProductState>(
-            buildWhen: (previous, current) => current is CompareProductsLoadedState || current is CompareProductErrorState,
-            builder: (context, state) {
-              if (state is CompareProductsLoadedState) {
-                if (bloc.compareResult.isEmpty) {
-                  return SizedBox.shrink();
-                }
-                return SmartSingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.all(14.w),
-                        child: SmartSingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            children: [
-                              Table(
-                                defaultColumnWidth: const IntrinsicColumnWidth(),
-                                columnWidths: bloc.generateTableColumnWidths(bloc.compareResult.length, 124.w),
-                                children: [_buildTableRow(context, style, bloc)],
-                              ),
-                              SizedBox(
-                                height: 132.h,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional.bottomStart,
-                        child: Container(
-                          height: 132.w,
-                          padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
-                          alignment: AlignmentDirectional.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withValues(alpha: 0.5),
-                                spreadRadius: 5.r,
-                                blurRadius: 7.r,
-                                offset: const Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: Table(
-                            defaultColumnWidth: const IntrinsicColumnWidth(),
-                            columnWidths: bloc.generateTableColumnWidths(5, 124.w),
-                            children: [
-                              TableRow(
-                                  children: List.generate(
-                                      bloc.compareResult.length,
-                                      (index) => SizedBox(
-                                          width: 130.w,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              SmartButton(
-                                                onTap: () {
-                                                  bloc.handleBagButtonClick(context, index);
-                                                },
-                                                title: (bloc.compareResult[index]['isAddedToCart'] ?? false)
-                                                    ? APPStrings.goToBag.tr
-                                                    : APPStrings.addToBag.tr,
-                                                width: 114.w,
-                                                height: 48.w,
-                                              ),
-                                              SizedBox(
-                                                height: 8.h,
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  bloc.add(CompareProductRemoveProductEvent(
-                                                      context: context, productId: bloc.productIdList[index], isFromCompareScreen: true));
-                                                },
-                                                child: Container(
-                                                  height: 48.h,
-                                                  width: 114.w,
-                                                  alignment: AlignmentDirectional.center,
-                                                  child: Icon(
-                                                    Icons.delete_forever,
-                                                    color: style.primaryColor,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ))))
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              } else if (state is CompareProductErrorState) {
-                return NoDataFoundWidget(text: state.message);
-              } else {
+        appBar: SmartAppBar(
+          title: APPStrings.compareProduct.tr,
+          onBack: () {
+            bloc.setInitialized(false);
+            context.pop();
+          },
+        ),
+        body: BlocBuilder<CompareProductBloc, CompareProductState>(
+          buildWhen: (previous, current) => current is CompareProductsLoadedState || current is CompareProductErrorState,
+          builder: (context, state) {
+            if (state is CompareProductsLoadedState) {
+              if (bloc.compareResult.isEmpty) {
                 return SizedBox.shrink();
               }
-            },
-          )),
+              return SmartSingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.all(14.w),
+                      child: SmartSingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: [
+                            Table(
+                              defaultColumnWidth: const IntrinsicColumnWidth(),
+                              columnWidths: bloc.generateTableColumnWidths(bloc.compareResult.length, 124.w),
+                              children: [_buildTableRow(context, style, bloc)],
+                            ),
+                            SizedBox(height: 132.h),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.bottomStart,
+                      child: Container(
+                        height: 132.w,
+                        padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
+                        alignment: AlignmentDirectional.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withValues(alpha: 0.5),
+                              spreadRadius: 5.r,
+                              blurRadius: 7.r,
+                              offset: const Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Table(
+                          defaultColumnWidth: const IntrinsicColumnWidth(),
+                          columnWidths: bloc.generateTableColumnWidths(5, 124.w),
+                          children: [
+                            TableRow(
+                              children: List.generate(
+                                bloc.compareResult.length,
+                                (index) => SizedBox(
+                                  width: 130.w,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SmartButton(
+                                        onTap: () {
+                                          bloc.handleBagButtonClick(context, index);
+                                        },
+                                        title:
+                                            (bloc.compareResult[index]['isAddedToCart'] ?? false)
+                                                ? APPStrings.goToBag.tr
+                                                : APPStrings.addToBag.tr,
+                                        width: 114.w,
+                                        height: 48.w,
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      InkWell(
+                                        onTap: () {
+                                          bloc.add(
+                                            CompareProductRemoveProductEvent(
+                                              context: context,
+                                              productId: bloc.productIdList[index],
+                                              isFromCompareScreen: true,
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 48.h,
+                                          width: 114.w,
+                                          alignment: AlignmentDirectional.center,
+                                          child: Icon(Icons.delete_forever, color: style.primaryColor),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is CompareProductErrorState) {
+              return NoDataFoundWidget(text: state.message);
+            } else {
+              return SizedBox.shrink();
+            }
+          },
+        ),
+      ),
     );
   }
 
@@ -139,9 +142,10 @@ class CompareProductScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SmartImage(
-            path: bloc.commodity == Commodity.jewellery
-                ? (((productMap['multiple_finished_view_image'] as List?)?.firstOrNull)?['IMAGE_URL'] ?? '')
-                : (productMap['image'] as List?)?.firstOrNull['URL'] ?? '',
+            path:
+                bloc.commodity == Commodity.jewellery
+                    ? (((productMap['multiple_finished_view_image'] as List?)?.firstOrNull)?['IMAGE_URL'] ?? '')
+                    : (productMap['image'] as List?)?.firstOrNull['URL'] ?? '',
             width: 114.w,
             height: 114.w,
             onTap: () {
@@ -159,12 +163,7 @@ class CompareProductScreen extends StatelessWidget {
           SizedBox(height: 8.h),
           Container(
             margin: EdgeInsetsDirectional.only(end: 10.w),
-            child: SmartText(
-              productDetail.name ?? '',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: style.productTitleStyle,
-            ),
+            child: SmartText(productDetail.name ?? '', maxLines: 2, overflow: TextOverflow.ellipsis, style: style.productTitleStyle),
           ),
           SizedBox(height: 8.h),
           SmartText(
@@ -229,8 +228,14 @@ class CompareProductScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductDetailWidgets(int index, String label, String value, CompareProductStyle style,
-      {double textHeight = 48, int maxLines = 2}) {
+  Widget _buildProductDetailWidgets(
+    int index,
+    String label,
+    String value,
+    CompareProductStyle style, {
+    double textHeight = 48,
+    int maxLines = 2,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -238,12 +243,7 @@ class CompareProductScreen extends StatelessWidget {
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,
-          child: SmartText(
-            label,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: style.productSubTitleStyle,
-          ),
+          child: SmartText(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: style.productSubTitleStyle),
         ),
         SizedBox(height: 8.h),
         const Divider(),
@@ -251,11 +251,7 @@ class CompareProductScreen extends StatelessWidget {
         Container(
           margin: EdgeInsetsDirectional.only(end: 12.w),
           height: textHeight.h,
-          child: SmartText(
-            value.isNotNullNorEmpty ? value : '-',
-            style: style.productTitleStyle,
-            maxLines: maxLines,
-          ),
+          child: SmartText(value.isNotNullNorEmpty ? value : '-', style: style.productTitleStyle, maxLines: maxLines),
         ),
         SizedBox(height: 10.h),
       ],

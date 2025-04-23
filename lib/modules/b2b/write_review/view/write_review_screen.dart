@@ -11,9 +11,7 @@ class WriteReviewScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is WriteReviewLoadedState,
       builder: (context, state) {
         return Scaffold(
-          appBar: SmartAppBar(
-            title: bloc.isEdit ? APPStrings.editReview.tr : APPStrings.writeAReview.tr,
-          ),
+          appBar: SmartAppBar(title: bloc.isEdit ? APPStrings.editReview.tr : APPStrings.writeAReview.tr),
           bottomNavigationBar: _buildBottomNavigationBar(context, bloc),
           body: SafeArea(
             child: SmartSingleChildScrollView(
@@ -83,14 +81,11 @@ class WriteReviewScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SmartText(
-          APPStrings.images.tr,
-          style: style.labelStyle,
-        ),
+        SmartText(APPStrings.images.tr, style: style.labelStyle),
         SizedBox(height: 8.h),
         BlocBuilder<WriteReviewBloc, WriteReviewState>(
-          buildWhen: (previous, current) =>
-              current is PickImageState || current is RemoveSelectedImageState || current is WriteReviewInitial,
+          buildWhen:
+              (previous, current) => current is PickImageState || current is RemoveSelectedImageState || current is WriteReviewInitial,
           builder: (context, state) {
             List<Widget> imageWidgets = [
               if (bloc.availablePickImageLength > 0)
@@ -106,32 +101,20 @@ class WriteReviewScreen extends StatelessWidget {
                     borderType: BorderType.RRect,
                     strokeWidth: 1.5.w,
                     color: style.borderColor,
-                    child: SizedBox(
-                      height: 96.w,
-                      width: 96.w,
-                      child: const Center(child: SmartImage(path: AppImages.icPlus)),
-                    ),
+                    child: SizedBox(height: 96.w, width: 96.w, child: const Center(child: SmartImage(path: AppImages.icPlus))),
                   ),
                 ),
             ];
 
             if (bloc.imageFileList.isNotEmpty) {
               imageWidgets.addAll(
-                List.generate(
-                  bloc.imageFileList.length,
-                  (index) {
-                    return _buildImageItem(bloc.imageFileList[index], bloc, index, style);
-                  },
-                ),
+                List.generate(bloc.imageFileList.length, (index) {
+                  return _buildImageItem(bloc.imageFileList[index], bloc, index, style);
+                }),
               );
             }
 
-            return Wrap(
-              spacing: 17.w,
-              runSpacing: 17.w,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              children: imageWidgets,
-            );
+            return Wrap(spacing: 17.w, runSpacing: 17.w, crossAxisAlignment: WrapCrossAlignment.start, children: imageWidgets);
           },
         ),
       ],
@@ -144,13 +127,7 @@ class WriteReviewScreen extends StatelessWidget {
       width: 96.w,
       child: Stack(
         children: [
-          SmartImage(
-            path: imageFile.path,
-            fit: BoxFit.cover,
-            height: 96.w,
-            width: 96.w,
-            imageBorderRadius: BorderRadius.circular(4.r),
-          ),
+          SmartImage(path: imageFile.path, fit: BoxFit.cover, height: 96.w, width: 96.w, imageBorderRadius: BorderRadius.circular(4.r)),
           PositionedDirectional(
             top: 8.w,
             end: 8.w,
@@ -159,16 +136,11 @@ class WriteReviewScreen extends StatelessWidget {
                 bloc.add(RemoveSelectedImageEvent(selectedImage: index));
               },
               child: Container(
-                decoration: BoxDecoration(
-                  color: style.whiteColor,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
+                decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.circular(12.r)),
                 height: 24.w,
                 width: 24.w,
                 alignment: AlignmentDirectional.center,
-                child: const SmartImage(
-                  path: AppImages.icCancel,
-                ),
+                child: const SmartImage(path: AppImages.icCancel),
               ),
             ),
           ),
@@ -187,12 +159,10 @@ class WriteReviewScreen extends StatelessWidget {
           },
         );
       },
-    ).then(
-      (value) {
-        bloc.reviewFocusNode.unfocus();
-        bloc.titleFocusNode.unfocus();
-      },
-    );
+    ).then((value) {
+      bloc.reviewFocusNode.unfocus();
+      bloc.titleFocusNode.unfocus();
+    });
   }
 
   Widget _buildBottomNavigationBar(BuildContext context, WriteReviewBloc bloc) {

@@ -52,8 +52,9 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
       selectedWatchlist = null;
     } else {
       selectedWatchlist = event.watchlistData;
-      WatchlistProducts? watchlistProducts =
-          selectedWatchlist?.products?.firstWhereOrNull((WatchlistProducts element) => element.productId == event.productDetails.productId);
+      WatchlistProducts? watchlistProducts = selectedWatchlist?.products?.firstWhereOrNull(
+        (WatchlistProducts element) => element.productId == event.productDetails.productId,
+      );
       if (watchlistProducts != null) {
         _arrSelectedWatchlist[0].isSelected = watchlistProducts.notifyOnAvailability ?? false;
         _arrSelectedWatchlist[1].isSelected = watchlistProducts.notifyOnPriceDrop ?? false;
@@ -89,7 +90,7 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
             ApiKey.commodity: productDetails?.commodity?.value,
             ApiKey.notifyOnPriceDrop: _arrSelectedWatchlist[1].isSelected,
             ApiKey.notifyOnDiscount: _arrSelectedWatchlist[2].isSelected,
-          }
+          },
         ],
       };
     } else {
@@ -107,25 +108,29 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
     } else if (selectedWatchlist?.products?.map((WatchlistProducts e) => e.productId).contains(productDetails?.productId) == false) {
       response = await AppRepository(event.context).watchListAddProduct(selectedWatchlist!.sId ?? '', body);
     } else {
-      response =
-          await AppRepository(event.context).watchListUpdateProduct(selectedWatchlist!.sId ?? '', productDetails?.productId ?? '', body);
+      response = await AppRepository(
+        event.context,
+      ).watchListUpdateProduct(selectedWatchlist!.sId ?? '', productDetails?.productId ?? '', body);
     }
 
-    await response?.fold((ErrorResponse error) {
-      Utils.showMessage(error.message);
-    }, (CommonResponse response) async {
-      // Resets the watchlist full list to get updated data when the user clicks on the add to watchlist button for the same product again.
-      // This requires calling the update product API.
-      watchlistBloc.resetAllWatchlistFull();
-      switch (actionType) {
-        case WatchlistActionType.edit:
-        case WatchlistActionType.remove:
-          event.context.pop(arguments: {RoutesData.isWatchlistUpdated: true});
-        default:
-          event.context.pop();
-      }
-      await Future.delayed(const Duration(milliseconds: 500));
-      Utils.showMessage(response.message);
-    });
+    await response?.fold(
+      (ErrorResponse error) {
+        Utils.showMessage(error.message);
+      },
+      (CommonResponse response) async {
+        // Resets the watchlist full list to get updated data when the user clicks on the add to watchlist button for the same product again.
+        // This requires calling the update product API.
+        watchlistBloc.resetAllWatchlistFull();
+        switch (actionType) {
+          case WatchlistActionType.edit:
+          case WatchlistActionType.remove:
+            event.context.pop(arguments: {RoutesData.isWatchlistUpdated: true});
+          default:
+            event.context.pop();
+        }
+        await Future.delayed(const Duration(milliseconds: 500));
+        Utils.showMessage(response.message);
+      },
+    );
   }
 }

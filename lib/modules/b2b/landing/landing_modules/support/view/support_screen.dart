@@ -8,58 +8,59 @@ class SupportScreen extends StatelessWidget {
     final SupportBloc supportBloc = BlocProvider.of<SupportBloc>(context);
     final SupportScreenStyle style = AppTheme.of(context).supportScreenStyle;
     return Scaffold(
-        appBar: SmartAppBar(
-          isBack: false,
-          leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
-          onScan: () {},
-          onFavorite: () {
-            context.pushNamed(AppRoutes.wishListPage);
-          },
-          onNotification: () {
-            context.pushNamed(AppRoutes.notificationPage);
-          },
-        ),
-        body: BlocBuilder<SupportBloc, SupportState>(
-          buildWhen: (previous, current) => current is SupportLoadedState || current is SupportLoadingState,
-          builder: (context, state) {
-            if (state is SupportLoadingState) {
-              return const SmartCircularProgressIndicator();
-            }
-            return SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 8.h),
-                    _buildSupportActionSection(supportBloc, context),
-                    const Divider(),
-                    SizedBox(height: 32.h),
-                    if (supportBloc.faqs.isNotNullNorEmpty) ...[
-                      SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.frequentlyAskedQuestionStyle),
-                      SizedBox(height: 16.h),
-                      _buildFAQSection(supportBloc, style),
-                      SizedBox(height: 16.h),
-                    ],
-                    Center(
-                      child: SmartButton(
-                        title: APPStrings.moreFaq.tr,
-                        height: 40.h,
-                        suffixImage: AppImages.icRight,
-                        imageSize: 20.w,
-                        padding: EdgeInsetsDirectional.only(start: 12.w),
-                        onTap: () {
-                          context.pushNamed(AppRoutes.faqPage);
-                        },
-                      ),
-                    ),
+      appBar: SmartAppBar(
+        isBack: false,
+        leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
+        onScan: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
+        onNotification: () {
+          context.pushNamed(AppRoutes.notificationPage);
+        },
+      ),
+      body: BlocBuilder<SupportBloc, SupportState>(
+        buildWhen: (previous, current) => current is SupportLoadedState || current is SupportLoadingState,
+        builder: (context, state) {
+          if (state is SupportLoadingState) {
+            return const SmartCircularProgressIndicator();
+          }
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8.h),
+                  _buildSupportActionSection(supportBloc, context),
+                  const Divider(),
+                  SizedBox(height: 32.h),
+                  if (supportBloc.faqs.isNotNullNorEmpty) ...[
+                    SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.frequentlyAskedQuestionStyle),
+                    SizedBox(height: 16.h),
+                    _buildFAQSection(supportBloc, style),
                     SizedBox(height: 16.h),
                   ],
-                ),
+                  Center(
+                    child: SmartButton(
+                      title: APPStrings.moreFaq.tr,
+                      height: 40.h,
+                      suffixImage: AppImages.icRight,
+                      imageSize: 20.w,
+                      padding: EdgeInsetsDirectional.only(start: 12.w),
+                      onTap: () {
+                        context.pushNamed(AppRoutes.faqPage);
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                ],
               ),
-            );
-          },
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Widget _buildSupportActionSection(SupportBloc supportBloc, BuildContext context) {
@@ -86,19 +87,9 @@ class SupportScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final FAQ faq = supportBloc.faqs[index];
         return SmartExpansionTile(
-          title: SmartText(
-            faq.question,
-            style: style.questionStyle,
-            optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
-          ),
+          title: SmartText(faq.question, style: style.questionStyle, optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h)),
           onExpansionChanged: (value) {},
-          children: [
-            SmartText(
-              faq.answer,
-              style: style.answerStyle,
-              optionalPadding: EdgeInsetsDirectional.only(bottom: 17.h),
-            ),
-          ],
+          children: [SmartText(faq.answer, style: style.answerStyle, optionalPadding: EdgeInsetsDirectional.only(bottom: 17.h))],
         );
       },
       separatorBuilder: (context, index) => const Divider(),

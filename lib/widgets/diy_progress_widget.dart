@@ -1,12 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class DiyProgressWidget extends StatelessWidget {
-  const DiyProgressWidget({
-    super.key,
-    required this.selectedStep,
-    this.padding,
-    this.screenIdentifier,
-  });
+  const DiyProgressWidget({super.key, required this.selectedStep, this.padding, this.screenIdentifier});
 
   final int selectedStep;
   final EdgeInsetsGeometry? padding;
@@ -92,31 +87,18 @@ class DiyProgressWidget extends StatelessWidget {
         '$title \n$subTitle',
         maxLines: 2,
         style: textStyle,
-        optionalPadding: EdgeInsetsDirectional.only(
-          start: padding ?? 40.w,
-          top: 10.h,
-          bottom: 10.h,
-        ),
+        optionalPadding: EdgeInsetsDirectional.only(start: padding ?? 40.w, top: 10.h, bottom: 10.h),
       ),
     );
   }
 
-  Widget _commonSelector(
-    BuildContext context,
-    bool isSelected,
-    String title,
-    int index,
-    String subTitle,
-  ) {
+  Widget _commonSelector(BuildContext context, bool isSelected, String title, int index, String subTitle) {
     final style = AppTheme.of(context).diyProgressViewStyle;
     return Expanded(
       child: Container(
         alignment: AlignmentDirectional.center,
         decoration: BoxDecoration(
-          border: Border.all(
-            color: isSelected ? style.selectedBorderColor : style.unselectedBorderColor,
-            width: 1,
-          ),
+          border: Border.all(color: isSelected ? style.selectedBorderColor : style.unselectedBorderColor, width: 1),
         ),
         padding: EdgeInsetsDirectional.all(12.w),
         height: 70.h,

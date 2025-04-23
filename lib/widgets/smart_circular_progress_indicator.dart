@@ -4,11 +4,7 @@ class SmartCircularProgressIndicator extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? size;
 
-  const SmartCircularProgressIndicator({
-    super.key,
-    this.padding,
-    this.size,
-  });
+  const SmartCircularProgressIndicator({super.key, this.padding, this.size});
 
   @override
   Widget build(BuildContext context) {

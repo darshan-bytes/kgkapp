@@ -96,13 +96,7 @@ class WatchlistProducts {
   DiamondDataModel? diamondData;
   GemstoneDatum? gemstoneData;
 
-  WatchlistProducts({
-    this.productId,
-    this.commodity,
-    this.notifyOnPriceDrop,
-    this.notifyOnAvailability,
-    this.notifyOnDiscount,
-  });
+  WatchlistProducts({this.productId, this.commodity, this.notifyOnPriceDrop, this.notifyOnAvailability, this.notifyOnDiscount});
 
   WatchlistProducts.fromJson(Map<String, dynamic> json) {
     productId = json['productId'];

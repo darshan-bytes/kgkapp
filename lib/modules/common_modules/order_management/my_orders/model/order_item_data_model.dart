@@ -16,21 +16,22 @@ class OrderItem {
   UserIdDetails? createdByDetails;
   String? commodity;
 
-  OrderItem(
-      {this.sId,
-      this.createdAt,
-      this.totalPrice,
-      this.currency,
-      this.createdBy,
-      this.orderStatus,
-      this.name,
-      this.email,
-      this.phone,
-      this.uniqueId,
-      this.items,
-      this.totalQuantity,
-      this.createdByDetails,
-      this.commodity});
+  OrderItem({
+    this.sId,
+    this.createdAt,
+    this.totalPrice,
+    this.currency,
+    this.createdBy,
+    this.orderStatus,
+    this.name,
+    this.email,
+    this.phone,
+    this.uniqueId,
+    this.items,
+    this.totalQuantity,
+    this.createdByDetails,
+    this.commodity,
+  });
 
   OrderItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

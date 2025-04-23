@@ -2,16 +2,10 @@ class FaqWrapper {
   String? title;
   List<FAQ>? faqs;
 
-  FaqWrapper({
-    this.title,
-    this.faqs,
-  });
+  FaqWrapper({this.title, this.faqs});
 
   factory FaqWrapper.fromJson(String title, List<Map<String, dynamic>> jsonList) {
-    return FaqWrapper(
-      title: title,
-      faqs: jsonList.map((faq) => FAQ.fromJson(faq)).toList(),
-    );
+    return FaqWrapper(title: title, faqs: jsonList.map((faq) => FAQ.fromJson(faq)).toList());
   }
 
   @override
@@ -27,16 +21,10 @@ class FAQ {
   String? question;
   String? answer;
 
-  FAQ({
-    this.question,
-    this.answer,
-  });
+  FAQ({this.question, this.answer});
 
   factory FAQ.fromJson(Map<String, dynamic> json) {
-    return FAQ(
-      question: json['question'] ?? '',
-      answer: json['answer'] ?? '',
-    );
+    return FAQ(question: json['question'] ?? '', answer: json['answer'] ?? '');
   }
 
   @override

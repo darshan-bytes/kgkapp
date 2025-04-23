@@ -7,10 +7,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final PreviewCatalogueBloc bloc = BlocProvider.of<PreviewCatalogueBloc>(context);
     final PreviewCatalogueStyle style = AppTheme.of(context).previewCatalogueStyle;
-    return Scaffold(
-      appBar: appBarPreferredSize(bloc, context),
-      body: buildBody(bloc, context, style),
-    );
+    return Scaffold(appBar: appBarPreferredSize(bloc, context), body: buildBody(bloc, context, style));
   }
 
   PreferredSizeWidget appBarPreferredSize(PreviewCatalogueBloc bloc, BuildContext context) {
@@ -51,10 +48,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
 
   Widget _buildCommentAndShareRow(PreviewCatalogueBloc bloc, PreviewCatalogueStyle style, BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        borderRadius: BorderRadius.circular(8.w),
-      ),
+      decoration: BoxDecoration(color: style.backgroundColor, borderRadius: BorderRadius.circular(8.w)),
       padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
       child: Row(
         children: [
@@ -85,24 +79,24 @@ class PreviewCatalogueScreen extends StatelessWidget {
           SmartText(bloc.previewCatalogueDataModel?.description ?? '', style: style.subTitleStyle, textAlign: TextAlign.center),
           SizedBox(height: 32.h),
           SmartGridView(
-            items: List.generate(
-              bloc.productList.length,
-              (index) {
-                return ProductGridItem(
-                  productDetails: bloc.productList[index],
-                  isBadgeVisible: false,
-                  isCrtAndGramVisible: bloc.productList[index].commodity == Commodity.jewellery ? true : false,
-                  isHidePriceView: _isHidePriceView(bloc.productList[index].commodity!),
-                  isCommentSelected: bloc.productList[index].isCommentVisible,
-                  onCommentTap: () {
-                    context.pushNamed(AppRoutes.commentListingPage, arguments: {
+            items: List.generate(bloc.productList.length, (index) {
+              return ProductGridItem(
+                productDetails: bloc.productList[index],
+                isBadgeVisible: false,
+                isCrtAndGramVisible: bloc.productList[index].commodity == Commodity.jewellery ? true : false,
+                isHidePriceView: _isHidePriceView(bloc.productList[index].commodity!),
+                isCommentSelected: bloc.productList[index].isCommentVisible,
+                onCommentTap: () {
+                  context.pushNamed(
+                    AppRoutes.commentListingPage,
+                    arguments: {
                       RoutesData.catalogueId: bloc.digitalCatalogueListingModel?.id ?? "",
                       RoutesData.productId: bloc.productList[index].productId ?? "",
-                    });
-                  },
-                );
-              },
-            ),
+                    },
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),
@@ -110,11 +104,6 @@ class PreviewCatalogueScreen extends StatelessWidget {
   }
 
   bool _isHidePriceView(Commodity commodity) {
-    return ![
-      Commodity.jewellery,
-      Commodity.gemstone,
-      Commodity.diamond,
-      Commodity.skuLibrary,
-    ].contains(commodity);
+    return ![Commodity.jewellery, Commodity.gemstone, Commodity.diamond, Commodity.skuLibrary].contains(commodity);
   }
 }

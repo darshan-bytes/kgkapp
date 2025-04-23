@@ -31,8 +31,10 @@ class CategoriesScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final startIndex = index * 3;
                 final endIndex = startIndex + 3;
-                final sublist = categoriesBloc.categories
-                    .sublist(startIndex, endIndex > categoriesBloc.categories.length ? categoriesBloc.categories.length : endIndex);
+                final sublist = categoriesBloc.categories.sublist(
+                  startIndex,
+                  endIndex > categoriesBloc.categories.length ? categoriesBloc.categories.length : endIndex,
+                );
                 return Column(
                   children: [
                     CategoryRow(
@@ -53,21 +55,25 @@ class CategoriesScreen extends StatelessWidget {
                     ),
                     AnimatedSize(
                       duration: const Duration(milliseconds: 300),
-                      child: categoriesBloc.selectedRowIndex == index
-                          ? SelectedCategoryDetails(
-                              arrowPosition: categoriesBloc.arrowPosition,
-                              productsDetailsList: categoriesBloc.selectedCategoriesList,
-                              scrollController: categoriesBloc.scrollController,
-                              onProductSelected: (value) {
-                                final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
-                                if (selectedCategory != null) {
-                                  categoriesBloc.navigateBasedOnCategory(
-                                      context: context, categoryName: selectedCategory, categorySubName: value.name);
-                                }
-                              },
-                            )
-                          : const SizedBox.shrink(),
-                    )
+                      child:
+                          categoriesBloc.selectedRowIndex == index
+                              ? SelectedCategoryDetails(
+                                arrowPosition: categoriesBloc.arrowPosition,
+                                productsDetailsList: categoriesBloc.selectedCategoriesList,
+                                scrollController: categoriesBloc.scrollController,
+                                onProductSelected: (value) {
+                                  final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
+                                  if (selectedCategory != null) {
+                                    categoriesBloc.navigateBasedOnCategory(
+                                      context: context,
+                                      categoryName: selectedCategory,
+                                      categorySubName: value.name,
+                                    );
+                                  }
+                                },
+                              )
+                              : const SizedBox.shrink(),
+                    ),
                   ],
                 );
               },

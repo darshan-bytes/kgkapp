@@ -23,22 +23,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   void _onInitialSearchEvent(SearchEvent event, Emitter<SearchState> emit) {
     emit(SearchReloadState());
     searchController.clear();
-    popularSearchList = [
-      'Diamond Rings',
-      'Yellow Diamond',
-      'Diamond Necklace',
-      'Colored Diamond',
-      'Diamond Bracelet',
-    ];
+    popularSearchList = ['Diamond Rings', 'Yellow Diamond', 'Diamond Necklace', 'Colored Diamond', 'Diamond Bracelet'];
 
-    recentSearchList = [
-      'Diamond Rings',
-      'Yellow Diamond',
-      'Diamond Necklace ',
-      'Colored Diamond',
-      'Diamond Bracelet  ',
-      'Diamond Rounds',
-    ];
+    recentSearchList = ['Diamond Rings', 'Yellow Diamond', 'Diamond Necklace ', 'Colored Diamond', 'Diamond Bracelet  ', 'Diamond Rounds'];
 
     List.generate(20, (index) {
       List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant"];
@@ -46,7 +33,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         "https://i.ibb.co/5jmqMcF/image-18654.png",
         "https://i.ibb.co/vBG9fzy/image-18655.png",
         "https://i.ibb.co/9wyrwGQ/Image.png",
-        "https://i.ibb.co/D4kHrXY/image-18652.jpg"
+        "https://i.ibb.co/D4kHrXY/image-18652.jpg",
       ];
       searchByCategoryList.add(
         AuctionListModel(

@@ -16,10 +16,7 @@ class EditWatchlistScreen extends StatelessWidget {
           Stack(
             children: [
               Container(
-                decoration: BoxDecoration(
-                  color: style.backgroundColor,
-                  borderRadius: BorderRadius.circular(16.w),
-                ),
+                decoration: BoxDecoration(color: style.backgroundColor, borderRadius: BorderRadius.circular(16.w)),
                 padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 20.h),
                 child: BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
                   buildWhen: (previous, current) => current is EditWatchlistLoadedState,
@@ -29,15 +26,9 @@ class EditWatchlistScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SmartText(
-                            bloc.appBarTitle,
-                            style: style.titleStyle,
-                          ),
+                          SmartText(bloc.appBarTitle, style: style.titleStyle),
                           SizedBox(height: 4.h),
-                          SmartText(
-                            APPStrings.watchListDesc.tr,
-                            style: style.subTitleStyle,
-                          ),
+                          SmartText(APPStrings.watchListDesc.tr, style: style.subTitleStyle),
                           SizedBox(height: 16.h),
                           BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
                             buildWhen: (previous, current) => current is EditWatchlistFieldErrorState,
@@ -60,8 +51,9 @@ class EditWatchlistScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 16.h),
                           BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
-                            buildWhen: (previous, current) =>
-                                current is EditWatchlistDurationChangedState || current is EditWatchlistFieldErrorState,
+                            buildWhen:
+                                (previous, current) =>
+                                    current is EditWatchlistDurationChangedState || current is EditWatchlistFieldErrorState,
                             builder: (context, state) {
                               return SmartDurationPicker(
                                 errorText: bloc.watchListDurationError,
@@ -121,18 +113,22 @@ class EditWatchlistScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                  child: SmartButton.white(
-                                      onTap: () {
-                                        context.pop();
-                                      },
-                                      title: APPStrings.cancel.tr)),
+                                child: SmartButton.white(
+                                  onTap: () {
+                                    context.pop();
+                                  },
+                                  title: APPStrings.cancel.tr,
+                                ),
+                              ),
                               SizedBox(width: 16.w),
                               Expanded(
-                                  child: SmartButton(
-                                      onTap: () {
-                                        bloc.add(EditWatchlistSaveEvent(context));
-                                      },
-                                      title: APPStrings.save.tr)),
+                                child: SmartButton(
+                                  onTap: () {
+                                    bloc.add(EditWatchlistSaveEvent(context));
+                                  },
+                                  title: APPStrings.save.tr,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 16.h),
@@ -186,25 +182,15 @@ class EditWatchlistScreen extends StatelessWidget {
             builder: (context, value, _) {
               return Row(
                 children: [
-                  SmartImage(
-                    path: AppImages.icClock,
-                    width: 20.w,
-                    height: 20.w,
-                  ),
+                  SmartImage(path: AppImages.icClock, width: 20.w, height: 20.w),
                   SizedBox(width: 10.w),
-                  SmartText(
-                    value,
-                    style: style.timeDurationValueStyle,
-                  ),
+                  SmartText(value, style: style.timeDurationValueStyle),
                 ],
               );
             },
           ),
           SizedBox(height: 4.h),
-          SmartText(
-            APPStrings.theProductWillBeRemovedWhenTheTimeIsUp.tr,
-            style: style.timeDurationDescStyle,
-          ),
+          SmartText(APPStrings.theProductWillBeRemovedWhenTheTimeIsUp.tr, style: style.timeDurationDescStyle),
         ],
       ),
     );

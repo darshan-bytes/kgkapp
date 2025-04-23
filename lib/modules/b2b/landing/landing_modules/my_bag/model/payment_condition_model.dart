@@ -67,15 +67,15 @@ class PaymentCondition {
   }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "slug": slug,
-        "created_by": createdBy,
-        "updated_by": updatedBy,
-        "status": status,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "id": id,
-        "created_by_details": createdByDetails?.toJson(),
-        "updated_by_details": updatedByDetails?.toJson(),
-      };
+    "name": name,
+    "slug": slug,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "status": status,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "id": id,
+    "created_by_details": createdByDetails?.toJson(),
+    "updated_by_details": updatedByDetails?.toJson(),
+  };
 }

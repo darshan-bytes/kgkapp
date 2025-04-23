@@ -50,12 +50,7 @@ class NewsletterScreen extends StatelessWidget {
             child: FilterBottomActionBar(
               controller: bloc.currentScrollController.controller,
               onFilterTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
-                );
+                Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
               },
             ),
           );

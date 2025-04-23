@@ -5,13 +5,7 @@ class DashboardStatisticsDataModel {
   String? variation;
   bool isNegative;
 
-  DashboardStatisticsDataModel({
-    this.title,
-    this.value,
-    this.subTitle,
-    this.variation,
-    this.isNegative = false,
-  });
+  DashboardStatisticsDataModel({this.title, this.value, this.subTitle, this.variation, this.isNegative = false});
 
   @override
   bool operator ==(Object other) {

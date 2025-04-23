@@ -40,37 +40,30 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
           contentPadding: contentPadding ?? EdgeInsetsDirectional.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0.r),
-            borderSide: BorderSide(
-              color: style.borderColor,
-              width: 1.w,
-            ),
+            borderSide: BorderSide(color: style.borderColor, width: 1.w),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0.r),
-            borderSide: BorderSide(
-              color: style.borderColor,
-              width: 1.w,
-            ),
+            borderSide: BorderSide(color: style.borderColor, width: 1.w),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0.r),
-            borderSide: BorderSide(
-              color: style.borderColor,
-              width: 1.w,
-            ),
+            borderSide: BorderSide(color: style.borderColor, width: 1.w),
           ),
         ),
         onChanged: onChanged,
-        items: items.map((T value) {
-          return DropdownMenuItem<T>(
-              value: value,
-              child: SmartText(
-                itemLableBuilder(value),
-                style: textStyle ?? style.textStyle,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ));
-        }).toList(),
+        items:
+            items.map((T value) {
+              return DropdownMenuItem<T>(
+                value: value,
+                child: SmartText(
+                  itemLableBuilder(value),
+                  style: textStyle ?? style.textStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
+            }).toList(),
       ),
     );
   }

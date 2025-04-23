@@ -1,9 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-enum _ListViewType {
-  designListItem,
-  cadListLibrary,
-}
+enum _ListViewType { designListItem, cadListLibrary }
 
 class CadLibraryListItem extends StatelessWidget {
   final B2BCustomListingDataModel designModel;
@@ -62,16 +59,10 @@ class CadLibraryListItem extends StatelessWidget {
         child: Container(
           padding: padding,
           margin: margin,
-          decoration: BoxDecoration(
-            color: style.backgroundColor,
-          ),
+          decoration: BoxDecoration(color: style.backgroundColor),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              cadImageSection(style),
-              SizedBox(width: 16.w),
-              cadDetailsSection(style, context),
-            ],
+            children: [cadImageSection(style), SizedBox(width: 16.w), cadDetailsSection(style, context)],
           ),
         ),
       ),
@@ -87,9 +78,10 @@ class CadLibraryListItem extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           color: style.cadBackgroundColor,
           child: SmartImage(
-            path: _viewType == _ListViewType.cadListLibrary
-                ? designModel.strCADLibraryImageUrl ?? ''
-                : designModel.strDesignListingImageUrl ?? '',
+            path:
+                _viewType == _ListViewType.cadListLibrary
+                    ? designModel.strCADLibraryImageUrl ?? ''
+                    : designModel.strDesignListingImageUrl ?? '',
             height: imageHeight,
             width: imageWidth,
             fit: fit,
@@ -150,7 +142,7 @@ class CadLibraryListItem extends StatelessWidget {
                   borderRadius: 4.0.r,
                   padding: EdgeInsetsDirectional.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
                   currentStatus: status,
-                )
+                ),
               ],
             ],
           ],

@@ -74,9 +74,10 @@ class SelectionButton extends StatelessWidget {
           color: isSelected ? (selectedButtonColor ?? style.selectedButtonColor) : (unselectedButtonColor ?? style.unselectedButtonColor),
           borderRadius: borderRadius ?? BorderRadius.circular(4.r),
           border: Border.all(
-            color: isSelected
-                ? (selectedButtonBorderColor ?? style.selectedButtonBorderColor)
-                : (unselectedButtonBorderColor ?? style.unselectedButtonBorderColor),
+            color:
+                isSelected
+                    ? (selectedButtonBorderColor ?? style.selectedButtonBorderColor)
+                    : (unselectedButtonBorderColor ?? style.unselectedButtonBorderColor),
           ),
         ),
         child: Row(
@@ -86,9 +87,10 @@ class SelectionButton extends StatelessWidget {
             if (image != null)
               SmartImage(
                 path: image!,
-                color: isSelected
-                    ? (selectedButtonIconColor ?? style.selectedButtonIconColor)
-                    : (unselectedButtonIconColor ?? style.unselectedButtonIconColor),
+                color:
+                    isSelected
+                        ? (selectedButtonIconColor ?? style.selectedButtonIconColor)
+                        : (unselectedButtonIconColor ?? style.unselectedButtonIconColor),
                 height: imageHeight,
                 width: imageWidth,
                 fit: fit,
@@ -101,9 +103,10 @@ class SelectionButton extends StatelessWidget {
                   title!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: isSelected
-                      ? (selectedButtonTextStyle ?? style.selectedButtonTextStyle)
-                      : (unselectedButtonTextStyle ?? style.unselectedButtonTextStyle),
+                  style:
+                      isSelected
+                          ? (selectedButtonTextStyle ?? style.selectedButtonTextStyle)
+                          : (unselectedButtonTextStyle ?? style.unselectedButtonTextStyle),
                 ),
               ),
           ],

@@ -18,10 +18,15 @@ class ApplyPromoCodeScreen extends StatelessWidget {
               hintText: APPStrings.hintPromoCode.tr,
               textInputAction: TextInputAction.done,
               onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-              suffixIcon: SmartText(APPStrings.apply.tr, onTap: () {
-                if (bloc.promoCodeController.text.isNullOrEmpty) return;
-                bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: bloc.promoCodeController.text));
-              }, textAlign: TextAlign.center, optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h)),
+              suffixIcon: SmartText(
+                APPStrings.apply.tr,
+                onTap: () {
+                  if (bloc.promoCodeController.text.isNullOrEmpty) return;
+                  bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: bloc.promoCodeController.text));
+                },
+                textAlign: TextAlign.center,
+                optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
+              ),
             ),
             Expanded(
               child: BlocBuilder<ApplyPromoCodeBloc, ApplyPromoCodeState>(
@@ -66,14 +71,18 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                                     itemBuilder: (builderContext, index) {
                                       if (bloc.applyPromoCodeList[index] == bloc.appliedPromoCode) return SizedBox.shrink();
                                       return _buildApplyPromoCodeItem(
-                                          model: bloc.applyPromoCodeList[index], style: style, context: context, bloc: bloc);
+                                        model: bloc.applyPromoCodeList[index],
+                                        style: style,
+                                        context: context,
+                                        bloc: bloc,
+                                      );
                                     },
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     );
                   }
@@ -120,7 +129,7 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SmartText(model.title ?? '', style: style.titleStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
-                          SmartText(model.code, style: style.codeStyle)
+                          SmartText(model.code, style: style.codeStyle),
                         ],
                       ),
                     ),
@@ -128,14 +137,24 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                 ),
               ),
               if (!isApplied) ...[
-                _getApplyButton(style, icon: Icons.check_circle, label: APPStrings.apply.tr, onPressed: () {
-                  bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: model.code ?? ""));
-                })
+                _getApplyButton(
+                  style,
+                  icon: Icons.check_circle,
+                  label: APPStrings.apply.tr,
+                  onPressed: () {
+                    bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: model.code ?? ""));
+                  },
+                ),
               ] else ...[
-                _getApplyButton(style, icon: Icons.close, label: APPStrings.remove.tr, onPressed: () {
-                  bloc.add(OnTapRemovePromoCodeEvent(context: context));
-                })
-              ]
+                _getApplyButton(
+                  style,
+                  icon: Icons.close,
+                  label: APPStrings.remove.tr,
+                  onPressed: () {
+                    bloc.add(OnTapRemovePromoCodeEvent(context: context));
+                  },
+                ),
+              ],
             ],
           ),
           SizedBox(height: 6.h),

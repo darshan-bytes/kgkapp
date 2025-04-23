@@ -31,14 +31,8 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SmartText(
-                APPStrings.login.tr,
-                style: style.titleTextStyle,
-              ),
-              SmartText(
-                APPStrings.enterYourAccountDetails.tr,
-                style: style.subTitleStyle,
-              ),
+              SmartText(APPStrings.login.tr, style: style.titleTextStyle),
+              SmartText(APPStrings.enterYourAccountDetails.tr, style: style.subTitleStyle),
               SizedBox(height: 32.h),
               _buildEmailField(style, context, bloc),
               SizedBox(height: 24.h),
@@ -93,10 +87,7 @@ class SignInScreen extends StatelessWidget {
       },
       child: Align(
         alignment: AlignmentDirectional.centerEnd,
-        child: SmartText(
-          APPStrings.forgotPasswordWithQuestion.tr,
-          style: style.forgotPasswordStyle,
-        ),
+        child: SmartText(APPStrings.forgotPasswordWithQuestion.tr, style: style.forgotPasswordStyle),
       ),
     );
   }
@@ -120,12 +111,7 @@ class SignInScreen extends StatelessWidget {
         Container(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
           color: style.backgroundColor,
-          child: SmartText(
-            APPStrings.orLoginWith.tr,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: style.labelStyle,
-          ),
+          child: SmartText(APPStrings.orLoginWith.tr, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.labelStyle),
         ),
       ],
     );
@@ -137,22 +123,11 @@ class SignInScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GestureDetector(
-          onTap: () {},
-          child: const SmartImage(
-            path: AppImages.icFacebook,
-          ),
-        ),
+        GestureDetector(onTap: () {}, child: const SmartImage(path: AppImages.icFacebook)),
         SizedBox(width: 40.w),
-        GestureDetector(
-          onTap: () {},
-          child: const SmartImage(path: AppImages.icGoogle),
-        ),
+        GestureDetector(onTap: () {}, child: const SmartImage(path: AppImages.icGoogle)),
         SizedBox(width: 40.w),
-        GestureDetector(
-          onTap: () {},
-          child: const SmartImage(path: AppImages.icZoho),
-        ),
+        GestureDetector(onTap: () {}, child: const SmartImage(path: AppImages.icZoho)),
       ],
     );
   }
@@ -177,7 +152,7 @@ class SignInScreen extends StatelessWidget {
                   context.pushNamed(AppRoutes.signUpPage);
                 },
                 style: style.registerTextStyle,
-              )
+              ),
             ],
           ),
           SizedBox(height: 16.h),

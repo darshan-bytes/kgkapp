@@ -108,16 +108,10 @@ class SharePresentationScreen extends StatelessWidget {
 
   Widget _buildBottomStaticSection(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.symmetric(
-        horizontal: 17.w,
-      ),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ..._buildGeneralShareRow(bloc, style),
-          const Divider(),
-          _buildBottomNavbar(bloc, style, context),
-        ],
+        children: [..._buildGeneralShareRow(bloc, style), const Divider(), _buildBottomNavbar(bloc, style, context)],
       ),
     );
   }
@@ -198,7 +192,7 @@ class SharePresentationScreen extends StatelessWidget {
             return const SmartCircularProgressIndicator();
           }
         },
-      )
+      ),
     ];
   }
 
@@ -219,10 +213,7 @@ class SharePresentationScreen extends StatelessWidget {
             ],
           ),
         ),
-        if (user.role != null) ...[
-          SizedBox(width: 16.w),
-          _buildPeopleAccessDropDownField(bloc, user),
-        ],
+        if (user.role != null) ...[SizedBox(width: 16.w), _buildPeopleAccessDropDownField(bloc, user)],
       ],
     );
   }
@@ -236,12 +227,7 @@ class SharePresentationScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SmartImage(
-            path: AppImages.icAnyoneWithLink,
-            height: 40.w,
-            width: 40.w,
-            imageBorderRadius: BorderRadius.circular(20.r),
-          ),
+          SmartImage(path: AppImages.icAnyoneWithLink, height: 40.w, width: 40.w, imageBorderRadius: BorderRadius.circular(20.r)),
           SizedBox(width: 12.w),
           Expanded(
             flex: 2,
@@ -262,7 +248,7 @@ class SharePresentationScreen extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
-          _buildGeneralAccessDropDownField(bloc)
+          _buildGeneralAccessDropDownField(bloc),
         ],
       ),
       SizedBox(height: 24.h),
@@ -307,12 +293,10 @@ class SharePresentationScreen extends StatelessWidget {
           isIcArrowDropDown: user.role!.isModifiable,
           isExpanded: false,
           border: const BorderDirectional(top: BorderSide.none),
-          items: bloc.arrPeopleAccessType.map((UserAccessType type) {
-            return SmartDropDownItem<UserAccessType>(
-              value: type,
-              title: type.accessType ?? APPStrings.select.tr,
-            );
-          }).toList(),
+          items:
+              bloc.arrPeopleAccessType.map((UserAccessType type) {
+                return SmartDropDownItem<UserAccessType>(value: type, title: type.accessType ?? APPStrings.select.tr);
+              }).toList(),
           onChanged: (type) {
             if (type != null) {
               bloc.add(ChangeUserAccessTypeEvent(type, user));
@@ -333,12 +317,10 @@ class SharePresentationScreen extends StatelessWidget {
           isExpanded: false,
           contentPadding: EdgeInsetsDirectional.zero,
           border: const BorderDirectional(top: BorderSide.none),
-          items: bloc.arrGeneralAccessType.map((UserAccessType type) {
-            return SmartDropDownItem<UserAccessType>(
-              value: type,
-              title: type.accessType ?? APPStrings.select.tr,
-            );
-          }).toList(),
+          items:
+              bloc.arrGeneralAccessType.map((UserAccessType type) {
+                return SmartDropDownItem<UserAccessType>(value: type, title: type.accessType ?? APPStrings.select.tr);
+              }).toList(),
           onChanged: (type) {
             if (type != null) {
               bloc.add(ChangeGeneralAccessTypeEvent(type));

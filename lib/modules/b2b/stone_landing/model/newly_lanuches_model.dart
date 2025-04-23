@@ -104,39 +104,44 @@ class HomeNewLanuchesDatum {
       cscCode: json["csc_code"],
       customerCode: json["customer_code"],
       productDescription: json["product_description"],
-      componentDetails: json["component_details"] == null
-          ? []
-          : List<HomeNewlyLauncheComponentDetail>.from(json["component_details"]!.map((x) => HomeNewlyLauncheComponentDetail.fromJson(x))),
-      multipleFinishedViewImage: json["multiple_finished_view_image"] == null
-          ? []
-          : List<HomeNewLaunchesMultipleFinishedViewImage>.from(
-              json["multiple_finished_view_image"]!.map((x) => HomeNewLaunchesMultipleFinishedViewImage.fromJson(x))),
+      componentDetails:
+          json["component_details"] == null
+              ? []
+              : List<HomeNewlyLauncheComponentDetail>.from(
+                json["component_details"]!.map((x) => HomeNewlyLauncheComponentDetail.fromJson(x)),
+              ),
+      multipleFinishedViewImage:
+          json["multiple_finished_view_image"] == null
+              ? []
+              : List<HomeNewLaunchesMultipleFinishedViewImage>.from(
+                json["multiple_finished_view_image"]!.map((x) => HomeNewLaunchesMultipleFinishedViewImage.fromJson(x)),
+              ),
       finalPrice: json["final_price"]?.toString().toDouble,
       discountPrice: json["discount_price"]?.toString().toDouble,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "suid": suid,
-        "exclusive": exclusive,
-        "business_category": businessCategory,
-        "contract_no_sku_no": contractNoSkuNo,
-        "guest_user": guestUser,
-        "jewelllery_type-code": jewellleryTypeCode,
-        "style_no": styleNo,
-        "kgk_collection": kgkCollection,
-        "csc_name": cscName,
-        "product_price_int_currency": productPriceIntCurrency,
-        "subarea_name": subareaName,
-        "csc_code": cscCode,
-        "customer_code": customerCode,
-        "product_description": productDescription,
-        "component_details": componentDetails.map((x) => x.toJson()).toList(),
-        "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
-        "final_price": finalPrice,
-        "discount_price": discountPrice,
-      };
+    "_id": id,
+    "suid": suid,
+    "exclusive": exclusive,
+    "business_category": businessCategory,
+    "contract_no_sku_no": contractNoSkuNo,
+    "guest_user": guestUser,
+    "jewelllery_type-code": jewellleryTypeCode,
+    "style_no": styleNo,
+    "kgk_collection": kgkCollection,
+    "csc_name": cscName,
+    "product_price_int_currency": productPriceIntCurrency,
+    "subarea_name": subareaName,
+    "csc_code": cscCode,
+    "customer_code": customerCode,
+    "product_description": productDescription,
+    "component_details": componentDetails.map((x) => x.toJson()).toList(),
+    "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
+    "final_price": finalPrice,
+    "discount_price": discountPrice,
+  };
 
   @override
   String toString() {
@@ -215,27 +220,27 @@ class HomeNewlyLauncheComponentDetail {
   }
 
   Map<String, dynamic> toJson() => {
-        "BrokenQty1": brokenQty1,
-        "Commodity": commodity,
-        "CommodityNameRefSuid": commodityNameRefSuid,
-        "CommodityNameSuid": commodityNameSuid,
-        "ConsumedQty1": consumedQty1,
-        "ConsumedQty2": consumedQty2,
-        "LossQty1": lossQty1,
-        "LotCode": lotCode,
-        "LotId": lotId,
-        "RMName": rmName,
-        "RMNameRefSuid": rmNameRefSuid,
-        "RMNameSuid": rmNameSuid,
-        "Shape": shape,
-        "ShapeRefSuid": shapeRefSuid,
-        "ShapeSuid": shapeSuid,
-        "TotalQty1": totalQty1,
-        "TotalQty2": totalQty2,
-        "UOM1": uom1,
-        "UOM2": uom2,
-        "Karatage": karatage,
-      };
+    "BrokenQty1": brokenQty1,
+    "Commodity": commodity,
+    "CommodityNameRefSuid": commodityNameRefSuid,
+    "CommodityNameSuid": commodityNameSuid,
+    "ConsumedQty1": consumedQty1,
+    "ConsumedQty2": consumedQty2,
+    "LossQty1": lossQty1,
+    "LotCode": lotCode,
+    "LotId": lotId,
+    "RMName": rmName,
+    "RMNameRefSuid": rmNameRefSuid,
+    "RMNameSuid": rmNameSuid,
+    "Shape": shape,
+    "ShapeRefSuid": shapeRefSuid,
+    "ShapeSuid": shapeSuid,
+    "TotalQty1": totalQty1,
+    "TotalQty2": totalQty2,
+    "UOM1": uom1,
+    "UOM2": uom2,
+    "Karatage": karatage,
+  };
 
   @override
   String toString() {
@@ -310,25 +315,26 @@ class HomeNewLaunchesMultipleFinishedViewImage {
       highRes2: json["high_res2"],
       highRes3: json["high_res3"],
       highRes4: json["high_res4"],
-      multiAngleUrl: json["MULTI_ANGLE_URL"] == null
-          ? []
-          : List<HomeNewLaunchesMultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => HomeNewLaunchesMultiAngleUrl.fromJson(x))),
+      multiAngleUrl:
+          json["MULTI_ANGLE_URL"] == null
+              ? []
+              : List<HomeNewLaunchesMultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => HomeNewLaunchesMultiAngleUrl.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "ContractNo": contractNo,
-        "ContractImage": contractImage,
-        "StyleImage": styleImage,
-        "IMAGE_AVAILABLE": imageAvailable,
-        "IMAGE_AVAILABLE_MA": imageAvailableMa,
-        "IMAGE_URL": imageUrl,
-        "high_res1": highRes1,
-        "high_res2": highRes2,
-        "high_res3": highRes3,
-        "high_res4": highRes4,
-        "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
-      };
+    "ContractNo": contractNo,
+    "ContractImage": contractImage,
+    "StyleImage": styleImage,
+    "IMAGE_AVAILABLE": imageAvailable,
+    "IMAGE_AVAILABLE_MA": imageAvailableMa,
+    "IMAGE_URL": imageUrl,
+    "high_res1": highRes1,
+    "high_res2": highRes2,
+    "high_res3": highRes3,
+    "high_res4": highRes4,
+    "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
+  };
 
   @override
   String toString() {
@@ -337,29 +343,19 @@ class HomeNewLaunchesMultipleFinishedViewImage {
 }
 
 class HomeNewLaunchesMultiAngleUrl {
-  HomeNewLaunchesMultiAngleUrl({
-    required this.url,
-  });
+  HomeNewLaunchesMultiAngleUrl({required this.url});
 
   final String? url;
 
-  HomeNewLaunchesMultiAngleUrl copyWith({
-    String? url,
-  }) {
-    return HomeNewLaunchesMultiAngleUrl(
-      url: url ?? this.url,
-    );
+  HomeNewLaunchesMultiAngleUrl copyWith({String? url}) {
+    return HomeNewLaunchesMultiAngleUrl(url: url ?? this.url);
   }
 
   factory HomeNewLaunchesMultiAngleUrl.fromJson(Map<String, dynamic> json) {
-    return HomeNewLaunchesMultiAngleUrl(
-      url: json["url"],
-    );
+    return HomeNewLaunchesMultiAngleUrl(url: json["url"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "url": url,
-      };
+  Map<String, dynamic> toJson() => {"url": url};
 
   @override
   String toString() {

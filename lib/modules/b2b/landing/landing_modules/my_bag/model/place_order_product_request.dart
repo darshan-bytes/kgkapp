@@ -43,13 +43,13 @@ class PlaceOrderProductRequest {
   }
 
   Map<String, dynamic> toJson() => {
-        "discount_percentage": discountPercentage,
-        "suid": suid,
-        "image": image,
-        "name": name,
-        "your_amount": yourAmount,
-        "your_rate": yourRate,
-        "your_discount": yourDiscount,
-        "quantity": quantity,
-      };
+    "discount_percentage": discountPercentage,
+    "suid": suid,
+    "image": image,
+    "name": name,
+    "your_amount": yourAmount,
+    "your_rate": yourRate,
+    "your_discount": yourDiscount,
+    "quantity": quantity,
+  };
 }

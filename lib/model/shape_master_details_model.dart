@@ -48,18 +48,18 @@ class ShapeMasterDetails {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "ref_suid": refSuid,
-        "suid": suid,
-        "reference_id": referenceId,
-        "imported_from": importedFrom,
-        "shape_code": shapeCode,
-        "created_at": createdAt?.toIso8601String(),
-        "shape_name": shapeName,
-        "stone_type": stoneType,
-        "sorting_order": sortingOrder,
-        "updated_date_time": updatedDateTime,
-        "received_date_time": receivedDateTime?.toIso8601String(),
-        "image": image,
-      };
+    "_id": id,
+    "ref_suid": refSuid,
+    "suid": suid,
+    "reference_id": referenceId,
+    "imported_from": importedFrom,
+    "shape_code": shapeCode,
+    "created_at": createdAt?.toIso8601String(),
+    "shape_name": shapeName,
+    "stone_type": stoneType,
+    "sorting_order": sortingOrder,
+    "updated_date_time": updatedDateTime,
+    "received_date_time": receivedDateTime?.toIso8601String(),
+    "image": image,
+  };
 }

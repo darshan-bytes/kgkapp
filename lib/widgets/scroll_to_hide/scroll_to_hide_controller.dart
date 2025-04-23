@@ -49,10 +49,7 @@ extension ScrollToHideControllerExt on ScrollController {
 ///
 /// This typedef is often used in conjunction with a [ScrollToHideController] to define custom
 /// visibility behavior for scrollable elements.
-typedef ScrollToHideVisibility = double Function(
-  ScrollPosition position,
-  double currentVisibility,
-);
+typedef ScrollToHideVisibility = double Function(ScrollPosition position, double currentVisibility);
 
 /// A custom wrapper for scroll controller.
 ///
@@ -63,11 +60,7 @@ class ScrollToHideController {
   ScrollToHideVisibility? scrollToHideVisibility;
   double deltaFactor;
 
-  ScrollToHideController({
-    required this.scrollController,
-    this.scrollToHideVisibility,
-    required this.deltaFactor,
-  }) {
+  ScrollToHideController({required this.scrollController, this.scrollToHideVisibility, required this.deltaFactor}) {
     scrollController.addListener(() => updateVisibility(scrollToHideVisibility, deltaFactor));
   }
 
@@ -79,10 +72,7 @@ class ScrollToHideController {
     final position = scrollController.position;
 
     if (visibility != null) {
-      visibilityNotifier.value = visibility(
-        position,
-        visibilityNotifier.value,
-      );
+      visibilityNotifier.value = visibility(position, visibilityNotifier.value);
       return;
     }
 

@@ -32,10 +32,7 @@ final class ProductCustomizationChangeEvent extends ProductDetailsEvent {
   final int index;
   final int childIndex;
 
-  const ProductCustomizationChangeEvent({
-    required this.index,
-    required this.childIndex,
-  });
+  const ProductCustomizationChangeEvent({required this.index, required this.childIndex});
 
   @override
   List<Object> get props => [index, childIndex];

@@ -4,12 +4,7 @@ part 'monitoring_event.dart';
 
 part 'monitoring_state.dart';
 
-enum MonitoringTab {
-  presentations,
-  dbf,
-  designs,
-  styles,
-}
+enum MonitoringTab { presentations, dbf, designs, styles }
 
 class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   late TabController tabController;
@@ -327,7 +322,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     );
   }
 
-// Method to generate dbf data
+  // Method to generate dbf data
   List<B2BCustomListingDataModel> generateDbfData(int currentPage) {
     return List.generate(
       4,
@@ -347,23 +342,24 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     );
   }
 
-// Method to generate designs data
+  // Method to generate designs data
   List<B2BCustomListingDataModel> generateDesignsData(int currentPage) {
     return List.generate(
       4,
       (index) => B2BCustomListingDataModel(
-          id: index.toString(),
-          status: ProjectStatus.approved,
-          strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
-          strDesignNumber: "DERS28MOVR",
-          strDbfNumber: "1234574",
-          strCustomer: "Alex Williams",
-          strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
-          strSalesman: "John Samanta",
-          strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
-          strApprovedBy: "John Samanta",
-          strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
-          strApprovedOn: "24/03/2023"),
+        id: index.toString(),
+        status: ProjectStatus.approved,
+        strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
+        strDesignNumber: "DERS28MOVR",
+        strDbfNumber: "1234574",
+        strCustomer: "Alex Williams",
+        strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strSalesman: "John Samanta",
+        strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        strApprovedBy: "John Samanta",
+        strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strApprovedOn: "24/03/2023",
+      ),
     );
   }
 
@@ -447,8 +443,9 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   Widget buildListView(BuildContext context, MonitoringTab currentTab) {
     return Expanded(
       child: BlocBuilder<MonitoringBloc, MonitoringState>(
-        buildWhen: (previous, current) =>
-            current is MonitoringListLoadedState || current is MonitoringOnTabChangedState || current is MonitoringListLoadedMoreState,
+        buildWhen:
+            (previous, current) =>
+                current is MonitoringListLoadedState || current is MonitoringOnTabChangedState || current is MonitoringListLoadedMoreState,
         builder: (context, state) {
           if (currentList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noPresentationFound.tr); // Adjust text based on the selected tab if necessary

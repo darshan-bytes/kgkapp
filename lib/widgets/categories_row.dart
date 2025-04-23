@@ -27,10 +27,7 @@ class CategoryRow extends StatelessWidget {
           return Expanded(
             child: GestureDetector(
               onTap: () => onCategorySelected(itemIndex),
-              child: CategoryTile(
-                category: category,
-                isSelected: selectedIndex == itemIndex,
-              ),
+              child: CategoryTile(category: category, isSelected: selectedIndex == itemIndex),
             ),
           );
         }),

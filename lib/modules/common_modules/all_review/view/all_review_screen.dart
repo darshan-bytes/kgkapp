@@ -18,8 +18,9 @@ class AllReviewScreen extends StatelessWidget {
               itemCount: bloc.reviewList.length,
               itemBuilder: (context, index) {
                 return BlocBuilder<AllReviewBloc, AllReviewState>(
-                  buildWhen: (previous, current) =>
-                      previous != current && (current is AllReviewLoadedMoreState || current is AllReviewLoadingMoreState),
+                  buildWhen:
+                      (previous, current) =>
+                          previous != current && (current is AllReviewLoadedMoreState || current is AllReviewLoadingMoreState),
                   builder: (context, state) {
                     return Column(
                       children: [

@@ -45,19 +45,13 @@ class PresentationGridItem extends StatelessWidget {
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildImage(),
-                _buildDetails(style),
-              ],
+              children: [_buildImage(), _buildDetails(style)],
             ),
             if (b2bCustomListingDataModel.status != null)
               PositionedDirectional(
                 start: 16.w,
                 top: 16.w,
-                child: SmartStatusBadge(
-                  currentStatus: b2bCustomListingDataModel.status!,
-                  height: statusBadgeHeight ?? 32.h,
-                ),
+                child: SmartStatusBadge(currentStatus: b2bCustomListingDataModel.status!, height: statusBadgeHeight ?? 32.h),
               ),
             if (onTapMenuButton != null)
               PositionedDirectional(
@@ -97,29 +91,17 @@ class PresentationGridItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (b2bCustomListingDataModel.strPresentationNumber.isNotNullNorEmpty) ...[
-                SmartText(
-                  b2bCustomListingDataModel.strPresentationNumber,
-                  style: titleStyle ?? style.titleStyle,
-                ),
+                SmartText(b2bCustomListingDataModel.strPresentationNumber, style: titleStyle ?? style.titleStyle),
                 SizedBox(width: 8.w),
                 if (b2bCustomListingDataModel.strCreatedOn.isNotNullNorEmpty)
-                  Flexible(
-                    flex: 1,
-                    child: SmartText(
-                      b2bCustomListingDataModel.strCreatedOn,
-                      style: subTitleStyle ?? style.subTitleStyle,
-                    ),
-                  ),
+                  Flexible(flex: 1, child: SmartText(b2bCustomListingDataModel.strCreatedOn, style: subTitleStyle ?? style.subTitleStyle)),
               ],
             ],
           ),
           if (b2bCustomListingDataModel.strConceptName.isNotNullNorEmpty) ...[
             SizedBox(height: 4.h),
-            SmartText(
-              getConceptName(),
-              style: subTitleStyle ?? style.subTitleStyle,
-            )
-          ]
+            SmartText(getConceptName(), style: subTitleStyle ?? style.subTitleStyle),
+          ],
         ],
       ),
     );

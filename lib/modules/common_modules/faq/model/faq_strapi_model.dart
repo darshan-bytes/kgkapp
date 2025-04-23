@@ -1,8 +1,5 @@
 class FaqStrapiModel {
-  FaqStrapiModel({
-    required this.data,
-    required this.meta,
-  });
+  FaqStrapiModel({required this.data, required this.meta});
 
   final List<FaqDatum> data;
   final Meta? meta;
@@ -14,10 +11,7 @@ class FaqStrapiModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-        "meta": meta?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"data": data.map((x) => x.toJson()).toList(), "meta": meta?.toJson()};
 
   @override
   String toString() {
@@ -26,25 +20,16 @@ class FaqStrapiModel {
 }
 
 class FaqDatum {
-  FaqDatum({
-    required this.id,
-    required this.attributes,
-  });
+  FaqDatum({required this.id, required this.attributes});
 
   final int? id;
   final FaqAttributes? attributes;
 
   factory FaqDatum.fromJson(Map<String, dynamic> json) {
-    return FaqDatum(
-      id: json["id"],
-      attributes: json["attributes"] == null ? null : FaqAttributes.fromJson(json["attributes"]),
-    );
+    return FaqDatum(id: json["id"], attributes: json["attributes"] == null ? null : FaqAttributes.fromJson(json["attributes"]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "attributes": attributes?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "attributes": attributes?.toJson()};
 
   @override
   String toString() {
@@ -96,18 +81,18 @@ class FaqAttributes {
   }
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "publishedAt": publishedAt?.toIso8601String(),
-        "locale": locale,
-        "title": title,
-        "support_title": supportTitle,
-        "meta": meta?.toJson(),
-        "support": support.map((x) => x.toJson()).toList(),
-        "faqs": faqs.map((x) => x.toJson()).toList(),
-        "still_nee_help": stillNeeHelp?.toJson(),
-        "localizations": localizations?.toJson(),
-      };
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "publishedAt": publishedAt?.toIso8601String(),
+    "locale": locale,
+    "title": title,
+    "support_title": supportTitle,
+    "meta": meta?.toJson(),
+    "support": support.map((x) => x.toJson()).toList(),
+    "faqs": faqs.map((x) => x.toJson()).toList(),
+    "still_nee_help": stillNeeHelp?.toJson(),
+    "localizations": localizations?.toJson(),
+  };
 
   @override
   String toString() {
@@ -116,21 +101,15 @@ class FaqAttributes {
 }
 
 class StillNeeHelp {
-  StillNeeHelp({
-    required this.id,
-  });
+  StillNeeHelp({required this.id});
 
   final int? id;
 
   factory StillNeeHelp.fromJson(Map<String, dynamic> json) {
-    return StillNeeHelp(
-      id: json["id"],
-    );
+    return StillNeeHelp(id: json["id"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-      };
+  Map<String, dynamic> toJson() => {"id": id};
 
   @override
   String toString() {
@@ -139,13 +118,7 @@ class StillNeeHelp {
 }
 
 class Support {
-  Support({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.action,
-    required this.url,
-  });
+  Support({required this.id, required this.title, required this.description, required this.action, required this.url});
 
   final int? id;
   final String? title;
@@ -154,22 +127,10 @@ class Support {
   final String? url;
 
   factory Support.fromJson(Map<String, dynamic> json) {
-    return Support(
-      id: json["id"],
-      title: json["title"],
-      description: json["description"],
-      action: json["action"],
-      url: json["url"],
-    );
+    return Support(id: json["id"], title: json["title"], description: json["description"], action: json["action"], url: json["url"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "action": action,
-        "url": url,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "title": title, "description": description, "action": action, "url": url};
 
   @override
   String toString() {
@@ -178,12 +139,7 @@ class Support {
 }
 
 class FaqData {
-  FaqData({
-    required this.id,
-    required this.question,
-    required this.answer,
-    required this.title,
-  });
+  FaqData({required this.id, required this.question, required this.answer, required this.title});
 
   final int? id;
   final String? question;
@@ -191,20 +147,10 @@ class FaqData {
   final String? title;
 
   factory FaqData.fromJson(Map<String, dynamic> json) {
-    return FaqData(
-      id: json["id"],
-      question: json["question"],
-      answer: json["answer"],
-      title: json["title"],
-    );
+    return FaqData(id: json["id"], question: json["question"], answer: json["answer"], title: json["title"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "question": question,
-        "answer": answer,
-        "title": title,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "question": question, "answer": answer, "title": title};
 
   @override
   String toString() {
@@ -213,9 +159,7 @@ class FaqData {
 }
 
 class FaqLocalizations {
-  FaqLocalizations({
-    required this.data,
-  });
+  FaqLocalizations({required this.data});
 
   final List<LocalizationsDatum> data;
 
@@ -225,9 +169,7 @@ class FaqLocalizations {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() => {"data": data.map((x) => x.toJson()).toList()};
 
   @override
   String toString() {
@@ -236,10 +178,7 @@ class FaqLocalizations {
 }
 
 class LocalizationsDatum {
-  LocalizationsDatum({
-    required this.id,
-    required this.attributes,
-  });
+  LocalizationsDatum({required this.id, required this.attributes});
 
   final int? id;
   final FluffyAttributes? attributes;
@@ -251,10 +190,7 @@ class LocalizationsDatum {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "attributes": attributes?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"id": id, "attributes": attributes?.toJson()};
 
   @override
   String toString() {
@@ -291,13 +227,13 @@ class FluffyAttributes {
   }
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "publishedAt": publishedAt?.toIso8601String(),
-        "locale": locale,
-        "title": title,
-        "support_title": supportTitle,
-      };
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "publishedAt": publishedAt?.toIso8601String(),
+    "locale": locale,
+    "title": title,
+    "support_title": supportTitle,
+  };
 
   @override
   String toString() {
@@ -306,12 +242,7 @@ class FluffyAttributes {
 }
 
 class AttributesMeta {
-  AttributesMeta({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.keyword,
-  });
+  AttributesMeta({required this.id, required this.title, required this.description, required this.keyword});
 
   final int? id;
   final String? title;
@@ -319,20 +250,10 @@ class AttributesMeta {
   final dynamic keyword;
 
   factory AttributesMeta.fromJson(Map<String, dynamic> json) {
-    return AttributesMeta(
-      id: json["id"],
-      title: json["title"],
-      description: json["description"],
-      keyword: json["keyword"],
-    );
+    return AttributesMeta(id: json["id"], title: json["title"], description: json["description"], keyword: json["keyword"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "keyword": keyword,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "title": title, "description": description, "keyword": keyword};
 
   @override
   String toString() {
@@ -341,21 +262,15 @@ class AttributesMeta {
 }
 
 class Meta {
-  Meta({
-    required this.pagination,
-  });
+  Meta({required this.pagination});
 
   final FaqPagination? pagination;
 
   factory Meta.fromJson(Map<String, dynamic> json) {
-    return Meta(
-      pagination: json["pagination"] == null ? null : FaqPagination.fromJson(json["pagination"]),
-    );
+    return Meta(pagination: json["pagination"] == null ? null : FaqPagination.fromJson(json["pagination"]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "pagination": pagination?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"pagination": pagination?.toJson()};
 
   @override
   String toString() {
@@ -364,12 +279,7 @@ class Meta {
 }
 
 class FaqPagination {
-  FaqPagination({
-    required this.page,
-    required this.pageSize,
-    required this.pageCount,
-    required this.total,
-  });
+  FaqPagination({required this.page, required this.pageSize, required this.pageCount, required this.total});
 
   final int? page;
   final int? pageSize;
@@ -377,20 +287,10 @@ class FaqPagination {
   final int? total;
 
   factory FaqPagination.fromJson(Map<String, dynamic> json) {
-    return FaqPagination(
-      page: json["page"],
-      pageSize: json["pageSize"],
-      pageCount: json["pageCount"],
-      total: json["total"],
-    );
+    return FaqPagination(page: json["page"], pageSize: json["pageSize"], pageCount: json["pageCount"], total: json["total"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "page": page,
-        "pageSize": pageSize,
-        "pageCount": pageCount,
-        "total": total,
-      };
+  Map<String, dynamic> toJson() => {"page": page, "pageSize": pageSize, "pageCount": pageCount, "total": total};
 
   @override
   String toString() {

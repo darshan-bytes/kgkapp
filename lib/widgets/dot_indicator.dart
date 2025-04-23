@@ -15,10 +15,7 @@ class DotIndicator extends StatelessWidget {
           Container(
             height: 2.h,
             width: 5.w,
-            decoration: BoxDecoration(
-              color: dotColor,
-              borderRadius: BorderRadiusDirectional.horizontal(end: Radius.circular(1.r)),
-            ),
+            decoration: BoxDecoration(color: dotColor, borderRadius: BorderRadiusDirectional.horizontal(end: Radius.circular(1.r))),
           ),
           Container(
             height: 2.h,
@@ -39,10 +36,7 @@ class DotIndicator extends StatelessWidget {
           Container(
             height: 2.h,
             width: 5.w,
-            decoration: BoxDecoration(
-              color: dotColor,
-              borderRadius: BorderRadiusDirectional.horizontal(start: Radius.circular(1.r)),
-            ),
+            decoration: BoxDecoration(color: dotColor, borderRadius: BorderRadiusDirectional.horizontal(start: Radius.circular(1.r))),
           ),
         ],
       ),

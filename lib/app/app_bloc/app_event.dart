@@ -88,11 +88,7 @@ class ProductAddToBagEvent extends AppEvent {
   final BuildContext context;
   final bool isBuyNow;
 
-  const ProductAddToBagEvent(
-    this.productDetails,
-    this.context, {
-    this.isBuyNow = false,
-  });
+  const ProductAddToBagEvent(this.productDetails, this.context, {this.isBuyNow = false});
 
   @override
   List<Object> get props => [productDetails, context];

@@ -57,8 +57,10 @@ class DesignLibraryScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
-                  style: diamondListingStyle.filterProductCountTextStyle),
+              SmartText(
+                APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
+                style: diamondListingStyle.filterProductCountTextStyle,
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -95,7 +97,7 @@ class DesignLibraryScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -116,10 +118,11 @@ class DesignLibraryScreen extends StatelessWidget {
 
   Widget _buildList(DesignLibraryBloc bloc) {
     return BlocBuilder<DesignLibraryBloc, DesignLibraryState>(
-      buildWhen: (previous, current) =>
-          current is DesignLibraryChangeListingTypeState ||
-          current is DesignLibraryLoadedMoreState ||
-          current is DesignLibraryLoadingMoreState,
+      buildWhen:
+          (previous, current) =>
+              current is DesignLibraryChangeListingTypeState ||
+              current is DesignLibraryLoadedMoreState ||
+              current is DesignLibraryLoadingMoreState,
       builder: (context, state) {
         if (bloc.designLibraryList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noDesignLibraryFound.tr);
@@ -146,10 +149,13 @@ class DesignLibraryScreen extends StatelessWidget {
           (index) => DesignListingGridItem.designGridItem(
             designModel: bloc.designLibraryList[index],
             onTap: () {
-              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                RoutesData.isPageFor: ScreenIdentifier.productForLibraryDesign,
-                RoutesData.productId: bloc.designLibraryList[index].id,
-              });
+              context.pushNamed(
+                AppRoutes.productDetailsPage,
+                arguments: {
+                  RoutesData.isPageFor: ScreenIdentifier.productForLibraryDesign,
+                  RoutesData.productId: bloc.designLibraryList[index].id,
+                },
+              );
             },
           ),
         ),
@@ -172,10 +178,13 @@ class DesignLibraryScreen extends StatelessWidget {
                 margin: EdgeInsetsDirectional.symmetric(vertical: 10.h),
                 designModel: bloc.designLibraryList[index],
                 onTap: () {
-                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                    RoutesData.isPageFor: ScreenIdentifier.productForLibraryDesign,
-                    RoutesData.productId: bloc.designLibraryList[index].id,
-                  });
+                  context.pushNamed(
+                    AppRoutes.productDetailsPage,
+                    arguments: {
+                      RoutesData.isPageFor: ScreenIdentifier.productForLibraryDesign,
+                      RoutesData.productId: bloc.designLibraryList[index].id,
+                    },
+                  );
                 },
               ),
               if (state is DesignLibraryLoadingMoreState && index == bloc.designLibraryList.length - 1)
@@ -203,13 +212,14 @@ class DesignLibraryScreen extends StatelessWidget {
 
               Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => FilterScreen(
-                  onApply: (value) {
-                    if (value != null && value is List<FilterData>) {
-                      bloc.add(DesignLibraryFilterEvent(context: context, filterData: value));
-                    }
-                  },
-                ),
+                builder:
+                    (context) => FilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          bloc.add(DesignLibraryFilterEvent(context: context, filterData: value));
+                        }
+                      },
+                    ),
               );
             },
             onSortTap: () async {
@@ -228,7 +238,9 @@ class DesignLibraryScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is DesignLibraryLoadedState || current is DesignLibraryChangeListingTypeState,
       builder: (context, state) {
         return ScrollToTopFAB(
-            canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop);
+          canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+          onTap: bloc.paginationScrollController.scrollToTop,
+        );
       },
     );
   }

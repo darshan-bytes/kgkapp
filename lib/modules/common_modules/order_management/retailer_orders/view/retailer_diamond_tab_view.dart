@@ -55,10 +55,11 @@ class RetailerDiamondTabView extends StatelessWidget {
           SizedBox(height: 24.h),
           Expanded(
             child: BlocBuilder<RetailerOrderListingBloc, RetailerOrderListingState>(
-              buildWhen: (previous, current) =>
-                  current is RetailerOrderListingListLoadedState ||
-                  current is RetailerOrderListingListLoadedMoreState ||
-                  current is RetailerOrderListingLoadingMoreState,
+              buildWhen:
+                  (previous, current) =>
+                      current is RetailerOrderListingListLoadedState ||
+                      current is RetailerOrderListingListLoadedMoreState ||
+                      current is RetailerOrderListingLoadingMoreState,
               builder: (context, state) {
                 if (retailerOrderListingBloc.diamondList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
@@ -68,10 +69,13 @@ class RetailerDiamondTabView extends StatelessWidget {
                   ordersList: retailerOrderListingBloc.diamondList,
                   currentListType: B2BListingType.retailerOrderListingDiamondType,
                   onTap: (index) {
-                    context.pushNamed(AppRoutes.manufacturerOrderDetailsPage, arguments: {
-                      RoutesData.orderNumber: retailerOrderListingBloc.diamondList[index].id,
-                      RoutesData.isPageFor: ScreenIdentifier.cancelOrderForRetailer
-                    });
+                    context.pushNamed(
+                      AppRoutes.manufacturerOrderDetailsPage,
+                      arguments: {
+                        RoutesData.orderNumber: retailerOrderListingBloc.diamondList[index].id,
+                        RoutesData.isPageFor: ScreenIdentifier.cancelOrderForRetailer,
+                      },
+                    );
                   },
                   bloc: retailerOrderListingBloc,
                 );
@@ -91,16 +95,15 @@ class RetailerDiamondTabView extends StatelessWidget {
           width: 120.w,
           child: SmartDropDown<OrderStoneTypeModel>(
             border: BorderDirectional(
-                end: BorderSide(color: style.dividerColor),
-                top: BorderSide(color: style.dividerColor),
-                bottom: BorderSide(color: style.dividerColor)),
+              end: BorderSide(color: style.dividerColor),
+              top: BorderSide(color: style.dividerColor),
+              bottom: BorderSide(color: style.dividerColor),
+            ),
             borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
-            items: retailerOrderListingBloc.arrStoneType.map((OrderStoneTypeModel type) {
-              return SmartDropDownItem<OrderStoneTypeModel>(
-                value: type,
-                title: type.name,
-              );
-            }).toList(),
+            items:
+                retailerOrderListingBloc.arrStoneType.map((OrderStoneTypeModel type) {
+                  return SmartDropDownItem<OrderStoneTypeModel>(value: type, title: type.name);
+                }).toList(),
             onChanged: (type) {
               if (type != null) {
                 retailerOrderListingBloc.add(ChangeRetailerOrderStoneTypeEvent(type));

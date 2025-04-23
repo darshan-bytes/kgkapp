@@ -30,19 +30,11 @@ class SettingListingScreen extends StatelessWidget {
             return FilterBottomActionBar(
               controller: settingListingBloc.paginationScrollController.controller,
               onFilterTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
-                );
+                Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
               },
               onSortTap: () async {
                 /// Fetch this from local and pass here as sortData based on commodity type
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => SortScreen(sortData: []),
-                );
+                Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: []));
               },
             );
           }
@@ -54,27 +46,29 @@ class SettingListingScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is SettingLoadedState) {
             return SafeArea(
-                child: SmartSingleChildScrollView(
-              controller: settingListingBloc.paginationScrollController.scrollController,
-              onRefresh: () async {
-                settingListingBloc.add(SettingListPullToRefreshEvent(context: context));
-              },
-              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
-              child: Column(
-                children: [
-                  SizedBox(height: 16.h),
-                  DiyProgressWidget(
+              child: SmartSingleChildScrollView(
+                controller: settingListingBloc.paginationScrollController.scrollController,
+                onRefresh: () async {
+                  settingListingBloc.add(SettingListPullToRefreshEvent(context: context));
+                },
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
+                child: Column(
+                  children: [
+                    SizedBox(height: 16.h),
+                    DiyProgressWidget(
                       padding: EdgeInsetsDirectional.zero,
                       selectedStep: settingListingBloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY ? 1 : 2,
-                      screenIdentifier: settingListingBloc.screenIdentifier),
-                  SizedBox(height: 24.h),
-                  _buildProductFilterCount(style, settingListingBloc),
-                  SizedBox(height: 24.h),
-                  _buildProductList(style, settingListingBloc),
-                  SizedBox(height: 7.h),
-                ],
+                      screenIdentifier: settingListingBloc.screenIdentifier,
+                    ),
+                    SizedBox(height: 24.h),
+                    _buildProductFilterCount(style, settingListingBloc),
+                    SizedBox(height: 24.h),
+                    _buildProductList(style, settingListingBloc),
+                    SizedBox(height: 7.h),
+                  ],
+                ),
               ),
-            ));
+            );
           } else {
             return const SizedBox.shrink();
           }
@@ -129,7 +123,7 @@ class SettingListingScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -144,8 +138,9 @@ class SettingListingScreen extends StatelessWidget {
         return Column(
           children: [
             BlocBuilder<SettingListingBloc, SettingListingState>(
-              buildWhen: (_, current) =>
-                  current is SettingLoadedState || current is SettingProductLoadedMoreState || current is SettingChangeListingTypeState,
+              buildWhen:
+                  (_, current) =>
+                      current is SettingLoadedState || current is SettingProductLoadedMoreState || current is SettingChangeListingTypeState,
               builder: (context, state) {
                 if (settingListingBloc.productList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.emptyProducts.tr);
@@ -154,32 +149,33 @@ class SettingListingScreen extends StatelessWidget {
                     return Column(
                       children: [
                         SmartGridView(
-                          items: List.generate(
-                            settingListingBloc.productList.length,
-                            (index) {
-                              ProductDetailsModel productDetails = settingListingBloc.productList[index];
-                              return ProductGridItem(
-                                productDetails: productDetails,
-                                onTap: () {
-                                  context.pushNamed(AppRoutes.settingDetailPage, arguments: {
+                          items: List.generate(settingListingBloc.productList.length, (index) {
+                            ProductDetailsModel productDetails = settingListingBloc.productList[index];
+                            return ProductGridItem(
+                              productDetails: productDetails,
+                              onTap: () {
+                                context.pushNamed(
+                                  AppRoutes.settingDetailPage,
+                                  arguments: {
                                     RoutesData.settingId: productDetails.suid,
                                     RoutesData.isPageFor: settingListingBloc.screenIdentifier,
-                                  });
-                                },
-                              );
-                            },
-                          ),
+                                  },
+                                );
+                              },
+                            );
+                          }),
                         ),
                       ],
                     );
                   } else {
                     return ListView.separated(
-                      itemBuilder: (context, index) => ProductListItem(
-                        onTap: () {
-                          settingListingBloc.add(SettingListingOnTapEvent(context: context, index: index));
-                        },
-                        productDetails: settingListingBloc.productList[index],
-                      ),
+                      itemBuilder:
+                          (context, index) => ProductListItem(
+                            onTap: () {
+                              settingListingBloc.add(SettingListingOnTapEvent(context: context, index: index));
+                            },
+                            productDetails: settingListingBloc.productList[index],
+                          ),
                       itemCount: settingListingBloc.productList.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),

@@ -27,7 +27,7 @@ class HomeGemstonesModel {
   final String? commodityCode;
   final String? updatedDateTime;
 
-  factory HomeGemstonesModel.fromJson(Map<String, dynamic> json){
+  factory HomeGemstonesModel.fromJson(Map<String, dynamic> json) {
     return HomeGemstonesModel(
       id: json["_id"],
       referenceId: json["reference_id"],
@@ -60,7 +60,7 @@ class HomeGemstonesModel {
   };
 
   @override
-  String toString(){
+  String toString() {
     return "$id, $referenceId, $rawMaterialName, $image, $importedFrom, $suid, $commodityName, $commodityGroup, $subTypeCode, $subTypeName, $commodityCode, $updatedDateTime, ";
   }
 }

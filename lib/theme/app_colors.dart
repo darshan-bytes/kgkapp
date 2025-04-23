@@ -53,36 +53,36 @@ class AppThemes {
 
   ThemeData light({MaterialColor? theme}) {
     return ThemeData(
-        useMaterial3: true,
-        primaryColor: appColor.primary,
-        scaffoldBackgroundColor: Colors.white,
-        dividerTheme: DividerThemeData(color: appColor.colorD3DAE0, space: 1.h),
-        colorScheme: ColorScheme.fromSeed(seedColor: appColor.primary),
-        textSelectionTheme: const TextSelectionThemeData(
-            //TODO: will update this.
-            // cursorColor: appColor.bg7AD6FF,
-            // selectionColor: appColor.bg7AD6FF,
-            // selectionHandleColor: appColor.bg7AD6FF,
-            ))
-      ..addThemeConfig(appColor);
+      useMaterial3: true,
+      primaryColor: appColor.primary,
+      scaffoldBackgroundColor: Colors.white,
+      dividerTheme: DividerThemeData(color: appColor.colorD3DAE0, space: 1.h),
+      colorScheme: ColorScheme.fromSeed(seedColor: appColor.primary),
+      textSelectionTheme: const TextSelectionThemeData(
+        //TODO: will update this.
+        // cursorColor: appColor.bg7AD6FF,
+        // selectionColor: appColor.bg7AD6FF,
+        // selectionHandleColor: appColor.bg7AD6FF,
+      ),
+    )..addThemeConfig(appColor);
   }
 
   ThemeData dark({MaterialColor? theme}) {
     return ThemeData(
-        useMaterial3: true,
-        primaryColor: appColor.primary,
-        scrollbarTheme: ScrollbarThemeData(
-          trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
-        ),
-        scaffoldBackgroundColor: Colors.grey,
-        colorScheme: ColorScheme.fromSeed(seedColor: appColor.primary),
-        textSelectionTheme: const TextSelectionThemeData(
-            //TODO: will update this.
-            // cursorColor: appColor.bg7AD6FF,
-            // selectionColor: appColor.bg7AD6FF,
-            // selectionHandleColor: appColor.bg7AD6FF,
-            ))
-      ..addThemeConfig(appColor);
+      useMaterial3: true,
+      primaryColor: appColor.primary,
+      scrollbarTheme: ScrollbarThemeData(
+        trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
+      ),
+      scaffoldBackgroundColor: Colors.grey,
+      colorScheme: ColorScheme.fromSeed(seedColor: appColor.primary),
+      textSelectionTheme: const TextSelectionThemeData(
+        //TODO: will update this.
+        // cursorColor: appColor.bg7AD6FF,
+        // selectionColor: appColor.bg7AD6FF,
+        // selectionHandleColor: appColor.bg7AD6FF,
+      ),
+    )..addThemeConfig(appColor);
   }
 }
 

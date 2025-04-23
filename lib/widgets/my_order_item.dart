@@ -39,22 +39,24 @@ class MyOrderItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: _buildDetailColumn(APPStrings.orderId.tr, model.orderId, style)),
-                    // SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == model.orderStatus.value)),
 
+                    // SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == model.orderStatus.value)),
                     Expanded(
-                        child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: _buildDetailColumn(APPStrings.status.tr, model.orderStatus.value, style)),
-                        InkWell(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: _buildDetailColumn(APPStrings.status.tr, model.orderStatus.value, style)),
+                          InkWell(
                             onTap: () {
                               if (onTapMenuButton != null) {
                                 onTapMenuButton!();
                               }
                             },
-                            child: const SmartImage(path: AppImages.icMoreHorizontal))
-                      ],
-                    )),
+                            child: const SmartImage(path: AppImages.icMoreHorizontal),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 16.h),
@@ -87,21 +89,16 @@ class MyOrderItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartText(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: style.titleStyle,
-          ),
+          SmartText(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.titleStyle),
           SizedBox(height: 4.h),
           isOrderStatus
               ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
               : SmartText(
-                  value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: style.subTitleStyle,
-                ),
+                value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: style.subTitleStyle,
+              ),
         ],
       ),
     );

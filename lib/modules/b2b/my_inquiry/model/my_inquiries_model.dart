@@ -49,35 +49,35 @@ class MyInquiriesModel {
       contextId: json["context_id"],
       createdBy: json["created_by"],
       status: json["status"],
-      assignedToDetails: json["assigned_to_details"] == null
-          ? []
-          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
+      assignedToDetails:
+          json["assigned_to_details"] == null
+              ? []
+              : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
       assignToDetails: json["assign_to_details"] == null ? null : UserIdDetails.fromJson(json["assign_to_details"]),
       createdByDetails: UserIdDetails.fromJson(json["created_by_details"]),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt,
-        "id": id,
-        "name": name,
-        "email": email,
-        "assign_to": assignTo,
-        "inquiry_type": inquiryType,
-        "commodity": commodity,
-        "inquiry_context_id": inquiryContextId,
-        "context_id": contextId,
-        "created_by": createdBy,
-        "status": status,
-        "assigned_to_details": List<dynamic>.from(assignedToDetails.map((x) => x.toJson())),
-        "assign_to_details": assignToDetails?.toJson(),
-        "created_by_details": createdByDetails.toJson(),
-      };
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt,
+    "id": id,
+    "name": name,
+    "email": email,
+    "assign_to": assignTo,
+    "inquiry_type": inquiryType,
+    "commodity": commodity,
+    "inquiry_context_id": inquiryContextId,
+    "context_id": contextId,
+    "created_by": createdBy,
+    "status": status,
+    "assigned_to_details": List<dynamic>.from(assignedToDetails.map((x) => x.toJson())),
+    "assign_to_details": assignToDetails?.toJson(),
+    "created_by_details": createdByDetails.toJson(),
+  };
 
   @override
   String toString() {
     return "$createdAt, $updatedAt, $id, $name, $email, $assignTo, $inquiryType, $commodity, $inquiryContextId, $contextId, $createdBy, $status, $assignedToDetails, $assignToDetails, $createdByDetails, ";
   }
 }
-

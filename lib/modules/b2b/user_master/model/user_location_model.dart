@@ -4,10 +4,7 @@ class UserLocationModel {
   String? id;
   String? name;
 
-  UserLocationModel({
-    this.id,
-    this.name,
-  });
+  UserLocationModel({this.id, this.name});
 
   @override
   bool operator ==(Object other) {

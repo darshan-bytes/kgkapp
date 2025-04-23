@@ -1,12 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class BranchLinkDataModel {
-  BranchLinkDataModel({
-    required this.branchLinkType,
-    required this.id,
-    required this.commodity,
-    this.webPath,
-  });
+  BranchLinkDataModel({required this.branchLinkType, required this.id, required this.commodity, this.webPath});
 
   final BranchLinkTypeType? branchLinkType;
   final String? id;
@@ -15,19 +10,16 @@ class BranchLinkDataModel {
 
   factory BranchLinkDataModel.fromJson(Map<String, dynamic> json) {
     return BranchLinkDataModel(
-      branchLinkType: json["branch_link_type"] == null
-          ? null
-          : BranchLinkTypeType.values.firstWhereOrNull((element) => element.value == json["branch_link_type"]),
+      branchLinkType:
+          json["branch_link_type"] == null
+              ? null
+              : BranchLinkTypeType.values.firstWhereOrNull((element) => element.value == json["branch_link_type"]),
       id: json["id"],
       commodity: json["commodity"],
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "branch_link_type": branchLinkType?.value,
-        "id": id,
-        "commodity": commodity,
-      };
+  Map<String, dynamic> toJson() => {"branch_link_type": branchLinkType?.value, "id": id, "commodity": commodity};
 }
 
 extension BranchLinkDataModelExtension on BranchLinkDataModel {

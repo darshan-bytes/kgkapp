@@ -117,27 +117,27 @@ class AddressDetails {
   }
 
   Map<String, dynamic> toJson() => {
-        "customer_org_id": customerOrgId,
-        "first_name": firstName,
-        "last_name": lastName,
-        "street_address": streetAddress,
-        "apartment": apartment,
-        "city": city,
-        "state": state,
-        "country": country,
-        "zip_code": zipCode,
-        "phone": phone.map((x) => x.toJson()).toList(),
-        "created_by": createdBy,
-        "is_shipping_default": isDefaultShipping,
-        "is_billing_default": isDefaultBilling,
-        "_id": id,
-        "type": type,
-        "isDeleted": isDeleted,
-        "deletedAt": deletedAt?.toIso8601String(),
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
-      };
+    "customer_org_id": customerOrgId,
+    "first_name": firstName,
+    "last_name": lastName,
+    "street_address": streetAddress,
+    "apartment": apartment,
+    "city": city,
+    "state": state,
+    "country": country,
+    "zip_code": zipCode,
+    "phone": phone.map((x) => x.toJson()).toList(),
+    "created_by": createdBy,
+    "is_shipping_default": isDefaultShipping,
+    "is_billing_default": isDefaultBilling,
+    "_id": id,
+    "type": type,
+    "isDeleted": isDeleted,
+    "deletedAt": deletedAt?.toIso8601String(),
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "__v": v,
+  };
 
   @override
   bool operator ==(Object other) =>
@@ -204,23 +204,14 @@ extension AddressDetailsExtension on AddressDetails {
 }
 
 class CustomerPhoneNumber {
-  CustomerPhoneNumber({
-    required this.phoneCode,
-    required this.phoneNumber,
-  });
+  CustomerPhoneNumber({required this.phoneCode, required this.phoneNumber});
 
   final String? phoneCode;
   final String? phoneNumber;
 
   factory CustomerPhoneNumber.fromJson(Map<String, dynamic> json) {
-    return CustomerPhoneNumber(
-      phoneCode: json["phone_code"],
-      phoneNumber: json["phone_number"],
-    );
+    return CustomerPhoneNumber(phoneCode: json["phone_code"], phoneNumber: json["phone_number"]);
   }
 
-  Map<String, dynamic> toJson() => {
-        "phone_code": phoneCode,
-        "phone_number": phoneNumber,
-      };
+  Map<String, dynamic> toJson() => {"phone_code": phoneCode, "phone_number": phoneNumber};
 }

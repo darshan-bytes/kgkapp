@@ -57,19 +57,23 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
   /// Fetches data from the design library API.
   Future<void> _callPreviewCatalogueApi({required BuildContext context}) async {
     /// Makes the API request and handles the response.
-    Either<ErrorResponse, PreviewCatalogueDataModel>? response =
-        await AppRepository(context).getPreviewCatalogue(id: digitalCatalogueListingModel?.id ?? '');
+    Either<ErrorResponse, PreviewCatalogueDataModel>? response = await AppRepository(
+      context,
+    ).getPreviewCatalogue(id: digitalCatalogueListingModel?.id ?? '');
 
-    response?.fold((error) {
-      if (error.message.isNotNullNorEmpty) {
-        Utils.showMessage(error.message);
-      }
-    }, (PreviewCatalogueDataModel data) {
-      previewCatalogueDataModel = data;
-      if (previewCatalogueDataModel != null) {
-        _generateProductList(previewCatalogueDataModel!);
-      }
-    });
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (PreviewCatalogueDataModel data) {
+        previewCatalogueDataModel = data;
+        if (previewCatalogueDataModel != null) {
+          _generateProductList(previewCatalogueDataModel!);
+        }
+      },
+    );
   }
 
   /// Generates a product list for the preview catalogue.
@@ -122,9 +126,10 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
       jewelleryDataList.length,
       (index) => ProductDetailsModel(
         productId: jewelleryDataList[index].suid,
-        imageUrl: (jewelleryDataList[index].multipleFinishedViewImage.isNotNullNorEmpty)
-            ? jewelleryDataList[index].multipleFinishedViewImage.first.imageUrl
-            : '',
+        imageUrl:
+            (jewelleryDataList[index].multipleFinishedViewImage.isNotNullNorEmpty)
+                ? jewelleryDataList[index].multipleFinishedViewImage.first.imageUrl
+                : '',
         title: jewelleryDataList[index].contractNoSkuNo,
         subTitle: jewelleryDataList[index].productDescription,
         kgkCollectionName: jewelleryDataList[index].kgkCollection ?? "\n",
@@ -185,9 +190,10 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
       designLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
         productId: designLibraryListItemDataList[index].suid,
-        imageUrl: (designLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
-            ? designLibraryListItemDataList[index].images?.first
-            : '',
+        imageUrl:
+            (designLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
+                ? designLibraryListItemDataList[index].images?.first
+                : '',
         title: designLibraryListItemDataList[index].contractNoSkuNo,
         subTitle: designLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: designLibraryListItemDataList[index].kgkCollection ?? "\n",
@@ -204,9 +210,10 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
       styleLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
         productId: styleLibraryListItemDataList[index].suid,
-        imageUrl: (styleLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
-            ? styleLibraryListItemDataList[index].images?.first
-            : '',
+        imageUrl:
+            (styleLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
+                ? styleLibraryListItemDataList[index].images?.first
+                : '',
         title: styleLibraryListItemDataList[index].contractNoSkuNo,
         subTitle: styleLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: styleLibraryListItemDataList[index].kgkCollection ?? "\n",
@@ -223,9 +230,10 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
       skuProductList.length,
       (index) => ProductDetailsModel(
         productId: skuProductList[index].suid,
-        imageUrl: (skuProductList[index].multipleFinishedViewImage?.isNotNullNorEmpty ?? false)
-            ? skuProductList[index].multipleFinishedViewImage?.first.imageUrl
-            : '',
+        imageUrl:
+            (skuProductList[index].multipleFinishedViewImage?.isNotNullNorEmpty ?? false)
+                ? skuProductList[index].multipleFinishedViewImage?.first.imageUrl
+                : '',
         title: skuProductList[index].contractNumber,
         subTitle: skuProductList[index].productDescription ?? '',
         kgkCollectionName: skuProductList[index].kgkCollection ?? "\n",

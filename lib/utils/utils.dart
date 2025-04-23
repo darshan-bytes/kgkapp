@@ -24,7 +24,7 @@ class Utils {
         toastification.dismiss(_toast!);
       }
 
-// Displays a new toast message with the specified properties.
+      // Displays a new toast message with the specified properties.
       _toast = toastification.show(
         description: Text(message ?? '', style: TextStyle(color: AppThemes().appColor.white)),
         autoCloseDuration: autoCloseDuration ?? const Duration(seconds: 3),
@@ -67,11 +67,7 @@ class Utils {
           labelText: APPStrings.search.tr,
           hintText: APPStrings.startTypingToSearch.tr,
           prefixIcon: const Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: countryPickerStyle.searchBorderColor,
-            ),
-          ),
+          border: OutlineInputBorder(borderSide: BorderSide(color: countryPickerStyle.searchBorderColor)),
         ),
       ),
       onSelect: onSelect,
@@ -92,45 +88,31 @@ class Utils {
       builder: (context) {
         final style = AppTheme.of(context).showDoubleActionDialogStyle;
         return AlertDialog.adaptive(
-          title: title != null
-              ? SmartText(
-                  title,
-                  style: style.titleStyle,
-                )
-              : null,
-          content: content != null
-              ? SmartText(
-                  content,
-                  style: style.contentStyle,
-                )
-              : null,
+          title: title != null ? SmartText(title, style: style.titleStyle) : null,
+          content: content != null ? SmartText(content, style: style.contentStyle) : null,
           actions: [
             if (cancelButtonText != null)
               TextButton(
-                  style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsetsDirectional.zero)),
-                  onPressed: () {
-                    context.pop();
-                    if (onCancelPressed != null) {
-                      onCancelPressed();
-                    }
-                  },
-                  child: SmartText(
-                    cancelButtonText,
-                    style: style.okButtonStyle,
-                  )),
+                style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsetsDirectional.zero)),
+                onPressed: () {
+                  context.pop();
+                  if (onCancelPressed != null) {
+                    onCancelPressed();
+                  }
+                },
+                child: SmartText(cancelButtonText, style: style.okButtonStyle),
+              ),
             if (okButtonText != null)
               TextButton(
-                  style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsetsDirectional.zero)),
-                  onPressed: () {
-                    context.pop();
-                    if (onOkPressed != null) {
-                      onOkPressed();
-                    }
-                  },
-                  child: SmartText(
-                    okButtonText,
-                    style: style.okButtonStyle,
-                  )),
+                style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsetsDirectional.zero)),
+                onPressed: () {
+                  context.pop();
+                  if (onOkPressed != null) {
+                    onOkPressed();
+                  }
+                },
+                child: SmartText(okButtonText, style: style.okButtonStyle),
+              ),
           ],
           buttonPadding: EdgeInsetsDirectional.zero,
           actionsPadding: EdgeInsetsDirectional.only(bottom: 8.w, end: 16.w, start: 8.w, top: 0.w),
@@ -143,22 +125,18 @@ class Utils {
   static void showQrAuthLoadingDialog(BuildContext context) {
     final style = AppTheme.of(context).profilePageScreenStyle;
     showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            child: Container(
-              height: 70.h, // Set the specific height here
-              width: context.width, // You can adjust the width as well
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7.r),
-                color: style.backgroundColor,
-              ),
-              child: Row(
-                children: [const SmartCircularProgressIndicator(), SmartText(APPStrings.loggingIn.tr)],
-              ),
-            ),
-          );
-        });
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            height: 70.h, // Set the specific height here
+            width: context.width, // You can adjust the width as well
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(7.r), color: style.backgroundColor),
+            child: Row(children: [const SmartCircularProgressIndicator(), SmartText(APPStrings.loggingIn.tr)]),
+          ),
+        );
+      },
+    );
   }
 
   static Future<T?> showSmartModalBottomSheet<T>({
@@ -189,10 +167,9 @@ class Utils {
       backgroundColor: backgroundColor,
       barrierLabel: barrierLabel,
       elevation: elevation,
-      shape: shape ??
-          RoundedRectangleBorder(
-            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r)),
-          ),
+      shape:
+          shape ??
+          RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r))),
       clipBehavior: clipBehavior,
       constraints: constraints,
       barrierColor: barrierColor,
@@ -209,32 +186,38 @@ class Utils {
     );
   }
 
-  static Future<void> showPermissionDeniedDialog(
-      {required BuildContext context,
-      required void Function(BuildContext context) onOkPressed,
-      required void Function(BuildContext context) onCancelPressed}) {
+  static Future<void> showPermissionDeniedDialog({
+    required BuildContext context,
+    required void Function(BuildContext context) onOkPressed,
+    required void Function(BuildContext context) onCancelPressed,
+  }) {
     return showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => PopScope(
-        canPop: false,
-        child: AlertDialog(
-          title: SmartText(APPStrings.permissionDenied.tr),
-          content: SmartText(APPStrings.pleaseEnableLocation.tr),
-          actions: [
-            SmartText(APPStrings.ok.tr, optionalPadding: EdgeInsetsDirectional.all(10.w), onTap: () {
-              onOkPressed(context);
-            }),
-            SmartText(
-              APPStrings.cancel.tr,
-              optionalPadding: EdgeInsetsDirectional.all(10.w),
-              onTap: () {
-                onCancelPressed(context);
-              },
-            )
-          ],
-        ),
-      ),
+      builder:
+          (context) => PopScope(
+            canPop: false,
+            child: AlertDialog(
+              title: SmartText(APPStrings.permissionDenied.tr),
+              content: SmartText(APPStrings.pleaseEnableLocation.tr),
+              actions: [
+                SmartText(
+                  APPStrings.ok.tr,
+                  optionalPadding: EdgeInsetsDirectional.all(10.w),
+                  onTap: () {
+                    onOkPressed(context);
+                  },
+                ),
+                SmartText(
+                  APPStrings.cancel.tr,
+                  optionalPadding: EdgeInsetsDirectional.all(10.w),
+                  onTap: () {
+                    onCancelPressed(context);
+                  },
+                ),
+              ],
+            ),
+          ),
     );
   }
 
@@ -389,9 +372,7 @@ class Utils {
   static Future<void> mergeCart(BuildContext context, {bool isRetry = false}) async {
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
     if (myBagDataModel != null) {
-      Map<String, dynamic> body = {
-        ApiKey.id: myBagDataModel.sId ?? '',
-      };
+      Map<String, dynamic> body = {ApiKey.id: myBagDataModel.sId ?? ''};
       await AppRepository(context).mergeBag(body: body).then((value) async {
         await value?.fold(
           (l) async {
@@ -430,25 +411,26 @@ class Utils {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (context) => ConfirmationDialog(
-        title: APPStrings.loginRequired.tr,
-        message: APPStrings.loginToUseThisFeature.tr,
-        onApproved: () async {
-          if (onApproved != null) {
-            await context.pushNamed(AppRoutes.signInPage, arguments: {RoutesData.isFromLoginRequired: true});
-            if (!StorageManager().getIsSkipLogin()) {
-              onApproved.call();
+      builder:
+          (context) => ConfirmationDialog(
+            title: APPStrings.loginRequired.tr,
+            message: APPStrings.loginToUseThisFeature.tr,
+            onApproved: () async {
+              if (onApproved != null) {
+                await context.pushNamed(AppRoutes.signInPage, arguments: {RoutesData.isFromLoginRequired: true});
+                if (!StorageManager().getIsSkipLogin()) {
+                  onApproved.call();
+                  context.pop();
+                }
+              }
+            },
+            onDenied: () {
               context.pop();
-            }
-          }
-        },
-        onDenied: () {
-          context.pop();
-          onDenied?.call();
-        },
-        onApprovedText: APPStrings.login.tr,
-        onDeniedText: APPStrings.cancel.tr,
-      ),
+              onDenied?.call();
+            },
+            onApprovedText: APPStrings.login.tr,
+            onDeniedText: APPStrings.cancel.tr,
+          ),
     );
   }
 
@@ -478,9 +460,10 @@ class Utils {
   static ProductDetailsModel convertJewelleryDataModelToProductDetailsModel({required JewelleryDataModel jewellery}) {
     return ProductDetailsModel(
       suid: jewellery.suid ?? "",
-      imageUrl: jewellery.multipleFinishedViewImage.isNotNullNorEmpty
-          ? jewellery.multipleFinishedViewImage[0].imageUrl
-          : jewellery.kgkCoutureImage,
+      imageUrl:
+          jewellery.multipleFinishedViewImage.isNotNullNorEmpty
+              ? jewellery.multipleFinishedViewImage[0].imageUrl
+              : jewellery.kgkCoutureImage,
       name: jewellery.productDescription ?? "",
       originalPrice: jewellery.finalPrice?.toString().setCurrency,
       finalPrice: jewellery.discountPrice?.toString().setCurrency,
@@ -498,11 +481,7 @@ class Utils {
       gms: jewellery.gms,
       brandName: jewellery.brandName,
       isAddedToCart: jewellery.isAddedToCart,
-      colorsCode: [
-        jewellery.metalColor1HexCode ?? "",
-        jewellery.metalColor2HexCode ?? "",
-        jewellery.metalColor3HexCode ?? "",
-      ],
+      colorsCode: [jewellery.metalColor1HexCode ?? "", jewellery.metalColor2HexCode ?? "", jewellery.metalColor3HexCode ?? ""],
       reviewCount: jewellery.reviewCount,
       rating: jewellery.rating?.toDouble(),
       components: jewellery.components,
@@ -582,9 +561,10 @@ class Utils {
       isAddedToCart: gemstone.isAddedToCart,
       rating: gemstone.rating,
       reviewCount: gemstone.reviewCount,
-      discountPercentageString: (gemstone.discountPercentage != null && gemstone.discountPercentage! > 0)
-          ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstone.discountPercentage])
-          : null,
+      discountPercentageString:
+          (gemstone.discountPercentage != null && gemstone.discountPercentage! > 0)
+              ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstone.discountPercentage])
+              : null,
       stoneElements: gemstone.components,
       productQuality: CartProductQuality(name: gemstone.quality),
       location: gemstone.location,

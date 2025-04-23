@@ -54,31 +54,26 @@ class SmartSfRangeSlider extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title.isNotNullNorEmpty)
-          SmartText(
-            title,
-            style: titleStyle,
-            optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
-          ),
+          SmartText(title, style: titleStyle, optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w)),
         SizedBox(height: 16.h),
         SliderTheme(
-            data: SliderThemeData(
-              showValueIndicator: ShowValueIndicator.always,
-              trackShape: RoundedRectSliderTrackShape(),
-            ),
-            child: RangeSlider(
-              values: values,
-              min: minMaxValues?.start ?? 0.0,
-              max: minMaxValues?.end ?? 100.0,
-              divisions: showDividers == true
-                  ? ((minMaxValues?.end ?? 100.0).toInt() > 1
-                      ? ((minMaxValues?.end ?? 100.0).toInt() - 1)
-                      : ((minMaxValues?.end ?? 100.0).toInt()))
-                  : null,
-              labels: RangeLabels(values.start.toStringAsFixed(2), values.end.toStringAsFixed(2)),
-              activeColor: rangeSliderTrackColor,
-              onChanged: onChanged,
-              onChangeEnd: (value) => onMaxControllerEditingComplete?.call(),
-            )),
+          data: SliderThemeData(showValueIndicator: ShowValueIndicator.always, trackShape: RoundedRectSliderTrackShape()),
+          child: RangeSlider(
+            values: values,
+            min: minMaxValues?.start ?? 0.0,
+            max: minMaxValues?.end ?? 100.0,
+            divisions:
+                showDividers == true
+                    ? ((minMaxValues?.end ?? 100.0).toInt() > 1
+                        ? ((minMaxValues?.end ?? 100.0).toInt() - 1)
+                        : ((minMaxValues?.end ?? 100.0).toInt()))
+                    : null,
+            labels: RangeLabels(values.start.toStringAsFixed(2), values.end.toStringAsFixed(2)),
+            activeColor: rangeSliderTrackColor,
+            onChanged: onChanged,
+            onChangeEnd: (value) => onMaxControllerEditingComplete?.call(),
+          ),
+        ),
         SizedBox(height: 6.h),
         Padding(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
@@ -103,10 +98,7 @@ class SmartSfRangeSlider extends StatelessWidget {
                         onEditingComplete: () => onMinControllerEditingComplete?.call(),
                         textInputAction: TextInputAction.done,
                       ),
-                      SmartText(
-                        APPStrings.min.tr,
-                        style: sliderLabelTextStyle,
-                      )
+                      SmartText(APPStrings.min.tr, style: sliderLabelTextStyle),
                     ],
                   ),
                 ),
@@ -128,13 +120,10 @@ class SmartSfRangeSlider extends StatelessWidget {
                       onEditingComplete: () => onMaxControllerEditingComplete?.call(),
                       textInputAction: TextInputAction.done,
                     ),
-                    SmartText(
-                      APPStrings.max.tr,
-                      style: sliderLabelTextStyle,
-                    )
+                    SmartText(APPStrings.max.tr, style: sliderLabelTextStyle),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

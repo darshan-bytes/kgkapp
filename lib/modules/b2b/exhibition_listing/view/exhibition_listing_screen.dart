@@ -63,13 +63,14 @@ class ExhibitionListingScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => AdvanceFilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        bloc.add(ExhibitionListingFilterEvent(filterData: value, context: context));
-                      }
-                    },
-                  ),
+                  builder:
+                      (context) => AdvanceFilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            bloc.add(ExhibitionListingFilterEvent(filterData: value, context: context));
+                          }
+                        },
+                      ),
                 );
               },
             ),

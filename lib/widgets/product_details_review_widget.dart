@@ -39,9 +39,7 @@ class ProductReviewsDetails extends StatelessWidget {
               flex: 1,
               child: Container(
                 alignment: AlignmentDirectional.center,
-                decoration: BoxDecoration(
-                  border: BorderDirectional(end: BorderSide(color: style.customiseBoxBorderColor)),
-                ),
+                decoration: BoxDecoration(border: BorderDirectional(end: BorderSide(color: style.customiseBoxBorderColor))),
                 padding: EdgeInsetsDirectional.fromSTEB(0, 42.w, 24.h, 42.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,10 +54,7 @@ class ProductReviewsDetails extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 8.h),
-                    SmartText(
-                      APPStrings.reviewsX.tr.interpolate([reviewCount]),
-                      style: style.productCodeStyle,
-                    ),
+                    SmartText(APPStrings.reviewsX.tr.interpolate([reviewCount]), style: style.productCodeStyle),
                   ],
                 ),
               ),
@@ -70,26 +65,27 @@ class ProductReviewsDetails extends StatelessWidget {
                 padding: EdgeInsetsDirectional.only(start: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: ratingCounts.entries.map((entry) {
-                    final rating = entry.key;
-                    final count = entry.value;
-                    return Padding(
-                      padding: EdgeInsetsDirectional.only(bottom: 4.h),
-                      child: Row(
-                        children: [
-                          SmartText('$rating'.tr),
-                          SizedBox(width: 18.w),
-                          Expanded(
-                            child: LinearProgressIndicator(
-                              value: maxCount > 0 ? count / maxCount : 0.0,
-                              color: style.ratingGlowColor,
-                              backgroundColor: style.ratingGlowColor.withValues(alpha: 0.2),
-                            ),
+                  children:
+                      ratingCounts.entries.map((entry) {
+                        final rating = entry.key;
+                        final count = entry.value;
+                        return Padding(
+                          padding: EdgeInsetsDirectional.only(bottom: 4.h),
+                          child: Row(
+                            children: [
+                              SmartText('$rating'.tr),
+                              SizedBox(width: 18.w),
+                              Expanded(
+                                child: LinearProgressIndicator(
+                                  value: maxCount > 0 ? count / maxCount : 0.0,
+                                  color: style.ratingGlowColor,
+                                  backgroundColor: style.ratingGlowColor.withValues(alpha: 0.2),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
+                        );
+                      }).toList(),
                 ),
               ),
             ),

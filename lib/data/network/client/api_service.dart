@@ -38,12 +38,15 @@ class ApiService implements ApiProvider {
     return headers;
   }
 
-  Future<Either<ErrorResponse, dynamic>?> _sendRequest<T>(_ApiType method, String url,
-      {Map<String, dynamic>? query,
-      dynamic body,
-      Map<String, String>? headers,
-      bool withFullResponse = false,
-      required bool withCurrencyHeader}) async {
+  Future<Either<ErrorResponse, dynamic>?> _sendRequest<T>(
+    _ApiType method,
+    String url, {
+    Map<String, dynamic>? query,
+    dynamic body,
+    Map<String, String>? headers,
+    bool withFullResponse = false,
+    required bool withCurrencyHeader,
+  }) async {
     try {
       if (!await ConnectivityManager().checkInternet()) {
         return Left(ErrorResponse(code: 0, message: APPStrings.checkInternet.tr));
@@ -56,28 +59,42 @@ class ApiService implements ApiProvider {
         url = uri.toString();
       }
       kgk_logger.log(
-          '🔷 Request URL: $url method: ${method.toString()} headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
+        '🔷 Request URL: $url method: ${method.toString()} headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}',
+      );
       switch (method) {
         case _ApiType.get:
-          response = await http.get(Uri.parse(url),
-              headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader));
+          response = await http.get(
+            Uri.parse(url),
+            headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
+          );
           break;
         case _ApiType.post:
-          response = await http.post(Uri.parse(url),
-              headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader), body: jsonEncode(body));
+          response = await http.post(
+            Uri.parse(url),
+            headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
+            body: jsonEncode(body),
+          );
           break;
         case _ApiType.put:
-          response = await http.put(Uri.parse(url),
-              headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader), body: jsonEncode(body));
+          response = await http.put(
+            Uri.parse(url),
+            headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
+            body: jsonEncode(body),
+          );
           break;
         case _ApiType.patch:
-          response = await http.patch(Uri.parse(url),
-              headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader), body: jsonEncode(body));
+          response = await http.patch(
+            Uri.parse(url),
+            headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
+            body: jsonEncode(body),
+          );
           break;
         case _ApiType.delete:
-          response = await http.delete(Uri.parse(url),
-              headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
-              body: body == null ? null : jsonEncode(body));
+          response = await http.delete(
+            Uri.parse(url),
+            headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
+            body: body == null ? null : jsonEncode(body),
+          );
           break;
       }
 
@@ -110,51 +127,109 @@ class ApiService implements ApiProvider {
 
   // Implement getMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> getMethod<T>(String url,
-      {Map<String, dynamic>? query, Map<String, String>? headers, bool withFullResponse = false, bool withCurrencyHeader = false}) async {
-    return _sendRequest<T>(_ApiType.get, url,
-        query: query, withFullResponse: withFullResponse, headers: headers, withCurrencyHeader: withCurrencyHeader);
+  Future<Either<ErrorResponse, dynamic>?> getMethod<T>(
+    String url, {
+    Map<String, dynamic>? query,
+    Map<String, String>? headers,
+    bool withFullResponse = false,
+    bool withCurrencyHeader = false,
+  }) async {
+    return _sendRequest<T>(
+      _ApiType.get,
+      url,
+      query: query,
+      withFullResponse: withFullResponse,
+      headers: headers,
+      withCurrencyHeader: withCurrencyHeader,
+    );
   }
 
   // Implement postMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> postMethod<T>(String url, dynamic body,
-      {Map<String, String>? headers, bool withFullResponse = false, bool withCurrencyHeader = false}) async {
-    return _sendRequest<T>(_ApiType.post, url,
-        body: body, headers: headers, withFullResponse: withFullResponse, withCurrencyHeader: withCurrencyHeader);
+  Future<Either<ErrorResponse, dynamic>?> postMethod<T>(
+    String url,
+    dynamic body, {
+    Map<String, String>? headers,
+    bool withFullResponse = false,
+    bool withCurrencyHeader = false,
+  }) async {
+    return _sendRequest<T>(
+      _ApiType.post,
+      url,
+      body: body,
+      headers: headers,
+      withFullResponse: withFullResponse,
+      withCurrencyHeader: withCurrencyHeader,
+    );
   }
 
   // Implement putMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> putMethod<T>(String url, dynamic body,
-      {Map<String, String>? headers, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
-    return _sendRequest<T>(_ApiType.put, url,
-        body: body, headers: headers, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse);
+  Future<Either<ErrorResponse, dynamic>?> putMethod<T>(
+    String url,
+    dynamic body, {
+    Map<String, String>? headers,
+    bool withCurrencyHeader = false,
+    bool withFullResponse = false,
+  }) async {
+    return _sendRequest<T>(
+      _ApiType.put,
+      url,
+      body: body,
+      headers: headers,
+      withCurrencyHeader: withCurrencyHeader,
+      withFullResponse: withFullResponse,
+    );
   }
 
   // Implement patchMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> updateMethod<T>(String url, dynamic body,
-      {Map<String, String>? headers, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
-    return _sendRequest<T>(_ApiType.patch, url,
-        body: body, headers: headers, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse);
+  Future<Either<ErrorResponse, dynamic>?> updateMethod<T>(
+    String url,
+    dynamic body, {
+    Map<String, String>? headers,
+    bool withCurrencyHeader = false,
+    bool withFullResponse = false,
+  }) async {
+    return _sendRequest<T>(
+      _ApiType.patch,
+      url,
+      body: body,
+      headers: headers,
+      withCurrencyHeader: withCurrencyHeader,
+      withFullResponse: withFullResponse,
+    );
   }
 
   // Implement deleteMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> deleteMethod<T>(String url,
-      {Map<String, dynamic>? body, Map<String, dynamic>? query, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
-    return _sendRequest<T>(_ApiType.delete, url,
-        query: query, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse, body: body);
+  Future<Either<ErrorResponse, dynamic>?> deleteMethod<T>(
+    String url, {
+    Map<String, dynamic>? body,
+    Map<String, dynamic>? query,
+    bool withCurrencyHeader = false,
+    bool withFullResponse = false,
+  }) async {
+    return _sendRequest<T>(
+      _ApiType.delete,
+      url,
+      query: query,
+      withCurrencyHeader: withCurrencyHeader,
+      withFullResponse: withFullResponse,
+      body: body,
+    );
   }
 
   @override
-  Future<Either<ErrorResponse, dynamic>?> postMultipartMethod<T>(String url, Map<String, dynamic> body,
-      {Map<String, String>? headers,
-      Map<String, dynamic>? query,
-      List<ModelMultiPartFile>? files,
-      bool withCurrencyHeader = false,
-      bool withFullResponse = false}) async {
+  Future<Either<ErrorResponse, dynamic>?> postMultipartMethod<T>(
+    String url,
+    Map<String, dynamic> body, {
+    Map<String, String>? headers,
+    Map<String, dynamic>? query,
+    List<ModelMultiPartFile>? files,
+    bool withCurrencyHeader = false,
+    bool withFullResponse = false,
+  }) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
         Uri uri = Uri.parse(url);
@@ -196,7 +271,8 @@ class ApiService implements ApiProvider {
         }
 
         kgk_logger.log(
-            'Request URL: $url method: postMultipartMethod headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
+          'Request URL: $url method: postMultipartMethod headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}',
+        );
 
         var response = await http.Response.fromStream(await request.send());
 
@@ -277,7 +353,8 @@ class ApiService implements ApiProvider {
         }
 
         kgk_logger.log(
-            'Request URL: $url method: Patch Multipart Method headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
+          'Request URL: $url method: Patch Multipart Method headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}',
+        );
 
         var response = await http.Response.fromStream(await request.send());
 
@@ -358,7 +435,8 @@ class ApiService implements ApiProvider {
         }
 
         kgk_logger.log(
-            'Request URL: $url method: Patch Multipart Method headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
+          'Request URL: $url method: Patch Multipart Method headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}',
+        );
 
         var response = await http.Response.fromStream(await request.send());
 

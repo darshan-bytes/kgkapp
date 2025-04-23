@@ -28,10 +28,7 @@ final class CompanyListLoadedState extends CompanyState {
   final List<CscDetails> companyList;
   final CscDetails? selectedData;
 
-  const CompanyListLoadedState({
-    required this.companyList,
-    this.selectedData,
-  });
+  const CompanyListLoadedState({required this.companyList, this.selectedData});
 
   @override
   List<Object?> get props => [companyList, selectedData];

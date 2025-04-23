@@ -24,32 +24,26 @@ class OrderConfirmationScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(child: SizedBox(height: 72.h)),
       body: SafeArea(
-          child: Center(
-        child: SmartSingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsetsDirectional.all(17.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SmartText(
-                  APPStrings.thankYouForYourPurchase.tr,
-                  style: style.titleTextStyle,
-                ),
-                SizedBox(height: 24.h),
-                _buildYourOrderSummary(style),
-                SizedBox(height: 8.h),
-                SmartText(
-                  APPStrings.orderConfirmWithTrackInfo.tr,
-                  style: style.descriptionStyle,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 24.h),
-                _buildContinueShoppingButton(context),
-              ],
+        child: Center(
+          child: SmartSingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsetsDirectional.all(17.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SmartText(APPStrings.thankYouForYourPurchase.tr, style: style.titleTextStyle),
+                  SizedBox(height: 24.h),
+                  _buildYourOrderSummary(style),
+                  SizedBox(height: 8.h),
+                  SmartText(APPStrings.orderConfirmWithTrackInfo.tr, style: style.descriptionStyle, textAlign: TextAlign.center),
+                  SizedBox(height: 24.h),
+                  _buildContinueShoppingButton(context),
+                ],
+              ),
             ),
           ),
         ),
-      )),
+      ),
     );
   }
 
@@ -63,13 +57,7 @@ class OrderConfirmationScreen extends StatelessWidget {
             text: TextSpan(
               text: APPStrings.yourOrderNumber.tr,
               style: style.subTitleStyle,
-              children: [
-                WidgetSpan(child: SizedBox(width: 4.w)),
-                TextSpan(
-                  text: orderNumber,
-                  style: style.orderNumberStyle,
-                ),
-              ],
+              children: [WidgetSpan(child: SizedBox(width: 4.w)), TextSpan(text: orderNumber, style: style.orderNumberStyle)],
             ),
           ),
         ),

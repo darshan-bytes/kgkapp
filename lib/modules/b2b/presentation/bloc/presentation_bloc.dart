@@ -82,10 +82,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {
-        ApiKey.field: ApiKey.id,
-        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
-      },
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
@@ -100,7 +97,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ];
           }
           break;
@@ -121,29 +118,28 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   }
 
   List<B2BCustomListingDataModel> _generateB2BListingModel(List<Presentation> presentationList) {
-    return presentationList.map(
-      (concept) {
-        // Use map and spread operator for cleaner list transformation
-        // List<String> dummy = concept.files.map((file) => file['path'].toString().setMediaUrl).toList();
-        List<String> dummy = [];
-        return B2BCustomListingDataModel(
-            id: concept.id,
-            strConceptNumber: concept.conceptNumber,
-            strConceptName: concept.conceptName,
-            status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
-            fields: generateB2BItemFields(concept.assignedToDetails),
-            strCreatedBy: concept.createdByDetails?.fullName,
-            strCreatedByImageUrl: concept.createdByDetails?.profilePic ?? '',
-            strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
-            strPresentationNumber: "-",
-            strConceptBy: "-",
-            strName: concept.conceptName,
-            strDescription: '-',
-            descriptionImageList: dummy,
-            presentationList: [],
-            strRevisedDate: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY));
-      },
-    ).toList();
+    return presentationList.map((concept) {
+      // Use map and spread operator for cleaner list transformation
+      // List<String> dummy = concept.files.map((file) => file['path'].toString().setMediaUrl).toList();
+      List<String> dummy = [];
+      return B2BCustomListingDataModel(
+        id: concept.id,
+        strConceptNumber: concept.conceptNumber,
+        strConceptName: concept.conceptName,
+        status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
+        fields: generateB2BItemFields(concept.assignedToDetails),
+        strCreatedBy: concept.createdByDetails?.fullName,
+        strCreatedByImageUrl: concept.createdByDetails?.profilePic ?? '',
+        strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        strPresentationNumber: "-",
+        strConceptBy: "-",
+        strName: concept.conceptName,
+        strDescription: '-',
+        descriptionImageList: dummy,
+        presentationList: [],
+        strRevisedDate: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
+      );
+    }).toList();
   }
 
   Future<void> _onPresentationLoadMoreEvent(PresentationLoadMoreEvent event, Emitter<PresentationState> emit) async {
@@ -161,16 +157,26 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     emit(PresentationLoadedState());
   }
 
-  Future<void> apiCallForPresentationStatus(
-      {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
+  Future<void> apiCallForPresentationStatus({
+    required BuildContext context,
+    required String presentationNumber,
+    required bool isApproved,
+  }) async {
     Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
-    await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
-          if (l.code == 403) {
-            Utils.showMessage(l.message);
-          }
-        }, (r) {
-          return null;
-        }));
+    await AppRepository(context)
+        .apiCallForPresentationStatus(body: body)
+        .then(
+          (value) => value?.fold(
+            (l) {
+              if (l.code == 403) {
+                Utils.showMessage(l.message);
+              }
+            },
+            (r) {
+              return null;
+            },
+          ),
+        );
     context.pop();
   }
 
@@ -232,11 +238,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       String fullName = detail.fullName;
       String imageUrl = detail.profilePic ?? '';
 
-      return B2BItemField(
-        label: APPStrings.assignTo.tr,
-        value: fullName,
-        imageUrl: imageUrl,
-      );
+      return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();
   }
 

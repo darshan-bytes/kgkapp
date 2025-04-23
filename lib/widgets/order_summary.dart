@@ -43,12 +43,7 @@ class OrderSummary extends StatelessWidget {
             style: titleStyle?.merge(style.orderSummaryTitleStyle) ?? style.orderSummaryTitleStyle,
           ),
           SizedBox(height: 20.h),
-          if (isPromoCodeApplied) ...[
-            const Divider(),
-            _buildPromoCodeSection(style, context),
-            const Divider(),
-            SizedBox(height: 14.h),
-          ],
+          if (isPromoCodeApplied) ...[const Divider(), _buildPromoCodeSection(style, context), const Divider(), SizedBox(height: 14.h)],
           _buildTotalSection(style, isSubTotal: true),
           SizedBox(height: 6.h),
           ListView.builder(
@@ -57,10 +52,7 @@ class OrderSummary extends StatelessWidget {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
-              return Padding(
-                padding: EdgeInsetsDirectional.only(bottom: 6.0),
-                child: _buildOrderSummaryItem(item, style),
-              );
+              return Padding(padding: EdgeInsetsDirectional.only(bottom: 6.0), child: _buildOrderSummaryItem(item, style));
             },
           ),
           _buildTotalSection(style),
@@ -85,9 +77,9 @@ class OrderSummary extends StatelessWidget {
   Widget _buildPromoCodeSection(OrderSummaryStyle style, BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(AppRoutes.applyPromoCodeScreen, arguments: {RoutesData.promoCode: promoCode}).then(
-          (_) => BlocProvider.of<MyBagBloc>(context).add(FetchOrderSummaryDataEvent(context)),
-        );
+        context
+            .pushNamed(AppRoutes.applyPromoCodeScreen, arguments: {RoutesData.promoCode: promoCode})
+            .then((_) => BlocProvider.of<MyBagBloc>(context).add(FetchOrderSummaryDataEvent(context)));
         onApplyPromoCode?.call();
       },
       child: Padding(
@@ -126,17 +118,9 @@ class OrderSummary extends StatelessWidget {
   Widget _buildTotalSection(OrderSummaryStyle style, {bool isSubTotal = false}) {
     return Row(
       children: [
-        Expanded(
-          child: SmartText(
-            isSubTotal ? APPStrings.subTotal.tr : APPStrings.total.tr,
-            style: style.orderSummaryItemStyle,
-          ),
-        ),
+        Expanded(child: SmartText(isSubTotal ? APPStrings.subTotal.tr : APPStrings.total.tr, style: style.orderSummaryItemStyle)),
         SizedBox(width: 16.w),
-        SmartText(
-          isSubTotal ? subTotalPrice : totalPrice,
-          style: totalStyle ?? style.totalPriceStyle,
-        ),
+        SmartText(isSubTotal ? subTotalPrice : totalPrice, style: totalStyle ?? style.totalPriceStyle),
       ],
     );
   }

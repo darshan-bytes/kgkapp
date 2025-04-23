@@ -17,23 +17,24 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
   final Widget? widgetBetweenTitleAndItems;
   final bool isScrollbarVisible;
 
-  const SmartHorizontalItemBuilder(
-      {super.key,
-      this.listPadding = EdgeInsetsDirectional.zero,
-      this.itemBetweenSpace,
-      this.crossAxisAlignment = CrossAxisAlignment.start,
-      this.mainAxisAlignment = CrossAxisAlignment.start,
-      required this.itemCount,
-      required this.itemBuilder,
-      this.title,
-      this.titleStyle,
-      this.spacingBetweenTitleAndItems = 0,
-      this.padding = EdgeInsetsDirectional.zero,
-      this.backgroundColor,
-      this.titleOptionalPadding = EdgeInsetsDirectional.zero,
-      this.scrollController,
-      this.widgetBetweenTitleAndItems,
-      this.isScrollbarVisible = false});
+  const SmartHorizontalItemBuilder({
+    super.key,
+    this.listPadding = EdgeInsetsDirectional.zero,
+    this.itemBetweenSpace,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.mainAxisAlignment = CrossAxisAlignment.start,
+    required this.itemCount,
+    required this.itemBuilder,
+    this.title,
+    this.titleStyle,
+    this.spacingBetweenTitleAndItems = 0,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.backgroundColor,
+    this.titleOptionalPadding = EdgeInsetsDirectional.zero,
+    this.scrollController,
+    this.widgetBetweenTitleAndItems,
+    this.isScrollbarVisible = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +45,12 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
         padding: listPadding,
         child: Row(
           crossAxisAlignment: mainAxisAlignment,
-          children: List.generate(
-            itemCount,
-            (index) {
-              return Padding(
-                padding: EdgeInsetsDirectional.only(end: index == itemCount - 1 ? 0 : (itemBetweenSpace ?? 16.w)),
-                child: itemBuilder(context, index),
-              );
-            },
-          ),
+          children: List.generate(itemCount, (index) {
+            return Padding(
+              padding: EdgeInsetsDirectional.only(end: index == itemCount - 1 ? 0 : (itemBetweenSpace ?? 16.w)),
+              child: itemBuilder(context, index),
+            );
+          }),
         ),
       ),
     );
@@ -77,7 +75,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
                     child: child,
                   )
                 : */
-            child
+            child,
           ],
         ),
       ),

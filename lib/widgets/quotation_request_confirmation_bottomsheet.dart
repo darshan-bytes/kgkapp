@@ -3,10 +3,7 @@ import 'package:kgk/kgk.dart';
 class QuotationRequestConfirmation extends StatelessWidget {
   final VoidCallback onContinueShopping;
 
-  const QuotationRequestConfirmation({
-    super.key,
-    required this.onContinueShopping,
-  });
+  const QuotationRequestConfirmation({super.key, required this.onContinueShopping});
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +21,16 @@ class QuotationRequestConfirmation extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SmartText(
-                      APPStrings.requestSubmitted.tr,
-                      style: style.titleStyle,
-                    ),
+                    SmartText(APPStrings.requestSubmitted.tr, style: style.titleStyle),
                     SizedBox(height: 16.h),
-                    SmartText(
-                      APPStrings.requestSubmittedDesc.tr,
-                      style: style.detailsTextStyle,
-                    ),
+                    SmartText(APPStrings.requestSubmittedDesc.tr, style: style.detailsTextStyle),
                     SizedBox(height: 24.h),
                     SmartButton(
                       onTap: () {
                         onContinueShopping();
                       },
                       title: APPStrings.continueShopping.tr,
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -50,14 +41,9 @@ class QuotationRequestConfirmation extends StatelessWidget {
                   onTap: () {
                     context.pop();
                   },
-                  child: SmartImage(
-                    path: AppImages.icCross,
-                    height: 24.w,
-                    width: 24.w,
-                    color: style.primaryColor,
-                  ),
+                  child: SmartImage(path: AppImages.icCross, height: 24.w, width: 24.w, color: style.primaryColor),
                 ),
-              )
+              ),
             ],
           ),
         ],

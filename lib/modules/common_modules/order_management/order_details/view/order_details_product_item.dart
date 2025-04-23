@@ -16,10 +16,7 @@ class OrderDetailsProductItem extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsetsDirectional.all(16.0.w),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0.r),
-              border: Border.all(color: style.borderColor),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0.r), border: Border.all(color: style.borderColor)),
             child: Column(
               children: [
                 Row(
@@ -41,12 +38,7 @@ class OrderDetailsProductItem extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     Expanded(
-                      child: SmartText(
-                        productDetails.name ?? '-',
-                        style: style.valueStyle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      child: SmartText(productDetails.name ?? '-', style: style.valueStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
                     ),
                   ],
                 ),
@@ -88,8 +80,14 @@ class OrderDetailsProductItem extends StatelessWidget {
     );
   }
 
-  Widget buildDetailsColumn(AuctionListItemStyle style, String title, String? value,
-      {bool isExpanded = false, bool isStatus = false, ProjectStatus? status}) {
+  Widget buildDetailsColumn(
+    AuctionListItemStyle style,
+    String title,
+    String? value, {
+    bool isExpanded = false,
+    bool isStatus = false,
+    ProjectStatus? status,
+  }) {
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

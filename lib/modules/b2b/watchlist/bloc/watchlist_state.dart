@@ -28,9 +28,7 @@ final class WatchlistLoadedState extends WatchlistState {
 final class WatchlistLoadedMoreState extends WatchlistState {
   final int currentPage;
 
-  const WatchlistLoadedMoreState({
-    required this.currentPage,
-  });
+  const WatchlistLoadedMoreState({required this.currentPage});
 
   @override
   List<Object> get props => [currentPage];

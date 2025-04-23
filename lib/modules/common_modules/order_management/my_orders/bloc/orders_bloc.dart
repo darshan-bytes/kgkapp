@@ -158,8 +158,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     emit(const OrdersLoadingState());
 
     /// Update filter data for the current tab
-    BlocProvider.of<AdvanceSortFilterBloc>(context)
-        .add(AddAdvanceSortFilterDataEvent(filterOptionList: appliedFilterData[currentTab] ?? [], context: context));
+    BlocProvider.of<AdvanceSortFilterBloc>(
+      context,
+    ).add(AddAdvanceSortFilterDataEvent(filterOptionList: appliedFilterData[currentTab] ?? [], context: context));
 
     /// Reload order data
     await _reloadOrderData(context, emit);
@@ -232,7 +233,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           if (element.dateRange != null) {
             filters[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
             ].join(',');
           }
           break;
@@ -271,8 +272,12 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   /// Fetches the order list data from the API
-  Future<void> fetchOrderListData(BuildContext context, Emitter<OrdersState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
+  Future<void> fetchOrderListData(
+    BuildContext context,
+    Emitter<OrdersState> emit, {
+    bool isLoadMore = false,
+    Map<String, dynamic>? query,
+  }) async {
     /// Here we need commodity base order data so we Get the commodity for the current tab
     String commodity = _getCommodityForTab(tabController.index);
 
@@ -284,107 +289,119 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       pageLimit: AppConst.pageLimit,
       commodity: commodity,
     );
-    Either<ErrorResponse, PaginationData<OrderItem>>? response =
-        await AppRepository(context).getMyOrderList(body: query, isLoadMore: isLoadMore);
+    Either<ErrorResponse, PaginationData<OrderItem>>? response = await AppRepository(
+      context,
+    ).getMyOrderList(body: query, isLoadMore: isLoadMore);
 
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-      emit(OrdersListLoadedState());
-    }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
-      originalOrderList.addAll(_populateOrderList((success.dataList as List<OrderItem>)));
-      filteredOrderList = List.from(originalOrderList);
-      if (!orderPaginationScrollController.isPageLoaded.isCompleted) {
-        orderPaginationScrollController.isPageLoaded.complete(orderPaginationScrollController.currentPage == totalNumberOfPages);
-      }
-      emit(OrdersListLoadedState());
-    });
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+        emit(OrdersListLoadedState());
+      },
+      (success) {
+        totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+        originalOrderList.addAll(_populateOrderList((success.dataList as List<OrderItem>)));
+        filteredOrderList = List.from(originalOrderList);
+        if (!orderPaginationScrollController.isPageLoaded.isCompleted) {
+          orderPaginationScrollController.isPageLoaded.complete(orderPaginationScrollController.currentPage == totalNumberOfPages);
+        }
+        emit(OrdersListLoadedState());
+      },
+    );
   }
 
   /// Populates the order list from the API data
   List<MyOrderDetailsModel> _populateOrderList(List<OrderItem> dataList) {
-    return dataList.where((data) {
-      /// Tab Index 0: Diamond Orders Only
-      if (tabController.index == 0) {
-        return data.commodity == Commodity.diamond.value;
-      }
+    return dataList
+        .where((data) {
+          /// Tab Index 0: Diamond Orders Only
+          if (tabController.index == 0) {
+            return data.commodity == Commodity.diamond.value;
+          }
+          /// Tab Index 1: Gemstone Orders Only
+          else if (tabController.index == 1) {
+            return data.commodity == Commodity.gemstone.value;
+          }
+          /// Tab Index 2: All other commodities (excluding Diamond & Gemstone)
+          else if (tabController.index == 2) {
+            return data.commodity != Commodity.diamond.value && data.commodity != Commodity.gemstone.value;
+          }
+          return false;
+        })
+        .map<MyOrderDetailsModel>((OrderItem data) {
+          return MyOrderDetailsModel(
+            id: data.uniqueId?.toString(),
+            orderId: data.uniqueId?.toString(),
+            orderStatus: getOrderStatus(orderStatus: data.orderStatus ?? ''),
+            orderDate: data.createdAt?.changeDateFormat(
+              inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
+              outputDateFormat: DateFormatter.dateFormatDDMMMYYYY,
+            ),
+            orderTotal: data.totalPrice?.setCurrency,
+            orderItems: data.items?.toString(),
+            orderQuantity: data.totalQuantity?.toString(),
 
-      /// Tab Index 1: Gemstone Orders Only
-      else if (tabController.index == 1) {
-        return data.commodity == Commodity.gemstone.value;
-      }
-
-      /// Tab Index 2: All other commodities (excluding Diamond & Gemstone)
-      else if (tabController.index == 2) {
-        return data.commodity != Commodity.diamond.value && data.commodity != Commodity.gemstone.value;
-      }
-      return false;
-    }).map<MyOrderDetailsModel>((OrderItem data) {
-      return MyOrderDetailsModel(
-        id: data.uniqueId?.toString(),
-        orderId: data.uniqueId?.toString(),
-        orderStatus: getOrderStatus(orderStatus: data.orderStatus ?? ''),
-        orderDate: data.createdAt?.changeDateFormat(
-            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
-        orderTotal: data.totalPrice?.setCurrency,
-        orderItems: data.items?.toString(),
-        orderQuantity: data.totalQuantity?.toString(),
-
-        /// Need to discuss for Image
-        orderImages: [data.createdByDetails?.profilePic ?? ''],
-        orderedBy: data.createdByDetails?.fullName ?? '',
-        commodity: data.commodity ?? '',
-      );
-    }).toList();
+            /// Need to discuss for Image
+            orderImages: [data.createdByDetails?.profilePic ?? ''],
+            orderedBy: data.createdByDetails?.fullName ?? '',
+            commodity: data.commodity ?? '',
+          );
+        })
+        .toList();
   }
 
   /// Sets up the filters for each tab
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response = await AppRepository(context).fetchOrderListingFilterOptionList();
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (AdvanceFilterOptionModel success) {
-      filterData.clear();
-      if (success.filters.isNotNullNorEmpty) {
-        for (Filters filterOption in success.filters ?? <Filters>[]) {
-          FilterData filter = FilterData(
-            name: filterOption.title,
-            code: filterOption.key,
-            inputType: filterOption.type,
-            filterType: filterOption.getFilterType(filterType: filterOption.type),
-            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
-          );
-          filterData.add(filter);
-        }
-
-        /// Parse the new filters list instead of referencing the map.
-        List.generate(tabs.length, (index) {
-          return appliedFilterData[index] = filterData.map((e) {
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (AdvanceFilterOptionModel success) {
+        filterData.clear();
+        if (success.filters.isNotNullNorEmpty) {
+          for (Filters filterOption in success.filters ?? <Filters>[]) {
             FilterData filter = FilterData(
-              code: e.code,
-              name: e.name,
-              inputType: e.inputType,
-              filterType: e.filterType,
-              dateRange: e.dateRange,
-              isAdvanceFilter: e.isAdvanceFilter,
-              minMaxValues: e.minMaxValues,
-              rangeValues: e.rangeValues,
-              subFilterCodes: e.subFilterCodes,
+              name: filterOption.title,
+              code: filterOption.key,
+              inputType: filterOption.type,
+              filterType: filterOption.getFilterType(filterType: filterOption.type),
+              secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
             );
-            filter.secondaryFilterData = e.secondaryFilterData?.map((se) {
-              SecondaryFilterData secondaryFilterData = SecondaryFilterData(
-                name: se.name,
-                code: se.code,
-                image: se.image,
-                isSelected: se.isSelected,
-              );
-              return secondaryFilterData;
-            }).toList();
-            return filter;
-          }).toList();
-        });
-      }
-    });
+            filterData.add(filter);
+          }
+
+          /// Parse the new filters list instead of referencing the map.
+          List.generate(tabs.length, (index) {
+            return appliedFilterData[index] =
+                filterData.map((e) {
+                  FilterData filter = FilterData(
+                    code: e.code,
+                    name: e.name,
+                    inputType: e.inputType,
+                    filterType: e.filterType,
+                    dateRange: e.dateRange,
+                    isAdvanceFilter: e.isAdvanceFilter,
+                    minMaxValues: e.minMaxValues,
+                    rangeValues: e.rangeValues,
+                    subFilterCodes: e.subFilterCodes,
+                  );
+                  filter.secondaryFilterData =
+                      e.secondaryFilterData?.map((se) {
+                        SecondaryFilterData secondaryFilterData = SecondaryFilterData(
+                          name: se.name,
+                          code: se.code,
+                          image: se.image,
+                          isSelected: se.isSelected,
+                        );
+                        return secondaryFilterData;
+                      }).toList();
+                  return filter;
+                }).toList();
+          });
+        }
+      },
+    );
   }
 
   /// Get secondary filter data

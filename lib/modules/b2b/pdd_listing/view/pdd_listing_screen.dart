@@ -50,10 +50,7 @@ class PddListingScreen extends StatelessWidget {
             controller: pddListingBloc.presentationSearchController,
             onValueChanges: (value) => pddListingBloc.add(PddListSearchEvent(context)),
             onFieldSubmitted: (value) => pddListingBloc.add(PddListSearchEvent(context)),
-            suffixIcon: SmartImage(
-              path: AppImages.icSearchThin,
-              padding: EdgeInsetsDirectional.all(14.w),
-            ),
+            suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(14.w)),
             onTapOutside: (value) => FocusScope.of(context).unfocus(),
           ),
         ),
@@ -92,19 +89,20 @@ class PddListingScreen extends StatelessWidget {
               },
             ),
           ],
-        )
+        ),
       ],
     );
   }
 
   Widget _buildPddList(PddListingBloc bloc, PddListingState state) {
     return BlocBuilder<PddListingBloc, PddListingState>(
-      buildWhen: (previous, current) =>
-          current is PddListingChangeListingTypeState ||
-          current is PddListLoadingMoreState ||
-          current is PddListLoadedMoreState ||
-          current is PddListingLoadedState ||
-          current is PddListLoadingState,
+      buildWhen:
+          (previous, current) =>
+              current is PddListingChangeListingTypeState ||
+              current is PddListLoadingMoreState ||
+              current is PddListLoadedMoreState ||
+              current is PddListingLoadedState ||
+              current is PddListLoadingState,
       builder: (context, state) {
         if (state is PddListLoadingState) {
           return const SmartCircularProgressIndicator();
@@ -141,27 +139,30 @@ class PddListingScreen extends StatelessWidget {
                   children: [
                     bloc.isGrid
                         ? PresentationGridItem(
-                            onTapMenuButton: () {
-                              _showMenuButtonTap(context, bloc, index);
-                            },
-                            margin: EdgeInsetsDirectional.only(
-                                bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
-                            onTap: () {
-                              bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
-                            },
-                            b2bCustomListingDataModel: bloc.presentationList[index])
-                        : B2BListingItem(
-                            margin: EdgeInsetsDirectional.only(
-                                bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
-                            onTapMenuButton: () {
-                              _showMenuButtonTap(context, bloc, index);
-                            },
-                            type: B2BListingType.presentationListingType,
-                            listingItemModel: bloc.presentationList[index],
-                            onTap: () {
-                              bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
-                            },
+                          onTapMenuButton: () {
+                            _showMenuButtonTap(context, bloc, index);
+                          },
+                          margin: EdgeInsetsDirectional.only(
+                            bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h,
                           ),
+                          onTap: () {
+                            bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
+                          },
+                          b2bCustomListingDataModel: bloc.presentationList[index],
+                        )
+                        : B2BListingItem(
+                          margin: EdgeInsetsDirectional.only(
+                            bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h,
+                          ),
+                          onTapMenuButton: () {
+                            _showMenuButtonTap(context, bloc, index);
+                          },
+                          type: B2BListingType.presentationListingType,
+                          listingItemModel: bloc.presentationList[index],
+                          onTap: () {
+                            bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
+                          },
+                        ),
                     if (state is PddListLoadingMoreState && index == bloc.presentationList.length - 1)
                       const SmartCircularProgressIndicator(),
                   ],
@@ -194,29 +195,44 @@ class PddListingScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (bloc.presentationList[index].status == ProjectStatus.pending)
-                _buildPopupOption(mainContext, text: APPStrings.approvePresentation.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                _buildPopupOption(
+                  mainContext,
+                  text: APPStrings.approvePresentation.tr,
+                  style: orderPopupStyle.optionTextStyle,
+                  onTap: () {
+                    context.pop();
+                    handleApproveMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
+                  },
+                ),
+              _buildPopupOption(
+                context,
+                text: APPStrings.deletePresentation.tr,
+                style: orderPopupStyle.cancelTextStyle,
+                onTap: () {
                   context.pop();
-                  handleApproveMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
-                }),
-              _buildPopupOption(context, text: APPStrings.deletePresentation.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
-                context.pop();
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (bottomSheetContext) => ConfirmationDialog(
-                    title: APPStrings.removeSelectedPresentation.tr,
-                    message: APPStrings.removeSelectedPresentationMsg.tr,
-                    onApproved: () {
-                      bloc.add(PddListDeleteEvent(
-                          context: bottomSheetContext, presentationNumber: bloc.presentationList[index].strPresentationNumber ?? ''));
-                    },
-                    onDenied: () {
-                      bottomSheetContext.pop();
-                    },
-                    onApprovedText: APPStrings.delete.tr,
-                    onDeniedText: APPStrings.cancel.tr,
-                  ),
-                );
-              }),
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    builder:
+                        (bottomSheetContext) => ConfirmationDialog(
+                          title: APPStrings.removeSelectedPresentation.tr,
+                          message: APPStrings.removeSelectedPresentationMsg.tr,
+                          onApproved: () {
+                            bloc.add(
+                              PddListDeleteEvent(
+                                context: bottomSheetContext,
+                                presentationNumber: bloc.presentationList[index].strPresentationNumber ?? '',
+                              ),
+                            );
+                          },
+                          onDenied: () {
+                            bottomSheetContext.pop();
+                          },
+                          onApprovedText: APPStrings.delete.tr,
+                          onDeniedText: APPStrings.cancel.tr,
+                        ),
+                  );
+                },
+              ),
             ],
           ),
         );
@@ -249,18 +265,19 @@ class PddListingScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
-      builder: (bottomSheetContext) => ConfirmationDialog(
-        title: APPStrings.presentationDialogTitle.tr,
-        message: APPStrings.presentationDialogMsg.tr,
-        onDenied: () {
-          bottomSheetContext.pop();
-        },
-        onApproved: () {
-          bloc.add(PddListReviewStateEvent(context: bottomSheetContext, isApproved: true, presentationNumber: strPresentationNumber));
-        },
-        onApprovedText: APPStrings.approve.tr,
-        onDeniedText: APPStrings.cancel.tr,
-      ),
+      builder:
+          (bottomSheetContext) => ConfirmationDialog(
+            title: APPStrings.presentationDialogTitle.tr,
+            message: APPStrings.presentationDialogMsg.tr,
+            onDenied: () {
+              bottomSheetContext.pop();
+            },
+            onApproved: () {
+              bloc.add(PddListReviewStateEvent(context: bottomSheetContext, isApproved: true, presentationNumber: strPresentationNumber));
+            },
+            onApprovedText: APPStrings.approve.tr,
+            onDeniedText: APPStrings.cancel.tr,
+          ),
     );
   }
 
@@ -274,13 +291,14 @@ class PddListingScreen extends StatelessWidget {
             onFilterTap: () {
               Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (_) => AdvanceFilterScreen(
-                  onApply: (value) {
-                    if (value != null && value is List<FilterData>) {
-                      pddListingBloc.add(FilterPresentationEvent(context, value));
-                    }
-                  },
-                ),
+                builder:
+                    (_) => AdvanceFilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          pddListingBloc.add(FilterPresentationEvent(context, value));
+                        }
+                      },
+                    ),
               );
             },
           );

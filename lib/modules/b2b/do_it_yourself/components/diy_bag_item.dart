@@ -64,11 +64,7 @@ class DIYBagItem extends StatelessWidget {
             ],
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                productImageSection(style),
-                SizedBox(width: 16.w),
-                productDetailsSection(style, context),
-              ],
+              children: [productImageSection(style), SizedBox(width: 16.w), productDetailsSection(style, context)],
             ),
             SizedBox(height: 10.h),
             Container(
@@ -76,17 +72,18 @@ class DIYBagItem extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                      child: SmartButton(
-                    activeBackgroundColor: style.backgroundColor,
-                    title: APPStrings.remove.tr,
-                    titleStyle: style.removeBagTextStyle,
-                    borderRadius: const BorderRadius.all(Radius.zero),
-                    onTap: () {
-                      if (onRemoveTap != null) {
-                        onRemoveTap!();
-                      }
-                    },
-                  )),
+                    child: SmartButton(
+                      activeBackgroundColor: style.backgroundColor,
+                      title: APPStrings.remove.tr,
+                      titleStyle: style.removeBagTextStyle,
+                      borderRadius: const BorderRadius.all(Radius.zero),
+                      onTap: () {
+                        if (onRemoveTap != null) {
+                          onRemoveTap!();
+                        }
+                      },
+                    ),
+                  ),
                   Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
                   if (isEnableAddToWishList)
                     Expanded(
@@ -154,13 +151,10 @@ class DIYBagItem extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: productDetails.diyBagItemProductDetailsList!.length,
-                separatorBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                  child: Divider(),
-                ),
-                itemBuilder: (context, index) =>
-                    _displayProductView(model: productDetails.diyBagItemProductDetailsList![index], style: style),
-              )
+                separatorBuilder: (context, index) => Padding(padding: EdgeInsets.symmetric(vertical: 12.h), child: Divider()),
+                itemBuilder:
+                    (context, index) => _displayProductView(model: productDetails.diyBagItemProductDetailsList![index], style: style),
+              ),
             ],
           ],
         ),
@@ -197,11 +191,11 @@ class DIYBagItem extends StatelessWidget {
                       SizedBox(width: 10.w),
                       Flexible(
                         child: SmartText(model.finalPrice, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.checkedPriceStyle),
-                      )
+                      ),
                     ],
                   ],
-                )
-              ]
+                ),
+              ],
             ],
           ),
         ),

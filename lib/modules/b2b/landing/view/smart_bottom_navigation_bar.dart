@@ -15,14 +15,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: style.backgroundColor,
         border: BorderDirectional(top: BorderSide(color: style.borderColor, width: 1.w)),
-        boxShadow: [
-          BoxShadow(
-            color: style.boxShadowColor,
-            blurRadius: 16.r,
-            spreadRadius: 0.r,
-            offset: const Offset(0, -2),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: style.boxShadowColor, blurRadius: 16.r, spreadRadius: 0.r, offset: const Offset(0, -2))],
       ),
       child: BlocBuilder<LandingBloc, LandingState>(
         bloc: landingBloc,
@@ -39,20 +32,21 @@ class SmartBottomNavigationBar extends StatelessWidget {
             selectedLabelStyle: style.labelStyle,
             unselectedLabelStyle: style.unselectedLabelStyle,
             selectedItemColor: style.labelStyle.color,
-            items: landingBloc.bottomNavigationBarDataModel.map((BottomNavigationBarDataModel model) {
-              if (model.isProfile) {
-                return BottomNavigationBarItem(
-                  icon: _buildProfileIcon(style, false, model.icon),
-                  activeIcon: _buildProfileIcon(style, true, model.icon),
-                  label: model.label.tr,
-                );
-              }
-              return BottomNavigationBarItem(
-                icon: _getBottomNavigationBarIcon(model, landingBloc, style: style),
-                activeIcon: _getBottomNavigationBarIcon(model, landingBloc, isActiveIcon: true, style: style),
-                label: model.label.tr,
-              );
-            }).toList(),
+            items:
+                landingBloc.bottomNavigationBarDataModel.map((BottomNavigationBarDataModel model) {
+                  if (model.isProfile) {
+                    return BottomNavigationBarItem(
+                      icon: _buildProfileIcon(style, false, model.icon),
+                      activeIcon: _buildProfileIcon(style, true, model.icon),
+                      label: model.label.tr,
+                    );
+                  }
+                  return BottomNavigationBarItem(
+                    icon: _getBottomNavigationBarIcon(model, landingBloc, style: style),
+                    activeIcon: _getBottomNavigationBarIcon(model, landingBloc, isActiveIcon: true, style: style),
+                    label: model.label.tr,
+                  );
+                }).toList(),
           );
         },
       ),
@@ -62,12 +56,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
     /// By default, the splash effect is disabled. also the BottomNavigationBar has default splash effect.
     return isShowSplashEffect
         ? child
-        : Theme(
-            data: ThemeData(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-            ),
-            child: child);
+        : Theme(data: ThemeData(splashColor: Colors.transparent, highlightColor: Colors.transparent), child: child);
   }
 
   Widget _buildProfileIcon(TabBarStyle style, bool isActive, String iconPath) {
@@ -77,12 +66,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(50.r),
       ),
       clipBehavior: Clip.antiAlias,
-      child: SmartImage(
-        path: iconPath,
-        imageBorderRadius: BorderRadius.circular(50.r),
-        height: 24.w,
-        width: 24.w,
-      ),
+      child: SmartImage(path: iconPath, imageBorderRadius: BorderRadius.circular(50.r), height: 24.w, width: 24.w),
     );
   }
 
@@ -95,18 +79,12 @@ class SmartBottomNavigationBar extends StatelessWidget {
     return BlocBuilder<LandingBloc, LandingState>(
       buildWhen: (previous, current) => current is LandingChangeMyBagCountState,
       builder: (context, state) {
-        Widget item = SmartImage(
-          path: isActiveIcon ? model.activeIcon : model.icon,
-          matchTextDirection: true,
-        );
+        Widget item = SmartImage(path: isActiveIcon ? model.activeIcon : model.icon, matchTextDirection: true);
         int notificationCount = model.notificationCount ?? 0;
         if (notificationCount > 0) {
           item = Badge(
             padding: EdgeInsetsDirectional.symmetric(horizontal: 6.w),
-            label: SmartText(
-              notificationCount > 9 ? '9+' : notificationCount.toString(),
-              color: style.backgroundColor,
-            ),
+            label: SmartText(notificationCount > 9 ? '9+' : notificationCount.toString(), color: style.backgroundColor),
             child: item,
           );
         }

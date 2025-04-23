@@ -39,11 +39,7 @@ final class EditAddressEvent extends AddressListEvent {
   final BuildContext context;
   final bool isBilling;
 
-  const EditAddressEvent(
-    this.index,
-    this.context, {
-    this.isBilling = false,
-  });
+  const EditAddressEvent(this.index, this.context, {this.isBilling = false});
 
   @override
   List<Object> get props => [index, context];

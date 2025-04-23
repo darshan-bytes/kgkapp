@@ -33,10 +33,7 @@ final class AddAddressChangeCountryEvent extends AddAddressEvent {
   final BuildContext context;
   final Country selectedCountry;
 
-  const AddAddressChangeCountryEvent({
-    required this.context,
-    required this.selectedCountry,
-  });
+  const AddAddressChangeCountryEvent({required this.context, required this.selectedCountry});
 
   @override
   List<Object> get props => [context, selectedCountry];

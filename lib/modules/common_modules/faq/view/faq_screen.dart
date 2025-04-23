@@ -13,43 +13,44 @@ class FaqScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is FaqLoadedState,
         builder: (context, state) {
           return SafeArea(
-            child: faqBloc.isLoading
-                ? SmartCircularProgressIndicator()
-                : SmartSingleChildScrollView(
-                    child: Container(
-                      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          SizedBox(height: 24.h),
-                          SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.titleStyle),
+            child:
+                faqBloc.isLoading
+                    ? SmartCircularProgressIndicator()
+                    : SmartSingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SizedBox(height: 24.h),
+                            SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.titleStyle),
 
-                          /// Below code is commented as search functionality is not implemented in the API for now
-                          /*SizedBox(height: 24.h),
+                            /// Below code is commented as search functionality is not implemented in the API for now
+                            /*SizedBox(height: 24.h),
                           SmartTextField(
                             controller: faqBloc.searchController,
                             suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(14.w)),
                           ),*/
-                          SizedBox(height: 16.h),
-                          BlocBuilder<FaqBloc, FaqState>(
-                            buildWhen: (previous, current) => current is FaqLoadedState,
-                            builder: (context, state) {
-                              return ListView.separated(
-                                shrinkWrap: true,
-                                primary: false,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: faqBloc.faq.length,
-                                itemBuilder: (_, index) => _buildFAQSection(faqBloc, style, index),
-                                separatorBuilder: (_, index) => SizedBox(height: 24.h),
-                              );
-                            },
-                          ),
-                          SizedBox(height: 32.h),
-                          _buildStillNeedSection(context, style, faqBloc),
-                        ],
+                            SizedBox(height: 16.h),
+                            BlocBuilder<FaqBloc, FaqState>(
+                              buildWhen: (previous, current) => current is FaqLoadedState,
+                              builder: (context, state) {
+                                return ListView.separated(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: faqBloc.faq.length,
+                                  itemBuilder: (_, index) => _buildFAQSection(faqBloc, style, index),
+                                  separatorBuilder: (_, index) => SizedBox(height: 24.h),
+                                );
+                              },
+                            ),
+                            SizedBox(height: 32.h),
+                            _buildStillNeedSection(context, style, faqBloc),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
           );
         },
       ),
@@ -73,18 +74,8 @@ class FaqScreen extends StatelessWidget {
             final FAQ faq = faqBloc.faq[index].faqs![faqIndex];
             return SmartExpansionTile(
               onExpansionChanged: (value) {},
-              title: SmartText(
-                faq.question,
-                style: style.questionStyle,
-                optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
-              ),
-              children: [
-                SmartText(
-                  faq.answer,
-                  style: style.answerStyle,
-                  optionalPadding: EdgeInsetsDirectional.only(bottom: 17.h),
-                ),
-              ],
+              title: SmartText(faq.question, style: style.questionStyle, optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h)),
+              children: [SmartText(faq.answer, style: style.answerStyle, optionalPadding: EdgeInsetsDirectional.only(bottom: 17.h))],
             );
           },
           separatorBuilder: (context, index) => const Divider(),
@@ -124,12 +115,7 @@ class FaqScreen extends StatelessWidget {
     if (options.length > 1) {
       Utils.showSmartModalBottomSheet(
         context: currentContext,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
-          ),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
         builder: (context) {
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -138,10 +124,7 @@ class FaqScreen extends StatelessWidget {
               SizedBox(height: 24.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: SmartText(
-                  APPStrings.selectContact.tr,
-                  style: AppTheme.of(context).faqStyle.titleStyle,
-                ),
+                child: SmartText(APPStrings.selectContact.tr, style: AppTheme.of(context).faqStyle.titleStyle),
               ),
               SizedBox(height: 16.h),
               ListView.separated(
