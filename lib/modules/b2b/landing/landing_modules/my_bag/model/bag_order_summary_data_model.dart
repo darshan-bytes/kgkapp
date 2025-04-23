@@ -1,12 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class BagOrderSummaryDataModel {
-  BagOrderSummaryDataModel({
-    required this.subTotal,
-    required this.totalAmount,
-    required this.charges,
-    required this.promoCode,
-  });
+  BagOrderSummaryDataModel({required this.subTotal, required this.totalAmount, required this.charges, required this.promoCode});
 
   final String? subTotal;
   final String? totalAmount;
@@ -23,11 +18,11 @@ class BagOrderSummaryDataModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "subTotal": subTotal,
-        "totalAmount": totalAmount,
-        "charges": charges.map((x) => x.toJson()).toList(),
-        "promoCode": promoCode?.toJson(),
-      };
+    "subTotal": subTotal,
+    "totalAmount": totalAmount,
+    "charges": charges.map((x) => x.toJson()).toList(),
+    "promoCode": promoCode?.toJson(),
+  };
 }
 
 class BagOrderCharge {
@@ -38,6 +33,7 @@ class BagOrderCharge {
     required this.value,
     required this.percentage,
     required this.fromPercentage,
+    required this.symbol,
   });
 
   final String? id;
@@ -46,6 +42,7 @@ class BagOrderCharge {
   final double? value;
   final double? percentage;
   final bool? fromPercentage;
+  final String? symbol;
 
   factory BagOrderCharge.fromJson(Map<String, dynamic> json) {
     return BagOrderCharge(
@@ -55,17 +52,19 @@ class BagOrderCharge {
       value: json["value"]?.toString().toDouble,
       percentage: json["percentage"]?.toString().toDouble,
       fromPercentage: json["from_percentage"],
+      symbol: json["symbol"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "title": title,
-        "display_value": displayValue,
-        "value": value,
-        "percentage": percentage,
-        "from_percentage": fromPercentage,
-      };
+    "_id": id,
+    "title": title,
+    "display_value": displayValue,
+    "value": value,
+    "percentage": percentage,
+    "from_percentage": fromPercentage,
+    "symbol": symbol,
+  };
 
   @override
   bool operator ==(Object other) =>
@@ -73,4 +72,11 @@ class BagOrderCharge {
 
   @override
   int get hashCode => id.hashCode ^ title.hashCode;
+
+  String? get displaySymbol =>
+      (symbol == 'add'
+          ? "+ "
+          : symbol == 'sub'
+          ? "- "
+          : null);
 }

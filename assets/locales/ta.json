@@ -552,7 +552,7 @@
   "mob_enter_address_or_pincode": "முகவரி அல்லது பின்கோட் உள்ளிடவும்",
   "mob_use_current_location": "தற்போதைய இருப்பிடத்தைப் பயன்படுத்தவும்",
   "mob_get_directions": "திசைகளைப் பெறுங்கள்",
-  "mob_from_your_location_x": "Your உங்கள் இருப்பிடத்திலிருந்து 0}",
+  "mob_from_your_location_x": "உங்கள் இருப்பிடத்திலிருந்து {#} கிலோமீட்டர்கள்",
   "mob_version_history": "பதிப்பு வரலாறு",
   "mob_catalogue": "பட்டியல்",
   "mob_search_digital_catalogue": "தேடல் பட்டியல்",

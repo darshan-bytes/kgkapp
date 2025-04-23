@@ -28,7 +28,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       //B2B
       // emailController.text = "joseph.murphy@yopmail.com";
 
-      emailController.text = "customer48008@kgkmail.com";
+      // emailController.text = "customer48008@kgkmail.com";
       // emailController.text = "kachinbali@yopmail.com";
       // emailController.text = "karthigeyan.m@sparklesoft.co.in"; // Siva User
 
@@ -39,7 +39,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // emailController.text = "parash2@yopmail.com"; // Jewellery
 
       passwordController.text = "Asdf@1234";
-      passwordController.text = "Test@123";
+      // passwordController.text = "Test@123";
       // passwordController.text = "Admin@123";
       // passwordController.text = "123";
     }
@@ -65,28 +65,31 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     Map<String, dynamic> params = {
       ApiKey.email: emailController.text.trim(),
       ApiKey.password: passwordController.text.trim(),
-      ApiKey.rememberMe: true
+      ApiKey.rememberMe: true,
     };
 
     await UserRepository(event.context).loginUser(params).then((value) async {
-      await value?.fold((l) {
-        ErrorResponse errorModel = l;
-        Utils.showMessage(errorModel.message);
-        emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
-      }, (r) async {
-        if (r.isVerified == false) {
-          //TODO: Handle OTP Verification
-          Utils.showMessage(APPStrings.yourAccountIsNotVerified.tr);
-          event.context.pushNamed(AppRoutes.otpVerificationPage, arguments: {
-            RoutesData.email: emailController.text.trim(),
-            RoutesData.isFromSignIn: true,
-          });
-        } else {
-          await Utils.handleAuthSuccessResponse(event.context, r, isFromLoginRequired);
-          clearAllFields();
-          emit(const SignInSuccessState());
-        }
-      });
+      await value?.fold(
+        (l) {
+          ErrorResponse errorModel = l;
+          Utils.showMessage(errorModel.message);
+          emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
+        },
+        (r) async {
+          if (r.isVerified == false) {
+            //TODO: Handle OTP Verification
+            Utils.showMessage(APPStrings.yourAccountIsNotVerified.tr);
+            event.context.pushNamed(
+              AppRoutes.otpVerificationPage,
+              arguments: {RoutesData.email: emailController.text.trim(), RoutesData.isFromSignIn: true},
+            );
+          } else {
+            await Utils.handleAuthSuccessResponse(event.context, r, isFromLoginRequired);
+            clearAllFields();
+            emit(const SignInSuccessState());
+          }
+        },
+      );
     });
   }
 

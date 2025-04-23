@@ -8,52 +8,52 @@ class AddressListScreen extends StatelessWidget {
     final AddressListBloc addressListBloc = BlocProvider.of<AddressListBloc>(context);
     final AddressListStyle style = AppTheme.of(context).addressListStyle;
     return Scaffold(
-        appBar: SmartAppBar(title: APPStrings.checkout.tr),
-        body: SafeArea(
-          child: BlocBuilder<AddressListBloc, AddressListState>(
-            buildWhen: (previous, current) => current is AddressListLoadedState,
-            builder: (context, state) {
-              if (state is! AddressListLoadedState) return const SizedBox.shrink();
-              return SmartSingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const CheckoutHeaderProgressbar(),
-                    SizedBox(height: 22.h),
-                    Padding(
-                      padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          SmartText(APPStrings.shippingAddress.tr, style: style.addressTypeTitleStyle),
-                          _buildShippingAddressList(addressListBloc, style),
-                          const Divider(),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SelectionButton(
-                                onTap: () {
-                                  addressListBloc.add(AddNewAddressEvent(context));
-                                },
-                                padding: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
-                                isSelected: false,
-                                title: APPStrings.addAddress.tr,
-                                image: AppImages.icPlus,
-                                selectedButtonBorderColor: style.whiteColor,
-                                unselectedButtonBorderColor: style.whiteColor,
-                              ),
-                            ],
-                          ),
-                          const Divider(),
-                          SizedBox(height: 24.h),
-                          _buildIsBillingAddressSameAsSelected(addressListBloc, style),
-                        ],
-                      ),
+      appBar: SmartAppBar(title: APPStrings.checkout.tr),
+      body: SafeArea(
+        child: BlocBuilder<AddressListBloc, AddressListState>(
+          buildWhen: (previous, current) => current is AddressListLoadedState,
+          builder: (context, state) {
+            if (state is! AddressListLoadedState) return const SizedBox.shrink();
+            return SmartSingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const CheckoutHeaderProgressbar(),
+                  SizedBox(height: 22.h),
+                  Padding(
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SmartText(APPStrings.shippingAddress.tr, style: style.addressTypeTitleStyle),
+                        _buildShippingAddressList(addressListBloc, style),
+                        const Divider(),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SelectionButton(
+                              onTap: () {
+                                addressListBloc.add(AddNewAddressEvent(context));
+                              },
+                              padding: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
+                              isSelected: false,
+                              title: APPStrings.addAddress.tr,
+                              image: AppImages.icPlus,
+                              selectedButtonBorderColor: style.whiteColor,
+                              unselectedButtonBorderColor: style.whiteColor,
+                            ),
+                          ],
+                        ),
+                        const Divider(),
+                        SizedBox(height: 24.h),
+                        _buildIsBillingAddressSameAsSelected(addressListBloc, style),
+                      ],
                     ),
-                    // Divider(color: style.backgroundColor, thickness: 8.h, height: 56.h),
+                  ),
 
-                    /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
-                    /* Padding(
+                  /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
+                  // Divider(color: style.backgroundColor, thickness: 8.h, height: 56.h),
+                  /* Padding(
                       padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
                       child: Column(
                         children: [
@@ -96,36 +96,32 @@ class AddressListScreen extends StatelessWidget {
                         ],
                       ),
                     ),*/
-                    if (addressListBloc.bagOrderSummaryData != null)
-                      _buildOrderSummary(
-                        style: style,
-                        context: context,
-                        addressListBloc: addressListBloc,
-                      ),
-                  ],
-                ),
-              );
-            },
+                  if (addressListBloc.bagOrderSummaryData != null)
+                    _buildOrderSummary(style: style, context: context, addressListBloc: addressListBloc),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SmartButton(
+                onTap: () {
+                  addressListBloc.add(ContinueToPaymentEvent(context: context));
+                },
+                title: APPStrings.strContinue.tr,
+              ),
+              SizedBox(height: 16.h),
+            ],
           ),
         ),
-        bottomNavigationBar: SafeArea(
-          child: Padding(
-            padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SmartButton(
-                  onTap: () {
-                    // context.pushNamed(AppRoutes.paymentPage);
-                    addressListBloc.add(ContinueToPaymentEvent(context: context));
-                  },
-                  title: APPStrings.strContinue.tr,
-                ),
-                SizedBox(height: 16.h),
-              ],
-            ),
-          ),
-        ));
+      ),
+    );
   }
 
   Widget _buildShippingAddressList(AddressListBloc addressListBloc, AddressListStyle style) {
@@ -140,8 +136,9 @@ class AddressListScreen extends StatelessWidget {
           primary: false,
           itemBuilder: (context, index) {
             return BlocBuilder<AddressListBloc, AddressListState>(
-              buildWhen: (previous, current) =>
-                  current is ChangeSelectedAddressState && !current.isBilling && (current.index == index || current.oldIndex == index),
+              buildWhen:
+                  (previous, current) =>
+                      current is ChangeSelectedAddressState && !current.isBilling && (current.index == index || current.oldIndex == index),
               builder: (context, state) {
                 final AddressDetails address = addressListBloc.shippingAddressList[index];
                 return AddressSelectionWidget(
@@ -156,21 +153,23 @@ class AddressListScreen extends StatelessWidget {
                   },
                   onDelete: () {
                     Utils.showSmartModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-                        ),
-                        builder: (builderContext) => ConfirmationDialog(
-                              title: APPStrings.deleteAddress.tr,
-                              message: APPStrings.deleteAddressMsg.tr,
-                              onApproved: () {
-                                builderContext.pop();
-                                addressListBloc.add(DeleteAddressEvent(context: context, index: index));
-                              },
-                              onDenied: () => builderContext.pop(),
-                              onApprovedText: APPStrings.delete.tr,
-                              onDeniedText: APPStrings.cancel.tr,
-                            ));
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+                      ),
+                      builder:
+                          (builderContext) => ConfirmationDialog(
+                            title: APPStrings.deleteAddress.tr,
+                            message: APPStrings.deleteAddressMsg.tr,
+                            onApproved: () {
+                              builderContext.pop();
+                              addressListBloc.add(DeleteAddressEvent(context: context, index: index));
+                            },
+                            onDenied: () => builderContext.pop(),
+                            onApprovedText: APPStrings.delete.tr,
+                            onDeniedText: APPStrings.cancel.tr,
+                          ),
+                    );
                   },
                 );
               },
@@ -194,8 +193,9 @@ class AddressListScreen extends StatelessWidget {
           primary: false,
           itemBuilder: (context, index) {
             return BlocBuilder<AddressListBloc, AddressListState>(
-              buildWhen: (previous, current) =>
-                  current is ChangeSelectedAddressState && current.isBilling && (current.index == index || current.oldIndex == index),
+              buildWhen:
+                  (previous, current) =>
+                      current is ChangeSelectedAddressState && current.isBilling && (current.index == index || current.oldIndex == index),
               builder: (context, state) {
                 final AddressDetails address = addressListBloc.billingAddressList[index];
                 return AddressSelectionWidget(
@@ -210,21 +210,23 @@ class AddressListScreen extends StatelessWidget {
                   },
                   onDelete: () {
                     Utils.showSmartModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
-                        ),
-                        builder: (builderContext) => ConfirmationDialog(
-                              title: APPStrings.deleteAddress.tr,
-                              message: APPStrings.deleteAddressMsg.tr,
-                              onApproved: () {
-                                builderContext.pop();
-                                addressListBloc.add(DeleteAddressEvent(context: context, index: index));
-                              },
-                              onDenied: () => builderContext.pop(),
-                              onApprovedText: APPStrings.delete.tr,
-                              onDeniedText: APPStrings.cancel.tr,
-                            ));
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+                      ),
+                      builder:
+                          (builderContext) => ConfirmationDialog(
+                            title: APPStrings.deleteAddress.tr,
+                            message: APPStrings.deleteAddressMsg.tr,
+                            onApproved: () {
+                              builderContext.pop();
+                              addressListBloc.add(DeleteAddressEvent(context: context, index: index));
+                            },
+                            onDenied: () => builderContext.pop(),
+                            onApprovedText: APPStrings.delete.tr,
+                            onDeniedText: APPStrings.cancel.tr,
+                          ),
+                    );
                   },
                 );
               },
@@ -262,11 +264,7 @@ class AddressListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderSummary({
-    required AddressListStyle style,
-    required BuildContext context,
-    required AddressListBloc addressListBloc,
-  }) {
+  Widget _buildOrderSummary({required AddressListStyle style, required BuildContext context, required AddressListBloc addressListBloc}) {
     addressListBloc.add(OrderSummaryDataRefreshEvent(context: context));
     return BlocBuilder<AddressListBloc, AddressListState>(
       buildWhen: (previous, current) => current is AddressListLoadedState,
@@ -274,16 +272,14 @@ class AddressListScreen extends StatelessWidget {
         return OrderSummary(
           onApplyPromoCode: () {},
           promoCode: addressListBloc.bagOrderSummaryData?.promoCode,
-          items: List.generate(
-            addressListBloc.bagOrderSummaryData?.charges.length ?? 0,
-            (index) {
-              BagOrderCharge? bagOrderCharge = addressListBloc.bagOrderSummaryData?.charges[index];
-              return OrderSummaryItem(
-                title: bagOrderCharge?.title ?? '',
-                value: bagOrderCharge?.displayValue?.setCurrency ?? '',
-              );
-            },
-          ).toList(),
+          items:
+              List.generate(addressListBloc.bagOrderSummaryData?.charges.length ?? 0, (index) {
+                BagOrderCharge? bagOrderCharge = addressListBloc.bagOrderSummaryData?.charges[index];
+                return OrderSummaryItem(
+                  title: bagOrderCharge?.title ?? '',
+                  value: "${bagOrderCharge?.displaySymbol ?? ''}${bagOrderCharge?.displayValue?.setCurrency ?? ''}",
+                );
+              }).toList(),
           totalPrice: addressListBloc.bagOrderSummaryData?.totalAmount?.setCurrency ?? '',
           subTotalPrice: addressListBloc.bagOrderSummaryData?.subTotal?.setCurrency ?? '',
         );

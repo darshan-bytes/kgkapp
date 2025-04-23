@@ -31,6 +31,8 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
   double userLat = 0.0;
   double userLong = 0.0;
 
+  ValueKey mapKey = const ValueKey('mapKey');
+
   FindStoreBloc() : super(FindStoreInitial()) {
     on<FindStoreInitialEvent>(_findStoreInitialEvent);
     on<FindStoreShowFullAddressEvent>(_findStoreShowFullAddressEvent);
@@ -48,24 +50,28 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
 
     if (position == null) return;
 
-    List<RetailStoreModel> dataList =
-        await findRetailStore(event.context, position.latitude, position.longitude, useCurrentLocation: event.useCurrentLocation);
-    addressList.addAll(dataList.map((e) {
-      _addMarker(e.latitude, e.longitude, e.name);
-      return AddressModel(
+    List<RetailStoreModel> dataList = await findRetailStore(
+      event.context,
+      position.latitude,
+      position.longitude,
+      useCurrentLocation: event.useCurrentLocation,
+    );
+    addressList.addAll(
+      dataList.map((e) {
+        _addMarker(e.latitude, e.longitude, e.name);
+        return AddressModel(
           storeName: e.name,
           storeDistance: e.distance?.toStringAsFixed(2),
           storeAddress: "${e.address2 != null && e.address2!.isNotEmpty ? '${e.address2}, ' : ''}${e.address1 ?? ''}",
           isExpanded: false,
           addressDetailsKey: GlobalKey<SmartExpansionTileState>(),
           latitude: e.latitude,
-          longitude: e.longitude);
-    }).toList());
+          longitude: e.longitude,
+        );
+      }).toList(),
+    );
     if (event.useCurrentLocation) {
-      myCameraPosition = CameraPosition(
-        target: LatLng(position.latitude, position.longitude),
-        zoom: AppConst.zoomPosition,
-      );
+      myCameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude), zoom: AppConst.zoomPosition);
       final GoogleMapController controller = await mapController.future;
       await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
     }
@@ -131,29 +137,38 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     emit(FindStoreChangeTypeState());
   }
 
-  Future<List<RetailStoreModel>> findRetailStore(BuildContext context, double latitude, double longitude,
-      {bool useCurrentLocation = false, bool isShowLoader = true, bool isForceFetch = false}) async {
+  Future<List<RetailStoreModel>> findRetailStore(
+    BuildContext context,
+    double latitude,
+    double longitude, {
+    bool useCurrentLocation = false,
+    bool isShowLoader = true,
+    bool isForceFetch = false,
+  }) async {
     List<RetailStoreModel> dataList = [];
     try {
       final Map<String, dynamic> body = {
         ApiKey.filters: {
           ApiKey.dynamicObject: {
-            ApiKey.latLong: [latitude, longitude]
-          }
+            ApiKey.latLong: [latitude, longitude],
+          },
         },
         ApiKey.search: "",
         ApiKey.pagination: {ApiKey.limit: AppConst.pageLimit50, ApiKey.page: paginationScrollController.currentPage.toString()},
-        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()},
       };
       Either<ErrorResponse, PaginationData<RetailStoreModel>>? response = await AppRepository(context).getRetailStore(body: body);
-      response?.fold((l) {
-        dataList = [];
-        Utils.showMessage(l.message);
-      }, (success) {
-        dataList = success.dataList as List<RetailStoreModel>;
-        totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
-        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      });
+      response?.fold(
+        (l) {
+          dataList = [];
+          Utils.showMessage(l.message);
+        },
+        (success) {
+          dataList = success.dataList as List<RetailStoreModel>;
+          totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+          paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+        },
+      );
     } catch (e) {
       printWrapped(e.toString());
     }
@@ -172,10 +187,7 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
   void _getDirectionEvent(GetDirectionEvent event, Emitter<FindStoreState> emit) async {
     String googleUrl = Utils.getGoogleMapUrl(latitude: event.latitude, longitude: event.longitude);
     if (await canLaunchUrl(Uri.parse(googleUrl))) {
-      await launchUrl(
-        Uri.parse(googleUrl),
-        mode: LaunchMode.externalApplication,
-      );
+      await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not open the map.';
     }
@@ -211,10 +223,7 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     await _populateAddressList(event.context, latitude, longitude);
 
     // Update camera position
-    myCameraPosition = CameraPosition(
-      target: LatLng(latitude, longitude),
-      zoom: AppConst.zoomPosition,
-    );
+    myCameraPosition = CameraPosition(target: LatLng(latitude, longitude), zoom: AppConst.zoomPosition);
 
     if (event.isCurrentLocation) {
       event.context.setAppLoading(false);
@@ -227,25 +236,28 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
   }
 
-// Extract common functionality into a separate method
+  // Extract common functionality into a separate method
   Future<void> _populateAddressList(BuildContext context, double latitude, double longitude) async {
     final dataList = await findRetailStore(context, latitude, longitude);
 
     for (final store in dataList) {
       _addMarker(store.latitude, store.longitude, store.name);
 
-      addressList.add(AddressModel(
+      addressList.add(
+        AddressModel(
           storeName: store.name,
           storeDistance: store.distance?.toStringAsFixed(2),
           storeAddress: _formatAddress(store.address1, store.address2),
           isExpanded: false,
           addressDetailsKey: GlobalKey<SmartExpansionTileState>(),
           latitude: store.latitude,
-          longitude: store.longitude));
+          longitude: store.longitude,
+        ),
+      );
     }
   }
 
-// Helper method to format address
+  // Helper method to format address
   String _formatAddress(String? address1, String? address2) {
     final hasAddress2 = address2 != null && address2.isNotEmpty;
     return hasAddress2 ? '$address2, ${address1 ?? ''}' : address1 ?? '';

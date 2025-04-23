@@ -552,7 +552,7 @@
   "mob_enter_address_or_pincode": "ป้อนที่อยู่หรือ Pincode",
   "mob_use_current_location": "ใช้ตำแหน่งปัจจุบัน",
   "mob_get_directions": "รับเส้นทาง",
-  "mob_from_your_location_x": "{#} จากตำแหน่งของคุณ",
+  "mob_from_your_location_x": "{#} กิโลเมตรจากที่ตั้งของคุณ",
   "mob_version_history": "ประวัติเวอร์ชัน",
   "mob_catalogue": "แคตตาล็อก",
   "mob_search_digital_catalogue": "ค้นหาแคตตาล็อก",
