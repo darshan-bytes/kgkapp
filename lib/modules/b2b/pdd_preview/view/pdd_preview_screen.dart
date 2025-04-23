@@ -5,26 +5,32 @@ class PddPreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PddPreviewBloc pddPreviewBloc = BlocProvider.of<PddPreviewBloc>(context);
+    final PddPreviewBloc bloc = BlocProvider.of<PddPreviewBloc>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).colors.colorF7F9FA,
-      appBar: _buildAppBar(pddPreviewBloc, context),
+      appBar: _buildAppBar(bloc, context),
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.all(16.0.w),
-              child: _previewOptions(pddPreviewBloc, context),
+            BlocBuilder<PddPreviewBloc, PddPreviewState>(
+              buildWhen: (previous, current) => current is PddPreviewLoadedState,
+              builder: (context, state) {
+                if (state is PddPreviewLoadedState) {
+                  return Padding(padding: EdgeInsetsDirectional.all(16.0.w), child: _previewOptions(bloc, context));
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
             ),
             const Divider(),
-            _buildWebView(pddPreviewBloc),
+            _buildWebView(bloc),
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar(PddPreviewBloc pddPreviewBloc, BuildContext context) {
+  PreferredSizeWidget _buildAppBar(PddPreviewBloc bloc, BuildContext context) {
     return PreferredSize(
       preferredSize: context.appBarHeight,
       child: BlocBuilder<PddPreviewBloc, PddPreviewState>(
@@ -32,65 +38,66 @@ class PddPreviewScreen extends StatelessWidget {
           return current is PddPreviewLoadedState;
         },
         builder: (context, state) {
-          return SmartAppBar(
-            title: pddPreviewBloc.presentationId,
-          );
+          return SmartAppBar(title: bloc.presentationId);
         },
       ),
     );
   }
 
-  Widget _previewOptions(PddPreviewBloc pddPreviewBloc, BuildContext context) {
-    return Row(children: [
-      Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SelectionButton(
-              width: 48.w,
-              isSelected: false,
-              image: AppImages.icVersionHistory,
-              onTap: () {
-                pddPreviewBloc.add(NavigateToPddVersionHistoryEvent(context: context));
-              },
-            ),
-            SelectionButton(
-              width: 48.w,
-              isSelected: false,
-              image: AppImages.icAddComment,
-              onTap: () {},
-            ),
-            SelectionButton(
-              width: 48.w,
-              isSelected: false,
-              image: AppImages.icShare,
-              onTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  enableDrag: false,
-                  builder: (context) => const SharePresentationScreen(),
-                );
-              },
-            ),
-          ],
+  Widget _previewOptions(PddPreviewBloc bloc, BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SelectionButton(
+                width: 48.w,
+                isSelected: false,
+                image: AppImages.icVersionHistory,
+                onTap: () {
+                  bloc.add(NavigateToPddVersionHistoryEvent(context: context));
+                },
+              ),
+              SelectionButton(width: 48.w, isSelected: false, image: AppImages.icAddComment, onTap: () {}),
+              SelectionButton(
+                width: 48.w,
+                isSelected: false,
+                image: AppImages.icShare,
+                onTap: () {
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    enableDrag: false,
+                    builder: (context) => const SharePresentationScreen(),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-      SizedBox(width: 16.w),
-      Expanded(
-        child: SmartButton(onTap: () {}, title: APPStrings.approve.tr),
-      ),
-    ]);
+        SizedBox(width: 16.w),
+        Expanded(
+          child:
+              bloc.presentation?.status?.toLowerCase() != ApiKey.approved
+                  ? SmartButton(
+                    onTap: () {
+                      bloc.add(PresentationApproveEvent(context: context));
+                    },
+                    title: APPStrings.approve.tr,
+                  )
+                  : SizedBox.shrink(),
+        ),
+      ],
+    );
   }
 
-  Widget _buildWebView(PddPreviewBloc pddPreviewBloc) {
+  Widget _buildWebView(PddPreviewBloc bloc) {
     return Expanded(
       child: BlocBuilder<PddPreviewBloc, PddPreviewState>(
         buildWhen: (previous, current) => current is PddPreviewLoadedState,
         builder: (context, state) {
           if (state is PddPreviewLoadedState) {
-            return WebViewWidget(
-              controller: pddPreviewBloc.webViewController,
-            );
+            return WebViewWidget(controller: bloc.webViewController);
           } else {
             return const SmartCircularProgressIndicator();
           }

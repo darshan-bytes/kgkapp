@@ -34,8 +34,18 @@ final class SharePddPreviewEvent extends PddPreviewEvent {
 
 final class VersionHistoryChangeEvent extends PddPreviewEvent {
   final PddVersionHistoryModel pddVersionHistoryModel;
+
   const VersionHistoryChangeEvent({required this.pddVersionHistoryModel});
 
   @override
   List<Object> get props => [pddVersionHistoryModel];
+}
+
+final class PresentationApproveEvent extends PddPreviewEvent {
+  final BuildContext context;
+
+  const PresentationApproveEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
 }
