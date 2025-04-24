@@ -73,7 +73,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     on<StoneListingFilterEvent>(_onStoneListingFilterEvent);
   }
 
-  bool get displaySelection => productId.isEmpty;
+  bool get displaySelection =>
+      productId.isEmpty && (screenIdentifier != ScreenIdentifier.diamondForDIY && screenIdentifier != ScreenIdentifier.jewelleryForDIY);
 
   @override
   Future<void> close() {

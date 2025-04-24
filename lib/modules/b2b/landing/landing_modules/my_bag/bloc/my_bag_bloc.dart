@@ -128,60 +128,141 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
             myBagProductList = List.generate(r.result.length, (index) {
               final item = r.result[index];
 
-              return ProductDetailsModel(
-                stockQty: item.stockQty,
-                productId: item.productId,
-                suid: item.suid,
-                quantity: item.quantity,
-                name: item.jewelleryName,
-                commodity: item.displayCommodity,
-                imageUrl: item.image,
-                shape: item.shape,
-                color: item.color,
-                lotCode: item.lotCode,
-                discountPercentageString:
-                    item.discountPercentage != null && item.discountPercentage != 0
-                        ? APPStrings.percentageOffInterpolating.tr.interpolate([
-                          item.discountPercentage == item.discountPercentage?.toInt()
-                              ? item.discountPercentage?.toInt()
-                              : item.discountPercentage?.toStringAsFixed(2),
-                        ])
-                        : "",
-                cut: item.cut,
-                clarity: item.clarity,
-                ctsOrGms: item.ctsOrGms,
-                cts: item.crtEXT,
-                gms: item.gms,
-                rappaportPrice: item.rappaportPrice,
-                polish: item.polish,
-                measurements: item.measurements,
-                table: item.table,
-                depth: item.depth,
-                totalPrice: item.totalPrice,
-                perCaratPrice: item.rate,
-                openDnaUrl: item.openDnaUrl,
-                certificateFile: item.certificateFile,
-                fluorescence: item.fluorescence,
-                shapeImage: item.shapeImage?.setMediaUrl,
-                isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
-                labs: item.labs,
-                location: item.location,
-                yourRate: item.yourRate,
-                yourAmount: item.yourAmount,
-                yourDiscount: item.yourDiscount,
-                discountPercentage: item.discountPercentage,
-                originalYourRate: item.originalYourRate,
-                originalYourAmount: item.originalYourAmount,
-                originalTotalPrice: item.originalTotalPrice,
-                originalFinalPrice: item.originalFinalPrice,
-                originalPrice: item.finalPrice?.toString().setCurrency,
-                finalPrice: item.yourAmount?.toString().setCurrency,
-                video: item.video,
+              if (commodity != Commodity.diy) {
+                return ProductDetailsModel(
+                  stockQty: item.stockQty,
+                  productId: item.productId,
+                  suid: item.suid,
+                  quantity: item.quantity,
+                  name: item.jewelleryName,
+                  commodity: item.displayCommodity,
+                  imageUrl: item.image,
+                  shape: item.shape,
+                  color: item.color,
+                  lotCode: item.lotCode,
+                  discountPercentageString:
+                      item.discountPercentage != null && item.discountPercentage != 0
+                          ? APPStrings.percentageOffInterpolating.tr.interpolate([
+                            item.discountPercentage == item.discountPercentage?.toInt()
+                                ? item.discountPercentage?.toInt()
+                                : item.discountPercentage?.toStringAsFixed(2),
+                          ])
+                          : "",
+                  cut: item.cut,
+                  clarity: item.clarity,
+                  ctsOrGms: item.ctsOrGms,
+                  cts: item.crtEXT,
+                  gms: item.gms,
+                  rappaportPrice: item.rappaportPrice,
+                  polish: item.polish,
+                  measurements: item.measurements,
+                  table: item.table,
+                  depth: item.depth,
+                  totalPrice: item.totalPrice,
+                  perCaratPrice: item.rate,
+                  openDnaUrl: item.openDnaUrl,
+                  certificateFile: item.certificateFile,
+                  fluorescence: item.fluorescence,
+                  shapeImage: item.shapeImage?.setMediaUrl,
+                  isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
+                  labs: item.labs,
+                  location: item.location,
+                  yourRate: item.yourRate,
+                  yourAmount: item.yourAmount,
+                  yourDiscount: item.yourDiscount,
+                  discountPercentage: item.discountPercentage,
+                  originalYourRate: item.originalYourRate,
+                  originalYourAmount: item.originalYourAmount,
+                  originalTotalPrice: item.originalTotalPrice,
+                  originalFinalPrice: item.originalFinalPrice,
+                  originalPrice: item.finalPrice?.toString().setCurrency,
+                  finalPrice: item.yourAmount?.toString().setCurrency,
+                  video: item.video,
 
-                /// Below code is commented as backend API is changing the keys
-                // finalPrice: item.finalPrice?.setCurrency,
-                // originalPrice: item.totalPrice?.setCurrency,
-              );
+                  /// Below code is commented as backend API is changing the keys
+                  // finalPrice: item.finalPrice?.setCurrency,
+                  // originalPrice: item.totalPrice?.setCurrency,
+                );
+              } else {
+                return ProductDetailsModel(
+                  diyBagItemProductDetailsList: [
+                    DiyBagItemProductDetailsModel(
+                      productNameTitle: item.jewelleryData?.jewelleryName ?? '',
+                      discountPrice: '',
+                      finalPrice: '',
+                      skuNo: item.jewelleryData?.productId,
+                      icon: AppImages.icDIYRing,
+                    ),
+                    DiyBagItemProductDetailsModel(
+                      icon: AppImages.icDIYDiamond,
+                      skuNo: item.diamondData?.productId,
+                      productNameTitle: item.diamondData?.jewelleryName ?? '',
+                      discountPrice: item.yourAmount?.toString().setCurrency,
+                      finalPrice: item.finalPrice?.toString().setCurrency,
+                      discountPercentageString:
+                          item.discountPercentage != null && item.discountPercentage != 0
+                              ? APPStrings.percentageOffInterpolating.tr.interpolate([
+                                item.discountPercentage == item.discountPercentage?.toInt()
+                                    ? item.discountPercentage?.toInt()
+                                    : item.discountPercentage?.toStringAsFixed(2),
+                              ])
+                              : "",
+                    ),
+                  ],
+                  stockQty: item.stockQty,
+                  productId: item.productId,
+                  suid: item.suid,
+                  quantity: item.quantity,
+                  name: item.jewelleryData?.jewelleryName,
+                  commodity: item.displayCommodity,
+                  imageUrl: item.jewelleryData?.image,
+                  shape: item.shape,
+                  color: item.color,
+                  lotCode: item.lotCode,
+                  discountPercentageString:
+                      item.discountPercentage != null && item.discountPercentage != 0
+                          ? APPStrings.percentageOffInterpolating.tr.interpolate([
+                            item.discountPercentage == item.discountPercentage?.toInt()
+                                ? item.discountPercentage?.toInt()
+                                : item.discountPercentage?.toStringAsFixed(2),
+                          ])
+                          : "",
+                  cut: item.cut,
+                  clarity: item.clarity,
+                  ctsOrGms: item.ctsOrGms,
+                  cts: item.crtEXT,
+                  gms: item.gms,
+                  rappaportPrice: item.rappaportPrice,
+                  polish: item.polish,
+                  measurements: item.measurements,
+                  table: item.table,
+                  depth: item.depth,
+                  totalPrice: item.totalPrice,
+                  perCaratPrice: item.rate,
+                  openDnaUrl: item.openDnaUrl,
+                  certificateFile: item.certificateFile,
+                  fluorescence: item.fluorescence,
+                  shapeImage: item.shapeImage?.setMediaUrl,
+                  isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
+                  labs: item.labs,
+                  location: item.location,
+                  yourRate: item.yourRate,
+                  yourAmount: item.yourAmount,
+                  yourDiscount: item.yourDiscount,
+                  discountPercentage: item.discountPercentage,
+                  originalYourRate: item.originalYourRate,
+                  originalYourAmount: item.originalYourAmount,
+                  originalTotalPrice: item.originalTotalPrice,
+                  originalFinalPrice: item.originalFinalPrice,
+                  originalPrice: item.finalPrice?.toString().setCurrency,
+                  finalPrice: item.yourAmount?.toString().setCurrency,
+                  video: item.video,
+
+                  /// Below code is commented as backend API is changing the keys
+                  // finalPrice: item.finalPrice?.setCurrency,
+                  // originalPrice: item.totalPrice?.setCurrency,
+                );
+              }
             });
           } else {
             await clearData();

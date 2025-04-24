@@ -554,6 +554,14 @@ class DiyBagItemProductDetailsModel {
   final String? skuNo;
   final String? finalPrice;
   final String? discountPrice;
+  final String? discountPercentageString;
 
-  DiyBagItemProductDetailsModel({this.icon, this.productNameTitle, this.skuNo, this.finalPrice, this.discountPrice});
+  DiyBagItemProductDetailsModel({
+    this.icon,
+    this.productNameTitle,
+    this.skuNo,
+    this.finalPrice,
+    this.discountPrice,
+    this.discountPercentageString,
+  });
 }

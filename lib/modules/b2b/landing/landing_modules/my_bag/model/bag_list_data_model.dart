@@ -129,6 +129,8 @@ class MyBagResult {
     required this.crt,
     required this.gms,
     required this.video,
+    required this.diamondData,
+    required this.jewelleryData,
   });
 
   final String? suid;
@@ -174,6 +176,8 @@ class MyBagResult {
   final String? crt;
   final String? gms;
   final String? video;
+  final MyBagResult? diamondData;
+  final MyBagResult? jewelleryData;
 
   factory MyBagResult.fromJson(Map<String, dynamic> json) {
     return MyBagResult(
@@ -220,6 +224,8 @@ class MyBagResult {
       crt: json["crt"]?.toString(),
       gms: json["gms"]?.toString(),
       video: json["video"]?.toString(),
+      diamondData: json["diamond"] != null ? MyBagResult.fromJson(json["diamond"]) : null,
+      jewelleryData: json["jewellery"] != null ? MyBagResult.fromJson(json["jewellery"]) : null,
     );
   }
 
@@ -267,6 +273,7 @@ class MyBagResult {
     "crt": crt,
     "gms": gms,
     "video": video,
+    "diamond": diamondData?.toJson(),
   };
 
   @override
