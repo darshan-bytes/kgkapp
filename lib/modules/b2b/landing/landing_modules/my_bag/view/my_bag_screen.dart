@@ -424,6 +424,16 @@ class MyBagScreen extends StatelessWidget {
                           : null,
                   qualityOptionsList: [],
                 );
+              case Commodity.diy:
+                return DIYBagItem(
+                  productDetails: product,
+                  onRemoveTap: () {
+                    bloc.add(MyBagRemoveProductEvent(context: context, index: index));
+                  },
+                  onMoveToWishListTap: () {
+                    bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
+                  },
+                );
               default:
                 return const SizedBox.shrink();
             }
