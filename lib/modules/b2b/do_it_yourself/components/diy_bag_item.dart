@@ -166,8 +166,7 @@ class DIYBagItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildIcon(path: model.icon ?? "", style: style),
-        SizedBox(width: 8.w),
+        if (model.icon.isNotNullNorEmpty) ...[buildIcon(path: model.icon ?? "", style: style), SizedBox(width: 8.w)],
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,6 +194,10 @@ class DIYBagItem extends StatelessWidget {
                     ],
                   ],
                 ),
+              ],
+              if (model.discountPercentageString.isNotNullNorEmpty) ...[
+                SizedBox(height: 4.h),
+                SmartText(model.discountPercentageString, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.discountTextStyle),
               ],
             ],
           ),
