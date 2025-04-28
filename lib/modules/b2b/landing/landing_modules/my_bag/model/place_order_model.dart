@@ -73,82 +73,6 @@ class PlaceOrderResponse {
   final AddressDetails? shippingAddressDetails;
   final AddressDetails? billingAddressDetails;
 
-  PlaceOrderResponse copyWith({
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? orderFor,
-    String? orderContext,
-    String? orderContextId,
-    List<OrderProduct>? products,
-    String? shippingAddressId,
-    String? billingAddressId,
-    String? totalPrice,
-    String? subTotal,
-    String? totalPercentage,
-    String? currency,
-    dynamic currentCurrencyRate,
-    dynamic productDescription,
-    String? createdBy,
-    String? orderStatus,
-    MetaInfo? metaInfo,
-    String? name,
-    String? email,
-    String? phone,
-    String? commodity,
-    String? userType,
-    List<BagOrderCharge>? charges,
-    BagOrderCharge? promoCode,
-    String? id,
-    bool? isDeleted,
-    dynamic deletedAt,
-    String? uniqueId,
-    String? v,
-    int? filteredRecords,
-    int? totalRecords,
-    int? items,
-    int? totalQuantity,
-    UserIdDetails? createdByDetails,
-    AddressDetails? shippingAddressDetails,
-    AddressDetails? billingAddressDetails,
-  }) {
-    return PlaceOrderResponse(
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      orderFor: orderFor ?? this.orderFor,
-      orderContext: orderContext ?? this.orderContext,
-      orderContextId: orderContextId ?? this.orderContextId,
-      products: products ?? this.products,
-      shippingAddressId: shippingAddressId ?? this.shippingAddressId,
-      billingAddressId: billingAddressId ?? this.billingAddressId,
-      totalPrice: totalPrice ?? this.totalPrice,
-      subTotal: subTotal ?? this.subTotal,
-      totalPercentage: totalPercentage ?? this.totalPercentage,
-      currency: currency ?? this.currency,
-      currentCurrencyRate: currentCurrencyRate ?? this.currentCurrencyRate,
-      productDescription: productDescription ?? this.productDescription,
-      createdBy: createdBy ?? this.createdBy,
-      orderStatus: orderStatus ?? this.orderStatus,
-      metaInfo: metaInfo ?? this.metaInfo,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      commodity: commodity ?? this.commodity,
-      userType: userType ?? this.userType,
-      charges: charges ?? this.charges,
-      promoCode: promoCode ?? this.promoCode,
-      id: id ?? this.id,
-      isDeleted: isDeleted ?? this.isDeleted,
-      deletedAt: deletedAt ?? this.deletedAt,
-      uniqueId: uniqueId ?? this.uniqueId,
-      v: v ?? this.v,
-      items: items ?? this.items,
-      totalQuantity: totalQuantity ?? this.totalQuantity,
-      createdByDetails: createdByDetails ?? this.createdByDetails,
-      shippingAddressDetails: shippingAddressDetails ?? this.shippingAddressDetails,
-      billingAddressDetails: billingAddressDetails ?? this.billingAddressDetails,
-    );
-  }
-
   factory PlaceOrderResponse.fromJson(Map<String, dynamic> json) {
     return PlaceOrderResponse(
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
@@ -359,7 +283,7 @@ class OrderProduct {
 extension PlaceOrderModelExt on PlaceOrderResponse {
   String get getOrderDate {
     if (createdAt == null) return '';
-    return createdAt!.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2);
+    return createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ?? '';
   }
 
   ProjectStatus? get getOrderStatus {

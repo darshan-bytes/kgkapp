@@ -26,7 +26,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     on<ConceptListLoadMoreEvent>(_onConceptListLoadMoreEvent);
     on<ConceptListPullToRefreshEvent>(_onConceptListingPullToRefresh);
     on<ConceptListFilterEvent>(_onConceptListingFilterEvent);
-    on<ConceptListSearchEvent>(_onConceptListSearchEvent);
+    on<ConceptListSearchEvent>(_onConceptListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
   }
 
   @override
@@ -132,7 +132,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
+      ApiKey.sort: {ApiKey.field: ApiKey.createdAt, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
@@ -142,11 +142,11 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     Emitter<ConceptListState> emit, {
     bool isLoadMore = false,
     Map<String, dynamic>? query,
-    String searchString = '',
+    String? searchString,
   }) async {
     query = buildQuery(
       filterData: filterData,
-      searchString: searchString,
+      searchString: searchString ?? searchController.text.trim(),
       currentPage: paginationScrollController.currentPage,
       pageLimit: AppConst.pageLimit,
     );
@@ -169,8 +169,12 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     );
   }
 
-  void _onConceptListSearchEvent(ConceptListSearchEvent event, Emitter<ConceptListState> emit) {
-    //TODO: Implement search logic
+  Future<void> _onConceptListSearchEvent(ConceptListSearchEvent event, Emitter<ConceptListState> emit) async {
+    emit(ConceptListLoadingState());
+    paginationScrollController.pullToRefresh();
+    conceptList.clear();
+    await apiCallForConceptList(event.context, emit, isLoadMore: false);
+    emit(ConceptListLoadedState());
   }
 
   /// Handle load more
@@ -203,15 +207,15 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
         status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
         fields: generateB2BItemFields(concept.assignedToDetails),
         strCreatedBy: concept.createdByDetails?.fullName,
-        strCreatedByImageUrl: concept.createdByDetails?.profilePic,
-        strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        strCreatedByImageUrl: concept.createdByDetails?.profilePicUrl?.setMediaUrl,
+        strCreatedOn: concept.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         strPresentationNumber: concept.presentationCount.toString(),
-        strConceptBy: concept.conceptCustomerIdDetails?.userType,
-        strName: concept.conceptName,
+        strConceptBy: concept.conceptCustomerIdDetails?.userType?.capitalizeFirst,
+        strName: concept.conceptCustomerIdDetails?.fullName,
         strDescription: concept.description ?? '',
         descriptionImageList: dummy,
         presentationList: concept.presentation,
-        strRevisedDate: concept.receivedAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
+        strRevisedDate: concept.receivedAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
       );
     }).toList();
   }
@@ -219,7 +223,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
   ProjectStatus getOrderStatus({required String orderStatus}) {
     switch (orderStatus) {
       case "approved":
-        return ProjectStatus.approval;
+        return ProjectStatus.approved;
       case "pending":
         return ProjectStatus.pending;
       case "completed":
@@ -240,7 +244,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
 
     return assignedToDetails.map((detail) {
       String fullName = detail.fullName;
-      String imageUrl = detail.profilePic ?? '';
+      String imageUrl = detail.profilePicUrl?.setMediaUrl ?? '';
 
       return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();

@@ -19,7 +19,7 @@ class SmartStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).statusBadgeStyle;
-    final statusText = _getStatusText(currentStatus);
+    final statusText = _getStatusText(currentStatus).capitalizeFirst;
     final backgroundColor = _getBackgroundColor(currentStatus, style);
     final textColor = _getTextColor(currentStatus, style);
 

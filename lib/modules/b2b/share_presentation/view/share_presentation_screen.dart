@@ -127,14 +127,14 @@ class SharePresentationScreen extends StatelessWidget {
           //TODO: Implement WhatsApp Share
           if (bloc.webUrl.isNotNullNorEmpty) {
             await Clipboard.setData(ClipboardData(text: bloc.webUrl!));
-            await Share.shareUri(Uri.parse(bloc.webUrl!));
+            await SharePlus.instance.share(ShareParams(uri: Uri.parse(bloc.webUrl!)));
           }
         }),
         _buildShareButtons(style.iconButtonTextStyle, AppImages.icFaceBook, APPStrings.facebook.tr, () async {
           //TODO: Implement Facebook Share
           if (bloc.webUrl.isNotNullNorEmpty) {
             await Clipboard.setData(ClipboardData(text: bloc.webUrl!));
-            await Share.shareUri(Uri.parse(bloc.webUrl!));
+            await SharePlus.instance.share(ShareParams(uri: Uri.parse(bloc.webUrl!)));
           }
         }),
         _buildShareButtons(style.iconButtonTextStyle, AppImages.icCopy, APPStrings.copyLink.tr, () async {

@@ -927,7 +927,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   // Share link
   Future<void> onTapShareLink({required BuildContext context, required String link}) async {
     context.pop();
-    await Share.share(link);
+    await SharePlus.instance.share(ShareParams(uri: Uri.tryParse(link)));
   }
 
   void initCompareProductChangesStream(BuildContext context) {

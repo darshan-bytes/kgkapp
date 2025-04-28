@@ -69,7 +69,7 @@ class MyOrderNewItem extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: _buildDetailColumn(APPStrings.orderedOn.tr, model.orderDate, style)),
+                    Expanded(child: _buildDetailColumn(APPStrings.orderedOn.tr, model.orderDate, style, isAutoSizeText: true)),
                     Expanded(child: _buildDetailColumn(APPStrings.orderedBy.tr, model.orderedBy, style)),
                   ],
                 ),
@@ -102,7 +102,13 @@ class MyOrderNewItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style, {bool isOrderStatus = false}) {
+  Widget _buildDetailColumn(
+    String title,
+    String? value,
+    MyBagDiamondItemStyle style, {
+    bool isOrderStatus = false,
+    bool isAutoSizeText = false,
+  }) {
     return Padding(
       padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
@@ -120,6 +126,7 @@ class MyOrderNewItem extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: style.subTitleStyle,
+            isAutoSizeText: isAutoSizeText,
           ),
         ],
       ),
