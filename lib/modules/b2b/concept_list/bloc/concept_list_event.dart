@@ -14,10 +14,12 @@ final class ConceptListInitialEvent extends ConceptListEvent {
 }
 
 final class ConceptListSearchEvent extends ConceptListEvent {
-  const ConceptListSearchEvent();
+  final BuildContext context;
+
+  const ConceptListSearchEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class ConceptListLoadMoreEvent extends ConceptListEvent {

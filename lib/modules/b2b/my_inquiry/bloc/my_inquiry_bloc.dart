@@ -167,7 +167,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
 
     return assignedToDetails.map((detail) {
       String fullName = detail.fullName;
-      String imageUrl = detail.profilePic ?? '';
+      String imageUrl = detail.profilePicUrl?.setMediaUrl ?? '';
 
       return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();

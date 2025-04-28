@@ -30,7 +30,7 @@ class PddDataModel {
   final int? approvedBy;
   final DateTime? approvedAt;
   final String? status;
-  final dynamic coverImage;
+  final String? coverImage;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? totalProjects;

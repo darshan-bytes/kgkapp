@@ -22,7 +22,9 @@ class ConceptListScreen extends StatelessWidget {
                     SmartTextField(
                       controller: conceptListBloc.searchController,
                       hintText: APPStrings.searchConcept.tr,
-                      onFieldSubmitted: (value) => conceptListBloc.add(const ConceptListSearchEvent()),
+                      onFieldSubmitted: (value) => conceptListBloc.add(ConceptListSearchEvent(context: context)),
+                      onEditingComplete: () => conceptListBloc.add(ConceptListSearchEvent(context: context)),
+                      onValueChanges: (value) => conceptListBloc.add(ConceptListSearchEvent(context: context)),
                       suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(14.w)),
                       onTapOutside: (event) {},
                     ),
@@ -37,7 +39,7 @@ class ConceptListScreen extends StatelessWidget {
                           return RefreshIndicator.adaptive(
                             child: ListView.separated(
                               physics: const ClampingScrollPhysics(),
-                              padding: EdgeInsetsDirectional.only(bottom: 34.h),
+                              padding: EdgeInsetsDirectional.only(bottom: 60.h),
                               controller: conceptListBloc.paginationScrollController.scrollController,
                               shrinkWrap: true,
                               itemCount: conceptListBloc.conceptList.length,

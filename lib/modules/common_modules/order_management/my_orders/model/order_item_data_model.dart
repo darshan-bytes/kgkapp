@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class OrderItem {
   String? sId;
-  String? createdAt;
+  DateTime? createdAt;
   String? totalPrice;
   String? currency;
   int? createdBy;
@@ -35,7 +35,7 @@ class OrderItem {
 
   OrderItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    createdAt = json['createdAt'];
+    createdAt = json['createdAt'] != null ? DateTime.tryParse(json['createdAt']) : null;
     totalPrice = json['total_price']?.toString();
     currency = json['currency'];
     createdBy = json['created_by'];
@@ -53,7 +53,7 @@ class OrderItem {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
-    data['createdAt'] = createdAt;
+    data['createdAt'] = createdAt?.toIso8601String();
     data['total_price'] = totalPrice;
     data['currency'] = currency;
     data['created_by'] = createdBy;

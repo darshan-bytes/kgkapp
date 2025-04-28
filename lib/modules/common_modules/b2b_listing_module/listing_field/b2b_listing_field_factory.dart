@@ -24,7 +24,9 @@ class B2BListingFieldFactory {
       case B2BListingType.presentationType:
         return [
           B2BItemField(label: APPStrings.presentationNumber.tr, value: model.strPresentationNumber),
-          B2BItemField(label: APPStrings.project.tr, value: model.strProject, isCircleWithValue: true),
+
+          /// Below code is commented because we are not showing project name in presentation listing for now. It is not integrated from the API/Web
+          // B2BItemField(label: APPStrings.project.tr, value: model.strProject, isCircleWithValue: true),
           B2BItemField(label: APPStrings.conceptNumber.tr, value: model.strConceptNumber),
           B2BItemField(label: APPStrings.conceptName.tr, value: model.strConceptName),
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),

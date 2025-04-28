@@ -51,7 +51,10 @@ class PddPreviewScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SelectionButton(
+              /// Below code is commented because of the following reasons.
+              /// 1. We are not using version history feature in this app for now.
+              /// 2. We are not using add comment feature in this app for now.
+              /*SelectionButton(
                 width: 48.w,
                 isSelected: false,
                 image: AppImages.icVersionHistory,
@@ -59,7 +62,7 @@ class PddPreviewScreen extends StatelessWidget {
                   bloc.add(NavigateToPddVersionHistoryEvent(context: context));
                 },
               ),
-              SelectionButton(width: 48.w, isSelected: false, image: AppImages.icAddComment, onTap: () {}),
+              SelectionButton(width: 48.w, isSelected: false, image: AppImages.icAddComment, onTap: () {}),*/
               SelectionButton(
                 width: 48.w,
                 isSelected: false,

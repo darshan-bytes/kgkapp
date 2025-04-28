@@ -349,7 +349,7 @@ class _OrderCreatorDetailsCard extends StatelessWidget {
           /// Development pending form backend
           _CreatorDetailItem(
             title: APPStrings.createdBy.tr,
-            iconImage: placeOrderResponse?.createdByDetails?.profilePic ?? AppImages.icPlaceholder,
+            iconImage: placeOrderResponse?.createdByDetails?.profilePicUrl?.setMediaUrl ?? AppImages.icPlaceholder,
             value: placeOrderResponse?.createdByDetails?.organisationName ?? APPStrings.dash.tr,
             style: style,
           ),

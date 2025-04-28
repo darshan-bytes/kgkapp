@@ -333,10 +333,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
             id: data.uniqueId?.toString(),
             orderId: data.uniqueId?.toString(),
             orderStatus: getOrderStatus(orderStatus: data.orderStatus ?? ''),
-            orderDate: data.createdAt?.changeDateFormat(
-              inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
-              outputDateFormat: DateFormatter.dateFormatDDMMMYYYY,
-            ),
+            orderDate: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMM),
             orderTotal: data.totalPrice?.setCurrency,
             orderItems: data.items?.toString(),
             orderQuantity: data.totalQuantity?.toString(),
