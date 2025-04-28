@@ -823,7 +823,7 @@
   "mob_comment_is_required": "Comment is required",
   "mob_delay": "Delay",
   "mob_presentation_dialog_title": "Presentation Review",
-  "mob_presentation_dialog_msg": "Review and approve or reject the presentation.",
+  "mob_presentation_dialog_msg": "Review and approve the presentation.",
   "mob_concept_by": "Concept By",
   "mob_received_on": "Received on",
   "mob_no_3d_view_available": "3D View not available",
@@ -867,7 +867,8 @@
   "mob_click_here_to_view": "Click here to view",
   "mob_view_all_presentation": "View all presentations",
   "mob_remove_selected_presentation": "Remove Selected Presentation",
-  "mob_remove_selected_presentation_msg": "Selected Presentation will be removed form the concept also",
+  "mob_remove_selected_presentation_msg": "Selected Presentation will be removed from the concept also",
   "mob_delete_presentation": "Delete Presentation",
-  "mob_approve_presentation": "Approve Presentation"
+  "mob_approve_presentation": "Approve Presentation",
+  "mob_cancelled": "Cancelled"
 }

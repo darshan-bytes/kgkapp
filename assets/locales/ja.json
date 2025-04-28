@@ -549,7 +549,7 @@
   "mob_hint_company_name": "ABC.inc",
   "mob_find_store": "店を見つけます",
   "mob_enter_an_address_or_zip_code_to_find_a_retailer_near_you": "住所または郵便番号を入力して、お近くの小売業者を見つけてください。",
-  "mob_enter_address_or_pincode": "アドレスまたはpincodeを入力します",
+  "mob_enter_address_or_pincode": "住所またはPINコードを入力してください",
   "mob_use_current_location": "現在の場所を使用します",
   "mob_get_directions": "道順を取得します",
   "mob_from_your_location_x": "現在地から {#} キロメートル",
@@ -823,7 +823,7 @@
   "mob_comment_is_required": "コメントが必要です",
   "mob_delay": "遅延",
   "mob_presentation_dialog_title": "プレゼンテーションのレビュー",
-  "mob_presentation_dialog_msg": "プレゼンテーションをレビューし、承認または拒否します。",
+  "mob_presentation_dialog_msg": "プレゼンテーションを確認して承認します。",
   "mob_concept_by": "コンセプト：",
   "mob_received_on": "受信日：",
   "mob_no_3d_view_available": "3Dビューは利用できません",
@@ -869,5 +869,6 @@
   "mob_remove_selected_presentation": "選択したプレゼンテーションを削除",
   "mob_remove_selected_presentation_msg": "選択したプレゼンテーションはコンセプトからも削除されます",
   "mob_delete_presentation": "プレゼンテーションの削除",
-  "mob_approve_presentation": "プレゼンテーションの承認"
+  "mob_approve_presentation": "プレゼンテーションの承認",
+  "mob_cancelled": "キャンセル"
 }

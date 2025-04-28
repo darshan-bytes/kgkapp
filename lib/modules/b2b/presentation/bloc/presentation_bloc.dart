@@ -5,6 +5,8 @@ part 'presentation_event.dart';
 part 'presentation_state.dart';
 
 class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
+  bool _isInitialized = false;
+
   // Controller for search
   final TextEditingController presentationSearchController = TextEditingController();
   List<Presentation>? presentationDataList;
@@ -27,9 +29,11 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
 
   PresentationBloc() : super(PresentationInitial()) {
     on<InitialPresentationEvent>(_onInitialPresentationEvent);
-    on<PresentationLoadMoreEvent>(_onPresentationLoadMoreEvent);
-    on<PresentationPullToRefreshEvent>(_onPresentationPullToRefreshEvent);
+    // on<PresentationLoadMoreEvent>(_onPresentationLoadMoreEvent);
     on<PresentationReviewStateEvent>(_onPresentationReviewStateEvent);
+
+    /// This method is used to pull to refresh but for now it is removed from the features
+    // on<PresentationPullToRefreshEvent>(_onPresentationPullToRefreshEvent);
   }
 
   bool hasRouteData(BuildContext context) {
@@ -42,6 +46,8 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   }
 
   Future<void> _onInitialPresentationEvent(InitialPresentationEvent event, Emitter<PresentationState> emit) async {
+    if (_isInitialized) return;
+    _isInitialized = true;
     emit(PresentationListReloadState());
 
     userType = BlocProvider.of<AppBloc>(event.context).userType;
@@ -49,6 +55,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     hasRouteData(event.context);
     presentationList = _generatePresentationList(presentationDataList);
 
+    /// This method is used to pull to refresh but for now it is removed from the features
     if (refreshCompleter.isCompleted) {
       refreshCompleter = Completer<bool>();
     }
@@ -59,9 +66,12 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     }
 
     paginationScrollController.init(
-      loadAction: (int currentPage) async {
-        add(PresentationLoadMoreEvent(currentPage));
-      },
+      loadAction: (int currentPage) {},
+
+      /// This method is used to pull to refresh but for now it is removed from the features
+      // loadAction: (int currentPage) async {
+      // add(PresentationLoadMoreEvent(currentPage));
+      // }
     );
     clearData();
     refreshCompleter.complete(true);
@@ -142,13 +152,14 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     }).toList();
   }
 
-  Future<void> _onPresentationLoadMoreEvent(PresentationLoadMoreEvent event, Emitter<PresentationState> emit) async {
-    emit(const PresentationListLoadingMoreState());
-    await Future.delayed(const Duration(seconds: 2));
-    presentationList.addAll(_generatePresentationList([]));
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 5);
-    emit(PresentationListLoadedMoreState(event.currentPage + 1));
-  }
+  /// This method is used to pull to refresh but for now it is removed from the features
+  // Future<void> _onPresentationLoadMoreEvent(PresentationLoadMoreEvent event, Emitter<PresentationState> emit) async {
+  //   emit(const PresentationListLoadingMoreState());
+  //   await Future.delayed(const Duration(seconds: 2));
+  //   presentationList.addAll(_generatePresentationList([]));
+  //   paginationScrollController.isPageLoaded.complete(event.currentPage == 5);
+  //   emit(PresentationListLoadedMoreState(event.currentPage + 1));
+  // }
 
   // Event for approval
   Future<void> _onPresentationReviewStateEvent(PresentationReviewStateEvent event, Emitter<PresentationState> emit) async {
@@ -198,15 +209,17 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       return B2BCustomListingDataModel(
         id: presentationList[index].id,
         strPresentationNumber: presentationList[index].presentationNumber,
-        strProject: "1",
+        strProject: '0',
         strConceptNumber: presentationList[index].conceptNumber,
         strConceptName: presentationList[index].conceptName,
         strCreatedBy: presentationList[index].createdByDetails?.fullName,
-        strCreatedByImageUrl: presentationList[index].createdByDetails?.profilePic.toString().setMediaUrl,
-        strCreatedOn: presentationList[index].createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        strCreatedByImageUrl: presentationList[index].createdByDetails?.profilePicUrl?.setMediaUrl,
+        strCreatedOn: presentationList[index].createdAt?.toLocal().dateToStringFormat(
+          outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA,
+        ),
         fields: generateB2BItemFields(presentationList[index].assignedToDetails),
         strApprovedBy: presentationList[index].approvedByDetails?.fullName ?? '',
-        strApprovedByImageUrl: presentationList[index].approvedByDetails?.profilePic ?? '',
+        strApprovedByImageUrl: presentationList[index].approvedByDetails?.profilePicUrl?.setMediaUrl ?? '',
         status: presentationList[index].status != null ? getOrderStatus(orderStatus: presentationList[index].status!) : null,
       );
     });
@@ -215,7 +228,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   static ProjectStatus getOrderStatus({required String orderStatus}) {
     switch (orderStatus) {
       case "approved":
-        return ProjectStatus.approval;
+        return ProjectStatus.approved;
       case "pending":
         return ProjectStatus.pending;
       case "completed":
@@ -236,28 +249,30 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
 
     return assignedToDetails.map((detail) {
       String fullName = detail.fullName;
-      String imageUrl = detail.profilePic ?? '';
+      String imageUrl = detail.profilePicUrl?.setMediaUrl ?? '';
 
       return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();
   }
 
-  Future<void> _onPresentationPullToRefreshEvent(PresentationPullToRefreshEvent event, Emitter<PresentationState> emit) async {
-    emit(PresentationListReloadState());
-    paginationScrollController.pullToRefresh();
-    await Future.delayed(const Duration(seconds: 1));
-    presentationList = _generatePresentationList([]);
-    refreshCompleter.complete(true);
-    emit(PresentationLoadedState());
-  }
+  /// This method is used to pull to refresh but for now it is removed from the features
+  // Future<void> _onPresentationPullToRefreshEvent(PresentationPullToRefreshEvent event, Emitter<PresentationState> emit) async {
+  //   emit(PresentationListReloadState());
+  //   paginationScrollController.pullToRefresh();
+  //   await Future.delayed(const Duration(seconds: 1));
+  //   presentationList = _generatePresentationList([]);
+  //   refreshCompleter.complete(true);
+  //   emit(PresentationLoadedState());
+  // }
 
-  Future<bool> pullToRefresh() async {
-    if (!refreshCompleter.isCompleted) {
-      return false;
-    }
-    refreshCompleter = Completer<bool>();
-    add(const PresentationPullToRefreshEvent());
-    bool result = await refreshCompleter.future;
-    return result;
-  }
+  /// This method is used to pull to refresh but for now it is removed from the features
+  // Future<bool> pullToRefresh() async {
+  //   if (!refreshCompleter.isCompleted) {
+  //     return false;
+  //   }
+  //   refreshCompleter = Completer<bool>();
+  //   add(const PresentationPullToRefreshEvent());
+  //   bool result = await refreshCompleter.future;
+  //   return result;
+  // }
 }

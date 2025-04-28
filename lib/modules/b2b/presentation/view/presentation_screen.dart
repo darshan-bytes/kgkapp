@@ -29,20 +29,22 @@ class PresentationScreen extends StatelessWidget {
             buildWhen: (previous, current) => current is PresentationLoadedState,
             builder: (context, state) {
               if (state is PresentationLoadedState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(height: 24.h),
-                    SmartTextField(
-                      hintText: APPStrings.searchPresentation.tr,
-                      controller: bloc.presentationSearchController,
-                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
-                      onTapOutside: (val) {},
-                      textInputAction: TextInputAction.search,
-                    ),
-                    _buildPresentationList(bloc),
-                  ],
-                );
+                return _buildPresentationList(bloc);
+
+                /// Below code is commented as of now as for now it is removed from the features
+                // return Column(
+                //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                //   children: [
+                // SizedBox(height: 24.h),
+                // SmartTextField(
+                //   hintText: APPStrings.searchPresentation.tr,
+                //   controller: bloc.presentationSearchController,
+                //   suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+                //   onTapOutside: (val) {},
+                //   textInputAction: TextInputAction.search,
+                // ),
+                // ],
+                // );
               } else {
                 return const SmartCircularProgressIndicator();
               }
@@ -54,55 +56,33 @@ class PresentationScreen extends StatelessWidget {
   }
 
   Widget _buildPresentationList(PresentationBloc bloc) {
+    if (!bloc.paginationScrollController.isInitialised) {
+      return SizedBox.shrink();
+    }
+    if (bloc.presentationList.isEmpty) {
+      return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
+    }
     return Expanded(
-      child: BlocBuilder<PresentationBloc, PresentationState>(
-        buildWhen: (previous, current) => current is PresentationListLoadedMoreState || current is PresentationListLoadingMoreState,
-        builder: (context, state) {
-          if (!bloc.paginationScrollController.isInitialised) {
-            return SizedBox.shrink();
-          }
-          if (bloc.presentationList.isEmpty) {
-            return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
-          }
-          return SmartRefreshIndicator(
-            onRefresh: () async {
-              await bloc.pullToRefresh();
-            },
-            child: ListView.separated(
-              shrinkWrap: true,
-              padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
-              controller: bloc.paginationScrollController.scrollController,
-              itemCount: bloc.presentationList.length,
-              itemBuilder: (context, index) {
-                B2BCustomListingDataModel presentationItem = bloc.presentationList[index];
-                return BlocBuilder<PresentationBloc, PresentationState>(
-                  buildWhen:
-                      (previous, current) => current is PresentationListLoadedMoreState || current is PresentationListLoadingMoreState,
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        B2BListingItem(
-                          type: B2BListingType.presentationType,
-                          listingItemModel: presentationItem,
-                          onTapMenuButton:
-                              bloc.userType == UserType.internal
-                                  ? () {
-                                    handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
-                                  }
-                                  : null,
-                          onTap: () {},
-                        ),
-                        if (index == bloc.presentationList.length - 1 && state is PresentationListLoadingMoreState)
-                          const SmartCircularProgressIndicator(),
-                      ],
-                    );
-                  },
-                );
-              },
-              separatorBuilder: (_, __) => SizedBox(height: 16.h),
-            ),
+      child: ListView.separated(
+        shrinkWrap: true,
+        padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
+        controller: bloc.paginationScrollController.scrollController,
+        itemCount: bloc.presentationList.length,
+        itemBuilder: (context, index) {
+          B2BCustomListingDataModel presentationItem = bloc.presentationList[index];
+          return B2BListingItem(
+            type: B2BListingType.presentationType,
+            listingItemModel: presentationItem,
+            onTapMenuButton:
+                bloc.userType == UserType.internal
+                    ? () {
+                      handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
+                    }
+                    : null,
+            onTap: () {},
           );
         },
+        separatorBuilder: (_, __) => SizedBox(height: 16.h),
       ),
     );
   }

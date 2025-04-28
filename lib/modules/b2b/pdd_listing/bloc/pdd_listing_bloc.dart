@@ -5,7 +5,7 @@ part 'pdd_listing_event.dart';
 part 'pdd_listing_state.dart';
 
 class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
-  bool isGrid = true;
+  bool isGrid = false;
   final TextEditingController presentationSearchController = TextEditingController();
   List<B2BCustomListingDataModel> presentationList = [];
 
@@ -218,7 +218,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()},
+      ApiKey.sort: {ApiKey.field: ApiKey.createdAt, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
@@ -291,12 +291,12 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
         strConceptName: data.conceptName ?? '',
         status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
         strCreatedBy: formatName(data.createdByDetails),
-        strCreatedByImageUrl: data.createdByDetails.profilePic ?? '',
+        strCreatedByImageUrl: data.createdByDetails.profilePicUrl?.setMediaUrl ?? '',
         strCreatedOn: data.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         strApprovedBy: formatName(data.approvedByDetails),
-        strApprovedByImageUrl: data.approvedByDetails.profilePic ?? '',
+        strApprovedByImageUrl: data.approvedByDetails.profilePicUrl?.setMediaUrl ?? '',
         strConceptNumber: data.conceptNumber ?? '',
-        strPresentationImageUrl: '',
+        strPresentationImageUrl: data.coverImage?.setMediaUrl ?? '',
         fields: generateB2BItemFields(data.assignedToDetails),
       );
     }).toList();
@@ -309,7 +309,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
     return assignedToDetails.map((detail) {
       String fullName = detail.fullName;
-      String imageUrl = detail.profilePic ?? '';
+      String imageUrl = detail.profilePicUrl?.setMediaUrl ?? '';
 
       return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();

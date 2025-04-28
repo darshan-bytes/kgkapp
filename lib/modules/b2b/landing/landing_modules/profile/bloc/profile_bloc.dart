@@ -465,6 +465,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           context.pushNamed(AppRoutes.dashboardPage);
         },
       ),
+      ProfileListModel(
+        image: AppImages.icMasters,
+        title: APPStrings.masters,
+        subTitle: APPStrings.masterDataOfUserAndNewsLetter,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.userMasterListingPage);
+        },
+      ),
+      ProfileListModel(
+        image: AppImages.icPreferences,
+        title: APPStrings.preferences,
+        subTitle: APPStrings.defaultCountryLanguageAndCurrency,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.preferencesPage);
+        },
+      ),
     ];
   }
 

@@ -549,7 +549,7 @@
   "mob_hint_company_name": "Abc.inc",
   "mob_find_store": "ค้นหาร้านค้า",
   "mob_enter_an_address_or_zip_code_to_find_a_retailer_near_you": "ป้อนที่อยู่หรือรหัสไปรษณีย์เพื่อค้นหาผู้ค้าปลีกที่อยู่ใกล้คุณ",
-  "mob_enter_address_or_pincode": "ป้อนที่อยู่หรือ Pincode",
+  "mob_enter_address_or_pincode": "ป้อนที่อยู่หรือรหัสพิน",
   "mob_use_current_location": "ใช้ตำแหน่งปัจจุบัน",
   "mob_get_directions": "รับเส้นทาง",
   "mob_from_your_location_x": "{#} กิโลเมตรจากที่ตั้งของคุณ",
@@ -823,7 +823,7 @@
   "mob_comment_is_required": "ความคิดเห็นจําเป็น",
   "mob_delay": "ช่วงเวลา",
   "mob_presentation_dialog_title": "การรีวิวและอนุมัติ",
-  "mob_presentation_dialog_msg": "คุณต้องการดำเนินการต่อหรือไม่?",
+  "mob_presentation_dialog_msg": "ตรวจสอบและอนุมัติการนำเสนอ",
   "mob_concept_by": "แนวคิดโดย",
   "mob_received_on": "ได้รับเมื่อ",
   "mob_no_3d_view_available": "มุมมอง 3D ไม่พร้อมใช้งาน",
@@ -869,5 +869,6 @@
   "mob_remove_selected_presentation": "ลบการนำเสนอที่เลือก",
   "mob_remove_selected_presentation_msg": "การนำเสนอที่เลือกจะถูกลบออกจากแนวคิดด้วย",
   "mob_delete_presentation": "ลบการนำเสนอ",
-  "mob_approve_presentation": "อนุมัติการนำเสนอ"
+  "mob_approve_presentation": "อนุมัติการนำเสนอ",
+  "mob_cancelled": "ยกเลิก"
 }

@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+88
+version: 1.0.0+89
 
 environment:
   sdk: ^3.7.2
@@ -118,7 +118,7 @@ dependencies:
   #For Video Player
   video_player: ^2.9.5
 
-  html: ^0.15.5+1
+  html: ^0.15.6
 
   # mime_type and http_parser both Used in Multipart File Uploading in ApiService class
   mime_type: ^1.0.1

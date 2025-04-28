@@ -23,6 +23,7 @@ class OrderListBuilder extends StatelessWidget {
         bloc.add(OrdersListPullToRefreshEvent(context: context));
       },
       child: ListView.separated(
+        padding: EdgeInsetsDirectional.only(bottom: 60.h),
         itemCount: ordersList.length,
         shrinkWrap: true,
         controller: currentScrollController.scrollController,

@@ -823,7 +823,7 @@
   "mob_comment_is_required": "தரவு தேர்ந்தெடுக்கப்பட்டது",
   "mob_delay": "தேர்ந்தெடுக்கம்",
   "mob_presentation_dialog_title": "மதிப்பு பரிசியம்",
-  "mob_presentation_dialog_msg": "தேர்ந்தெடுக்கப்படும் மதிப்பு பரிசியம் செய்ய விரும்புகிறீர்கள்?",
+  "mob_presentation_dialog_msg": "விளக்கக்காட்சியை மதிப்பாய்வு செய்து அங்கீகரிக்கவும்.",
   "mob_concept_by": "கோப்பு",
   "mob_received_on": "பெற்றது",
   "mob_no_3d_view_available": "3D பார்வை கிடைக்கவில்லை",
@@ -869,5 +869,6 @@
   "mob_remove_selected_presentation": "தேர்ந்தெடுக்கப்பட்ட விளக்கக்காட்சியை அகற்று",
   "mob_remove_selected_presentation_msg": "தேர்ந்தெடுக்கப்பட்ட விளக்கக்காட்சி கருத்தாக்கத்திலிருந்தும் அகற்றப்படும்",
   "mob_delete_presentation": "விளக்கக்காட்சியை நீக்கு",
-  "mob_approve_presentation": "விளக்கக்காட்சியை அங்கீகரிக்கவும்"
+  "mob_approve_presentation": "விளக்கக்காட்சியை அங்கீகரிக்கவும்",
+  "mob_cancelled": "ரத்துச்செய்யப்பட்டுள்ளது"
 }

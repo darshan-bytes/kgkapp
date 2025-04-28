@@ -88,7 +88,7 @@ class CartProductItem extends StatelessWidget {
             ],
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [productImageSection(style), SizedBox(width: 16.w), productDetailsSection(style, context)],
+              children: [productImageSection(context, style), SizedBox(width: 16.w), productDetailsSection(style, context)],
             ),
             if (onRemoveTap != null || (isEnableAddToWishList && onMoveToWishListTap != null)) ...[
               SizedBox(height: 10.h),
@@ -135,7 +135,7 @@ class CartProductItem extends StatelessWidget {
     );
   }
 
-  Widget productImageSection(ProductItemStyle style) {
+  Widget productImageSection(BuildContext context, ProductItemStyle style) {
     return Stack(
       children: [
         Container(
@@ -143,7 +143,27 @@ class CartProductItem extends StatelessWidget {
           width: boxWidth ?? 96.w,
           alignment: AlignmentDirectional.center,
           color: style.productBackgroundColor,
-          child: SmartImage(path: productDetails.imageUrl ?? '', height: imageHeight, width: imageWidth, fit: fit),
+          child: SmartImage(
+            path: productDetails.imageUrl ?? '',
+            height: imageHeight,
+            width: imageWidth,
+            fit: fit,
+            onTap: () {
+              if (productDetails.imageUrl != null) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog.fullscreen(
+                      backgroundColor: Colors.transparent,
+                      child: ProductPhotoViewGallery(imageUrls: [productDetails.imageUrl ?? '']),
+                    );
+                  },
+                );
+              } else {
+                Utils.showMessage(APPStrings.noImageAvailable.tr);
+              }
+            },
+          ),
         ),
         if (isCheckboxShow)
           PositionedDirectional(

@@ -609,10 +609,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
         strItems: data.items?.toString(),
         strTotalAmount: data.totalPrice?.setCurrency,
         strOrderedBy: data.createdByDetails?.fullName,
-        strCreatedOn: data.createdAt?.changeDateFormat(
-          inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
-          outputDateFormat: DateFormatter.dateFormatDDMMMYYYY,
-        ),
+        strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
         strOrderedByImageUrl: data.createdByDetails?.profilePicUrl,
         strTotalQuantity: data.totalQuantity?.toString(),
       );
