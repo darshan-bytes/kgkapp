@@ -1476,6 +1476,17 @@ class AppRepository extends ApiService {
     // context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, List<DiyJewelleryType>>?> diyJewelleryFilters({bool isShowLoading = false}) async {
+    if (isShowLoading) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<DiyJewelleryType>(ApiClient.diyJewellery, withCurrencyHeader: true);
+    if (isShowLoading) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

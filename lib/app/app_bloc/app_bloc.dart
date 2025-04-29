@@ -45,6 +45,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   DiamondDataModel? diamondDataForDIY;
   DiyStyleListModel? diyStyleForDIY;
 
+  List<DiyJewelleryType> diyJewelleryTypeList = [];
+
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
@@ -123,6 +125,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
       locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
       await sortOptionListApiCall(event.context);
+      await getDIYJewelleryFilters(event.context);
       countryList.clear();
       countryStateMap.clear();
       emit(LanguageState(locale));
@@ -547,6 +550,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         await StorageManager().setSortingData(sortingData);
       },
     );
+  }
+
+  Future<void> getDIYJewelleryFilters(BuildContext context) async {
+    Either<ErrorResponse, List<DiyJewelleryType>>? response;
+    response = await AppRepository(context).diyJewelleryFilters();
+    response?.fold((error) {}, (diyJewelleryTypes) async {
+      diyJewelleryTypeList = diyJewelleryTypes;
+    });
   }
 }
 
