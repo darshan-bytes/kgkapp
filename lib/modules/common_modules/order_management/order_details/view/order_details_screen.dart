@@ -96,6 +96,7 @@ class _OrderDetailBody extends StatelessWidget {
               final ProductDetailsModel product = bloc.orderProductList[index];
               return CartProductItem(
                 isOutOfStock: false,
+                isFromOrderDetails: true,
                 boxHeight: 72.w,
                 boxWidth: 72.w,
                 isDropDownEnable: false,
@@ -106,7 +107,12 @@ class _OrderDetailBody extends StatelessWidget {
                 onMoveToWishListTap: null,
                 productDetails: product,
                 qualityOptionsList: product.cartProductQuality ?? [],
-                quantityOptionsList: product.cartProductQuantity ?? [],
+                quantityOptionsList: List.generate(
+                  product.quantity ?? 0,
+                  (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1),
+                ),
+                selectedQuantity: CartProductQuantity(name: product.quantity?.toString(), quantity: product.quantity),
+                onQuantityChanged: (value) {},
                 priceTextStyle: style.priceTextStyle,
               );
             } else {

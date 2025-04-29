@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                     optionalPadding: EdgeInsetsDirectional.only(start: 17.w, top: 16.h),
                   ),
                   _buildAccountList(style, bloc),
-                  if (bloc.userType == UserType.internal) ...[
+                  if (bloc.userType == UserType.internal && bloc.profileAdminList.isNotEmpty) ...[
                     Divider(color: style.dividerColor, thickness: 8.h),
                     SmartText(
                       APPStrings.adminSection.tr,

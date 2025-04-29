@@ -432,7 +432,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icMyOrders,
         title: APPStrings.orderManagement,
-        subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.orderPage);
@@ -441,7 +440,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icProfileCalendar,
         title: APPStrings.calendar,
-        subTitle: APPStrings.meetingsTasksAllInOnePlace,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.calendarPage);
@@ -450,7 +448,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icMessages,
         title: APPStrings.messages,
-        subTitle: APPStrings.conversationsYouAreHaving,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.messagesPage);
@@ -459,7 +456,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icStore,
         title: APPStrings.dashboard,
-        subTitle: APPStrings.listOfDashboard,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.dashboardPage);
@@ -468,7 +464,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icMasters,
         title: APPStrings.masters,
-        subTitle: APPStrings.masterDataOfUserAndNewsLetter,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.userMasterListingPage);
@@ -477,7 +472,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icPreferences,
         title: APPStrings.preferences,
-        subTitle: APPStrings.defaultCountryLanguageAndCurrency,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.preferencesPage);
@@ -492,7 +486,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icMyOrders,
         title: APPStrings.myOrder,
-        subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
+
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.orderPage);
@@ -501,7 +495,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icActions,
         title: APPStrings.auctions,
-        subTitle: APPStrings.listOfAuctionsYouAppliedTo,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.auctionListingPage);
@@ -510,7 +503,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icInquiries,
         title: APPStrings.myInquiries,
-        subTitle: APPStrings.yourSubmittedInquiries,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.myInquiryScreen);
@@ -519,7 +511,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icWatchlist,
         title: APPStrings.watchlist,
-        subTitle: APPStrings.listOfProductsAddedToWatchlist,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.watchListPage);
@@ -528,7 +519,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icExhibition,
         title: APPStrings.exhibition,
-        subTitle: APPStrings.listOfExhibitionsOfKGK,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.exhibitionListingPage);
@@ -537,7 +527,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icActivityLog,
         title: APPStrings.activityLog,
-        subTitle: APPStrings.getLogOnTheAccount,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.activityLogScreenPage);
@@ -546,7 +535,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icNewsFeed,
         title: APPStrings.newsFeed,
-        subTitle: APPStrings.createAndSeeNewsFeeds,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.newsletterPage);
@@ -555,7 +543,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icMasters,
         title: APPStrings.masters,
-        subTitle: APPStrings.masterDataOfUserAndNewsLetter,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.userMasterListingPage);
@@ -564,7 +551,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icStore,
         title: APPStrings.findAStore,
-        subTitle: APPStrings.searchYourNearbyStores,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.findStorePage);
@@ -573,7 +559,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icMapPin,
         title: APPStrings.savedAddress,
-        subTitle: APPStrings.listOfAllYourSavedAddresses,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.savedAddressPage);
@@ -582,7 +567,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icLock,
         title: APPStrings.changePassword,
-        subTitle: APPStrings.changeYourExistingPassword,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           Utils.showSmartModalBottomSheet(
@@ -597,7 +581,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icPreferences,
         title: APPStrings.preferences,
-        subTitle: APPStrings.defaultCountryLanguageAndCurrency,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.preferencesPage);
@@ -606,7 +589,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icNotificationSettings,
         title: APPStrings.notificationSettings,
-        subTitle: APPStrings.changeNotificationSettings,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.notificationSettingsPage);
