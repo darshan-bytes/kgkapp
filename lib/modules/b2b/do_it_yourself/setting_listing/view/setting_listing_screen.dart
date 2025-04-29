@@ -30,7 +30,20 @@ class SettingListingScreen extends StatelessWidget {
             return FilterBottomActionBar(
               controller: settingListingBloc.paginationScrollController.controller,
               onFilterTap: () {
-                Utils.showSmartModalBottomSheet(context: context, builder: (context) => FilterScreen(onApply: () {}));
+                BlocProvider.of<SortFilterBloc>(
+                  context,
+                ).add(AddSortFilterDataEvent(filterOptionList: settingListingBloc.filterData, context: context));
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder:
+                      (_) => FilterScreen(
+                        onApply: (value) {
+                          if (value != null && value is List<FilterData>) {
+                            settingListingBloc.add(SettingLibraryFilterEvent(context: context, filterData: value));
+                          }
+                        },
+                      ),
+                );
               },
               onSortTap: () async {
                 /// Fetch this from local and pass here as sortData based on commodity type
@@ -140,9 +153,14 @@ class SettingListingScreen extends StatelessWidget {
             BlocBuilder<SettingListingBloc, SettingListingState>(
               buildWhen:
                   (_, current) =>
-                      current is SettingLoadedState || current is SettingProductLoadedMoreState || current is SettingChangeListingTypeState,
+                      current is SettingLoadedState ||
+                      current is SettingProductLoadedMoreState ||
+                      current is SettingChangeListingTypeState ||
+                      current is SettingLoadingState,
               builder: (context, state) {
-                if (settingListingBloc.productList.isEmpty) {
+                if (state is SettingLoadingState) {
+                  return const SizedBox.shrink();
+                } else if (settingListingBloc.productList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.emptyProducts.tr);
                 } else {
                   if (settingListingBloc.isGrid) {

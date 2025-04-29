@@ -279,7 +279,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       ApiKey.quantity: 1,
       ApiKey.suid: event.productDetails.suid,
     };
-
+    if (event.productDetails.commodity == Commodity.diy) {
+      //TODO: This will be dynamic when we add gemstone for DIY. For now it is only for diamond so kept it static
+      body[ApiKey.type] = "diamond";
+    }
     if (StorageManager().getIsSkipLogin()) {
       MyBagDataModel? myBagDataModel = StorageManager().getBagData();
       String id = myBagDataModel?.sId ?? '';

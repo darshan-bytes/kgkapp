@@ -51,3 +51,13 @@ final class SettingListingOnTapEvent extends SettingListingEvent {
   @override
   List<Object> get props => [context, index];
 }
+
+final class SettingLibraryFilterEvent extends SettingListingEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const SettingLibraryFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}
