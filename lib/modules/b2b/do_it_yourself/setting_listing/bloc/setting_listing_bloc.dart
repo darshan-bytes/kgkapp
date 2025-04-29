@@ -53,6 +53,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     on<LoadMoreSettingProductListEvent>(_onLoadMoreSettingProductListEvent);
     on<SettingListPullToRefreshEvent>(_onSettingListPullToRefresh);
     on<SettingListingOnTapEvent>(_onSettingListingOnTapEvent);
+    on<SettingLibraryFilterEvent>(_onSettingLibraryFilterEvent);
   }
 
   Future<void> _onSettingListingInitialEvent(SettingListingInitialEvent event, Emitter<SettingListingState> emit) async {
@@ -65,6 +66,9 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     _initializePagination(context);
     productList.clear();
     diyStyleList.clear();
+    if (filterData.isEmpty) {
+      await _setupFilters(context);
+    }
     await _fetchSettingProductList(context, emit, false);
     emit(const SettingLoadedState());
   }
@@ -115,6 +119,44 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     emit(const SettingLoadedState());
   }
 
+  Future<void> _setupFilters(BuildContext context) async {
+    final filterList = await BlocProvider.of<AppBloc>(
+      context,
+    ).getFilterOptionList(context, AppConst.diyStyleListing, subTypeCode: filterDataMap?[ApiKey.jewelleryTypeName]);
+    filterData.clear();
+    for (FilterOptionModel filterOption in filterList) {
+      if (filterDataMap?.containsKey(filterOption.slug) == true) {
+        continue;
+      }
+      if (filterOption.data.isNotEmpty) {
+        FilterData filter = FilterData(
+          name: filterOption.name,
+          code: filterOption.slug,
+          inputType: filterOption.inputType,
+          filterType: filterOption.filterType,
+          subFilterCodes: filterOption.data.map((e) => e.toString()).join(','),
+          secondaryFilterData: [],
+        );
+        if (!filterOption.fromCommon) {
+          filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
+        } else if (filterOption.filterType == FilterType.boolean) {
+          if (filterOption.data.isNotEmpty && filterOption.data.any((element) => element?.toString().toLowerCase() == 'yes')) {
+            filter.secondaryFilterData = [SecondaryFilterData(name: filterOption.name)];
+          } else {
+            continue;
+          }
+        } else if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
+          if (filterOption.data.isNotEmpty) {
+            filter.minMaxValues = SfRangeValues(0, filterOption.data.lastOrNull?.toString().toDouble ?? 0);
+          } else {
+            continue;
+          }
+        }
+        filterData.add(filter);
+      }
+    }
+  }
+
   Future<void> _fetchSettingProductList(BuildContext context, Emitter<SettingListingState> emit, bool isLoadMore) async {
     Either<ErrorResponse, PaginationData<DiyStyleListModel>>? response;
 
@@ -144,9 +186,6 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     if (diamondDataForDIY?.shapeCode != null) {
       query[ApiKey.shapeCode] = diamondDataForDIY?.shapeCode ?? '';
     }
-
-    ///TODO : need to remove this temporarily
-    // query[ApiKey.jewelleryTypeName] = 'Ring';
 
     response = await AppRepository(context).diyStyleFilters(
       page: paginationScrollController.currentPage.toString(),
@@ -181,5 +220,15 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
       }
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     });
+  }
+
+  Future<void> _onSettingLibraryFilterEvent(SettingLibraryFilterEvent event, Emitter<SettingListingState> emit) async {
+    emit(const SettingLoadingState());
+    paginationScrollController.pullToRefresh();
+    productList.clear();
+    diyStyleList.clear();
+    filterData = event.filterData;
+    await _fetchSettingProductList(event.context, emit, false);
+    emit(const SettingLoadedState());
   }
 }

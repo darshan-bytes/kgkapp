@@ -33,6 +33,13 @@ final class SettingProductReloadState extends SettingListingState {
   List<Object> get props => [];
 }
 
+final class SettingLoadingState extends SettingListingState {
+  const SettingLoadingState();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class SettingLoadingMoreState extends SettingListingState {
   const SettingLoadingMoreState();
 
