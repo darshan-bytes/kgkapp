@@ -5,6 +5,7 @@ part 'cad_library_listing_state.dart';
 part 'cad_library_listing_event.dart';
 
 class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListingState> {
+  late AppBloc _appBloc;
   UserType userType = UserType.b2cUser;
   bool isGrid = true;
   String appBarTitle = '';
@@ -35,7 +36,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   Future<void> _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(const CadListingReloadState());
     clearData();
-    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    _appBloc = BlocProvider.of<AppBloc>(event.context);
+    userType = _appBloc.userType;
     getRouteData(event.context);
     emit(const CadAppBarTitleChangedState());
     await _initializeSortOptions(event.context);
@@ -151,6 +153,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       strCADLibraryProductName: sourceModel.autoDescription,
       strCarats: "${sourceModel.crt ?? 0} ${APPStrings.crt.tr}",
       strGrams: "${sourceModel.approximateModelWeight ?? 0} ${APPStrings.grms.tr}",
+      tagImagePath: getTagImagePath(sourceModel),
     );
   }
 
@@ -283,5 +286,14 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     } catch (e) {
       debugPrint("Error in _handleApplyFilter: $e");
     }
+  }
+
+  String getTagImagePath(CadLibraryListItemDataModel sourceModel) {
+    String tagImagePath = '';
+    final String languageCode = _appBloc.locale.languageCode;
+    if (sourceModel.isExclusive?.toLowerCase() == 'yes') {
+      tagImagePath = AppImages.icExclusiveLabel(languageCode);
+    }
+    return tagImagePath;
   }
 }
