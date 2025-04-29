@@ -4,7 +4,7 @@ class SelectedCategoryDetails extends StatelessWidget {
   final ArrowPosition arrowPosition;
   final List<ProductDetailModel> productsDetailsList;
   final ScrollController scrollController;
-  final void Function(dynamic) onProductSelected;
+  final void Function(ProductDetailModel) onProductSelected;
 
   const SelectedCategoryDetails({
     super.key,

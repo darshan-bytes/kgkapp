@@ -35,6 +35,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await _currencyApiCall(event.context, emit);
     await _languageLabelApiCall(event.context, emit); // This is mainly use for get CMS Pages
     await BlocProvider.of<AppBloc>(event.context).sortOptionListApiCall(event.context);
+    await BlocProvider.of<AppBloc>(event.context).getDIYJewelleryFilters(event.context);
     await navigateToNextScreen(event.context);
   }
 

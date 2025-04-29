@@ -8,6 +8,7 @@ enum ArrowPosition { leftTop, centerTop, rightTop }
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   UserType userType = UserType.b2cUser;
+  List<DiyJewelleryType> diyJewelleryTypes = [];
   int? selectedRowIndex;
   int? selectedItemIndex;
   ArrowPosition arrowPosition = ArrowPosition.rightTop;
@@ -25,9 +26,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Collection', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
   ];
-  List<ProductDetailModel> doItYourselfSubOptionsB2CList = [
+
+  List<ProductDetailModel> get doItYourselfSubOptionsB2CList => [
     ProductDetailModel(name: 'Diamond', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
+    ...(diyJewelleryTypes.map((e) => ProductDetailModel(name: e.jewelleryTypeName, image: '', data: e.toJson()))),
   ];
   List<ProductDetailModel> aboutUsSubOptionsB2CList = [ProductDetailModel(name: 'Collection', image: '')];
   List<ProductDetailModel> educationSubOptionsB2CList = [
@@ -58,9 +61,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   List<ProductDetailModel> digitalCatalogueSubOptionsB2BList = [ProductDetailModel(name: 'Collection', image: '')];
 
-  List<ProductDetailModel> doItYourselfSubOptionsB2BList = [
+  List<ProductDetailModel> get doItYourselfSubOptionsB2BList => [
     ProductDetailModel(name: 'Diamond', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
+    ...(diyJewelleryTypes.map((e) => ProductDetailModel(name: e.jewelleryTypeName, image: '', data: e.toJson()))),
   ];
   List<ProductDetailModel> orionSubCategoryList = [ProductDetailModel(name: 'Collection', image: '')];
 
@@ -70,8 +74,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   void onCategoriesInitialEvent(CategoriesInitialEvent event, Emitter<CategoriesState> emit) {
-    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    AppBloc appBloc = BlocProvider.of<AppBloc>(event.context);
+    userType = appBloc.userType;
     selectedRowIndex = null;
+    diyJewelleryTypes = appBloc.diyJewelleryTypeList;
     categories.clear();
     if (userType == UserType.b2bUser || userType == UserType.internal) {
       categories.addAll([
@@ -186,10 +192,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   // Navigate based on the selected category and subcategory
-  void navigateBasedOnCategory({required BuildContext context, String? categoryName, String? categorySubName}) {
+  void navigateBasedOnCategory({required BuildContext context, String? categoryName, String? categorySubName, Map<String, dynamic>? data}) {
     if (categoryName.isNotNullNorEmpty) {
       String? routeName = _getRouteName(categoryName!, categorySubName);
-      Map<RoutesData, dynamic>? arguments = _getRouteArguments(categoryName, categorySubName);
+      Map<RoutesData, dynamic>? arguments = _getRouteArguments(categoryName, categorySubName, data: data);
 
       if (routeName.isNotNullNorEmpty) {
         context.pushNamed(routeName!, arguments: arguments);
@@ -207,11 +213,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   // Get route arguments based on user type and category
-  Map<RoutesData, dynamic>? _getRouteArguments(String categoryName, String? categorySubName) {
+  Map<RoutesData, dynamic>? _getRouteArguments(String categoryName, String? categorySubName, {Map<String, dynamic>? data}) {
     if (userType == UserType.b2cUser) {
-      return _getRouteArgumentsForB2C(categoryName, categorySubName);
+      return _getRouteArgumentsForB2C(categoryName, categorySubName, data);
     } else {
-      return _getRouteArgumentsForB2B(categoryName, categorySubName);
+      return _getRouteArgumentsForB2B(categoryName, categorySubName, data);
     }
   }
 
@@ -239,7 +245,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     }
   }
 
-  Map<RoutesData, dynamic>? _getRouteArgumentsForB2C(String categoryName, String? categorySubName) {
+  Map<RoutesData, dynamic>? _getRouteArgumentsForB2C(String categoryName, String? categorySubName, Map<String, dynamic>? data) {
     switch (categoryName) {
       case 'Natural \nDiamonds':
         return _getNaturalDiamondsRouteArgumentsForB2C(categorySubName);
@@ -250,7 +256,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'Jewellery':
         return _getJewelleryRouteArgumentsForB2C(categorySubName);
       case 'Do It \nYourself':
-        return _getDoItYourselfRouteArgumentsForB2C(categorySubName);
+        return _getDoItYourselfRouteArgumentsForB2C(categorySubName, data);
       case 'About Us':
         return _getAboutUsRouteArgumentsForB2C(categorySubName);
       case 'Education':
@@ -286,7 +292,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     }
   }
 
-  Map<RoutesData, dynamic>? _getRouteArgumentsForB2B(String categoryName, String? categorySubName) {
+  Map<RoutesData, dynamic>? _getRouteArgumentsForB2B(String categoryName, String? categorySubName, Map<String, dynamic>? data) {
     switch (categoryName) {
       case 'PDD':
         return _getPDDRouteArgumentsB2B(categorySubName);
@@ -301,7 +307,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'Digital \nCatalogue':
         return _getDigitalCatalogueRouteArgumentsB2B(categorySubName);
       case 'Do It \nYourself':
-        return _getDoItYourselfRouteArgumentsB2B(categorySubName);
+        return _getDoItYourselfRouteArgumentsB2B(categorySubName, data);
       case 'Orion':
         return _getOrionRouteArgumentsB2B(categorySubName);
       default:
@@ -392,22 +398,20 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return AppRoutes.stoneListingPage;
 
       case 'Jewellery':
-        return AppRoutes.settingListingPage;
-
       default:
-        return defaultAction();
+        return AppRoutes.settingListingPage;
     }
   }
 
-  Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsForB2C(String? categorySubName) {
+  Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsForB2C(String? categorySubName, Map<String, dynamic>? data) {
     switch (categorySubName) {
       case 'Diamond':
         return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
-
       case 'Jewellery':
         return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY};
-
       default:
+        return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY, RoutesData.filterData: data};
+
         return defaultAction();
     }
   }
@@ -597,17 +601,20 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     switch (categorySubName) {
       case 'Diamond':
         return AppRoutes.stoneListingPage;
+      case 'Jewellery':
       default:
-        return defaultAction();
+        return AppRoutes.settingListingPage;
     }
   }
 
-  Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsB2B(String? categorySubName) {
+  Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsB2B(String? categorySubName, Map<String, dynamic>? data) {
     switch (categorySubName) {
       case 'Diamond':
         return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
+      case 'Jewellery':
+        return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY};
       default:
-        return null;
+        return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY, RoutesData.filterData: data};
     }
   }
 

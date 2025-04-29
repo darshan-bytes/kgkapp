@@ -51,9 +51,14 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
         if (r.product != null) {
           diyStyleListModel = r.product!;
           if (diyStyleListModel != null) {
+            imgList.clear();
             if (diyStyleListModel!.imageSketch.isNotNullNorEmpty) {
-              imgList.clear();
               imgList.add(diyStyleListModel!.imageSketch ?? '');
+            }
+            if (diyStyleListModel!.multipleFinishedViewImage.isNotNullNorEmpty) {
+              for (var element in diyStyleListModel!.multipleFinishedViewImage) {
+                imgList.add(element.imageUrl ?? '');
+              }
             }
             productName = diyStyleListModel!.longDescription ?? '';
 
