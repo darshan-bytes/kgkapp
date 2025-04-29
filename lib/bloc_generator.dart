@@ -43,7 +43,6 @@ class BlocGenerator {
       BlocProvider<ManufacturerOrderListingBloc>(create: (_) => ManufacturerOrderListingBloc()),
       BlocProvider<RetailerOrderListingBloc>(create: (_) => RetailerOrderListingBloc()),
       BlocProvider<OrionBloc>(create: (_) => OrionBloc()),
-      BlocProvider<PresentationBloc>(create: (_) => PresentationBloc()),
       BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
       BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc(), lazy: false),
       BlocProvider<AdvanceSortFilterBloc>(create: (_) => AdvanceSortFilterBloc()),
