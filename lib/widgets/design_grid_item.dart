@@ -98,6 +98,8 @@ class DesignListingGridItem extends StatelessWidget {
           color: style.productBackgroundColor,
           child: SmartImage(path: _getImageUrl(), height: imageHeight, width: imageWidth, fit: fit),
         ),
+        if (designModel.tagImagePath.isNotNullNorEmpty)
+          PositionedDirectional(start: -4.w, child: SmartImage(path: designModel.tagImagePath ?? '', fit: BoxFit.fill)),
         if (_viewType == _GridViewType.designGridItem && status != null)
           PositionedDirectional(
             bottom: 8.w,

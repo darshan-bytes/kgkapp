@@ -5,6 +5,8 @@ part 'design_library_event.dart';
 part 'design_library_state.dart';
 
 class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
+  late AppBloc _appBloc;
+
   /// The type of user, defaults to B2C user.
   UserType userType = UserType.b2cUser;
 
@@ -80,7 +82,8 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<DesignLibraryState> emit) async {
     emit(DesignLibraryLoadingState());
-    userType = BlocProvider.of<AppBloc>(context).userType;
+    _appBloc = BlocProvider.of<AppBloc>(context);
+    userType = _appBloc.userType;
     await _initializeSortOptions(context);
     BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent(sortOptions: sortOptions));
     _initializePagination(context);
@@ -155,6 +158,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
       strDbfNumber: sourceModel.designDescription,
       strCarats: sourceModel.crt.isNotNullNorEmpty ? "${sourceModel.crt} ${APPStrings.crt.tr}" : null,
       strGrams: sourceModel.approximateModelWeight.isNotNullNorEmpty ? "${sourceModel.approximateModelWeight} ${APPStrings.grms.tr}" : null,
+      tagImagePath: getTagImagePath(sourceModel),
     );
   }
 
@@ -251,5 +255,14 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
         filterData.add(filter);
       }
     }
+  }
+
+  String getTagImagePath(DesignLibraryListItemDataModel sourceModel) {
+    String tagImagePath = '';
+    final String languageCode = _appBloc.locale.languageCode;
+    if (sourceModel.isExclusive?.toLowerCase() == 'yes') {
+      tagImagePath = AppImages.icExclusiveLabel(languageCode);
+    }
+    return tagImagePath;
   }
 }

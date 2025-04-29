@@ -192,6 +192,8 @@ class AppImages {
 
   static String icNewArrivalLabel(String languageCode) => 'assets/images/ic_new_arrival_label_$languageCode.svg';
 
+  static String icExclusiveLabel(String languageCode) => 'assets/images/ic_exclusive_$languageCode.svg';
+
   static const String icDIYRing = 'assets/images/ic_diy_ring.svg';
   static const String icDIYDiamond = 'assets/images/ic_diy_diamond.svg';
 }

@@ -5,6 +5,8 @@ part 'sku_library_event.dart';
 part 'sku_library_state.dart';
 
 class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
+  late AppBloc _appBloc;
+
   /// The type of user, defaults to B2C user.
   UserType userType = UserType.b2cUser;
 
@@ -77,7 +79,8 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<SkuLibraryState> emit) async {
     emit(SkuLibraryLoadingState());
-    userType = BlocProvider.of<AppBloc>(context).userType;
+    _appBloc = BlocProvider.of<AppBloc>(context);
+    userType = _appBloc.userType;
     await _initializeSortOptions(context);
     BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent(sortOptions: sortOptions));
     _initializePagination(context);
@@ -148,6 +151,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
       strDbfNumber: sourceModel.productDescription,
       strCarats: sourceModel.crt.isNotNullNorEmpty ? "${sourceModel.crt} ${APPStrings.crt.tr}" : null,
       strGrams: sourceModel.gms.isNotNullNorEmpty ? "${sourceModel.gms} ${APPStrings.grms.tr}" : null,
+      tagImagePath: getTagImagePath(sourceModel),
     );
   }
 
@@ -239,5 +243,14 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
       }
       filterData.add(filter);
     }
+  }
+
+  String getTagImagePath(SkuLibraryListItemDataModel sourceModel) {
+    String tagImagePath = '';
+    final String languageCode = _appBloc.locale.languageCode;
+    if (sourceModel.exclusive?.toLowerCase() == 'yes') {
+      tagImagePath = AppImages.icExclusiveLabel(languageCode);
+    }
+    return tagImagePath;
   }
 }
