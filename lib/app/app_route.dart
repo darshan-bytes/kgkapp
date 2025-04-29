@@ -678,8 +678,10 @@ class AppRoutes {
 
       case presentationPage:
         builder = (context) {
-          BlocProvider.of<PresentationBloc>(context).add(InitialPresentationEvent(context));
-          return const PresentationScreen();
+          return BlocProvider<PresentationBloc>(
+            create: (context) => PresentationBloc()..add(InitialPresentationEvent(context)),
+            child: const PresentationScreen(),
+          );
         };
         break;
 

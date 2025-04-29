@@ -62,28 +62,26 @@ class PresentationScreen extends StatelessWidget {
     if (bloc.presentationList.isEmpty) {
       return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
     }
-    return Expanded(
-      child: ListView.separated(
-        shrinkWrap: true,
-        padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
-        controller: bloc.paginationScrollController.scrollController,
-        itemCount: bloc.presentationList.length,
-        itemBuilder: (context, index) {
-          B2BCustomListingDataModel presentationItem = bloc.presentationList[index];
-          return B2BListingItem(
-            type: B2BListingType.presentationType,
-            listingItemModel: presentationItem,
-            onTapMenuButton:
-                bloc.userType == UserType.internal
-                    ? () {
-                      handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
-                    }
-                    : null,
-            onTap: () {},
-          );
-        },
-        separatorBuilder: (_, __) => SizedBox(height: 16.h),
-      ),
+    return ListView.separated(
+      shrinkWrap: true,
+      padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
+      controller: bloc.paginationScrollController.scrollController,
+      itemCount: bloc.presentationList.length,
+      itemBuilder: (context, index) {
+        B2BCustomListingDataModel presentationItem = bloc.presentationList[index];
+        return B2BListingItem(
+          type: B2BListingType.presentationType,
+          listingItemModel: presentationItem,
+          onTapMenuButton:
+              bloc.userType == UserType.internal
+                  ? () {
+                    handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
+                  }
+                  : null,
+          onTap: () {},
+        );
+      },
+      separatorBuilder: (_, __) => SizedBox(height: 16.h),
     );
   }
 

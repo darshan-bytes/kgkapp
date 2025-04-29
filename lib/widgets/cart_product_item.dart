@@ -30,6 +30,7 @@ class CartProductItem extends StatelessWidget {
   final bool isDropDownEnable;
   final bool isEnableAddToWishList;
   final bool isOutOfStock;
+  final bool isFromOrderDetails;
 
   const CartProductItem({
     super.key,
@@ -62,6 +63,7 @@ class CartProductItem extends StatelessWidget {
     this.isEnableAddToWishList = true,
     this.priceTextStyle,
     required this.isOutOfStock,
+    this.isFromOrderDetails = false,
   });
 
   @override
@@ -241,7 +243,7 @@ class CartProductItem extends StatelessWidget {
             // SmartText("${APPStrings.qty.tr} : ${selectedQuantity?.name ?? ''}", style: style.productNameStyle),
             // SizedBox(height: 12.h),
             //padding: EdgeInsetsDirectional.only(top: 16.h, bottom: 24.h),
-            if (isDropDownEnable)
+            if (isDropDownEnable || isFromOrderDetails)
               Padding(
                 padding: EdgeInsetsDirectional.only(top: 8.h),
                 child: Row(
@@ -257,19 +259,24 @@ class CartProductItem extends StatelessWidget {
                     //   ),
                     // ),
                     // SizedBox(width: 8.w),
-                    DropdownButton<CartProductQuantity>(
-                      isDense: true,
-                      value: selectedQuantity,
-                      onChanged: (newValue) => onQuantityChanged?.call(newValue!),
-                      selectedItemBuilder: (context) {
-                        return quantityOptionsList.map((e) {
-                          return SmartText(APPStrings.qtyX.tr.interpolate([e.name]));
-                        }).toList();
-                      },
-                      items:
-                          quantityOptionsList
-                              .map((e) => DropdownMenuItem<CartProductQuantity>(value: e, child: SmartText(e.name ?? '')))
-                              .toList(),
+                    AbsorbPointer(
+                      absorbing: isFromOrderDetails,
+                      child: DropdownButton<CartProductQuantity>(
+                        enableFeedback: !isFromOrderDetails,
+                        isDense: true,
+                        value: selectedQuantity,
+                        icon: isFromOrderDetails ? SizedBox.shrink() : null,
+                        onChanged: (newValue) => onQuantityChanged?.call(newValue!),
+                        selectedItemBuilder: (context) {
+                          return quantityOptionsList.map((e) {
+                            return SmartText(APPStrings.qtyX.tr.interpolate([e.name]));
+                          }).toList();
+                        },
+                        items:
+                            quantityOptionsList
+                                .map((e) => DropdownMenuItem<CartProductQuantity>(value: e, child: SmartText(e.name ?? '')))
+                                .toList(),
+                      ),
                     ),
                   ],
                 ),
