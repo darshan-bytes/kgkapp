@@ -29,6 +29,9 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   /// List of applied filter data
   List<FilterData> filterData = [];
 
+  /// List of applied filter data from navigation
+  Map<String, dynamic>? filterDataMap;
+
   /// List to store loaded product details
   final List<ProductDetailsModel> productList = [];
 
@@ -73,6 +76,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     if (screenIdentifier != null && screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       diamondDataForDIY = null;
     }
+    filterDataMap = data?[RoutesData.filterData];
   }
 
   /// Initialize pagination
@@ -114,7 +118,10 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   Future<void> _fetchSettingProductList(BuildContext context, Emitter<SettingListingState> emit, bool isLoadMore) async {
     Either<ErrorResponse, PaginationData<DiyStyleListModel>>? response;
 
-    Map<String, String>? query = {};
+    Map<String, String> query = {};
+    filterDataMap?.forEach((key, value) {
+      query[key] = value.toString(); // Add filterDataMap to query
+    });
     filterData
         .where(
           (element) =>
@@ -139,7 +146,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     }
 
     ///TODO : need to remove this temporarily
-    query[ApiKey.jewelleryTypeName] = 'Ring';
+    // query[ApiKey.jewelleryTypeName] = 'Ring';
 
     response = await AppRepository(context).diyStyleFilters(
       page: paginationScrollController.currentPage.toString(),
@@ -158,7 +165,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
         localList.map((item) {
           return ProductDetailsModel(
             suid: item.suid ?? "",
-            imageUrl: item.imageSketch,
+            imageUrl: item.multipleFinishedViewImage.firstOrNull?.imageUrl ?? "",
             subTitle: item.autoDescription,
             originalPrice: item.finalPrice?.toString().setCurrency,
             finalPrice: item.discountPrice?.toString().setCurrency,

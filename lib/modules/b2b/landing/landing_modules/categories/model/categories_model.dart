@@ -10,6 +10,15 @@ class CategoriesModel {
 class ProductDetailModel {
   String? name;
   String? image;
+  Map<String, dynamic>? data;
 
-  ProductDetailModel({this.name, this.image});
+  ProductDetailModel({this.name, this.image, this.data});
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProductDetailModel && runtimeType == other.runtimeType && name == other.name && image == other.image && data == other.data;
+
+  @override
+  int get hashCode => name.hashCode ^ image.hashCode ^ data.hashCode;
 }

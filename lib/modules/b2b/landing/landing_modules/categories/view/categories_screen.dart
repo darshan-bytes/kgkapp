@@ -61,13 +61,14 @@ class CategoriesScreen extends StatelessWidget {
                                 arrowPosition: categoriesBloc.arrowPosition,
                                 productsDetailsList: categoriesBloc.selectedCategoriesList,
                                 scrollController: categoriesBloc.scrollController,
-                                onProductSelected: (value) {
+                                onProductSelected: (ProductDetailModel value) {
                                   final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
                                   if (selectedCategory != null) {
                                     categoriesBloc.navigateBasedOnCategory(
                                       context: context,
                                       categoryName: selectedCategory,
                                       categorySubName: value.name,
+                                      data: value.data,
                                     );
                                   }
                                 },

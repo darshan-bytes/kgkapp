@@ -72,6 +72,12 @@ shorebird release ios --export-method development
 shorebird patch android
 ```
 
+### 6. Patch an Update for iOS
+
+```bash
+shorebird patch ios --export-method development
+```
+
 ---
 
 ### 7. Clear Logcat Logs
