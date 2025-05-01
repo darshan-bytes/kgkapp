@@ -5,6 +5,8 @@ part 'orders_event.dart';
 part 'orders_state.dart';
 
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
+  late AppBloc appBloc;
+
   /// List of Order data
   List<MyOrderDetailsModel> originalOrderList = [];
 
@@ -125,7 +127,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   /// Initializes the OrdersBloc with pagination and initial data fetching
   Future<void> _initializeBloc(BuildContext context, Emitter<OrdersState> emit) async {
     emit(const OrdersLoadingState());
-    userType = BlocProvider.of<AppBloc>(context).userType;
+    appBloc = BlocProvider.of<AppBloc>(context);
+    userType = appBloc.userType;
     _initializePagination(context);
     _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || orderPaginationScrollController.currentPage <= totalNumberOfPages!) {

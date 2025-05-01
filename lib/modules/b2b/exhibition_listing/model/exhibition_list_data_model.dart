@@ -102,6 +102,17 @@ extension ExhibitionListDataExtension on ExhibitionListDataModel {
   String get fullDate =>
       "${startDate?.changeDateFormat(outputDateFormat: DateFormatter.dateFormatDD, inputDateFormat: DateFormatter.dateFormatYYYYMMDD)} - ${endDate?.changeDateFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY, inputDateFormat: DateFormatter.dateFormatYYYYMMDD)}";
 
-  String get fullTime =>
-      "${startTime?.changeDateFormat(outputDateFormat: DateFormatter.timeFormatHA, inputDateFormat: DateFormatter.timeFormat)} - ${endTime?.changeDateFormat(outputDateFormat: DateFormatter.timeFormatHA, inputDateFormat: DateFormatter.timeFormat)}";
+  String get fullTime {
+    String output = "";
+    DateTime? start = startTime!.stringToDateTime(inputDateFormat: DateFormatter.timeFormat);
+    start = (DateTime.now().toUtc()).copyWith(hour: start!.hour, minute: start.minute, second: start.second).toLocal();
+
+    DateTime? end = endTime!.stringToDateTime(inputDateFormat: DateFormatter.timeFormat);
+    end = (DateTime.now().toUtc()).copyWith(hour: end!.hour, minute: end.minute, second: end.second).toLocal();
+
+    output =
+        "${start.dateToStringFormat(outputDateFormat: DateFormatter.timeFormat12H)} - ${end.dateToStringFormat(outputDateFormat: DateFormatter.timeFormat12H)}";
+
+    return output;
+  }
 }

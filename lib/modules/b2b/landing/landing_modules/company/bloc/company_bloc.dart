@@ -22,10 +22,9 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
       await loadCompanyList(event.context, emit);
       if (selectData == null) {
         UserResponse? userResponse = StorageManager().getUserResponse();
-        if (userResponse?.defaultCscCode != null) {
-          String? defaultCscCode = userResponse?.defaultCscCode;
-          selectData = companyList.firstWhereOrNull((element) => element.cscCode == defaultCscCode);
-
+        String? defaultCscCode = userResponse?.defaultCscCode;
+        if (defaultCscCode != null) {
+          selectData = companyList.firstWhereOrNull((element) => element.cscCode == defaultCscCode) ?? companyList.firstOrNull;
           if (selectData != null) {
             await StorageManager().setSelectedCsc(selectData!);
           }
@@ -58,8 +57,8 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
       (error) {
         Utils.showMessage(error.message);
       },
-      (companyList) {
-        this.companyList = companyList;
+      (companyListData) {
+        companyList = companyListData;
         emit(CompanyListLoadedState(companyList: companyList, selectedData: selectData));
       },
     );

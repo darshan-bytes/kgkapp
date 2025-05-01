@@ -5,11 +5,22 @@ sealed class ProductDetailsState extends Equatable {
 }
 
 final class ProductDetailsInitialState extends ProductDetailsState {
+  const ProductDetailsInitialState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductDetailsReload extends ProductDetailsState {
+  const ProductDetailsReload();
+
   @override
   List<Object> get props => [];
 }
 
 final class ProductDetailsLoadingState extends ProductDetailsState {
+  const ProductDetailsLoadingState();
+
   @override
   List<Object> get props => [];
 }
@@ -41,15 +52,6 @@ final class ProductCustomizationChangeState extends ProductDetailsState {
 
   @override
   List<Object> get props => [index, childIndex, oldChildIndex];
-}
-
-final class RingDetailsToggleState extends ProductDetailsState {
-  final bool isRingDetailsOpen;
-
-  const RingDetailsToggleState(this.isRingDetailsOpen);
-
-  @override
-  List<Object> get props => [isRingDetailsOpen];
 }
 
 final class ProductDiamondDetailsToggleState extends ProductDetailsState {

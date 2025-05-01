@@ -302,6 +302,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         }
         await StorageManager().storeBagData(myBagDataModel);
         await StorageManager().setBagId(myBagDataModel.sId ?? '');
+        event.onProductAdded?.call();
         Utils.showMessage(data.message);
         if (event.isBuyNow) {
           BuildContext context = event.context.mounted ? event.context : getNavigatorKeyContext;

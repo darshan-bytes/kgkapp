@@ -83,7 +83,8 @@ class PreviewCatalogueScreen extends StatelessWidget {
               return ProductGridItem(
                 productDetails: bloc.productList[index],
                 isBadgeVisible: false,
-                isCrtAndGramVisible: bloc.productList[index].commodity == Commodity.jewellery ? true : false,
+                isCrtAndGramVisible:
+                    (bloc.productList[index].commodity != Commodity.diamond) && (bloc.productList[index].commodity != Commodity.gemstone),
                 isHidePriceView: _isHidePriceView(bloc.productList[index].commodity!),
                 isCommentSelected: bloc.productList[index].isCommentVisible,
                 onCommentTap: () {

@@ -180,6 +180,8 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         businessCategoryName: cadLibraryListItemDataList[index].businessCategoryName ?? "\n",
         isCommentVisible: cadLibraryListItemDataList[index].isCommented,
         commodity: Commodity.cadLibrary,
+        cts: "${cadLibraryListItemDataList[index].crt ?? 0} ${APPStrings.crt.tr}",
+        gms: "${cadLibraryListItemDataList[index].approximateModelWeight ?? 0} ${APPStrings.grms.tr}",
       ),
     );
   }
