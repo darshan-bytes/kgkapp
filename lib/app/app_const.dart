@@ -42,6 +42,7 @@ class AppConst {
   static const String diamondFilter = "diamond";
   static const String gemstoneFilter = "gemstone";
   static const String diamondForDIYFilter = "diy_rm_listing";
+  static const String gemstoneForDIYFilter = "diy_gemstone_listing";
 
   static const String sortKeyBestSeller = "best_seller";
   static const String sortKeyNewArrival = "new_arrival";

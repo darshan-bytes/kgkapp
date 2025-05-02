@@ -177,6 +177,7 @@ class SettingListingScreen extends StatelessWidget {
                                   arguments: {
                                     RoutesData.settingId: productDetails.suid,
                                     RoutesData.isPageFor: settingListingBloc.screenIdentifier,
+                                    RoutesData.type: settingListingBloc.diyType,
                                   },
                                 );
                               },

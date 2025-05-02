@@ -188,6 +188,10 @@ class ApiClient {
 
   static String diyDetails(String id) => '$apiBaseUrl/diy/$id/view';
 
+  static const String diyGemstoneFilters = '$apiBaseUrl/diy/gemstone/filters';
+
+  static String diyGemstoneDetails(String id) => '$apiBaseUrl/diy/gemstone/$id/view';
+
   static String orderDetails(String id) => '$apiBaseUrl/orders/$id';
 
   static const String getExhibitionList = '$apiBaseUrl/exhibition/filters';

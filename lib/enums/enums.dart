@@ -243,3 +243,12 @@ enum AddressTypeEnum {
   final String value;
   final String label;
 }
+
+enum DIYType {
+  diamond('diamond'),
+  gemstone('gemstone');
+
+  const DIYType(this.value);
+
+  final String value;
+}

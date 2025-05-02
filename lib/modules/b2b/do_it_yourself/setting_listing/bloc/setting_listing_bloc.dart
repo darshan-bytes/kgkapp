@@ -13,6 +13,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
 
   /// Holds selected diamond data for the DIY feature
   DiamondDataModel? diamondDataForDIY;
+  GemstoneDatum? gemstoneDataForDIY;
 
   /// Indicates if the toggle is in its initial state
   bool isInitialToggle = true;
@@ -47,6 +48,8 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   /// Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  DIYType? diyType;
+
   SettingListingBloc() : super(const SettingListingInitial()) {
     on<SettingListingInitialEvent>(_onSettingListingInitialEvent);
     on<SettingChangeListingTypeEvent>(_onChangeListingTypeEvent);
@@ -77,8 +80,13 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   void getRouteData(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor];
+    diyType = data?[RoutesData.type] ?? DIYType.diamond;
     if (screenIdentifier != null && screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       diamondDataForDIY = null;
+      gemstoneDataForDIY = null;
+    } else {
+      diamondDataForDIY = appBloc.diamondDataForDIY;
+      gemstoneDataForDIY = appBloc.gemstoneDataForDIY;
     }
     filterDataMap = data?[RoutesData.filterData];
   }
@@ -183,8 +191,8 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
           }
         });
 
-    if (diamondDataForDIY?.shapeCode != null) {
-      query[ApiKey.shapeCode] = diamondDataForDIY?.shapeCode ?? '';
+    if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+      query[ApiKey.shapeCode] = diyType == DIYType.diamond ? diamondDataForDIY?.shapeCode ?? '' : gemstoneDataForDIY?.shapeCode ?? '';
     }
 
     response = await AppRepository(context).diyStyleFilters(

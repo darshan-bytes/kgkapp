@@ -7,6 +7,7 @@ part 'complete_product_state.dart';
 class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductState> {
   late AppBloc appBloc;
   DiamondDataModel? diamondDataForDIY;
+  GemstoneDatum? gemstoneDataForDIY;
   DiyStyleListModel? diyStyleForDIY;
   final CarouselSliderController controller = CarouselSliderController();
   final List<String> imgList = [];
@@ -21,6 +22,8 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
 
   DIYPrice? dIYPrice;
   ScreenIdentifier? screenIdentifier;
+
+  DIYType? diyType;
 
   CompleteProductBloc() : super(CompleteProductInitial()) {
     on<CompleteProductInitialEvent>(_onCompleteProductInitialEvent);
@@ -40,14 +43,20 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
     if (data != null) {
       screenIdentifier = data[RoutesData.isPageFor];
     }
-
-    diamondDataForDIY = appBloc.diamondDataForDIY;
+    diyType = data?[RoutesData.type] ?? DIYType.diamond;
+    if (diyType == DIYType.diamond) {
+      diamondDataForDIY = appBloc.diamondDataForDIY;
+    } else {
+      gemstoneDataForDIY = appBloc.gemstoneDataForDIY;
+    }
     diyStyleForDIY = appBloc.diyStyleForDIY;
     settingId = diyStyleForDIY?.suid;
   }
 
   Future<void> getSettingDetails(BuildContext context, String? settingId) async {
-    final Map<String, String> query = {ApiKey.diamondSuid: diamondDataForDIY?.suid ?? ''};
+    final Map<String, String> query = {
+      ApiKey.diamondSuid: (diyType == DIYType.diamond ? diamondDataForDIY?.suid : gemstoneDataForDIY?.suid) ?? '',
+    };
     Either<ErrorResponse, DiyFinalDetailsModel>? response = await AppRepository(
       context,
     ).getDiySettingDetails(settingId ?? '', query: query);
@@ -117,6 +126,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
             displaySpecification += diamondData.clarity!;
           }
         }
+
         dIYPrice = r.dIYPrice;
       },
     );
@@ -130,7 +140,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
         ).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: event.context, isForce: true));
         event.context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
       } else {
-        appBloc.add(ProductAddToBagEvent(productDetails!, event.context));
+        appBloc.add(ProductAddToBagEvent(productDetails!, event.context, type: diyType?.value));
       }
     }
   }

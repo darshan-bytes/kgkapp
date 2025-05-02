@@ -35,6 +35,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   String? settingId;
   DiyStyleListModel? diyStyleListModel;
 
+  /// DIY Type is used for identifying the type of DIY from Diamond and Gemstone
+  DIYType? diyType;
+
   String productNavigation = "";
   Map<dynamic, String?>? filterDataMap;
 
@@ -149,6 +152,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     filterDataMap = data?[RoutesData.filterData];
     String? title = data?[RoutesData.appBarTitle];
 
+    diyType = data?[RoutesData.type] ?? DIYType.diamond;
+
     if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       settingId = data?[RoutesData.settingId];
       diyStyleListModel = appBloc.diyStyleForDIY;
@@ -183,9 +188,13 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
       case ScreenIdentifier.jewelleryForDIY:
-        await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.diamondForDIY);
+        }
+        if (diyType == DIYType.diamond) {
+          await fetchDiamondList(context, emit);
+        } else {
+          await fetchGemstoneList(context, emit);
         }
         break;
       case ScreenIdentifier.productForGemstones:
@@ -385,6 +394,13 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         queryParam.addAll(stringMap);
       }
       response = await AppRepository(context).getGemstoneDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+      response = await AppRepository(context).diyGemstoneFilter(
+        page: paginationScrollController.currentPage.toString(),
+        isLoadMore: isLoadMore,
+        limit: AppConst.pageLimit.toString(),
+        query: query,
+      );
     } else {
       response = await AppRepository(context).fetchGemstoneList(
         page: paginationScrollController.currentPage.toString(),
@@ -497,7 +513,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     String filterKey = "";
     String type = "";
     if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-      filterKey = AppConst.diamondForDIYFilter;
+      filterKey = diyType == DIYType.diamond ? AppConst.diamondForDIYFilter : AppConst.gemstoneForDIYFilter;
       type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       filterKey = AppConst.diamondFilter;
@@ -549,9 +565,23 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Initialize sort options
   Future<void> _initializeSortOptions(BuildContext context) async {
-    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(
-      screenIdentifier == ScreenIdentifier.diamondForDIY ? Commodity.diamond.value : Commodity.gemstone.value,
-    );
+    /// Get sorting list from storage based on screen identifier and diy type ans set sort key and sort value
+    String sortingKey = "";
+    switch (screenIdentifier) {
+      case ScreenIdentifier.diamondForDIY:
+      case ScreenIdentifier.jewelleryForDIY:
+        sortingKey = diyType == DIYType.diamond ? AppConst.diamondFilter : AppConst.gemstone;
+        break;
+      case ScreenIdentifier.diamondForDefault:
+        sortingKey = AppConst.diamondFilter;
+        break;
+      case ScreenIdentifier.productForGemstones:
+        sortingKey = AppConst.gemstoneFilter;
+        break;
+      default:
+        break;
+    }
+    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(sortingKey);
     if (sortOptionsList.isNotNullNorEmpty) {
       sortOptions = sortOptionsList;
       SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;

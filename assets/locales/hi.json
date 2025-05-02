@@ -870,5 +870,7 @@
   "mob_remove_selected_presentation_msg": "चयनित प्रस्तुतिकरण को अवधारणा से भी हटा दिया जाएगा",
   "mob_delete_presentation": "प्रस्तुतिकरण हटाएँ",
   "mob_approve_presentation": "प्रस्तुति को मंजूरी दें",
-  "mob_cancelled": "केन्सल्ड"
+  "mob_cancelled": "केन्सल्ड",
+  "mob_select_gemstone": "जेमस्टोन चुनें",
+  "mob_select_stone_desc": "स्टोन टाइप डायमंड या रत्न का चयन करें।"
 }

@@ -77,7 +77,7 @@ class PresentationGridItem extends StatelessWidget {
       path: b2bCustomListingDataModel.strPresentationImageUrl ?? '',
       height: imageHeight ?? 224.h,
       width: double.infinity,
-      fit: BoxFit.fill,
+      fit: BoxFit.contain,
     );
   }
 

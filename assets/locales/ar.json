@@ -870,5 +870,7 @@
   "mob_remove_selected_presentation_msg": "ستتم إزالة العرض التقديمي المحدد من المفهوم أيضًا",
   "mob_delete_presentation": "حذف العرض التقديمي",
   "mob_approve_presentation": "الموافقة على العرض التقديمي",
-  "mob_cancelled": "ملغى"
+  "mob_cancelled": "ملغى",
+  "mob_select_gemstone": "حدد الجيمستون",
+  "mob_select_stone_desc": "حدد نوع الحجر الماس أو الأحجار الكريمة."
 }

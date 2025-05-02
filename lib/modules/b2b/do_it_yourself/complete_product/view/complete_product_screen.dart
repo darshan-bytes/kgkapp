@@ -22,7 +22,7 @@ class CompleteProductScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DiyProgressWidget(selectedStep: 3, screenIdentifier: bloc.screenIdentifier),
+                    DiyProgressWidget(selectedStep: 3, screenIdentifier: bloc.screenIdentifier, diyType: bloc.diyType),
                     SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
                     SizedBox(height: 40.h),
                     _productDetail(style, bloc, context),
@@ -71,7 +71,7 @@ class CompleteProductScreen extends StatelessWidget {
                     children: [
                       SmartText(APPStrings.approxPrice.tr, style: style.productTypeStyle),
                       SizedBox(height: 4.w),
-                      SmartText(bloc.dIYPrice?.totalDiscountPrice?.setCurrency, style: style.priceStyle),
+                      SmartText(bloc.dIYPrice?.totalDiscountPrice?.setCurrency, style: style.priceStyle, maxLines: 1, isAutoSizeText: true),
                     ],
                   ),
                 ),
