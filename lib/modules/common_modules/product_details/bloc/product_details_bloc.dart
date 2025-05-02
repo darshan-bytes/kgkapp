@@ -146,7 +146,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<LoadProductDetailsEvent>(_onLoadProductDetails);
     on<ToggleCompareProductEvent>(_onToggleCompareProduct);
     on<ProductCustomizationChangeEvent>(_onOnProductCustomizationChange);
-    on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
     on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
     on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
     on<ProductDetailsSuggestedLoadedEvent>(_onProductDetailsSuggestedLoadedEvent);
@@ -158,6 +157,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ProductDetailsAuctionPlaceBidEvent>(_onPlaceBidEvent);
     on<ProductDetailsPlaceBidFieldChangeEvent>(_onProductDetailsPlaceBidFieldChangeEvent);
     on<ProductDetailsAddInquiryEvent>(_onProductDetailsAddInquiryEvent);
+    on<ProductDetailsAddToCartEvent>(_onProductDetailsAddToCartEvent);
   }
 
   bool get canCompare =>
@@ -761,11 +761,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(ProductCustomizationChangeState(event.index, event.childIndex, oldChildIndex));
   }
 
-  void _onRingDetailsToggleEvent(RingDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
-    isRingDetailsOpen = !isRingDetailsOpen;
-    emit(RingDetailsToggleState(isRingDetailsOpen));
-  }
-
   void _onProductDiamondDetailsToggleEvent(ProductDiamondDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
     isDiamondDetailsOpen = !isDiamondDetailsOpen;
     emit(ProductDiamondDetailsToggleState(isDiamondDetailsOpen));
@@ -957,8 +952,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
-  Future<void> handleBagButtonClick(BuildContext context) async {
+  Future<void> handleBagButtonClick(BuildContext context, Emitter<ProductDetailsState> emit) async {
     if (productDetails == null) return;
+    emit(ProductDetailsReload());
     if (!isAddedToCart) {
       Completer<void> completer = Completer<void>();
       BlocProvider.of<AppBloc>(context).onTapBag(
@@ -966,6 +962,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         productDetails: productDetails!,
         onProductAdded: () {
           isAddedToCart = true;
+          productDetails?.isAddedToCart = true;
+          emit(ProductDetailsLoadedState(productDetails!));
           completer.complete();
         },
       );
@@ -1143,5 +1141,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         arguments: {RoutesData.cmsPageData: CmsWebViewDataModel(url: videoUrl, showLoader: true)},
       );
     }
+  }
+
+  Future<void> _onProductDetailsAddToCartEvent(ProductDetailsAddToCartEvent event, Emitter<ProductDetailsState> emit) async {
+    await handleBagButtonClick(event.context, emit);
   }
 }

@@ -292,7 +292,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
         status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
         strCreatedBy: formatName(data.createdByDetails),
         strCreatedByImageUrl: data.createdByDetails.profilePicUrl?.setMediaUrl ?? '',
-        strCreatedOn: data.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         strApprovedBy: formatName(data.approvedByDetails),
         strApprovedByImageUrl: data.approvedByDetails.profilePicUrl?.setMediaUrl ?? '',
         strConceptNumber: data.conceptNumber ?? '',

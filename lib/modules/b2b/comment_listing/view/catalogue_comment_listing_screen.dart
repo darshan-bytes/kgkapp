@@ -39,12 +39,7 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                     Comments commentModel = (bloc.commentsAddedResponseModel?.comments?[index] ?? Comments());
                     return CommentListItem(
                       id: commentModel.updatedIdDetails?.companyName ?? '',
-                      createdAt:
-                          commentModel.createdAt?.changeDateFormat(
-                            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ,
-                            outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2,
-                          ) ??
-                          '',
+                      createdAt: commentModel.displayDate ?? '',
                       message: commentModel.message ?? '',
                       userImage: commentModel.updatedIdDetails?.profilePic ?? '',
                       onEditPressed: () {

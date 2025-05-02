@@ -48,9 +48,16 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   List<ProductDetailModel> jewellerySubOptionsB2BList = [
     ProductDetailModel(name: 'Collection', image: ''),
     ProductDetailModel(name: 'Landing', image: ''),
+    ProductDetailModel(name: 'Jewellery', image: ''),
   ];
-  List<ProductDetailModel> diamondSubOptionsB2BList = [ProductDetailModel(name: 'Collection', image: '')];
-  List<ProductDetailModel> gemstoneSubOptionsB2BList = [ProductDetailModel(name: 'Collection', image: '')];
+  List<ProductDetailModel> diamondSubOptionsB2BList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Landing', image: ''),
+  ];
+  List<ProductDetailModel> gemstoneSubOptionsB2BList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Landing', image: ''),
+  ];
 
   List<ProductDetailModel> librarySubOptionsList = [
     ProductDetailModel(name: 'Design Library', image: ''),
@@ -411,8 +418,6 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY};
       default:
         return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY, RoutesData.filterData: data};
-
-        return defaultAction();
     }
   }
 
@@ -504,9 +509,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getJewelleryRouteArgumentsB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
-        return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
+        return defaultAction();
       case 'Jewellery':
-        return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
+        return {RoutesData.isPageFor: ScreenIdentifier.productForRing};
       case 'Landing':
         return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
       default:
@@ -517,7 +522,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String? _getDiamondRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
+        return AppRoutes.stoneListingPage;
+      case 'Landing':
         return AppRoutes.stonesLandingPage;
+
       default:
         return AppRoutes.stoneListingPage;
     }
@@ -526,6 +534,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getDiamondRouteArgumentsB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault};
+      case 'Landing':
         return {RoutesData.isPageFor: ScreenIdentifier.landingForDiamonds};
       default:
         return defaultAction();
@@ -535,6 +545,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String? _getGemstoneRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
+        return AppRoutes.stoneListingPage;
+      case 'Landing':
         return AppRoutes.stonesLandingPage;
       default:
         return defaultAction();
@@ -544,6 +556,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getGemstoneRouteArgumentsB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForGemstones};
+      case 'Landing':
         return {RoutesData.isPageFor: ScreenIdentifier.landingForGemstones};
       default:
         return defaultAction();

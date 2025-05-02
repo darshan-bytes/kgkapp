@@ -5,7 +5,6 @@ abstract class DateFormatter {
   static const String dateFormatEEEE = "EEEE";
   static const String timeFormat24H = "hh:mm";
   static const String timeFormat = "HH:mm:ss";
-  static const String timeFormatHA = "h a";
   static const String timeFormat12H = "hh:mm a";
   static const String dateFormatYYYYMMDD = "yyyy-MM-dd";
   static const String dateFormatDDMMYYYY = "dd/MM/yyyy";
