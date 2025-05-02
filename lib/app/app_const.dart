@@ -98,4 +98,5 @@ class AppConst {
   static String frontendLink = 'https://dev.kgk.magnetoinfotech.com/';
   static const String pending = 'pending';
   static const String rejected = 'rejected';
+  static const String accepted = 'accepted';
 }

@@ -499,7 +499,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       context.setAppLoading(true);
     }
     final String title = productDetails.name ?? '';
-    // FOr now description and destination are empty. It will be updated later
     final String description = productDetails.kgkCollectionName ?? '';
 
     BranchLinkDataModel branchLinkDataModel = BranchLinkDataModel(
@@ -514,6 +513,43 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       description: description,
       extraData: branchLinkDataModel,
       imageUrl: productDetails.imageUrl ?? productDetails.shapeImage ?? '',
+    );
+    if (isShowLoading) {
+      context.setAppLoading(false);
+    }
+    if (response.success) {
+      final String deepLink = response.result;
+      return deepLink;
+    } else {
+      Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+    }
+
+    return null;
+  }
+
+  Future<String?> handleShareCatalogue({
+    required BuildContext context,
+    required DigitalCatalogueListingModel productDetails,
+    bool isShowLoading = false,
+  }) async {
+    if (isShowLoading) {
+      context.setAppLoading(true);
+    }
+    final String title = productDetails.name ?? '';
+    final String description = productDetails.description ?? '';
+
+    BranchLinkDataModel branchLinkDataModel = BranchLinkDataModel(
+      branchLinkType: BranchLinkTypeType.catalogueShare,
+      id: productDetails.id,
+      webPath: 'digital-catalogue/catalogue/${productDetails.id}/preview',
+      title: productDetails.name,
+    );
+
+    final BranchResponse response = await BranchService().createDeepLink(
+      title: title,
+      description: description,
+      extraData: branchLinkDataModel,
+      imageUrl: productDetails.image ?? '',
     );
     if (isShowLoading) {
       context.setAppLoading(false);

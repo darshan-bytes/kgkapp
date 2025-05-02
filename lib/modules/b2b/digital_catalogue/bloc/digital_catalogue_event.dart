@@ -53,11 +53,12 @@ final class DigitalCatalogueFilterEvent extends DigitalCatalogueEvent {
 
 final class DigitalCatalogueShareEvent extends DigitalCatalogueEvent {
   final BuildContext context;
+  final int index;
 
-  const DigitalCatalogueShareEvent({required this.context});
+  const DigitalCatalogueShareEvent({required this.context, required this.index});
 
   @override
-  List<Object> get props => [context];
+  List<Object> get props => [context, index];
 }
 
 final class DeleteDigitalCatalogueEvent extends DigitalCatalogueEvent {

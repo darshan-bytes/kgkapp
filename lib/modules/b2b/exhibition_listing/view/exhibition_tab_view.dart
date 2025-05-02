@@ -107,7 +107,12 @@ class ExhibitionTabView extends StatelessWidget {
     return Container(
       margin: EdgeInsetsDirectional.only(bottom: 16.0.h),
       decoration: BoxDecoration(border: Border.all(color: style.borderColor, width: 1.w)),
-      child: GestureDetector(
+      child: InkWell(
+        focusColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        overlayColor: WidgetStatePropertyAll<Color>(Colors.transparent),
         onTap: () {
           /// If user is internal user then navigate to exhibition details page otherwise not navigate
           UserType userType = BlocProvider.of<AppBloc>(context).userType;

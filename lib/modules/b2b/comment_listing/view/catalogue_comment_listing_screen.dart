@@ -38,7 +38,7 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     Comments commentModel = (bloc.commentsAddedResponseModel?.comments?[index] ?? Comments());
                     return CommentListItem(
-                      id: commentModel.updatedIdDetails?.companyName ?? '',
+                      id: commentModel.updatedIdDetails?.fullName ?? '',
                       createdAt: commentModel.displayDate ?? '',
                       message: commentModel.message ?? '',
                       userImage: commentModel.updatedIdDetails?.profilePic ?? '',

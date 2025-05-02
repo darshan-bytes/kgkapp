@@ -7,59 +7,49 @@ part 'preview_catalogue_state.dart';
 class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueState> {
   /// Title of the digital catalogue.
   String titleOfCatalogue = '';
+  String catalogueId = '';
 
   /// Model containing details of the digital catalogue.
-  DigitalCatalogueListingModel? digitalCatalogueListingModel;
+  DigitalCatalogueListingModel? _digitalCatalogueListingModel;
 
   /// Model containing data of the preview catalogue.
   PreviewCatalogueDataModel? previewCatalogueDataModel;
 
-  /// Determines if the catalogue should be displayed in a WebView.
-  bool get isWebView => digitalCatalogueListingModel?.isWebView ?? false;
-
   /// List of product details displayed in the catalogue.
   List<ProductDetailsModel> productList = [];
 
-  /// Controller for managing WebView actions and events.
-  late WebViewController webViewController;
-
   PreviewCatalogueBloc() : super(const PreviewCatalogueInitial()) {
     on<InitialPreviewCatalogueEvent>(_onInitialPreviewCatalogueEvent);
+    on<PreviewCatalogueShareEvent>(_onPreviewCatalogueShareEvent);
   }
 
   /// Handles the initial loading of the preview catalogue.
   Future<void> _onInitialPreviewCatalogueEvent(InitialPreviewCatalogueEvent event, Emitter<PreviewCatalogueState> emit) async {
     _getRouteData(context: event.context);
-    if (isWebView) {
-      _initializeWebViewController();
-    } else {
-      await _callPreviewCatalogueApi(context: event.context);
-    }
+
+    await _callPreviewCatalogueApi(context: event.context);
     emit(const PreviewCatalogueLoadedState());
   }
 
   /// Retrieves the digital catalogue data from the route data.
   void _getRouteData({required BuildContext context}) {
     if (context.routesData == null) return;
-    digitalCatalogueListingModel = context.routesData?[RoutesData.catalogueData];
-    titleOfCatalogue = digitalCatalogueListingModel?.name ?? '';
-  }
-
-  /// Initializes the WebView controller and sets up the navigation delegate
-  void _initializeWebViewController() {
-    webViewController = WebViewController()..setJavaScriptMode(JavaScriptMode.unrestricted);
-    String? webUrl = digitalCatalogueListingModel?.webUrl;
-    if (webUrl.isNotNullNorEmpty) {
-      webViewController.loadRequest(Uri.parse(webUrl!));
+    _digitalCatalogueListingModel = context.routesData?[RoutesData.catalogueData];
+    if (_digitalCatalogueListingModel != null) {
+      catalogueId = _digitalCatalogueListingModel?.id ?? '';
+      titleOfCatalogue = _digitalCatalogueListingModel?.name ?? '';
+    } else {
+      catalogueId = context.routesData?[RoutesData.catalogueId];
+      titleOfCatalogue = context.routesData?[RoutesData.appBarTitle];
     }
   }
 
   /// Fetches data from the design library API.
   Future<void> _callPreviewCatalogueApi({required BuildContext context}) async {
+    if (catalogueId.isEmpty) return;
+
     /// Makes the API request and handles the response.
-    Either<ErrorResponse, PreviewCatalogueDataModel>? response = await AppRepository(
-      context,
-    ).getPreviewCatalogue(id: digitalCatalogueListingModel?.id ?? '');
+    Either<ErrorResponse, PreviewCatalogueDataModel>? response = await AppRepository(context).getPreviewCatalogue(id: catalogueId);
 
     response?.fold(
       (error) {
@@ -246,5 +236,43 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         commodity: Commodity.skuLibrary,
       ),
     );
+  }
+
+  Future<void> _onPreviewCatalogueShareEvent(PreviewCatalogueShareEvent event, Emitter<PreviewCatalogueState> emit) async {
+    BuildContext context = event.context;
+    DigitalCatalogueListingModel digitalCatalogue = DigitalCatalogueListingModel(
+      name: previewCatalogueDataModel?.name ?? '',
+      image: previewCatalogueDataModel?.catalogueCoverImage ?? '',
+      description: previewCatalogueDataModel?.description ?? '',
+      id: previewCatalogueDataModel?.sId ?? '',
+      date: previewCatalogueDataModel?.createdAt,
+      productCount: productList.length.toString(),
+    );
+    String? link = await BlocProvider.of<AppBloc>(
+      context,
+    ).handleShareCatalogue(context: context, productDetails: digitalCatalogue, isShowLoading: true);
+    if (link != null) {
+      Utils.showSmartModalBottomSheet(
+        context: context,
+        enableDrag: false,
+        builder:
+            (sheetContext) => ShareOptionSheet(
+              title: APPStrings.share.tr,
+              onTapQrCode: () async {
+                sheetContext.pop();
+                Utils.showQrCodeDialog(context: context, data: link);
+              },
+              onTapCopy: () async {
+                await Clipboard.setData(ClipboardData(text: link));
+                Utils.showMessage(APPStrings.textCopied.tr);
+              },
+              onTapOther: () async {
+                Utils.onTapShareLink(context: sheetContext, link: link, title: digitalCatalogue.name, imageUrl: digitalCatalogue.image);
+              },
+            ),
+      );
+    } else {
+      Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+    }
   }
 }

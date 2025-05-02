@@ -340,14 +340,14 @@ class ProductDetailsScreen extends StatelessWidget {
                                                   title: APPStrings.share.tr,
                                                   onTapQrCode: () async {
                                                     sheetContext.pop();
-                                                    _showQrCodeDialog(context: context, data: link);
+                                                    Utils.showQrCodeDialog(context: context, data: link);
                                                   },
                                                   onTapCopy: () async {
                                                     await Clipboard.setData(ClipboardData(text: link));
                                                     Utils.showMessage(APPStrings.textCopied.tr);
                                                   },
                                                   onTapOther: () async {
-                                                    bloc.onTapShareLink(context: sheetContext, link: link);
+                                                    Utils.onTapShareLink(context: sheetContext, link: link, title: bloc.productName);
                                                   },
                                                 ),
                                           );
