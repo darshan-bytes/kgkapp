@@ -679,4 +679,69 @@ class Utils {
       await Utils.launchUrlFromString(url);
     }
   }
+
+  static Future showQrCodeDialog({required BuildContext context, required String data}) {
+    final QRCodeDialogStyle style = AppTheme.of(context).qrCodeDialogStyle;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: AnimatedScale(
+            scale: 1.0,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOutBack,
+            child: Stack(
+              alignment: AlignmentDirectional.topEnd,
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: EdgeInsetsDirectional.all(24.w),
+                  decoration: BoxDecoration(
+                    color: style.whiteColor,
+                    boxShadow: [BoxShadow(color: style.shadowColor, blurRadius: 15.0, spreadRadius: 5.0)],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: 56.w,
+                        width: 56.w,
+                        decoration: BoxDecoration(border: Border.all(color: style.borderColor), borderRadius: BorderRadius.circular(12.r)),
+                        child: Icon(Icons.qr_code_2_outlined, size: 42.w, color: style.primaryColor),
+                      ),
+                      SizedBox(height: 16.h),
+                      SmartText(APPStrings.scanThisQRCode.tr, style: style.titleStyle),
+                      SizedBox(height: 8.h),
+                      SmartText(APPStrings.scanThisQRCodeDetails.tr, style: style.subTitleStyle, textAlign: TextAlign.center),
+                      SizedBox(height: 20.h),
+                      QrImageView(data: data, version: QrVersions.auto, size: 245.w, backgroundColor: style.whiteColor),
+                    ],
+                  ),
+                ),
+                PositionedDirectional(
+                  end: 20.w,
+                  top: 20.h,
+                  child: SmartImage(
+                    path: AppImages.icCross,
+                    height: 24.w,
+                    width: 24.w,
+                    color: style.primaryColor,
+                    onTap: () => context.pop(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // Share link
+  static Future<void> onTapShareLink({required BuildContext context, required String link, String? title, String? imageUrl}) async {
+    context.pop();
+    await SharePlus.instance.share(
+      ShareParams(uri: Uri.tryParse(link), title: title, previewThumbnail: imageUrl.isNotNullNorEmpty ? XFile(imageUrl!) : null),
+    );
+  }
 }

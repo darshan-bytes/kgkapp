@@ -12,3 +12,13 @@ final class InitialPreviewCatalogueEvent extends PreviewCatalogueEvent {
   @override
   List<Object> get props => [context];
 }
+
+// Share Event
+final class PreviewCatalogueShareEvent extends PreviewCatalogueEvent {
+  final BuildContext context;
+
+  const PreviewCatalogueShareEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

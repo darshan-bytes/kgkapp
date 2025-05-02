@@ -222,6 +222,13 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
             },
           );
           break;
+
+        case BranchLinkTypeType.catalogueShare:
+          context.pushNamed(
+            AppRoutes.previewCataloguePage,
+            arguments: {RoutesData.catalogueId: branchLinkData.id, RoutesData.appBarTitle: branchLinkData.title},
+          );
+
         //TODO: Add more cases for different link types
         default:
           break;

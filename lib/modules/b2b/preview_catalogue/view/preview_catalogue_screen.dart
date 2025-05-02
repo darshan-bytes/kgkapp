@@ -34,9 +34,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
           return Column(
             children: [
               if (bloc.previewCatalogueDataModel?.isPublic == true) _buildCommentAndShareRow(bloc, style, context),
-              Expanded(
-                child: bloc.isWebView ? WebViewWidget(controller: bloc.webViewController) : _buildCustomCatalogueView(bloc, style, context),
-              ),
+              _buildCustomCatalogueView(bloc, style, context),
             ],
           );
         } else {
@@ -55,11 +53,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
           Expanded(
             child: SmartButton(
               onTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  enableDrag: false,
-                  builder: (context) => SharePresentationScreen(isPresentation: false, webUrl: bloc.digitalCatalogueListingModel?.webUrl),
-                );
+                bloc.add(PreviewCatalogueShareEvent(context));
               },
               title: APPStrings.share.tr,
             ),
@@ -71,6 +65,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
 
   Widget _buildCustomCatalogueView(PreviewCatalogueBloc bloc, PreviewCatalogueStyle style, BuildContext context) {
     return SmartSingleChildScrollView(
+      isExpanded: true,
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 27.h),
       child: Column(
         children: [
@@ -90,10 +85,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
                 onCommentTap: () {
                   context.pushNamed(
                     AppRoutes.commentListingPage,
-                    arguments: {
-                      RoutesData.catalogueId: bloc.digitalCatalogueListingModel?.id ?? "",
-                      RoutesData.productId: bloc.productList[index].productId ?? "",
-                    },
+                    arguments: {RoutesData.catalogueId: bloc.catalogueId, RoutesData.productId: bloc.productList[index].productId ?? ""},
                   );
                 },
               );

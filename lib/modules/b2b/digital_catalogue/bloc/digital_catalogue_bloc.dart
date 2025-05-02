@@ -35,6 +35,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
     on<DigitalCatalogueSearchEvent>(_onDigitalCatalogueSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<DigitalCatalogueFilterEvent>(_onDigitalCatalogueFilterEvent);
     on<DeleteDigitalCatalogueEvent>(_onDeleteDigitalCatalogueEvent);
+    on<DigitalCatalogueShareEvent>(_onDigitalCatalogueShareEvent);
   }
 
   @override
@@ -249,8 +250,6 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         image: data.catalogueCoverImage?.setMediaUrl,
         productCount: data.products.length.toString(),
         date: data.updatedAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
-        isWebView: false,
-        webUrl: null,
         status: ProjectStatus.values.firstWhereOrNull((e) => e.value == data.status?.toLowerCase()),
       );
     }).toList();
@@ -289,5 +288,36 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
       tempSecondaryData = filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
     }
     return tempSecondaryData;
+  }
+
+  Future<void> _onDigitalCatalogueShareEvent(DigitalCatalogueShareEvent event, Emitter<DigitalCatalogueState> emit) async {
+    BuildContext context = event.context;
+    DigitalCatalogueListingModel digitalCatalogue = digitalCatalogueList[event.index];
+    String? link = await BlocProvider.of<AppBloc>(
+      context,
+    ).handleShareCatalogue(context: context, productDetails: digitalCatalogue, isShowLoading: true);
+    if (link != null) {
+      Utils.showSmartModalBottomSheet(
+        context: context,
+        enableDrag: false,
+        builder:
+            (sheetContext) => ShareOptionSheet(
+              title: APPStrings.share.tr,
+              onTapQrCode: () async {
+                sheetContext.pop();
+                Utils.showQrCodeDialog(context: context, data: link);
+              },
+              onTapCopy: () async {
+                await Clipboard.setData(ClipboardData(text: link));
+                Utils.showMessage(APPStrings.textCopied.tr);
+              },
+              onTapOther: () async {
+                Utils.onTapShareLink(context: sheetContext, link: link, title: digitalCatalogue.name, imageUrl: digitalCatalogue.image);
+              },
+            ),
+      );
+    } else {
+      Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+    }
   }
 }
