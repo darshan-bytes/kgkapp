@@ -49,6 +49,7 @@ class StoneListingScreen extends StatelessWidget {
                         if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
                             bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
                           DiyProgressWidget(
+                            diyType: bloc.diyType,
                             padding: EdgeInsetsDirectional.zero,
                             selectedStep: bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ? 1 : 2,
                             screenIdentifier: bloc.screenIdentifier,
@@ -249,7 +250,11 @@ class StoneListingScreen extends StatelessWidget {
                                 bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
                               context.pushNamed(
                                 AppRoutes.stoneDetailPage,
-                                arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId},
+                                arguments: {
+                                  RoutesData.isPageFor: bloc.screenIdentifier,
+                                  RoutesData.productId: productDetails.productId,
+                                  RoutesData.type: bloc.diyType,
+                                },
                               );
                             } else if (bloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
                               context.pushNamed(
@@ -308,7 +313,11 @@ class StoneListingScreen extends StatelessWidget {
                                 bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
                               context.pushNamed(
                                 AppRoutes.stoneDetailPage,
-                                arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId},
+                                arguments: {
+                                  RoutesData.isPageFor: bloc.screenIdentifier,
+                                  RoutesData.productId: product.productId,
+                                  RoutesData.type: bloc.diyType,
+                                },
                               );
                             }
                           },

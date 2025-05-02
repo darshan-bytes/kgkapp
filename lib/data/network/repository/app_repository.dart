@@ -1243,6 +1243,43 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, GemstoneListingModel>?> diyGemstoneFilter({
+    required String limit,
+    required String page,
+    String? sortKey,
+    String? sortValue,
+    bool isLoadMore = false,
+    Map<String, String?>? query,
+    String? type,
+  }) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    Map<String, String?> queryParams = {
+      ApiKey.limit: limit,
+      ApiKey.page: page,
+      if (sortKey.isNotNullNorEmpty) ApiKey.sortKey: sortKey!,
+      if (sortValue.isNotNullNorEmpty) ApiKey.sortValue: sortValue!,
+      if (type.isNotNullNorEmpty) ApiKey.type: type!,
+    };
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+    var response = await getMethod<GemstoneListingModel>(ApiClient.diyGemstoneFilters, query: queryParams, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  //diyGemstoneDetails
+  Future<Either<ErrorResponse, GemstoneDatum>?> diyGemstoneDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<GemstoneDatum>(ApiClient.diyGemstoneDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   // fetchInquiryType
   Future<Either<ErrorResponse, List<String>>?> fetchInquiryType() async {
     var response = await getMethod<String>(ApiClient.inquiryType);

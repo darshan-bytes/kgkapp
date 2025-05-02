@@ -1,11 +1,12 @@
 import 'package:kgk/kgk.dart';
 
 class DiyProgressWidget extends StatelessWidget {
-  const DiyProgressWidget({super.key, required this.selectedStep, this.padding, this.screenIdentifier});
+  const DiyProgressWidget({super.key, required this.selectedStep, this.padding, this.screenIdentifier, this.diyType});
 
   final int selectedStep;
   final EdgeInsetsGeometry? padding;
   final ScreenIdentifier? screenIdentifier;
+  final DIYType? diyType;
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +19,11 @@ class DiyProgressWidget extends StatelessWidget {
     ];
     List<String> titleList = [];
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
-      titleList = [APPStrings.diamond.tr, APPStrings.ring.tr, APPStrings.ring.tr];
+      titleList = [(diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr, APPStrings.ring.tr, APPStrings.ring.tr];
     } else if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-      titleList = [APPStrings.ring.tr, APPStrings.diamond.tr, APPStrings.ring.tr];
+      titleList = [APPStrings.ring.tr, (diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr, APPStrings.ring.tr];
     } else {
-      titleList = [APPStrings.diamond.tr, APPStrings.ring.tr, APPStrings.ring.tr];
+      titleList = [(diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr, APPStrings.ring.tr, APPStrings.ring.tr];
     }
 
     return Container(

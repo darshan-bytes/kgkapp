@@ -810,6 +810,7 @@ enum RoutesData {
   contextId,
   isEdited,
   myReview,
+  type,
 }
 
 enum ScreenIdentifier {

@@ -8,6 +8,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   bool isGrid = false;
   final TextEditingController presentationSearchController = TextEditingController();
   List<B2BCustomListingDataModel> presentationList = [];
+  List<PddDataModel> pddList = [];
 
   //Pagination controller
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
@@ -250,6 +251,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
       (PaginationData<PddDataModel> success) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
         List<PddDataModel> dataList = success.dataList ?? [];
+        pddList.addAll(dataList);
         presentationList.addAll(_populateDigitalCatalogueList(dataList));
         gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
         emit(PddListingLoadedState());

@@ -29,6 +29,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   List<ProductDetailModel> get doItYourselfSubOptionsB2CList => [
     ProductDetailModel(name: 'Diamond', image: ''),
+    ProductDetailModel(name: 'Gemstone', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
     ...(diyJewelleryTypes.map((e) => ProductDetailModel(name: e.jewelleryTypeName, image: '', data: e.toJson()))),
   ];
@@ -70,6 +71,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   List<ProductDetailModel> get doItYourselfSubOptionsB2BList => [
     ProductDetailModel(name: 'Diamond', image: ''),
+    ProductDetailModel(name: 'Gemstone', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
     ...(diyJewelleryTypes.map((e) => ProductDetailModel(name: e.jewelleryTypeName, image: '', data: e.toJson()))),
   ];
@@ -402,6 +404,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String? _getDoItYourselfRouteNameForB2C(String? categorySubName) {
     switch (categorySubName) {
       case 'Diamond':
+      case 'Gemstone':
         return AppRoutes.stoneListingPage;
 
       case 'Jewellery':
@@ -413,7 +416,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsForB2C(String? categorySubName, Map<String, dynamic>? data) {
     switch (categorySubName) {
       case 'Diamond':
-        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY, RoutesData.type: DIYType.diamond};
+      case 'Gemstone':
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY, RoutesData.type: DIYType.gemstone};
       case 'Jewellery':
         return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY};
       default:
@@ -614,6 +619,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String? _getDoItYourselfRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Diamond':
+      case 'Gemstone':
         return AppRoutes.stoneListingPage;
       case 'Jewellery':
       default:
@@ -624,7 +630,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsB2B(String? categorySubName, Map<String, dynamic>? data) {
     switch (categorySubName) {
       case 'Diamond':
-        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY, RoutesData.type: DIYType.diamond};
+      case 'Gemstone':
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY, RoutesData.type: DIYType.gemstone};
       case 'Jewellery':
         return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY};
       default:

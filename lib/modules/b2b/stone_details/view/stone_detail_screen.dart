@@ -26,6 +26,7 @@ class StoneDetailScreen extends StatelessWidget {
               children: [
                 if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY || bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
                   DiyProgressWidget(
+                    diyType: bloc.diyType,
                     selectedStep: bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ? 1 : 2,
                     screenIdentifier: bloc.screenIdentifier,
                   ),
@@ -117,8 +118,7 @@ class StoneDetailScreen extends StatelessWidget {
                   onTap: () {
                     bloc.add(StoneDetailSelectStoneForDIYEvent(context: context));
                   },
-                  padding: EdgeInsetsDirectional.zero,
-                  title: APPStrings.selectDiamond.tr,
+                  title: bloc.diyType == DIYType.gemstone ? APPStrings.selectGemstone.tr : APPStrings.selectDiamond.tr,
                   height: 55.h,
                 ),
               ),
