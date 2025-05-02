@@ -38,13 +38,6 @@ final class ProductCustomizationChangeEvent extends ProductDetailsEvent {
   List<Object> get props => [index, childIndex];
 }
 
-final class RingDetailsToggleEvent extends ProductDetailsEvent {
-  const RingDetailsToggleEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class ProductDiamondDetailsToggleEvent extends ProductDetailsEvent {
   const ProductDiamondDetailsToggleEvent();
 
@@ -128,6 +121,15 @@ final class ProductDetailsAddInquiryEvent extends ProductDetailsEvent {
   final BuildContext context;
 
   const ProductDetailsAddInquiryEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class ProductDetailsAddToCartEvent extends ProductDetailsEvent {
+  final BuildContext context;
+
+  const ProductDetailsAddToCartEvent(this.context);
 
   @override
   List<Object> get props => [context];

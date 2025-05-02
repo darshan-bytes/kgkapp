@@ -338,12 +338,6 @@ class ProductGridItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            height: 14.w,
-            width: 14.w,
-            decoration: BoxDecoration(color: productDetails.getCatalogueBadgeColor, borderRadius: BorderRadius.circular(32.r)),
-          ),
-          SizedBox(width: 8.w),
           Flexible(
             child: Row(
               children: [

@@ -70,4 +70,6 @@ class Comments {
     data['user'] = updatedIdDetails?.toJson();
     return data;
   }
+
+  String? get displayDate => createdAt?.stringToDateTime()?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2);
 }

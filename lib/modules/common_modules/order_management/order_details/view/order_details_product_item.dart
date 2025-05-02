@@ -35,6 +35,21 @@ class OrderDetailsProductItem extends StatelessWidget {
                       width: 44.w,
                       height: 44.h,
                       imageBorderRadius: BorderRadius.circular(5.5.r),
+                      onTap: () {
+                        if (productDetails.image != null) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog.fullscreen(
+                                backgroundColor: Colors.transparent,
+                                child: ProductPhotoViewGallery(imageUrls: [productDetails.image ?? '']),
+                              );
+                            },
+                          );
+                        } else {
+                          Utils.showMessage(APPStrings.noImageAvailable.tr);
+                        }
+                      },
                     ),
                     SizedBox(width: 8.w),
                     Expanded(

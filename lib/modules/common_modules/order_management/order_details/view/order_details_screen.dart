@@ -94,26 +94,31 @@ class _OrderDetailBody extends StatelessWidget {
           itemBuilder: (context, index) {
             if (bloc.userType == UserType.b2cUser) {
               final ProductDetailsModel product = bloc.orderProductList[index];
-              return CartProductItem(
-                isOutOfStock: false,
-                isFromOrderDetails: true,
-                boxHeight: 72.w,
-                boxWidth: 72.w,
-                isDropDownEnable: false,
-                isCheckboxShow: false,
-                isEnableAddToWishList: false,
-                // TODO :: To be implemented
-                // onRemoveTap: () {},
-                onMoveToWishListTap: null,
-                productDetails: product,
-                qualityOptionsList: product.cartProductQuality ?? [],
-                quantityOptionsList: List.generate(
-                  product.quantity ?? 0,
-                  (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1),
+              return Card(
+                clipBehavior: Clip.antiAlias,
+
+                child: CartProductItem(
+                  padding: EdgeInsetsDirectional.all(10.w),
+                  isOutOfStock: false,
+                  isFromOrderDetails: true,
+                  boxHeight: 72.w,
+                  boxWidth: 72.w,
+                  isDropDownEnable: false,
+                  isCheckboxShow: false,
+                  isEnableAddToWishList: false,
+                  // TODO :: To be implemented
+                  // onRemoveTap: () {},
+                  onMoveToWishListTap: null,
+                  productDetails: product,
+                  qualityOptionsList: product.cartProductQuality ?? [],
+                  quantityOptionsList: List.generate(
+                    product.quantity ?? 0,
+                    (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1),
+                  ),
+                  selectedQuantity: CartProductQuantity(name: product.quantity?.toString(), quantity: product.quantity),
+                  onQuantityChanged: (value) {},
+                  priceTextStyle: style.priceTextStyle,
                 ),
-                selectedQuantity: CartProductQuantity(name: product.quantity?.toString(), quantity: product.quantity),
-                onQuantityChanged: (value) {},
-                priceTextStyle: style.priceTextStyle,
               );
             } else {
               final productDetails = bloc.orderProductDetailsList[index];
@@ -125,7 +130,7 @@ class _OrderDetailBody extends StatelessWidget {
               );
             }
           },
-          separatorBuilder: (context, index) => SizedBox(height: 24.h),
+          separatorBuilder: (context, index) => bloc.userType == UserType.b2cUser ? Divider(height: 24.h) : SizedBox(height: 24.h),
         );
       },
     );
@@ -449,6 +454,7 @@ class _CreatorDetailItem extends StatelessWidget {
         SizedBox(width: 16.w),
         Expanded(
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (iconImage != null)
                 Padding(

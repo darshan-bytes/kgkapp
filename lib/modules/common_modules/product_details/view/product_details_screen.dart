@@ -119,12 +119,17 @@ class ProductDetailsScreen extends StatelessWidget {
                 SizedBox(width: 4.w),
                 Expanded(
                   flex: 4,
-                  child: SmartButton(
-                    height: 54.h,
-                    prefixImage: AppImages.icShoppingBag,
-                    title: bloc.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
-                    onTap: () {
-                      bloc.handleBagButtonClick(context);
+                  child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+                    buildWhen: (previous, current) => current is ProductDetailsLoadedState,
+                    builder: (context, state) {
+                      return SmartButton(
+                        height: 54.h,
+                        prefixImage: AppImages.icShoppingBag,
+                        title: bloc.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
+                        onTap: () {
+                          bloc.add(ProductDetailsAddToCartEvent(context));
+                        },
+                      );
                     },
                   ),
                 ),
