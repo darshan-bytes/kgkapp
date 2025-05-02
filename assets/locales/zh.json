@@ -870,5 +870,7 @@
   "mob_remove_selected_presentation_msg": "选定的演示也将从概念中删除",
   "mob_delete_presentation": "删除演示文稿",
   "mob_approve_presentation": "批准演示文稿",
-  "mob_cancelled": "取消"
+  "mob_cancelled": "取消",
+  "mob_select_gemstone": "选择宝石",
+  "mob_select_stone_desc": "选择石材型钻石或宝石。"
 }

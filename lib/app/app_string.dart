@@ -1066,4 +1066,6 @@ class APPStrings {
   static const String removeSelectedPresentationMsg = 'mob_remove_selected_presentation_msg';
   static const String deletePresentation = 'mob_delete_presentation';
   static const String approvePresentation = 'mob_approve_presentation';
+  static const String selectGemstone = 'mob_select_gemstone';
+  static const String selectStoneDesc = 'mob_select_stone_desc';
 }

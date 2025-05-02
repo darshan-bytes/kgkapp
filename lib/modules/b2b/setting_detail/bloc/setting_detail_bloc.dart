@@ -15,8 +15,8 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
 
   String productName = '';
   String? settingId;
-
   ScreenIdentifier? screenIdentifier;
+  DIYType? diyType;
 
   SettingDetailBloc() : super(SettingDetailInitial()) {
     on<SettingDetailInitialEvent>(_onSettingDetailInitialEvent);
@@ -38,6 +38,7 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
     if (data != null) {
       settingId = data[RoutesData.settingId];
       screenIdentifier = data[RoutesData.isPageFor];
+      diyType = data[RoutesData.type] ?? DIYType.diamond;
     }
   }
 
@@ -81,11 +82,36 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
     );
   }
 
-  void handleSelectSetting(BuildContext context) {
+  Future<void> handleSelectSetting(BuildContext context) async {
     appBloc.diyStyleForDIY = diyStyleListModel;
+    if (diyType == null || screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+      await Utils.showSmartModalBottomSheet(
+        isDismissible: false,
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+        ),
+        builder:
+            (context) => ConfirmationDialog(
+              title: APPStrings.selectStone.tr,
+              message: APPStrings.selectStoneDesc.tr,
+              onApproved: () {
+                diyType = DIYType.gemstone;
+                context.pop();
+              },
+              onDenied: () {
+                diyType = DIYType.diamond;
+                context.pop();
+              },
+              onApprovedText: APPStrings.gemstone.tr,
+              onDeniedText: APPStrings.diamond.tr,
+            ),
+      );
+    }
     final String route = screenIdentifier == ScreenIdentifier.jewelleryForDIY ? AppRoutes.stoneListingPage : AppRoutes.completeProductPage;
     final Map<RoutesData, dynamic> arguments = {
       RoutesData.settingId: settingId,
+      RoutesData.type: diyType,
       RoutesData.isPageFor:
           screenIdentifier == ScreenIdentifier.jewelleryForDIY ? ScreenIdentifier.jewelleryForDIY : ScreenIdentifier.diamondForDIY,
     };

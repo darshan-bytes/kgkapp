@@ -870,5 +870,7 @@
   "mob_remove_selected_presentation_msg": "選択したプレゼンテーションはコンセプトからも削除されます",
   "mob_delete_presentation": "プレゼンテーションの削除",
   "mob_approve_presentation": "プレゼンテーションの承認",
-  "mob_cancelled": "キャンセル"
+  "mob_cancelled": "キャンセル",
+  "mob_select_gemstone": "宝石を選択",
+  "mob_select_stone_desc": "ストーンタイプのダイヤモンドまたは宝石を選択します。"
 }

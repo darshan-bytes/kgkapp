@@ -870,5 +870,7 @@
   "mob_remove_selected_presentation_msg": "Selected Presentation will be removed from the concept also",
   "mob_delete_presentation": "Delete Presentation",
   "mob_approve_presentation": "Approve Presentation",
-  "mob_cancelled": "Cancelled"
+  "mob_cancelled": "Cancelled",
+  "mob_select_gemstone": "Select Gemstone",
+  "mob_select_stone_desc": "Select Stone type Diamond or Gemstone."
 }
