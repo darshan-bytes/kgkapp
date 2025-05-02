@@ -127,7 +127,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                     onSelected: (PopupMenuOption option) {
                                       switch (option) {
                                         case PopupMenuOption.share:
-                                          digitalCatalogueBloc.add(DigitalCatalogueShareEvent(context: context));
+                                          digitalCatalogueBloc.add(DigitalCatalogueShareEvent(context: context, index: index));
                                           break;
                                         case PopupMenuOption.remove:
                                           Utils.showDoubleActionDialog(

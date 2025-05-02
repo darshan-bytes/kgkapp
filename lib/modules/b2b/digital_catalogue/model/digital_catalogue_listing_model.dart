@@ -7,21 +7,9 @@ class DigitalCatalogueListingModel {
   String? image;
   String? productCount;
   String? date;
-  bool isWebView;
-  String? webUrl;
   ProjectStatus? status;
 
-  DigitalCatalogueListingModel({
-    this.id,
-    this.name,
-    this.description,
-    this.image,
-    this.productCount,
-    this.date,
-    this.isWebView = false,
-    this.webUrl,
-    this.status,
-  });
+  DigitalCatalogueListingModel({this.id, this.name, this.description, this.image, this.productCount, this.date, this.status});
 
   @override
   bool operator ==(Object other) {
@@ -34,21 +22,11 @@ class DigitalCatalogueListingModel {
         other.image == image &&
         other.productCount == productCount &&
         other.date == date &&
-        other.isWebView == isWebView &&
-        other.webUrl == webUrl &&
         other.status == status;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        description.hashCode ^
-        image.hashCode ^
-        productCount.hashCode ^
-        date.hashCode ^
-        isWebView.hashCode ^
-        webUrl.hashCode ^
-        status.hashCode;
+    return id.hashCode ^ name.hashCode ^ description.hashCode ^ image.hashCode ^ productCount.hashCode ^ date.hashCode ^ status.hashCode;
   }
 }

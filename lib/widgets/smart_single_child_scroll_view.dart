@@ -13,6 +13,7 @@ class SmartSingleChildScrollView extends StatelessWidget {
   final String? restorationId;
   final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
   final RefreshCallback? onRefresh;
+  final bool isExpanded;
 
   const SmartSingleChildScrollView({
     super.key,
@@ -28,6 +29,7 @@ class SmartSingleChildScrollView extends StatelessWidget {
     this.restorationId,
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.onRefresh,
+    this.isExpanded = false,
   });
 
   @override
@@ -46,18 +48,21 @@ class SmartSingleChildScrollView extends StatelessWidget {
       child: child,
     );
 
-    return GestureDetector(
+    if (onRefresh != null) {
+      view = RefreshIndicator.adaptive(triggerMode: RefreshIndicatorTriggerMode.anywhere, onRefresh: onRefresh!, child: view);
+    }
+
+    view = GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: _getRefreshIndicatorView(view: view),
+      child: view,
     );
-  }
 
-  Widget _getRefreshIndicatorView({required Widget view}) {
-    if (onRefresh != null) {
-      return RefreshIndicator.adaptive(triggerMode: RefreshIndicatorTriggerMode.anywhere, onRefresh: onRefresh!, child: view);
+    if (isExpanded) {
+      view = Expanded(child: view);
     }
+
     return view;
   }
 }

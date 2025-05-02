@@ -205,7 +205,8 @@ enum Priority {
 }
 
 enum BranchLinkTypeType {
-  productShare('product_share');
+  productShare('product_share'),
+  catalogueShare('catalogue_share');
 
   const BranchLinkTypeType(this.value);
 

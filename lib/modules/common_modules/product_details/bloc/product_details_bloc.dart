@@ -608,7 +608,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }) async {
     if (isClosed) return;
     emit(const ReloadProductDetailsState());
-    Map<String, String> query = {ApiKey.productId_: productId, ApiKey.limit: "6", ApiKey.page: "1"};
+    Map<String, String> query = {ApiKey.productId_: productId, ApiKey.limit: "6", ApiKey.page: "1", ApiKey.status: AppConst.accepted};
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
     Either<ErrorResponse, ProductReviewWrapperModel>? response = await AppRepository(
       context,
@@ -917,12 +917,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       product.wishlistId = state.wishlistId;
       product.isFavourite = state.wishlistId.isNotEmpty;
     }
-  }
-
-  // Share link
-  Future<void> onTapShareLink({required BuildContext context, required String link}) async {
-    context.pop();
-    await SharePlus.instance.share(ShareParams(uri: Uri.tryParse(link)));
   }
 
   void initCompareProductChangesStream(BuildContext context) {
