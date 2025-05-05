@@ -118,9 +118,9 @@ class SignUpScreen extends StatelessWidget {
     return <Widget>[
       _buildCompanyNameField(signUpBloc),
       SizedBox(height: 24.h),
-      _buildCompanyLocationField(signUpBloc),
-      SizedBox(height: 24.h),
       _buildBusinessType(signUpBloc, context, style),
+      SizedBox(height: 24.h),
+      _buildCompanyLocationField(signUpBloc),
       SizedBox(height: 24.h),
       const Divider(),
       SizedBox(height: 24.h),
@@ -588,7 +588,7 @@ class SignUpScreen extends StatelessWidget {
                             if (val == null) {
                               return;
                             }
-                            signUpBloc.add(SignUpBusinessTypeChangedEvent(val, index));
+                            signUpBloc.add(SignUpBusinessTypeChangedEvent(context, val, index));
                             signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.businessType));
                           },
                           label: businessType.name,

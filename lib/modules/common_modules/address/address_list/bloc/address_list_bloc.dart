@@ -139,13 +139,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       arguments: {RoutesData.isFromCheckout: true},
     );
     if (result != null && result.containsKey(RoutesData.addressDetails) && result[RoutesData.addressDetails] is AddressDetails) {
-      AddressDetails addressDetails = result[RoutesData.addressDetails];
-      _addressList.add(addressDetails);
-      selectedShippingAddress = addressDetails;
-      if (isBillingAndShippingSame) {
-        selectedBillingAddress = addressDetails;
-      }
-      emit(AddNewAddressState(addressDetails));
+      add(LoadAddressListEvent(event.context));
     }
   }
 
