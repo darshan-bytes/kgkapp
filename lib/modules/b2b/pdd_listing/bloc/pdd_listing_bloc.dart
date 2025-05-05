@@ -279,11 +279,9 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   /// Populate digital catalogue list
   List<B2BCustomListingDataModel> _populateDigitalCatalogueList(List<PddDataModel> dataList) {
     return dataList.map((data) {
-      String formatName(UserIdDetails? details) {
-        if (details == null) return '-';
-        final firstName = details.firstname ?? '';
-        final lastName = details.lastname ?? '';
-        return (firstName.isNotEmpty || lastName.isNotEmpty) ? '$firstName $lastName'.trim() : '-';
+      String? formatName(UserIdDetails? details) {
+        if (details == null || details.fullName.isNullOrEmpty) return null;
+        return details.fullName;
       }
 
       return B2BCustomListingDataModel(

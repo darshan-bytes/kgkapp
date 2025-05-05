@@ -46,10 +46,12 @@ final class SignUpBusinessTypeChangedEvent extends SignUpEvent {
   final int index;
   final bool isSelected;
 
-  const SignUpBusinessTypeChangedEvent(this.isSelected, this.index);
+  final BuildContext context;
+
+  const SignUpBusinessTypeChangedEvent(this.context, this.isSelected, this.index);
 
   @override
-  List<Object> get props => [isSelected, index];
+  List<Object> get props => [context, isSelected, index];
 }
 
 final class SignupAddContactEvent extends SignUpEvent {

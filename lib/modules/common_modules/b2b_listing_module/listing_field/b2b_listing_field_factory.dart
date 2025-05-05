@@ -45,7 +45,8 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
           B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
-          B2BItemField(label: APPStrings.approvedBy.tr, value: model.strApprovedBy, imageUrl: model.strApprovedByImageUrl),
+          if (model.strApprovedBy.isNotNullNorEmpty)
+            B2BItemField(label: APPStrings.approvedBy.tr, value: model.strApprovedBy, imageUrl: model.strApprovedByImageUrl),
         ];
 
       case B2BListingType.projectListingType:
