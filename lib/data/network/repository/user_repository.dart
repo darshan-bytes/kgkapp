@@ -30,9 +30,9 @@ class UserRepository extends ApiService {
   }
 
   // For User SignUp with Office Location
-  Future<Either<ErrorResponse, List<OfficeLocation>>?> getOfficeLocations() async {
+  Future<Either<ErrorResponse, List<OfficeLocation>>?> getOfficeLocations(Map<String, String>? query) async {
     context.setAppLoading(true);
-    var response = await getMethod<OfficeLocation>(ApiClient.officeLocations);
+    var response = await getMethod<OfficeLocation>(ApiClient.officeLocations, query: query);
     context.setAppLoading(false);
     return response?.fold((error) => Left(error), (officeLocations) => Right(officeLocations as List<OfficeLocation>));
   }

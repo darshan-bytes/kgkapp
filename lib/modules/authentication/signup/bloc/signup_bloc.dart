@@ -84,7 +84,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   OfficeLocation? selectedOfficeLocation;
 
-  bool get isSignupButtonEnabled => isBusinessTypeListFetched && isOfficeLocationListFetched;
+  bool get isSignupButtonEnabled => isIndividual || (isBusinessTypeListFetched && isOfficeLocationListFetched);
+
+  Timer? _timer;
 
   SignUpBloc() : super(SignupInitial()) {
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
@@ -110,7 +112,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     _isInitialised = true;
     emit(const SignUpLoadingState());
     isBusinessTypeListFetched = await getBusinessTypeList(event, emit);
-    isOfficeLocationListFetched = await getOfficeLocations(event, emit);
 
     emit(const SignUpLoadedState());
   }
@@ -132,8 +133,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         false;
   }
 
-  Future<bool> getOfficeLocations(SignUpInitialEvent event, Emitter<SignUpState> emit) async {
-    Either<ErrorResponse, List<OfficeLocation>>? officeLocationResponse = await UserRepository(event.context).getOfficeLocations();
+  Future<bool> getOfficeLocations(BuildContext context, Emitter<SignUpState> emit) async {
+    final businessTypeIds = businessTypes.where((element) => element.isSelected).map((e) => e.slug).join(',');
+    if (businessTypeIds.isEmpty) {
+      return isOfficeLocationListFetched = false;
+    }
+    Map<String, String> query = {};
+    query[ApiKey.type] = businessTypeIds;
+    Either<ErrorResponse, List<OfficeLocation>>? officeLocationResponse = await UserRepository(context).getOfficeLocations(query);
     return officeLocationResponse?.fold(
           (l) {
             emit(SignUpErrorState(l.message ?? ''));
@@ -145,6 +152,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             if (officeLocations.isNotEmpty) {
               selectedOfficeLocation = officeLocations.first;
             }
+            isOfficeLocationListFetched = true;
             return true;
           },
         ) ??
@@ -192,9 +200,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(SignUpChangeCountryCodeState(country: selectedCountryCodes[event.index], index: event.index));
   }
 
-  void _onSignUpBusinessTypeChangedEvent(SignUpBusinessTypeChangedEvent event, Emitter<SignUpState> emit) {
+  Future<void> _onSignUpBusinessTypeChangedEvent(SignUpBusinessTypeChangedEvent event, Emitter<SignUpState> emit) async {
     emit(SignUpReloadState());
-
+    isOfficeLocationListFetched = false;
     if (event.index == 2) {
       if (!businessTypes[0].isSelected && !businessTypes[1].isSelected) {
         businessTypes[event.index].isSelected = event.isSelected;
@@ -206,6 +214,16 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
       }
     }
+    _timer?.cancel();
+    officeLocations = [];
+    selectedOfficeLocation = null;
+    isOfficeLocationListFetched = false;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      await getOfficeLocations(event.context, emit);
+      if (isOfficeLocationListFetched) {
+        _timer?.cancel();
+      }
+    });
   }
 
   void _onSignUpChangeCountryEvent(SignUpChangeCountryEvent event, Emitter<SignUpState> emit) {

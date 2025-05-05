@@ -34,14 +34,14 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // emailController.text = "kachinbali@yopmail.com";
       // emailController.text = "karthigeyan.m@sparklesoft.co.in"; // Siva User
 
-      emailController.text = "customer48008@kgkmail.com";
+      // emailController.text = "customer48008@kgkmail.com";
       // emailController.text = "kachinbali@yopmail.com";
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "jainamm.diamonds@yopmail.com"; //Diamond
       // emailController.text = "parash2@yopmail.com"; // Jewellery
 
       passwordController.text = "Asdf@1234";
-      passwordController.text = "Test@123";
+      // passwordController.text = "Test@123";
       // passwordController.text = "Admin@123";
       // passwordController.text = "123";
     }

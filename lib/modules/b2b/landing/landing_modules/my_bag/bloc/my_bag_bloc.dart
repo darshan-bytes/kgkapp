@@ -398,8 +398,16 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onMyBagMoveToWishListEvent(MyBagMoveToWishListEvent event, Emitter<MyBagState> emit) async {
-    BlocProvider.of<AppBloc>(event.context).add(ProductAddToFavoriteEvent(myBagProductList[event.index], event.context));
-    add(MyBagRemoveProductEvent(index: event.index, context: event.context, isFromMoveToWishList: true));
+    BlocProvider.of<AppBloc>(event.context).add(
+      ProductAddToFavoriteEvent(
+        myBagProductList[event.index],
+        event.context,
+        onFavTap: () {
+          if (isClosed) return;
+          add(MyBagRemoveProductEvent(index: event.index, context: event.context, isFromMoveToWishList: true));
+        },
+      ),
+    );
   }
 
   void _onMyBagSelectAllProductChangedEvent(MyBagSelectAllProductChangedEvent event, Emitter<MyBagState> emit) {
