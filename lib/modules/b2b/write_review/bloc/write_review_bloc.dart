@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:http/http.dart' as http;
 
 part 'write_review_event.dart';
 
@@ -11,6 +10,8 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   int selectedRating = 0;
   final ImagePicker _picker = ImagePicker();
   List<XFile> imageFileList = [];
+  List<String> imageUrls = [];
+  List<String> removedImages = [];
 
   int get maxImagesCount => AppConst.maxImagesCount;
 
@@ -41,8 +42,8 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
       titleController.text = myReview?.title ?? '';
       reviewController.text = myReview?.description ?? '';
       selectedRating = myReview?.rating ?? 0;
-
-      await downloadImages(event.context);
+      imageUrls = myReview?.displayImage ?? [];
+      imageFileList.addAll(imageUrls.map((e) => XFile(e)).toList());
       emit(const WriteReviewLoadedState());
     } else {
       add(const WriteReviewResetEvent());
@@ -79,6 +80,10 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     emit(const WriteReviewReloadState());
     if (imageFileList.isNotNullNorEmpty) {
       imageFileList.removeAt(event.selectedImage);
+      if (event.selectedImage < imageUrls.length) {
+        removedImages.add(imageUrls[event.selectedImage]);
+        imageUrls.removeAt(event.selectedImage);
+      }
       emit(const RemoveSelectedImageState());
     }
   }
@@ -150,7 +155,12 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     };
     Either<ErrorResponse, CommonResponse<ProductReviewModel>>? response;
     if (isEdit) {
-      response = await AppRepository(event.context).editProductReview(productId, body, images: imageFileList.map((e) => e.path).toList());
+      if (removedImages.isNotEmpty) {
+        body[ApiKey.removeFiles] = removedImages.map((e) => e.replaceAll(''.setMediaUrl, '')).join(',');
+      }
+      response = await AppRepository(
+        event.context,
+      ).editProductReview(myReview?.id ?? '', body, images: imageFileList.map((e) => e.path).toList());
     } else {
       response = await AppRepository(event.context).addProductReview(body, images: imageFileList.map((e) => e.path).toList());
     }
@@ -164,29 +174,5 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
         Utils.showMessage(data.message);
       },
     );
-  }
-
-  /// Download images from the server using http.get method
-  Future<void> downloadImages(BuildContext context) async {
-    context.setAppLoading(true);
-    try {
-      for (var imageUrl in myReview?.displayImage ?? []) {
-        final response = await http.get(Uri.parse(imageUrl));
-        if (response.statusCode == 200) {
-          final bytes = response.bodyBytes;
-          final tempDir = await getTemporaryDirectory();
-          final filePath = '${tempDir.path}/${imageUrl.split('/').last}';
-          final file = File(filePath);
-          await file.writeAsBytes(bytes);
-          imageFileList.add(XFile(filePath));
-        } else {
-          throw Exception('Failed to download image');
-        }
-      }
-    } catch (e) {
-      debugPrint('Error downloading images: $e');
-    } finally {
-      context.setAppLoading(false);
-    }
   }
 }
