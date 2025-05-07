@@ -141,4 +141,5 @@ class ApiKey {
   static const String ids = 'ids';
   static const String inquiryContextId = 'inquiry_context_id';
   static const String contextId = 'context_id';
+  static const String removeFiles = 'remove_files';
 }

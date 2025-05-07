@@ -102,7 +102,7 @@ class APPStrings {
   //Product item
   static const String addToBag = 'mob_add_to_bag';
   static const String select = 'mob_select';
-  static const String ring = 'mob_ring';
+
   static const String remove = 'mob_remove';
   static const String moveToWishlist = 'mob_move_to_wishlist';
 

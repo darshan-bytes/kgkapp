@@ -19,11 +19,23 @@ class DiyProgressWidget extends StatelessWidget {
     ];
     List<String> titleList = [];
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
-      titleList = [(diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr, APPStrings.ring.tr, APPStrings.ring.tr];
+      titleList = [
+        (diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr,
+        APPStrings.jewellery.tr,
+        APPStrings.jewellery.tr,
+      ];
     } else if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
-      titleList = [APPStrings.ring.tr, (diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr, APPStrings.ring.tr];
+      titleList = [
+        APPStrings.jewellery.tr,
+        (diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr,
+        APPStrings.jewellery.tr,
+      ];
     } else {
-      titleList = [(diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr, APPStrings.ring.tr, APPStrings.ring.tr];
+      titleList = [
+        (diyType == DIYType.gemstone ? APPStrings.gemstone : APPStrings.diamond).tr,
+        APPStrings.jewellery.tr,
+        APPStrings.jewellery.tr,
+      ];
     }
 
     return Container(
