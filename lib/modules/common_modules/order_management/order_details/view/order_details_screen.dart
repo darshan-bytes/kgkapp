@@ -94,31 +94,26 @@ class _OrderDetailBody extends StatelessWidget {
           itemBuilder: (context, index) {
             if (bloc.userType == UserType.b2cUser) {
               final ProductDetailsModel product = bloc.orderProductList[index];
-              return Card(
-                clipBehavior: Clip.antiAlias,
-
-                child: CartProductItem(
-                  padding: EdgeInsetsDirectional.all(10.w),
-                  isOutOfStock: false,
-                  isFromOrderDetails: true,
-                  boxHeight: 72.w,
-                  boxWidth: 72.w,
-                  isDropDownEnable: false,
-                  isCheckboxShow: false,
-                  isEnableAddToWishList: false,
-                  // TODO :: To be implemented
-                  // onRemoveTap: () {},
-                  onMoveToWishListTap: null,
-                  productDetails: product,
-                  qualityOptionsList: product.cartProductQuality ?? [],
-                  quantityOptionsList: List.generate(
-                    product.quantity ?? 0,
-                    (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1),
-                  ),
-                  selectedQuantity: CartProductQuantity(name: product.quantity?.toString(), quantity: product.quantity),
-                  onQuantityChanged: (value) {},
-                  priceTextStyle: style.priceTextStyle,
+              return CartProductItem(
+                isOutOfStock: false,
+                isFromOrderDetails: true,
+                boxHeight: 72.w,
+                boxWidth: 72.w,
+                isDropDownEnable: false,
+                isCheckboxShow: false,
+                isEnableAddToWishList: false,
+                // TODO :: To be implemented
+                // onRemoveTap: () {},
+                onMoveToWishListTap: null,
+                productDetails: product,
+                qualityOptionsList: product.cartProductQuality ?? [],
+                quantityOptionsList: List.generate(
+                  product.quantity ?? 0,
+                  (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1),
                 ),
+                selectedQuantity: CartProductQuantity(name: product.quantity?.toString(), quantity: product.quantity),
+                onQuantityChanged: (value) {},
+                priceTextStyle: style.priceTextStyle,
               );
             } else {
               final productDetails = bloc.orderProductDetailsList[index];
