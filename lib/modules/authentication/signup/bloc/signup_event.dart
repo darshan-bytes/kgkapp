@@ -71,10 +71,12 @@ final class SignUpRemoveContactEvent extends SignUpEvent {
 }
 
 final class SignUpResetEvent extends SignUpEvent {
-  const SignUpResetEvent();
+  final BuildContext context;
+
+  const SignUpResetEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class SignUpChangeOfficeLocationEvent extends SignUpEvent {

@@ -118,12 +118,18 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
 
   /// Fetches data from the design library API.
   Future<void> _callDesignLibraryApi({required BuildContext context, required Emitter<DesignLibraryState> emit}) async {
-    final Map<String, dynamic> params = {
-      ApiKey.limit: AppConst.pageLimit,
-      ApiKey.page: paginationScrollController.currentPage,
+    final Map<String, String> params = {
+      ApiKey.limit: AppConst.pageLimit.toString(),
+      ApiKey.page: paginationScrollController.currentPage.toString(),
       ApiKey.sortKey: sortKey,
       ApiKey.sortValue: sortValue,
     };
+
+    buildFilterQuery(params, filterData).forEach((key, value) {
+      if (params.containsKey(key) == false) {
+        params[key] = value;
+      }
+    });
 
     /// Makes the API request and handles the response.
     Either<ErrorResponse, PaginationData<DesignLibraryListItemDataModel>>? response = await AppRepository(
@@ -147,6 +153,28 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
     );
     paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     emit(const DesignLibraryLoadedState());
+  }
+
+  /// Builds the filter query
+  Map<String, String> buildFilterQuery(Map<String, String> query, List<FilterData> filterData) {
+    filterData
+        .where((element) {
+          return (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+              (element.filterType == FilterType.range && element.rangeValues != null);
+        })
+        .forEach((element) {
+          if (element.filterType == FilterType.range) {
+            query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+            query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+          } else if (element.filterType == FilterType.boolean &&
+              (element.secondaryFilterData ?? []).isNotEmpty &&
+              element.secondaryFilterData!.any((e) => e.isSelected)) {
+            query[element.code ?? ''] = AppConst.filterBoolYesValue;
+          } else {
+            query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+          }
+        });
+    return query;
   }
 
   /// Converts API response data to the custom listing data model.

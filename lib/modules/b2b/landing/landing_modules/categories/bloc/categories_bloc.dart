@@ -90,7 +90,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     categories.clear();
     if (userType == UserType.b2bUser || userType == UserType.internal) {
       categories.addAll([
-        CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
+        if (userType == UserType.internal)
+          CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
         CategoriesModel(
           name: 'Jewellery',
           image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png',

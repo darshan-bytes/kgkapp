@@ -40,7 +40,7 @@ class SmartCarouselSlider extends StatelessWidget {
                 child: CarouselSlider(
                   items:
                       imgList.map((e) {
-                        return SmartImage(path: e);
+                        return SmartImage(path: e, fit: BoxFit.contain);
                       }).toList(),
                   carouselController: controller,
                   options: CarouselOptions(
