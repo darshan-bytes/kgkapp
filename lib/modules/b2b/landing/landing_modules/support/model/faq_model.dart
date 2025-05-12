@@ -24,7 +24,7 @@ class FAQ {
   FAQ({this.question, this.answer});
 
   factory FAQ.fromJson(Map<String, dynamic> json) {
-    return FAQ(question: json['question'] ?? '', answer: json['answer'] ?? '');
+    return FAQ(question: json['question'] ?? '', answer: json['answer']?.trim() ?? '');
   }
 
   @override

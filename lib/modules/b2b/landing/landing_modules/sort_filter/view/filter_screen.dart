@@ -176,7 +176,6 @@ class FilterScreen extends StatelessWidget {
           ),
           minPriceController: bloc.minPriceController,
           maxPriceController: bloc.maxPriceController,
-          rangeSliderTrackColor: style.rangeSliderTrackColor,
           propertySelectionSubtitleStyle: style.propertySelectionSubtitleStyle,
           sliderLabelTextStyle: style.sliderLabelTextStyle,
           sliderThumbBorderColor: style.sliderThumbBorderColor,

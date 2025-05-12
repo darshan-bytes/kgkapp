@@ -308,6 +308,8 @@ class StrapiEndPoints {
   static String get returnPolicies => '$baseUrl/return-policies';
 
   static String get termsOfUsesPage => '$baseUrl/terms-of-uses';
+
+  static String get domainTheme => '$baseUrl/theme';
 }
 
 /// All attributes are defined here for the Strapi CMS

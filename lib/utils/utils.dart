@@ -744,4 +744,50 @@ class Utils {
       ShareParams(uri: Uri.tryParse(link), title: title, previewThumbnail: imageUrl.isNotNullNorEmpty ? XFile(imageUrl!) : null),
     );
   }
+
+  static Future<List<String>> listSvgAssetsInImagesDirS() async {
+    final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+
+    return manifestMap.keys.where((String key) => key.startsWith('assets/images/') && key.endsWith('.svg')).toList();
+  }
+
+  static Future<void> replaceAllSvgColorsS(
+    Color newColor,
+  ) async {
+    final svgAssetPaths = await listSvgAssetsInImagesDirS();
+    debugPrint("svgFiles::  ${newColor.toHex()}");
+
+    final String oldColorHex = AppColor.kgkTheme().primary.toHex();
+    final String newColorHex = newColor.toHex();
+
+    final Directory outputDir = await getApplicationDocumentsDirectory();
+    AppBloc.outputDirPath = "${outputDir.path}/modified_svgs";
+
+    final Directory modifiedSvgsDir = Directory('${outputDir.path}/modified_svgs');
+    if (!await modifiedSvgsDir.exists()) {
+      await modifiedSvgsDir.create(recursive: true);
+    }
+
+    await Future.forEach(svgAssetPaths, (String assetPath) async {
+      final String svgContent = await rootBundle.loadString(assetPath);
+      final String updatedSvg = svgContent.replaceAll(oldColorHex, newColorHex);
+
+      final String fileName = assetPath.split('/').last;
+      final File outputFile = File('${modifiedSvgsDir.path}/$fileName');
+      await outputFile.writeAsString(updatedSvg);
+      debugPrint("outputFile::  ${outputFile.path}");
+    });
+    /* for (String assetPath in svgAssetPaths) {
+      final String svgContent = await rootBundle.loadString(assetPath);
+      final String updatedSvg = svgContent.replaceAll(oldColorHex, newColorHex);
+
+      final String fileName = assetPath.split('/').last;
+      final File outputFile = File('${modifiedSvgsDir.path}/$fileName');
+      await outputFile.writeAsString(updatedSvg);
+      print("outputFile::  ${outputFile.path}");
+    }*/
+
+    debugPrint('SVG color replacement complete. Files saved to: ${modifiedSvgsDir.path}');
+  }
 }

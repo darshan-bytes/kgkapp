@@ -540,3 +540,5 @@ export 'package:kgk/modules/b2b/orion/model/orion_data_model.dart';
 export 'package:kgk/modules/b2b/orion/model/orion_detail_model.dart';
 export 'package:kgk/modules/b2b/user_master/view/change_password_bottom_sheet_for_user_master.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/diy_jewellery_type_model.dart';
+export 'package:kgk/data/network/model/strapi_domain_theme_data_model.dart';
+export 'package:kgk/extension_methods/colors.dart';

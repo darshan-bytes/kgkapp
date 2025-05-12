@@ -20,7 +20,6 @@ class BlocGenerator {
       BlocProvider<StoneListingBloc>(create: (_) => StoneListingBloc()),
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
-      BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),

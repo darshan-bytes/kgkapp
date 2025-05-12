@@ -29,6 +29,8 @@ void main() async {
   // Timer.periodic(Duration(seconds: 1), (timer) {
   //logMemoryUsage();
   // });
+  await AppRepository.fetchStrapiThemeData();
+  await Utils.replaceAllSvgColorsS(AppThemes().appColor.primary);
 
   /// Initializing app
   runApp(const MyApp());
@@ -98,6 +100,7 @@ class _MyAppState extends State<MyApp> {
 
   /// Build date banner tag on top right corner
   Align buildDateBannerTag() {
+    return Align(alignment: AlignmentDirectional.topEnd, child: const Banner(message: "14 April", location: BannerLocation.topEnd));
     return Align(alignment: AlignmentDirectional.topEnd, child: const Banner(message: "12 May", location: BannerLocation.topEnd));
   }
 

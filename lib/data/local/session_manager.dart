@@ -30,6 +30,7 @@ class StorageManager {
   final String _recentlyViewedDiamonds = 'recentlyViewedDiamonds';
   final String _recentlyViewedGemstones = 'recentlyViewedGemstones';
   final String _placeHolderImage = 'placeHolderImage';
+  final String _companyTheme = 'companyTheme';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -320,5 +321,14 @@ class StorageManager {
   bool getSystemTheme() {
     //TODO: need to implement
     return true;
+  }
+
+  /// Set company theme
+  Future<void> setCompanyTheme(String companyTheme) async {
+    await _box.put(_companyTheme, companyTheme.toLowerCase());
+  }
+
+  String getCompanyTheme() {
+    return _box.get(_companyTheme)?.toLowerCase() ?? 'kgk';
   }
 }

@@ -1,7 +1,11 @@
+import 'package:kgk/data/local/session_manager.dart';
+
 /// All asset images path are defined here
 class AppImages {
   AppImages._();
 
+  static const String icEntice = 'assets/images/ic_entice.png';
+  static const String icMartinFlyer = 'assets/images/ic_martin_flyer.png';
   static const String icSplashBg = 'assets/images/ic_splash_bg.svg';
   static const String icEyeOpen = 'assets/images/ic_eye_open.svg';
   static const String icEyeClose = 'assets/images/ic_eye_close.svg';
@@ -29,6 +33,20 @@ class AppImages {
 
   // This image is used in splash screen only.
   static const String icSplashLogoWithSvg = 'assets/images/ic_splash_logo.svg';
+
+  static String get icSplashLogoGet {
+    String companyTheme = StorageManager.instance.getCompanyTheme();
+    switch (companyTheme) {
+      case 'entice':
+        return icEntice;
+      case 'martin':
+        return icMartinFlyer;
+      default:
+        return icSplashLogoWithSvg;
+    }
+    // return 'assets/images/ic_splash_logo.svg';
+  }
+
   static const String icCompanyBottomNavbar = 'assets/images/ic_company_bottom_navbar.svg';
   static const String icCompanyActive = 'assets/images/ic_company_active.svg';
 

@@ -3,6 +3,7 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
+
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
 class AppRepository extends ApiService {
@@ -44,6 +45,29 @@ class AppRepository extends ApiService {
       }
     } catch (e) {
       return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
+    }
+  }
+
+  static Future<Either<ErrorResponse, ThemeAttributes?>> fetchStrapiThemeData() async {
+    String url = StrapiEndPoints.domainTheme;
+    try {
+      final response =
+          await http.get(Uri.parse(url), headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'});
+      if (response.statusCode == 200) {
+        final contactUsStrapiModel = StrapiDomainThemeDataModel.fromJson(jsonDecode(response.body));
+        await StorageManager().setCompanyTheme(contactUsStrapiModel.data?.attributes?.theme ?? 'kgk');
+        return Right(contactUsStrapiModel.data?.attributes);
+      } else {
+        return Left(ErrorResponse(
+          code: response.statusCode,
+          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
+        ));
+      }
+    } catch (e) {
+      return Left(ErrorResponse(
+        code: 500,
+        message: APPStrings.errorOccurred.tr,
+      ));
     }
   }
 

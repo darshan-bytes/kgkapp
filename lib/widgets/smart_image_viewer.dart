@@ -69,8 +69,8 @@ class SmartImage extends StatelessWidget {
             margin: margin,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(borderRadius: imageBorderRadius, border: border, color: bgColor),
-            child: SvgPicture.asset(
-              path,
+            child: SvgPicture.file(
+              path.svgToFile,
               width: width,
               height: height,
               fit: fit ?? BoxFit.contain,
