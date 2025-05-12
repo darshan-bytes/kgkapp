@@ -63,12 +63,17 @@ class ConceptListScreen extends StatelessWidget {
                                           // onTap: () {
                                           //   showConceptDetailBottomSheet(context: context, concept: conceptListBloc.conceptList[index]);
                                           // },
-                                          onTapCircleWithText: () {
-                                            context.pushNamed(
-                                              AppRoutes.presentationPage,
-                                              arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList},
-                                            );
-                                          },
+                                          onTapCircleWithText:
+                                              conceptListBloc.conceptList[index].presentationList.isNotNullNorEmpty
+                                                  ? () {
+                                                    context.pushNamed(
+                                                      AppRoutes.presentationPage,
+                                                      arguments: {
+                                                        RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList,
+                                                      },
+                                                    );
+                                                  }
+                                                  : null,
                                           type: B2BListingType.conceptListingType,
                                           listingItemModel: conceptListBloc.conceptList[index],
                                         ),
@@ -152,7 +157,7 @@ class ConceptListScreen extends StatelessWidget {
                 text: APPStrings.viewAllPresentation.tr,
                 style: orderPopupStyle.optionTextStyle,
                 onTap: () {
-                  context.pushNamed(
+                  context.popAndPushNamed(
                     AppRoutes.presentationPage,
                     arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList},
                   );

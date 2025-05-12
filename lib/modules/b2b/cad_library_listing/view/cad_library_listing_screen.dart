@@ -25,7 +25,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                       children: [
                         SizedBox(height: 24.h),
                         _buildCadFilterCount(cadLibraryListingBloc, context),
-                        _buildSearchTextField(cadLibraryListingBloc),
+                        SizedBox(height: 16.h),
                         _buildCadList(cadLibraryListingBloc),
                         SizedBox(height: 16.h),
                       ],
