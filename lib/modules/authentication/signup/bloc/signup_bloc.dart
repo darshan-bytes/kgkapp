@@ -126,7 +126,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           },
           (r) {
             businessTypes = r;
-            selectFirstBusinessLocation();
+            selectFirstBusinessLocation(event.context, emit);
             return true;
           },
         ) ??
@@ -180,7 +180,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
               title: APPStrings.areYouSureChangeAccountType.tr,
               onApproved: () {
                 context.pop();
-                clearField();
+                clearField(context, emit);
                 isIndividual = event.isIndividual;
                 emit(SignUpChangeAccountTypeState(isIndividual));
               },
@@ -282,14 +282,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       element.isSelected = false;
     }
     isIndividual = true;
-    selectFirstBusinessLocation();
+    selectFirstBusinessLocation(event.context, emit);
     emit(SignUpReloadState());
   }
 
-  void selectFirstBusinessLocation() {
+  Future<void> selectFirstBusinessLocation(context, Emitter<SignUpState> emit) async {
     //TODO: Remove when business types UI is done
     if (businessTypes.isNotEmpty) {
-      businessTypes.first.isSelected = true;
+      businessTypes.firstOrNull?.isSelected = true;
+      await getOfficeLocations(context, emit);
     }
   }
 
@@ -509,7 +510,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         Utils.showMessage(l.message);
       },
       (r) async {
-        add(const SignUpResetEvent());
+        add(SignUpResetEvent(event.context));
         if (isIndividual) {
           event.context.pushNamedAndRemoveUntil(
             AppRoutes.otpVerificationPage,
@@ -663,7 +664,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(SignUpFieldValidationState(fieldType: event.fieldType));
   }
 
-  void clearField() {
+  void clearField(BuildContext context, Emitter<SignUpState> emit) {
     firstNameController.clear();
     lastNameController.clear();
     emailController.clear();
@@ -695,7 +696,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       ),
     ];
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
-    selectFirstBusinessLocation();
+    selectFirstBusinessLocation(context, emit);
     firstNameError = null;
     lastNameError = null;
     emailError = null;

@@ -116,12 +116,20 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   }
 
   Future<void> _callStyleLibraryListingApi({required BuildContext context, bool isLoadMore = false}) async {
-    final Map<String, dynamic> params = {
-      ApiKey.limit: AppConst.pageLimit,
-      ApiKey.page: gridPaginationScrollController.currentPage,
+    final Map<String, String> params = {
+      ApiKey.limit: AppConst.pageLimit.toString(),
+      ApiKey.page: gridPaginationScrollController.currentPage.toString(),
       ApiKey.sortValue: sortValue,
       ApiKey.sortKey: sortKey,
     };
+
+    /// Build the query based on filters
+    buildFilterQuery(params, filterData).forEach((key, value) {
+      if (params.containsKey(key) == false) {
+        params[key] = value;
+      }
+    });
+
     Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response = await AppRepository(
       context,
     ).getStyleLibraryList(query: params, isLoadMore: isLoadMore);

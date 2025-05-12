@@ -106,6 +106,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         }
       },
       (r) async {
+        https: //gitlab.bytestechnolab.com/mobile/kgkapp/-/merge_requests/471
         if (r.isExpired == true) {
           await StorageManager().setBagId(r.bagId ?? '');
           await StorageManager().clearBagData();
@@ -130,7 +131,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
               if (commodity != Commodity.diy) {
                 return ProductDetailsModel(
-                  stockQty: item.stockQty,
+                  /// Here we are using 200 as static for B2B user as there is no limit for B2B user for order quantity
+                  stockQty: userType == UserType.b2cUser ? item.stockQty : 200,
                   productId: item.productId,
                   suid: item.suid,
                   quantity: item.quantity,
@@ -164,7 +166,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
                   certificateFile: item.certificateFile,
                   fluorescence: item.fluorescence,
                   shapeImage: item.shapeImage?.setMediaUrl,
-                  isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
+                  isOutOfStock: userType == UserType.b2cUser ? (item.stockQty ?? 0) < (item.quantity ?? 0) : false,
                   labs: item.labs,
                   location: item.location,
                   yourRate: item.yourRate,
@@ -209,7 +211,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
                               : "",
                     ),
                   ],
-                  stockQty: item.stockQty,
+
+                  /// Here we are using 200 as static for B2B user as there is no limit for B2B user for order quantity
+                  stockQty: userType == UserType.b2cUser ? item.stockQty : 200,
                   productId: item.productId,
                   suid: item.suid,
                   quantity: item.quantity,
@@ -243,7 +247,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
                   certificateFile: item.certificateFile,
                   fluorescence: item.fluorescence,
                   shapeImage: item.shapeImage?.setMediaUrl,
-                  isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
+                  isOutOfStock: userType == UserType.b2cUser ? (item.stockQty ?? 0) < (item.quantity ?? 0) : false,
                   labs: item.labs,
                   location: item.location,
                   yourRate: item.yourRate,
