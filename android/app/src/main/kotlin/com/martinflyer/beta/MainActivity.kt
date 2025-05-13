@@ -1,4 +1,4 @@
-package com.kgk.mobileappsbeta
+package com.martinflyer.beta
 
 import io.flutter.embedding.android.FlutterActivity
 

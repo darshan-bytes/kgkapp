@@ -8,9 +8,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         lazy: false,
-        create: (context) =>
-        SplashBloc()
-          ..add(LoadSplashEvent(context: context)),
+        create: (context) => SplashBloc()..add(LoadSplashEvent(context: context)),
         child: BlocBuilder<SplashBloc, SplashState>(
           buildWhen: (previous, current) => current is SplashVideoInitialized || current is SplashVideoCompleteState,
           builder: (context, state) {
@@ -23,26 +21,33 @@ class SplashScreen extends StatelessWidget {
                   SizedBox(
                     height: context.height,
                     width: context.width,
-                    child: Center(child: SmartImage(path: AppImages.icSplashLogoGet, height: 112.w, // width: 112.w, fit: BoxFit.cover)),
+                    child: Center(
+                      child: SmartImage(
+                        path: AppImages.icSplashLogoGet,
+                        fit: BoxFit.cover,
+                        height: 112.w,
+                        // width: 112.w,
+                      ),
                     ),
-                      ],
-                    );
-                    }
-                    return Stack(
-                    children: [
-                    SizedBox(
-                    height: context.height,
-                    width: context.width,
-                    child: const SmartImage(path: AppImages.icSplashBg, fit: BoxFit.cover),
                   ),
-                  SizedBox(
-                    height: context.height,
-                    width: context.width,
-                  child: Center(child: SmartImage(path: AppImages.icSplashLogo, height: 112.w, width: 112.w, fit: BoxFit.cover)),
-                ),
                 ],
               );
-            },
+            }
+            return Stack(
+              children: [
+                SizedBox(
+                  height: context.height,
+                  width: context.width,
+                  child: const SmartImage(path: AppImages.icSplashBg, fit: BoxFit.cover),
+                ),
+                SizedBox(
+                  height: context.height,
+                  width: context.width,
+                  child: Center(child: SmartImage(path: AppImages.icSplashLogoGet, height: 112.w, width: 112.w, fit: BoxFit.cover)),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

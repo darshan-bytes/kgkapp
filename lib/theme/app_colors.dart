@@ -5,19 +5,20 @@ AppColor colors(BuildContext context) => Theme.of(context).colors;
 /// To get Light and dark mode.[AppThemes]
 class AppThemes {
   AppThemes() {
-    String companyTheme = StorageManager().getCompanyTheme();
-    switch (companyTheme) {
-      case 'entice':
-        appColor = AppColor.enticeTheme();
-        break;
-      case 'martin':
-        appColor = AppColor.martinTheme();
-        break;
-      case 'kgk':
-      default:
-        appColor = AppColor.kgkTheme();
-        break;
-    }
+    appColor = AppColor.martinTheme();
+    // String companyTheme = StorageManager().getCompanyTheme();
+    // switch (companyTheme) {
+    //   case 'entice':
+    //     appColor = AppColor.enticeTheme();
+    //     break;
+    //   case 'martin':
+    //     appColor = AppColor.martinTheme();
+    //     break;
+    //   case 'kgk':
+    //   default:
+    //     appColor = AppColor.kgkTheme();
+    //     break;
+    // }
   }
 
   late ThemeData selectedColor;

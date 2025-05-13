@@ -29,7 +29,8 @@ void main() async {
   // Timer.periodic(Duration(seconds: 1), (timer) {
   //logMemoryUsage();
   // });
-  await AppRepository.fetchStrapiThemeData();
+  // await AppRepository.fetchStrapiThemeData();
+  await StorageManager().setCompanyTheme('martin');
   await Utils.replaceAllSvgColorsS(AppThemes().appColor.primary);
 
   /// Initializing app
@@ -100,8 +101,7 @@ class _MyAppState extends State<MyApp> {
 
   /// Build date banner tag on top right corner
   Align buildDateBannerTag() {
-    return Align(alignment: AlignmentDirectional.topEnd, child: const Banner(message: "14 April", location: BannerLocation.topEnd));
-    return Align(alignment: AlignmentDirectional.topEnd, child: const Banner(message: "12 May", location: BannerLocation.topEnd));
+    return Align(alignment: AlignmentDirectional.topEnd, child: const Banner(message: "14 May", location: BannerLocation.topEnd));
   }
 
   /// Build app roots widgets with loading indicator

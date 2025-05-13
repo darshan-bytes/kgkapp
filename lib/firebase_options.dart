@@ -45,7 +45,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBgtbTvLgYJqlRMNjfVL4z-0j8VrwASUZ4',
-    appId: '1:389620144527:android:894f93b986658e68ccd3fa',
+    appId: '1:389620144527:android:0f276c95b90c2e98ccd3fa',
     messagingSenderId: '389620144527',
     projectId: 'kgk-app-396d7',
     storageBucket: 'kgk-app-396d7.firebasestorage.app',
@@ -53,10 +53,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDKXUGf3yT0S5aceHVdc4PTejZ-f22G6-Q',
-    appId: '1:389620144527:ios:a8934b7ec393f7c0ccd3fa',
+    appId: '1:389620144527:ios:edbeace57b2c4373ccd3fa',
     messagingSenderId: '389620144527',
     projectId: 'kgk-app-396d7',
     storageBucket: 'kgk-app-396d7.firebasestorage.app',
-    iosBundleId: 'com.kgk.mobileappsbeta',
+    iosBundleId: 'com.martinflyer.beta',
   );
+
 }

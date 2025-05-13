@@ -161,8 +161,6 @@ export 'package:kgk/modules/b2b/landing/landing_modules/categories/view/categori
 export 'package:kgk/modules/b2b/landing/landing_modules/company/bloc/company_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/company/model/csc_details_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/company/view/company_screen.dart';
-export 'package:kgk/modules/b2b/landing/landing_modules/diamond_filter/bloc/diamond_filter_bloc.dart';
-export 'package:kgk/modules/b2b/landing/landing_modules/diamond_filter/view/diamond_filter_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/home/bloc/home_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/home/view/home_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/home/widgets/home_widgets.dart';

@@ -1,15 +1,30 @@
+import 'package:kgk/kgk.dart';
+
 /// All api endpoints are defined here
 class ApiClient {
   ApiClient._();
 
-  static const String devApiBase = 'https://api.kgk.magnetoinfotech.com/v1';
-  static const String qaApiBase = 'https://qa-api.kgk.magnetoinfotech.com/v1';
-  static const String apiBaseUrl = qaApiBase;
-  static const String assetsBaseUrl = '$apiBaseUrl/assets/';
+  static String devApiBase = 'https://api.kgk.magnetoinfotech.com/v1';
+  static String qaApiBase = 'https://qa-api.kgk.magnetoinfotech.com/v1';
+  static String martinApiBase = 'https://api.martinflyer.com/v1';
 
-  static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
-  static const String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
-  static const String checkDuplicationEmail = '$apiBaseUrl/users/check-email-duplication';
+  static String get apiBaseUrl {
+    String companyTheme = StorageManager.instance.getCompanyTheme();
+    switch (companyTheme) {
+      case 'martin':
+        return martinApiBase;
+      case 'kgk':
+        return qaApiBase;
+      default:
+        return devApiBase;
+    }
+  }
+
+  static String assetsBaseUrl = '$apiBaseUrl/assets/';
+
+  static String loginUser = '$apiBaseUrl/auth/front-sign-in';
+  static String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
+  static String checkDuplicationEmail = '$apiBaseUrl/users/check-email-duplication';
 
   static String checkDuplicationPhoneNumber(String code, String phoneNumber) =>
       '$apiBaseUrl/users/phone-code/$code/phone/$phoneNumber/lookup';
@@ -18,22 +33,22 @@ class ApiClient {
   static String orionDetails(String discountPrice, String caratWeight) =>
       '$apiBaseUrl/commodity/diamond/orion/detail?discount_price=$discountPrice&carat_weight=$caratWeight';
 
-  static const String businessTypes = '$apiBaseUrl/business-types';
-  static const String officeLocations = '$apiBaseUrl/subarea-masters';
-  static const String signUpCustomer = '$apiBaseUrl/customer/signup';
+  static String businessTypes = '$apiBaseUrl/business-types';
+  static String officeLocations = '$apiBaseUrl/subarea-masters';
+  static String signUpCustomer = '$apiBaseUrl/customer/signup';
 
-  static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
-  static const String currencies = '$apiBaseUrl/currency';
-  static const String languageLabels = '$apiBaseUrl/language/labels';
-  static const String frontendLinks = '$apiBaseUrl/strapi-pages/frontend/link';
+  static String forgotPassword = '$apiBaseUrl/auth/forgot-password';
+  static String currencies = '$apiBaseUrl/currency';
+  static String languageLabels = '$apiBaseUrl/language/labels';
+  static String frontendLinks = '$apiBaseUrl/strapi-pages/frontend/link';
 
-  static const String diamondListing = '$apiBaseUrl/commodity/diamond/filters';
-  static const String gemstoneListing = '$apiBaseUrl/commodity/color-stone/filters';
-  static const String jewelleryListing = '$apiBaseUrl/jewelleries/filters';
-  static const String wishlist = '$apiBaseUrl/wishlist/filters';
-  static const String bagListData = '$apiBaseUrl/bag/list';
-  static const String auctionListing = '$apiBaseUrl/auctions/customer/filter';
-  static const String createBid = '$apiBaseUrl/auctions/create-bid';
+  static String diamondListing = '$apiBaseUrl/commodity/diamond/filters';
+  static String gemstoneListing = '$apiBaseUrl/commodity/color-stone/filters';
+  static String jewelleryListing = '$apiBaseUrl/jewelleries/filters';
+  static String wishlist = '$apiBaseUrl/wishlist/filters';
+  static String bagListData = '$apiBaseUrl/bag/list';
+  static String auctionListing = '$apiBaseUrl/auctions/customer/filter';
+  static String createBid = '$apiBaseUrl/auctions/create-bid';
 
   static String diamondDetails(String id) => '$apiBaseUrl/commodity/diamond/$id/view';
 
@@ -42,7 +57,7 @@ class ApiClient {
   static String gemstoneDetails(String id) => '$apiBaseUrl/commodity/color-stone/$id/view';
 
   // For Get the list of watchList, Create watchList and Update watchList
-  static const String watchList = '$apiBaseUrl/watchlist';
+  static String watchList = '$apiBaseUrl/watchlist';
 
   static String gemstoneYouMayAlsoLike(String id) => '$apiBaseUrl/commodity/color-stone/$id/you-may-also-like';
 
@@ -60,177 +75,177 @@ class ApiClient {
 
   static String jewelleryYouMayAlsoLike(String id) => '$apiBaseUrl/jewelleries/$id/you-may-also-like';
 
-  static const String createWishList = '$apiBaseUrl/wishlist';
+  static String createWishList = '$apiBaseUrl/wishlist';
 
   static String deleteWishList(String id) => '$apiBaseUrl/wishlist/$id';
 
-  static const String productReviews = '$apiBaseUrl/product/reviews';
+  static String productReviews = '$apiBaseUrl/product/reviews';
 
   static String productReviewsById(String id) => '$apiBaseUrl/product/reviews/$id';
 
-  static const String productReviewsFilter = '$apiBaseUrl/product/reviews/filter';
+  static String productReviewsFilter = '$apiBaseUrl/product/reviews/filter';
 
   static String auctionDetails(String auctionId) => '$apiBaseUrl/auctions/$auctionId';
 
-  static const String addToBag = '$apiBaseUrl/bag/create';
+  static String addToBag = '$apiBaseUrl/bag/create';
 
-  static const String collectionMaster = '$apiBaseUrl/collection-master';
+  static String collectionMaster = '$apiBaseUrl/collection-master';
 
-  static const String deleteBag = '$apiBaseUrl/bag';
+  static String deleteBag = '$apiBaseUrl/bag';
 
-  static const String mergeBag = '$apiBaseUrl/bag/merge-bag';
+  static String mergeBag = '$apiBaseUrl/bag/merge-bag';
 
-  static const String filterConceptList = '$apiBaseUrl/concepts/filter-list';
+  static String filterConceptList = '$apiBaseUrl/concepts/filter-list';
 
-  static const String presentationStatus = '$apiBaseUrl/presentations/status';
+  static String presentationStatus = '$apiBaseUrl/presentations/status';
 
   static String filterOptions(String type) => '$apiBaseUrl/filter-options/$type';
 
   static String secondaryFilterOptions(String slug, String codes) => '$apiBaseUrl/common-modules/$slug?codes=$codes';
 
-  static const String languageList = '$apiBaseUrl/language/filter';
+  static String languageList = '$apiBaseUrl/language/filter';
 
-  static const String cscMastersList = '$apiBaseUrl/csc-masters/list';
+  static String cscMastersList = '$apiBaseUrl/csc-masters/list';
 
-  static const String customerAddress = '$apiBaseUrl/address';
+  static String customerAddress = '$apiBaseUrl/address';
 
-  static const String countryMasters = '$apiBaseUrl/country-masters';
+  static String countryMasters = '$apiBaseUrl/country-masters';
 
   static String stateMasters(String countryCode) => '$apiBaseUrl/state-masters/country/$countryCode';
 
-  static const String customerAddressFilters = '$apiBaseUrl/address/filters';
+  static String customerAddressFilters = '$apiBaseUrl/address/filters';
 
   static String customerAddressById(String id) => '$apiBaseUrl/address/$id';
 
-  static const String editUserProfile = '$apiBaseUrl/customer/profile';
+  static String editUserProfile = '$apiBaseUrl/customer/profile';
 
-  static const String changePassword = '$apiBaseUrl/users/change-password';
+  static String changePassword = '$apiBaseUrl/users/change-password';
 
-  static const String cadLibraryListing = '$apiBaseUrl/jewelleries/library/cad/filters';
+  static String cadLibraryListing = '$apiBaseUrl/jewelleries/library/cad/filters';
 
-  static const String styleLibraryListing = '$apiBaseUrl/jewelleries/library/style/filters';
+  static String styleLibraryListing = '$apiBaseUrl/jewelleries/library/style/filters';
 
-  static const String digitalCatalogueFilters = '$apiBaseUrl/digital-catalogue/filters';
+  static String digitalCatalogueFilters = '$apiBaseUrl/digital-catalogue/filters';
 
-  static const String designLibraryListing = '$apiBaseUrl/jewelleries/library/design/filters';
+  static String designLibraryListing = '$apiBaseUrl/jewelleries/library/design/filters';
 
-  static const String skuLibraryListing = '$apiBaseUrl/jewelleries/library/sku/filters';
+  static String skuLibraryListing = '$apiBaseUrl/jewelleries/library/sku/filters';
 
-  static const String compareProducts = '$apiBaseUrl/compare-products';
+  static String compareProducts = '$apiBaseUrl/compare-products';
 
-  static const String homePageKgkCoutureCollections = '$apiBaseUrl/homepage-collections/couture-collections';
+  static String homePageKgkCoutureCollections = '$apiBaseUrl/homepage-collections/couture-collections';
 
-  static const String homePageNewlyLaunches = '$apiBaseUrl/homepage-collections/home-page-newlylaunches';
+  static String homePageNewlyLaunches = '$apiBaseUrl/homepage-collections/home-page-newlylaunches';
 
-  static const String homePageShopByMetals = '$apiBaseUrl/homepage-collections/home-page-shopbymetals';
+  static String homePageShopByMetals = '$apiBaseUrl/homepage-collections/home-page-shopbymetals';
 
-  static const String shapeMasterFilters = '$apiBaseUrl/homepage-collections/diamond-shape';
+  static String shapeMasterFilters = '$apiBaseUrl/homepage-collections/diamond-shape';
 
   static String digitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
 
-  static const String digitalCatalogueAddComment = '$apiBaseUrl/digital-catalogue/add-comment';
+  static String digitalCatalogueAddComment = '$apiBaseUrl/digital-catalogue/add-comment';
 
-  static const String previewCatalogueCommentsList = '$apiBaseUrl/digital-catalogue/comments';
+  static String previewCatalogueCommentsList = '$apiBaseUrl/digital-catalogue/comments';
 
-  static const String commodityMasterFilters = '$apiBaseUrl/commodity-master/filters';
+  static String commodityMasterFilters = '$apiBaseUrl/commodity-master/filters';
 
-  static const String homePageShopByGemstones = '$apiBaseUrl/homepage-collections/home-page-shopbygemstones';
+  static String homePageShopByGemstones = '$apiBaseUrl/homepage-collections/home-page-shopbygemstones';
 
-  static const String productsShare = '$apiBaseUrl/products-share';
+  static String productsShare = '$apiBaseUrl/products-share';
 
-  static const String sortingData = '$apiBaseUrl/common-modules/sorting-data';
+  static String sortingData = '$apiBaseUrl/common-modules/sorting-data';
 
-  static const String wishlistFilterOptions = '$apiBaseUrl/wishlist/filter-list';
+  static String wishlistFilterOptions = '$apiBaseUrl/wishlist/filter-list';
 
-  static const String logoutUser = '$apiBaseUrl/users/logout';
+  static String logoutUser = '$apiBaseUrl/users/logout';
 
-  static const String deleteUser = '$apiBaseUrl/users';
+  static String deleteUser = '$apiBaseUrl/users';
 
   static String get findRetailerStore => '$apiBaseUrl/retailer-stores/filters';
 
-  static const String customerSalesman = '$apiBaseUrl/customer/salesman';
+  static String customerSalesman = '$apiBaseUrl/customer/salesman';
 
   static String bagOrderSummaryById(String id) => '$apiBaseUrl/bag/order-summary/$id';
 
-  static const String applyPromoCode = '$apiBaseUrl/promo-code/apply';
+  static String applyPromoCode = '$apiBaseUrl/promo-code/apply';
 
   static String removePromoCode(String id) => '$apiBaseUrl/promo-code/remove/$id';
 
-  static const String jewelleryDealOfTheDay = '$apiBaseUrl/homepage-collections/jewellery-deal-of-the-day';
+  static String jewelleryDealOfTheDay = '$apiBaseUrl/homepage-collections/jewellery-deal-of-the-day';
 
-  static const String rmDealOfTheDay = '$apiBaseUrl/homepage-collections/rm-deal-of-the-day';
+  static String rmDealOfTheDay = '$apiBaseUrl/homepage-collections/rm-deal-of-the-day';
 
-  static const String checkoutStatus = '$apiBaseUrl/checkout/status';
+  static String checkoutStatus = '$apiBaseUrl/checkout/status';
 
-  static const String bagUserAddress = '$apiBaseUrl/bag/user/address';
+  static String bagUserAddress = '$apiBaseUrl/bag/user/address';
 
-  static const String orderIndividual = '$apiBaseUrl/orders/individual';
+  static String orderIndividual = '$apiBaseUrl/orders/individual';
 
-  static const String bag = '$apiBaseUrl/bag';
+  static String bag = '$apiBaseUrl/bag';
 
-  static const String digitalCatalogueFilterOptions = '$apiBaseUrl/digital-catalogue/filter-list';
+  static String digitalCatalogueFilterOptions = '$apiBaseUrl/digital-catalogue/filter-list';
 
-  static const String paymentTermsFilter = '$apiBaseUrl/payment-terms/filter';
+  static String paymentTermsFilter = '$apiBaseUrl/payment-terms/filter';
 
-  static const String auctionListingFilterOption = '$apiBaseUrl/auctions/customer/filter-list';
+  static String auctionListingFilterOption = '$apiBaseUrl/auctions/customer/filter-list';
 
-  static const String myOrders = '$apiBaseUrl/orders';
+  static String myOrders = '$apiBaseUrl/orders';
 
-  static const String placeB2BOrder = '$apiBaseUrl/orders';
+  static String placeB2BOrder = '$apiBaseUrl/orders';
 
-  static const String orderFilterList = '$apiBaseUrl/orders/filter-list';
+  static String orderFilterList = '$apiBaseUrl/orders/filter-list';
 
-  static const String getCalenderEvents = '$apiBaseUrl/calendar/filters';
+  static String getCalenderEvents = '$apiBaseUrl/calendar/filters';
 
   static String getCalenderEventDetailsById(String id) => '$apiBaseUrl/tasks/$id';
 
-  static const String diyFilters = '$apiBaseUrl/diy/filters';
+  static String diyFilters = '$apiBaseUrl/diy/filters';
 
   static String diyDetails(String id) => '$apiBaseUrl/diy/$id/view';
 
-  static const String diyGemstoneFilters = '$apiBaseUrl/diy/gemstone/filters';
+  static String diyGemstoneFilters = '$apiBaseUrl/diy/gemstone/filters';
 
   static String diyGemstoneDetails(String id) => '$apiBaseUrl/diy/gemstone/$id/view';
 
   static String orderDetails(String id) => '$apiBaseUrl/orders/$id';
 
-  static const String getExhibitionList = '$apiBaseUrl/exhibition/filters';
+  static String getExhibitionList = '$apiBaseUrl/exhibition/filters';
 
-  static const String getExhibitionFilterListOption = '$apiBaseUrl/exhibition/filter-list';
+  static String getExhibitionFilterListOption = '$apiBaseUrl/exhibition/filter-list';
 
   static String getExhibitionDetails(String id) => '$apiBaseUrl/exhibition/$id';
 
   static String getExhibitionProductsDetails = '$apiBaseUrl/orders/product-detail';
 
-  static const String diyStyleFilters = '$apiBaseUrl/diy/style/filters';
+  static String diyStyleFilters = '$apiBaseUrl/diy/style/filters';
 
-  static const String promoCodeList = '$apiBaseUrl/promo-code/list';
+  static String promoCodeList = '$apiBaseUrl/promo-code/list';
 
-  static const String getExhibitionListByLocations = '$apiBaseUrl/exhibition';
+  static String getExhibitionListByLocations = '$apiBaseUrl/exhibition';
 
-  static const String presentationFilters = '$apiBaseUrl/presentations/filters';
+  static String presentationFilters = '$apiBaseUrl/presentations/filters';
 
-  static const String pddFilterOptions = '$apiBaseUrl/presentations/filter-list';
+  static String pddFilterOptions = '$apiBaseUrl/presentations/filter-list';
 
-  static const String myInquiryFilterOptions = '$apiBaseUrl/customer-inquiry/filter-list';
+  static String myInquiryFilterOptions = '$apiBaseUrl/customer-inquiry/filter-list';
 
-  static const String watchListFilterOptions = '$apiBaseUrl/watchlist/filter-list';
+  static String watchListFilterOptions = '$apiBaseUrl/watchlist/filter-list';
 
-  static const String inquiryType = '$apiBaseUrl/customer-inquiry/types';
+  static String inquiryType = '$apiBaseUrl/customer-inquiry/types';
 
-  static const String submitMakeInquiry = '$apiBaseUrl/customer-inquiry';
+  static String submitMakeInquiry = '$apiBaseUrl/customer-inquiry';
 
   static String editMakeInquiry(String id) => '$apiBaseUrl/customer-inquiry/$id';
 
-  static const String myInquiries = '$apiBaseUrl/customer-inquiry/filters';
+  static String myInquiries = '$apiBaseUrl/customer-inquiry/filters';
 
-  static const String removeMyInquiry = '$apiBaseUrl/customer-inquiry';
+  static String removeMyInquiry = '$apiBaseUrl/customer-inquiry';
 
-  static const String submitContactUs = '$apiBaseUrl/contact_us';
+  static String submitContactUs = '$apiBaseUrl/contact_us';
 
-  static const String verifyEmailOtp = '$apiBaseUrl/auth/verify-email-otp';
+  static String verifyEmailOtp = '$apiBaseUrl/auth/verify-email-otp';
 
-  static const String resendEmailOtp = '$apiBaseUrl/auth/resend-email-otp';
+  static String resendEmailOtp = '$apiBaseUrl/auth/resend-email-otp';
 
   static String get uniqueShapes => '$apiBaseUrl/commodity/diamond/unique-shape';
 
@@ -238,7 +253,7 @@ class ApiClient {
 
   static String diyStyleDetails(String id) => '$apiBaseUrl/diy/style/$id/view';
 
-  static const String getUserProfile = '$apiBaseUrl/customer/profile';
+  static String getUserProfile = '$apiBaseUrl/customer/profile';
 
   static String digitalCatalogueCommentsById(String commentId) => '$apiBaseUrl/digital-catalogue/comments/$commentId';
 
@@ -254,9 +269,9 @@ class ApiClient {
 
   static String cancelProductFromOrder(String id) => '$apiBaseUrl/orders/$id/product';
 
-  static const String conceptList = '$apiBaseUrl/concepts/filters';
+  static String conceptList = '$apiBaseUrl/concepts/filters';
 
-  static const String staffUserFilters = '$apiBaseUrl/users/staff-user/filters';
+  static String staffUserFilters = '$apiBaseUrl/users/staff-user/filters';
 
   static String updateUserStatus(String id) => '$apiBaseUrl/users/update-user-status/$id';
 
@@ -264,12 +279,22 @@ class ApiClient {
 
   static String presentationDetailsById(String id) => '$apiBaseUrl/presentations/$id/details';
 
-  static const String diyJewellery = '$apiBaseUrl/diy/jewellery-type';
+  static String diyJewellery = '$apiBaseUrl/diy/jewellery-type';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
 class StrapiEndPoints {
-  static const String baseUrl = 'https://qa-strapi-cms.kgk.magnetoinfotech.com/api'; // Replace with your actual base URL
+  static String get baseUrl {
+    String companyTheme = StorageManager.instance.getCompanyTheme();
+    switch (companyTheme) {
+      case 'martin':
+        return 'https://strapi-cms.martinflyer.com/api';
+      case 'kgk':
+        return 'https://qa-strapi-cms.kgk.magnetoinfotech.com/api';
+      default:
+        return 'https://dev-strapi-cms.kgk.magnetoinfotech.com/api';
+    }
+  } // Replace with your actual base URL
 
   static String get aboutUsPage => '$baseUrl/about-uses';
 
@@ -314,24 +339,24 @@ class StrapiEndPoints {
 
 /// All attributes are defined here for the Strapi CMS
 class Attributes {
-  static const String homePage = 'home';
-  static const String mobileHomePage = 'home';
-  static const String diamondPage = 'diamonds';
-  static const String gemstonePage = 'gemstones';
-  static const String jewelleryPage = 'jewelleries';
-  static const String contactUsPage = 'contact_us';
-  static const String aboutUsPage = 'About_us';
-  static const String faqPage = 'faqs';
-  static const String notFoundPage = 'page_not_found';
-  static const String termsOfUsePage = 'terms_of_use';
-  static const String privacyPolicyPage = 'privacy_policy';
-  static const String returnPolicyPage = 'return_policy';
-  static const String disclaimerPage = 'disclaimer';
-  static const String educationDiamondPage = 'diamonds';
-  static const String educationGemstonePage = 'gemstones';
-  static const String educationMetalPage = 'metals';
-  static const String educationRingSizerPage = 'ring_sizers';
-  static const String educationLabGrownDiamondPage = 'lab_grown_diamonds';
-  static const String findAStorePage = 'Find_a_store';
-  static const String checkbox = 'checkbox';
+  static String homePage = 'home';
+  static String mobileHomePage = 'home';
+  static String diamondPage = 'diamonds';
+  static String gemstonePage = 'gemstones';
+  static String jewelleryPage = 'jewelleries';
+  static String contactUsPage = 'contact_us';
+  static String aboutUsPage = 'About_us';
+  static String faqPage = 'faqs';
+  static String notFoundPage = 'page_not_found';
+  static String termsOfUsePage = 'terms_of_use';
+  static String privacyPolicyPage = 'privacy_policy';
+  static String returnPolicyPage = 'return_policy';
+  static String disclaimerPage = 'disclaimer';
+  static String educationDiamondPage = 'diamonds';
+  static String educationGemstonePage = 'gemstones';
+  static String educationMetalPage = 'metals';
+  static String educationRingSizerPage = 'ring_sizers';
+  static String educationLabGrownDiamondPage = 'lab_grown_diamonds';
+  static String findAStorePage = 'Find_a_store';
+  static String checkbox = 'checkbox';
 }

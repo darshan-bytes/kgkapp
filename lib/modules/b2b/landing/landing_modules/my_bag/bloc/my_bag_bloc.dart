@@ -106,7 +106,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         }
       },
       (r) async {
-        https: //gitlab.bytestechnolab.com/mobile/kgkapp/-/merge_requests/471
         if (r.isExpired == true) {
           await StorageManager().setBagId(r.bagId ?? '');
           await StorageManager().clearBagData();

@@ -752,9 +752,7 @@ class Utils {
     return manifestMap.keys.where((String key) => key.startsWith('assets/images/') && key.endsWith('.svg')).toList();
   }
 
-  static Future<void> replaceAllSvgColorsS(
-    Color newColor,
-  ) async {
+  static Future<void> replaceAllSvgColorsS(Color newColor) async {
     final svgAssetPaths = await listSvgAssetsInImagesDirS();
     debugPrint("svgFiles::  ${newColor.toHex()}");
 
