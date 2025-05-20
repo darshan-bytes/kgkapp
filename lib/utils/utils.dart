@@ -493,6 +493,7 @@ class Utils {
       reviewCount: jewellery.reviewCount,
       rating: jewellery.rating?.toDouble(),
       components: jewellery.components,
+      customizationSuid: jewellery.customizationSuid,
     );
   }
 

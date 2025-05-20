@@ -265,6 +265,12 @@ class ApiClient {
   static String presentationDetailsById(String id) => '$apiBaseUrl/presentations/$id/details';
 
   static const String diyJewellery = '$apiBaseUrl/diy/jewellery-type';
+
+  static const String customization = '$apiBaseUrl/customization';
+
+  static String customizationSuid(String suid) => '$customization/$suid';
+
+  static const String customizationBag = '$apiBaseUrl/bag/customization';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

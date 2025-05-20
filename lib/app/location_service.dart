@@ -31,11 +31,11 @@ class LocationService with WidgetsBindingObserver {
         await Utils.showPermissionDeniedDialog(
           context: context,
           onOkPressed: (context) async {
-            await context.pop();
+            context.pop();
             geoloc.Geolocator.openAppSettings();
           },
           onCancelPressed: (context) async {
-            await context.pop();
+            context.pop();
           },
         );
         return null;
@@ -46,11 +46,11 @@ class LocationService with WidgetsBindingObserver {
         await Utils.showPermissionDeniedDialog(
           context: context,
           onOkPressed: (context) async {
-            await context.pop();
+            context.pop();
             geoloc.Geolocator.openAppSettings();
           },
           onCancelPressed: (context) async {
-            await context.pop();
+            context.pop();
           },
         );
         return null;
@@ -65,11 +65,11 @@ class LocationService with WidgetsBindingObserver {
       await Utils.showPermissionDeniedDialog(
         context: context,
         onOkPressed: (context) async {
-          await context.pop();
+          context.pop();
           geoloc.Geolocator.openAppSettings();
         },
         onCancelPressed: (context) async {
-          await context.pop();
+          context.pop();
         },
       );
       return null;

@@ -871,5 +871,6 @@
   "mob_approve_presentation": "プレゼンテーションの承認",
   "mob_cancelled": "キャンセル",
   "mob_select_gemstone": "宝石を選択",
-  "mob_select_stone_desc": "ストーンタイプのダイヤモンドまたは宝石を選択します。"
+  "mob_select_stone_desc": "ストーンタイプのダイヤモンドまたは宝石を選択します。",
+  "mob_quantity_exceeds_stock": "商品の在庫が不足しています"
 }

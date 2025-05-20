@@ -871,19 +871,19 @@ extension RoutesDataExtension on BuildContext {
     return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
-  void popUntil(RoutePredicate predicate) async {
+  void popUntil(RoutePredicate predicate) {
     return Navigator.popUntil(this, predicate);
   }
 
-  void popUntilOfContext(RoutePredicate predicate) async {
+  void popUntilOfContext(RoutePredicate predicate) {
     return Navigator.of(this).popUntil(predicate);
   }
 
-  Future<dynamic> pop({Map<RoutesData, dynamic>? arguments}) async {
+  void pop({Map<RoutesData, dynamic>? arguments}) {
     return Navigator.pop(this, arguments);
   }
 
-  Future<dynamic> popOfContext({Map<RoutesData, dynamic>? arguments}) async {
+  void popOfContext({Map<RoutesData, dynamic>? arguments}) {
     return Navigator.of(this).pop(arguments);
   }
 }

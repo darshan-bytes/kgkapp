@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
 
   /// Build date banner tag on top right corner
   Align buildDateBannerTag() {
-    return Align(alignment: AlignmentDirectional.topEnd, child: const Banner(message: "12 May", location: BannerLocation.topEnd));
+    return Align(alignment: AlignmentDirectional.topEnd, child: const Banner(message: "21 May", location: BannerLocation.topEnd));
   }
 
   /// Build app roots widgets with loading indicator

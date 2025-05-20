@@ -94,7 +94,7 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
     bool isSuccess = await _saveAddress(event.context, body: body, addressId: selectedAddress!.id ?? '');
     if (isSuccess) {
       selectedAddress = isShipping ? selectedAddress!.copyWith(isShippingDefault: true) : selectedAddress!.copyWith(isBillingDefault: true);
-      await event.context.pop(arguments: {RoutesData.addressDetails: selectedAddress, RoutesData.isShippingAddress: isShipping});
+      event.context.pop(arguments: {RoutesData.addressDetails: selectedAddress, RoutesData.isShippingAddress: isShipping});
     }
   }
 
