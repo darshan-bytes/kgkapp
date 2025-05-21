@@ -70,7 +70,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget leadingIcon(BuildContext context, CustomAppBarStyle style) {
     if (!isBack && leadingImage?.isNotEmpty == true) {
-      return SmartImage(key: ValueKey(leadingImage!), path: leadingImage!, height: 40.w, width: 40.w);
+      return SmartImage(key: ValueKey(leadingImage!), path: leadingImage!, height: 40.w, fit: BoxFit.contain);
     } else if (isBack) {
       return GestureDetector(
         onTap: onBack ?? () => context.pop(),

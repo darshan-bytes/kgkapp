@@ -9,7 +9,7 @@ class CategoriesScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         isBack: false,
-        leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
+        leadingImage: AppImages.icHeaderLogoGet,
         onSearch: () {
           context.pushNamed(AppRoutes.searchPage);
         },

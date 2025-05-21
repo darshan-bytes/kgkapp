@@ -17,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
     if (isSkipUser) return null;
     return SmartAppBar(
       isBack: false,
-      leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
+      leadingImage: AppImages.icHeaderLogoGet,
       onScan: () {},
       onFavorite: () {
         context.pushNamed(AppRoutes.wishListPage);

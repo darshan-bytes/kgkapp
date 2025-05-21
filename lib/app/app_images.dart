@@ -6,6 +6,7 @@ class AppImages {
 
   static const String icEntice = 'assets/images/ic_entice.png';
   static const String icMartinFlyer = 'assets/images/ic_martin_flyer.png';
+  static const String icMartinFlyerLogo = 'assets/images/martin_logo.png';
   static const String icSplashBg = 'assets/images/ic_splash_bg.svg';
   static const String icEyeOpen = 'assets/images/ic_eye_open.svg';
   static const String icEyeClose = 'assets/images/ic_eye_close.svg';
@@ -40,11 +41,23 @@ class AppImages {
       case 'entice':
         return icEntice;
       case 'martin':
-        return icMartinFlyer;
+        return icMartinFlyerLogo;
       default:
         return icSplashLogoWithSvg;
     }
     // return 'assets/images/ic_splash_logo.svg';
+  }
+
+  static String get icHeaderLogoGet {
+    String companyTheme = StorageManager.instance.getCompanyTheme();
+    switch (companyTheme) {
+      case 'entice':
+        return icEntice;
+      case 'martin':
+        return icMartinFlyerLogo;
+      default:
+        return icSplashLogoWithSvg;
+    }
   }
 
   static const String icCompanyBottomNavbar = 'assets/images/ic_company_bottom_navbar.svg';

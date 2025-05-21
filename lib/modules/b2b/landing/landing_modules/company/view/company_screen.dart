@@ -10,7 +10,7 @@ class CompanyScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         isBack: false,
-        leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
+        leadingImage: AppImages.icHeaderLogoGet,
         onFavorite: () {
           context.pushNamed(AppRoutes.wishListPage);
         },
