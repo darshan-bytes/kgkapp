@@ -1068,4 +1068,5 @@ class APPStrings {
   static const String approvePresentation = 'mob_approve_presentation';
   static const String selectGemstone = 'mob_select_gemstone';
   static const String selectStoneDesc = 'mob_select_stone_desc';
+  static const String quantityExceedsStock = 'mob_quantity_exceeds_stock';
 }

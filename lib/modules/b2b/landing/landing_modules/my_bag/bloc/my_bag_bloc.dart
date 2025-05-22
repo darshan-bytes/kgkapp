@@ -106,7 +106,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         }
       },
       (r) async {
-        https: //gitlab.bytestechnolab.com/mobile/kgkapp/-/merge_requests/471
         if (r.isExpired == true) {
           await StorageManager().setBagId(r.bagId ?? '');
           await StorageManager().clearBagData();
@@ -131,8 +130,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
               if (commodity != Commodity.diy) {
                 return ProductDetailsModel(
-                  /// Here we are using 200 as static for B2B user as there is no limit for B2B user for order quantity
-                  stockQty: userType == UserType.b2cUser ? item.stockQty : 200,
+                  stockQty: item.stockQty,
                   productId: item.productId,
                   suid: item.suid,
                   quantity: item.quantity,
@@ -213,7 +211,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
                   ],
 
                   /// Here we are using 200 as static for B2B user as there is no limit for B2B user for order quantity
-                  stockQty: userType == UserType.b2cUser ? item.stockQty : 200,
+                  stockQty: item.stockQty,
                   productId: item.productId,
                   suid: item.suid,
                   quantity: item.quantity,
@@ -374,7 +372,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     }
     emit(MyBagReloadState());
     String bagId = StorageManager().getBagId() ?? "";
-    String suid = myBagProductList[event.index].suid ?? "";
+    String suid =
+        (commodity == Commodity.customization
+            ? bagListDataModel?.result[event.index].customizationId
+            : myBagProductList[event.index].suid) ??
+        "";
     if (bagId.isEmpty || suid.isEmpty) return;
     final Map<String, dynamic> body = {ApiKey.id: bagId, ApiKey.suid: suid};
     final result = await AppRepository(event.context).deleteBag(body: body);
@@ -561,12 +563,17 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onMyBagProductQuantityChanged(MyBagProductQuantityChangedEvent event, Emitter<MyBagState> emit) async {
+    if (commodity != Commodity.customization &&
+        (userType == UserType.b2cUser && event.quantity > (myBagProductList[event.index].stockQty ?? 0))) {
+      Utils.showMessage(APPStrings.quantityExceedsStock.tr);
+      return;
+    }
     emit(MyBagReloadState());
-    myBagProductList[event.index].quantity = event.quantity;
     emit(MyBagLoadedState());
     final Map<String, dynamic> body = {
       ApiKey.id: StorageManager().getBagId(),
-      ApiKey.suid: myBagProductList[event.index].suid,
+      ApiKey.suid:
+          commodity == Commodity.customization ? bagListDataModel?.result[event.index].customizationId : myBagProductList[event.index].suid,
       ApiKey.quantity: event.quantity,
       ApiKey.commodity: myBagProductList[event.index].commodity?.value,
     };
@@ -577,6 +584,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         Utils.showMessage(l.message);
       },
       (r) async {
+        myBagProductList[event.index].quantity = event.quantity;
         await fetchBagOrderSummaryData(event.context, emit);
         emit(MyBagOrderSummaryDataLoadedState());
       },

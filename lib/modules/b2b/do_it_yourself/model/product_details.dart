@@ -78,6 +78,7 @@ class ProductDetailsModel {
   String? video;
   String? contractNoSkuNo;
   List<DiyBagItemProductDetailsModel>? diyBagItemProductDetailsList;
+  String? customizationSuid;
 
   ProductDetailsModel({
     this.productId,
@@ -157,6 +158,7 @@ class ProductDetailsModel {
     this.video,
     this.contractNoSkuNo,
     this.diyBagItemProductDetailsList,
+    this.customizationSuid,
   });
 
   @override

@@ -259,23 +259,69 @@ class CartProductItem extends StatelessWidget {
                     //   ),
                     // ),
                     // SizedBox(width: 8.w),
-                    AbsorbPointer(
-                      absorbing: isFromOrderDetails,
-                      child: DropdownButton<CartProductQuantity>(
-                        enableFeedback: !isFromOrderDetails,
-                        isDense: true,
-                        value: selectedQuantity,
-                        icon: isFromOrderDetails ? SizedBox.shrink() : null,
-                        onChanged: (newValue) => onQuantityChanged?.call(newValue!),
-                        selectedItemBuilder: (context) {
-                          return quantityOptionsList.map((e) {
-                            return SmartText(APPStrings.qtyX.tr.interpolate([e.name]));
-                          }).toList();
-                        },
-                        items:
-                            quantityOptionsList
-                                .map((e) => DropdownMenuItem<CartProductQuantity>(value: e, child: SmartText(e.name ?? '')))
-                                .toList(),
+                    GestureDetector(
+                      onTap:
+                          !isFromOrderDetails
+                              ? () async {
+                                final TextEditingController controller = TextEditingController(text: selectedQuantity?.name ?? '');
+                                await showDialog(
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return Dialog(
+                                      backgroundColor: Colors.white,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.all(20.w),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SmartText(APPStrings.selectQuantity.tr),
+                                            SizedBox(height: 8.h),
+                                            SmartTextField(
+                                              autofocus: true,
+                                              controller: controller,
+                                              hintText: APPStrings.selectQuantity.tr,
+                                              keyboardType: TextInputType.number,
+                                              textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                                              textInputAction: TextInputAction.done,
+                                            ),
+                                            SizedBox(height: 8.h),
+                                            SmartButton(
+                                              onTap: () async {
+                                                if (controller.text.isNotEmpty) {
+                                                  dialogContext.pop();
+                                                  await Future.delayed(Duration(milliseconds: 200));
+                                                  onQuantityChanged?.call(
+                                                    CartProductQuantity(
+                                                      name: controller.text.trim(),
+                                                      quantity: controller.text.trim().toInt,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              title: APPStrings.selectQuantity.tr,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                              : null,
+                      child: Container(
+                        decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.w, color: style.borderColor))),
+                        child: Row(
+                          children: [
+                            SmartText(APPStrings.qtyX.tr.interpolate([selectedQuantity?.name]), maxLines: 1),
+                            SizedBox(width: 8.w),
+                            Icon(
+                              Icons.arrow_drop_down,
+                              size: 16.w,
+                              // color: style.iconColor,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

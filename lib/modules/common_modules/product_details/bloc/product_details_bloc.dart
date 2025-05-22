@@ -19,7 +19,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   final CarouselSliderController controller = CarouselSliderController();
   final ScrollController youMayLikeScrollController = ScrollController();
   final ScrollController recentViewScrollController = ScrollController();
-  Map<dynamic, String?>? filterDataMap;
 
   List<String> imgList = [];
   int current = 0;
@@ -49,74 +48,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   String get timerValue => _timerValue;
 
-  List<ProductCustomizationOptions> productCustomizations = [
-    ProductCustomizationOptions(
-      id: '1',
-      name: APPStrings.diamondShape.tr,
-      type: ProductCustomizationType.image.value,
-      selectedValue: ProductCustomizationOptionValues(id: '1', value: 'Round', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
-      values: [
-        ProductCustomizationOptionValues(id: '1', value: 'Round', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
-        ProductCustomizationOptionValues(id: '2', value: 'Princess', image: 'https://i.ibb.co/Czxfjrr/Frame-1410088948-2.png'),
-        ProductCustomizationOptionValues(id: '3', value: 'Emerald', image: 'https://i.ibb.co/HGKZm5K/Frame-1410088948-6.png'),
-        ProductCustomizationOptionValues(id: '4', value: 'Asscher', image: 'https://i.ibb.co/52XHw1d/Frame-1410088948-4.png'),
-        ProductCustomizationOptionValues(id: '5', value: 'Oval', image: 'https://i.ibb.co/80xk2MK/Frame-1410088948-5.png'),
-      ],
-    ),
-    ProductCustomizationOptions(
-      id: '2',
-      name: APPStrings.metal.tr,
-      type: ProductCustomizationType.metal.value,
-      selectedValue: ProductCustomizationOptionValues(id: '1', value: 'White Gold', image: 'https://i.ibb.co/Zzd66J6/Ellipse-117.png'),
-      values: [
-        ProductCustomizationOptionValues(id: '1', value: 'White Gold', image: 'https://i.ibb.co/Zzd66J6/Ellipse-117.png'),
-        ProductCustomizationOptionValues(id: '2', value: 'Rose Gold', image: 'https://i.ibb.co/DYMS4xm/Ellipse-117-1.png'),
-        ProductCustomizationOptionValues(id: '3', value: 'Yellow Gold', image: 'https://i.ibb.co/XsKxFtz/Ellipse-117-2.png'),
-        ProductCustomizationOptionValues(id: '4', value: 'Silver', image: 'https://i.ibb.co/wJmc5Vq/Ellipse-117-3.png'),
-        ProductCustomizationOptionValues(id: '5', value: 'Platinum', image: 'https://i.ibb.co/QbPWvNs/Ellipse-117-4.png'),
-      ],
-    ),
-    ProductCustomizationOptions(
-      id: '3',
-      name: APPStrings.metalKaratage.tr,
-      type: ProductCustomizationType.metalKaratage.value,
-      selectedValue: ProductCustomizationOptionValues(id: '1', value: '5'),
-      values: [
-        ProductCustomizationOptionValues(id: '1', value: '5'),
-        ProductCustomizationOptionValues(id: '2', value: '18K'),
-        ProductCustomizationOptionValues(id: '3', value: '22K'),
-      ],
-    ),
-    ProductCustomizationOptions(
-      id: '4',
-      name: APPStrings.diamondQuality.tr,
-      type: ProductCustomizationType.diamondQuality.value,
-      selectedValue: ProductCustomizationOptionValues(id: '1', value: 'Standard', image: 'https://i.ibb.co/RbD0fvW/Truck.png'),
-      values: [
-        ProductCustomizationOptionValues(id: '1', value: 'Standard', image: 'https://i.ibb.co/RbD0fvW/Truck.png'),
-        ProductCustomizationOptionValues(id: '2', value: 'Standard - 2', image: 'https://i.ibb.co/1qqDcCR/Truck-1.png'),
-        ProductCustomizationOptionValues(id: '3', value: 'Standard - 3', image: 'https://i.ibb.co/X2SdMK4/Truck-2.png'),
-      ],
-    ),
-    ProductCustomizationOptions(
-      id: '5',
-      name: APPStrings.ringSize.tr,
-      type: ProductCustomizationType.ringSize.value,
-      selectedValue: ProductCustomizationOptionValues(id: '1', value: '5.5'),
-      values: [
-        ProductCustomizationOptionValues(id: '1', value: '5.5'),
-        ProductCustomizationOptionValues(id: '2', value: '6'),
-        ProductCustomizationOptionValues(id: '3', value: '6.5'),
-        ProductCustomizationOptionValues(id: '4', value: '7'),
-        ProductCustomizationOptionValues(id: '5', value: '7.5'),
-        ProductCustomizationOptionValues(id: '6', value: '8'),
-        ProductCustomizationOptionValues(id: '7', value: '8.5'),
-        ProductCustomizationOptionValues(id: '8', value: '9'),
-        ProductCustomizationOptionValues(id: '9', value: '9.5'),
-        ProductCustomizationOptionValues(id: '10', value: '10'),
-      ],
-    ),
-  ];
+  List<ProductCustomizeDataDatum> productCustomizations = [];
 
   bool isRingDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> ringDetailsKey = GlobalKey();
@@ -142,6 +74,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
   StreamSubscription<CompareProductState>? compareProductStream;
 
+  ProductCustomizeData? productCustomizeData;
+
   ProductDetailsBloc() : super(ProductDetailsInitialState()) {
     on<LoadProductDetailsEvent>(_onLoadProductDetails);
     on<ToggleCompareProductEvent>(_onToggleCompareProduct);
@@ -158,12 +92,17 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ProductDetailsPlaceBidFieldChangeEvent>(_onProductDetailsPlaceBidFieldChangeEvent);
     on<ProductDetailsAddInquiryEvent>(_onProductDetailsAddInquiryEvent);
     on<ProductDetailsAddToCartEvent>(_onProductDetailsAddToCartEvent);
+    on<ProductDetailsGetCustomizationNameEvent>(
+      _onProductDetailsGetCustomizationName,
+      transformer: BlocEventDeBouncer.debounceTransformer(),
+    );
   }
 
   bool get canCompare =>
-      screenIdentifier == ScreenIdentifier.productForRing ||
-      screenIdentifier == ScreenIdentifier.productForDiamonds ||
-      screenIdentifier == ScreenIdentifier.productForGemstones;
+      !isCustomisation &&
+      (screenIdentifier == ScreenIdentifier.productForRing ||
+          screenIdentifier == ScreenIdentifier.productForDiamonds ||
+          screenIdentifier == ScreenIdentifier.productForGemstones);
 
   bool get canAddToWishlist =>
       screenIdentifier == ScreenIdentifier.productForRing ||
@@ -212,33 +151,35 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> _loadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     _clearProductData();
     if (isClosed) return;
-    switch (screenIdentifier) {
-      case ScreenIdentifier.productForDiamonds:
-        await _handleDiamondProduct(event, emit);
-        break;
-      case ScreenIdentifier.productForGemstones:
-        await _handleGemstoneProduct(event, emit);
-        break;
-      case ScreenIdentifier.productForRing:
-        await _handleRingProduct(event, emit);
-        break;
-      case ScreenIdentifier.productForLibraryDesign:
-        await _handleDesignLibraryProduct(event, emit);
-        break;
-      case ScreenIdentifier.productForLibraryCAD:
-      case ScreenIdentifier.productForLibraryStyle:
-        await _handleCadLibraryProduct(event, emit);
-        break;
-      case ScreenIdentifier.productForLibrarySKU:
-        await _handleSkuLibraryProduct(event, emit);
-        break;
-      default:
-        break;
+    if (!isCustomisation) {
+      switch (screenIdentifier) {
+        case ScreenIdentifier.productForDiamonds:
+          await _handleDiamondProduct(event, emit);
+          break;
+        case ScreenIdentifier.productForGemstones:
+          await _handleGemstoneProduct(event, emit);
+          break;
+        case ScreenIdentifier.productForRing:
+          await _handleRingProduct(event, emit);
+          break;
+        case ScreenIdentifier.productForLibraryDesign:
+          await _handleDesignLibraryProduct(event, emit);
+          break;
+        case ScreenIdentifier.productForLibraryCAD:
+        case ScreenIdentifier.productForLibraryStyle:
+          await _handleCadLibraryProduct(event, emit);
+          break;
+        case ScreenIdentifier.productForLibrarySKU:
+          await _handleSkuLibraryProduct(event, emit);
+          break;
+        default:
+          break;
+      }
+    } else {
+      /// set up customizations
+      await getCustomizationData(event, productId, emit);
     }
     if (isClosed) return;
-
-    /// set up customizations
-    _setupCustomizations(context: event.context);
   }
 
   void _clearProductData() {
@@ -309,28 +250,31 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   void _setupCustomizations({required BuildContext context}) {
-    isCustomisation = context.mounted ? (context.routesData?[RoutesData.isCustomisationPage] ?? false) : false;
-    if (isCustomisation) {
-      productCustomizations.insert(
-        0,
-        ProductCustomizationOptions(
-          id: productCustomizations.length.toString(),
-          name: APPStrings.head.tr,
-          type: ProductCustomizationType.head.value,
-          selectedValue: ProductCustomizationOptionValues(
-            id: '1',
-            value: 'Four Prong',
-            image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png',
-          ),
-          values: [
-            ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
-            ProductCustomizationOptionValues(id: '2', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
-            ProductCustomizationOptionValues(id: '3', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
-            ProductCustomizationOptionValues(id: '4', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
-            ProductCustomizationOptionValues(id: '5', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
-          ],
-        ),
-      );
+    productCustomizations = productCustomizeData?.data ?? [];
+    if (productCustomizeData?.productCustomizeDataDefault != null) {
+      Map<String, dynamic> productCustomizeDataDefaultMap = productCustomizeData!.productCustomizeDataDefault ?? {};
+      for (int i = 0; i < productCustomizations.length; i++) {
+        ProductCustomizeDataDatum productCustomizeDataDatum = productCustomizations[i];
+        List<ProductCustomizationOptions> data = productCustomizeDataDatum.data;
+
+        for (int i = 0; i < data.length; i++) {
+          ProductCustomizationOptions productCustomizationOptions = data[i];
+          if (productCustomizationOptions.variants.isNotEmpty) {
+            for (int v0 = 0; v0 < productCustomizationOptions.variants.length; v0++) {
+              Variant variant = productCustomizationOptions.variants[v0];
+              variant.selectedVariantDatum = variant.data.firstWhereOrNull((element) => element.isDefault?.toLowerCase() == 'yes');
+              productCustomizationOptions.variants[v0] = variant;
+            }
+          }
+        }
+
+        // Select Default Value
+        productCustomizeDataDatum.selectedValue = productCustomizeDataDatum.data.firstWhereOrNull(
+          (element) => element.code == productCustomizeDataDefaultMap[productCustomizeDataDatum.slug],
+        );
+      }
+
+      add(ProductDetailsGetCustomizationNameEvent(context: context));
     }
   }
 
@@ -711,7 +655,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
-    filterDataMap = data?[RoutesData.filterData] ?? {};
+    isCustomisation = context.mounted ? (context.routesData?[RoutesData.isCustomisationPage] ?? false) : false;
   }
 
   Future<void> _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) async {
@@ -753,12 +697,25 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   void _onOnProductCustomizationChange(ProductCustomizationChangeEvent event, Emitter<ProductDetailsState> emit) {
-    int oldChildIndex =
-        productCustomizations[event.index].selectedValue != null
-            ? (productCustomizations[event.index].values?.indexOf(productCustomizations[event.index].selectedValue!) ?? 0)
-            : -1;
-    productCustomizations[event.index].selectedValue = productCustomizations[event.index].values?[event.childIndex];
-    emit(ProductCustomizationChangeState(event.index, event.childIndex, oldChildIndex));
+    int oldChildIndex = 0;
+    if (event.isVariant) {
+      oldChildIndex =
+          productCustomizations[event.index].selectedValue?.variants[event.childIndex].selectedVariantDatum != null
+              ? (productCustomizations[event.index].selectedValue!.variants[event.childIndex].data.indexOf(
+                (productCustomizations[event.index].selectedValue!.variants[event.childIndex].selectedVariantDatum!),
+              ))
+              : -1;
+      productCustomizations[event.index].selectedValue?.variants[event.childIndex].selectedVariantDatum =
+          productCustomizations[event.index].selectedValue?.variants[event.childIndex].data[event.selectedVariantIndex ?? 0];
+    } else {
+      oldChildIndex =
+          productCustomizations[event.index].selectedValue != null
+              ? (productCustomizations[event.index].data.indexOf(productCustomizations[event.index].selectedValue!))
+              : -1;
+      productCustomizations[event.index].selectedValue = productCustomizations[event.index].data[event.childIndex];
+    }
+    emit(ProductCustomizationChangeState(event.index, event.childIndex, oldChildIndex, event.isVariant));
+    add(ProductDetailsGetCustomizationNameEvent(context: event.context));
   }
 
   void _onProductDiamondDetailsToggleEvent(ProductDiamondDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
@@ -950,18 +907,22 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     if (productDetails == null) return;
     emit(ProductDetailsReload());
     if (!isAddedToCart) {
-      Completer<void> completer = Completer<void>();
-      BlocProvider.of<AppBloc>(context).onTapBag(
-        context,
-        productDetails: productDetails!,
-        onProductAdded: () {
-          isAddedToCart = true;
-          productDetails?.isAddedToCart = true;
-          emit(ProductDetailsLoadedState(productDetails!));
-          completer.complete();
-        },
-      );
-      await completer.future;
+      if (isCustomisation) {
+        await _onProductDetailsAddToBagCustomizationEvent(context, emit);
+      } else {
+        Completer<void> completer = Completer<void>();
+        BlocProvider.of<AppBloc>(context).onTapBag(
+          context,
+          productDetails: productDetails!,
+          onProductAdded: () {
+            isAddedToCart = true;
+            productDetails?.isAddedToCart = true;
+            emit(ProductDetailsLoadedState(productDetails!));
+            completer.complete();
+          },
+        );
+        await completer.future;
+      }
     } else {
       BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
       context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
@@ -1139,5 +1100,153 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> _onProductDetailsAddToCartEvent(ProductDetailsAddToCartEvent event, Emitter<ProductDetailsState> emit) async {
     await handleBagButtonClick(event.context, emit);
+  }
+
+  Future<void> getCustomizationData(LoadProductDetailsEvent event, String productId, Emitter<ProductDetailsState> emit) async {
+    if (isClosed || productId.isEmpty) return;
+    Either<ErrorResponse, ProductCustomizeData>? response = await AppRepository(event.context).getCustomization(id: productId);
+    response?.fold(
+      (error) {
+        isErrorInLoadingData = true;
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (data) {
+        if (isClosed) return;
+        isErrorInLoadingData = false;
+        productCustomizeData = data;
+
+        _setupCustomizations(context: event.context);
+        emit(ProductDetailsLoadedState(ProductDetailsModel()));
+      },
+    );
+  }
+
+  Future<void> _onProductDetailsGetCustomizationName(
+    ProductDetailsGetCustomizationNameEvent event,
+    Emitter<ProductDetailsState> emit,
+  ) async {
+    await _getCustomizationName(event.context, productId, emit);
+  }
+
+  Future<void> _getCustomizationName(BuildContext context, String productId, Emitter<ProductDetailsState> emit) async {
+    if (isClosed || productId.isEmpty) return;
+    final Map<String, dynamic> body = {ApiKey.suid: productId};
+
+    for (final customization in productCustomizations) {
+      if (customization.selectedValue != null) {
+        body[customization.slug ?? ''] = customization.selectedValue?.code;
+        if (customization.selectedValue!.variants.isNotEmpty) {
+          for (final variantData in customization.selectedValue!.variants) {
+            if (variantData.selectedVariantDatum != null) {
+              body[variantData.slug ?? ''] = variantData.selectedVariantDatum?.code;
+            }
+          }
+        }
+      }
+    }
+
+    Either<ErrorResponse, ProductCustomizeData>? response = await AppRepository(context).getCustomizationName(body: body);
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (data) {
+        if (isClosed) return;
+        isErrorInLoadingData = false;
+        productName = data.name ?? '';
+
+        try {
+          if (data.applicable.isNotEmpty) {
+            data.applicable.forEach((key, value) {
+              int index = productCustomizations.indexWhere((element) => element.slug == key);
+              if (index != -1) {
+                ProductCustomizeDataDatum productCustomizeDataDatum = productCustomizations[index];
+                for (int i = 0; i < productCustomizeDataDatum.data.length; i++) {
+                  productCustomizeDataDatum.data[i].isApplicable = (value).contains(productCustomizeDataDatum.data[i].code);
+                }
+                productCustomizations[index] = productCustomizeDataDatum;
+              }
+            });
+          }
+        } catch (e) {
+          debugPrint("Error in _getCustomizationName: $e");
+        }
+
+        productDetails = ProductDetailsModel(
+          productId: productId,
+          name: productName,
+          commodity: Commodity.customization,
+          originalPrice: data.price,
+        );
+        emit(ProductDetailsLoadedState(productDetails!));
+      },
+    );
+  }
+
+  // Customization product Add to bag
+  Future<void> _onProductDetailsAddToBagCustomizationEvent(BuildContext context, Emitter<ProductDetailsState> emit) async {
+    final MyBagBloc myBagBloc = BlocProvider.of<MyBagBloc>(context);
+    final String bagId = StorageManager.instance.getBagId() ?? '';
+    if (myBagBloc.commodity != Commodity.customization) {
+      bool isConfirm = false;
+      await Utils.showSmartModalBottomSheet(
+        context: context,
+        builder: (thisContext) {
+          return ConfirmationDialog(
+            title: APPStrings.differentCommoditiesSelected.tr,
+            message: APPStrings.cantAddProductFromDifferentCommodities.tr,
+            onDeniedText: APPStrings.cancel.tr,
+            onApprovedText: APPStrings.strContinue.tr,
+            onDenied: () {
+              isConfirm = false;
+              thisContext.pop();
+            },
+            onApproved: () {
+              isConfirm = true;
+              thisContext.pop();
+            },
+          );
+        },
+      );
+      if (!isConfirm) return;
+
+      Map<String, dynamic> body = {ApiKey.id: bagId};
+
+      await AppRepository(context).deleteBag(body: body);
+      await StorageManager().clearBagData();
+    }
+    if (isClosed || bagId.isEmpty) return;
+    final Map<String, dynamic> body = {ApiKey.suid: productId, ApiKey.id: bagId, ApiKey.quantity: 1};
+
+    final Map<String, dynamic> customizationData = {};
+    for (final customization in productCustomizations) {
+      if (customization.selectedValue != null) {
+        customizationData[customization.slug ?? ''] = customization.selectedValue?.code;
+        if (customization.selectedValue!.variants.isNotEmpty) {
+          for (final variantData in customization.selectedValue!.variants) {
+            if (variantData.selectedVariantDatum != null) {
+              customizationData[variantData.slug ?? ''] = variantData.selectedVariantDatum?.code;
+            }
+          }
+        }
+      }
+    }
+
+    body[ApiKey.customizationData] = jsonEncode(customizationData);
+    final Either<ErrorResponse, BagListDataModel>? result = await AppRepository(context).getCustomizationBag(body: body);
+
+    result?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (data) {
+        if (isClosed) return;
+        isAddedToCart = true;
+        productDetails?.isAddedToCart = true;
+        emit(ProductDetailsLoadedState(productDetails!));
+      },
+    );
   }
 }

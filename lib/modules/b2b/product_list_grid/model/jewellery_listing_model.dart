@@ -187,6 +187,7 @@ class JewelleryDataModel {
     this.leavingSoon,
     this.specialOffer,
     this.trending,
+    this.customizationSuid,
   });
 
   dynamic metalColor3RefSuid;
@@ -344,6 +345,7 @@ class JewelleryDataModel {
   String? leavingSoon;
   String? specialOffer;
   String? trending;
+  String? customizationSuid;
 
   factory JewelleryDataModel.fromJson(Map<String, dynamic> json) {
     return JewelleryDataModel(
@@ -514,6 +516,7 @@ class JewelleryDataModel {
       leavingSoon: json["leaving_soon"]?.toString(),
       specialOffer: json["special_offer"]?.toString(),
       trending: json["trending"]?.toString(),
+      customizationSuid: json["customization_suid"]?.toString(),
     );
   }
 
@@ -670,6 +673,7 @@ class JewelleryDataModel {
     "leaving_soon": leavingSoon,
     "special_offer": specialOffer,
     "trending": trending,
+    "customization_suid": customizationSuid,
   };
 
   @override

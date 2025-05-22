@@ -871,5 +871,6 @@
   "mob_approve_presentation": "प्रस्तुति को मंजूरी दें",
   "mob_cancelled": "केन्सल्ड",
   "mob_select_gemstone": "जेमस्टोन चुनें",
-  "mob_select_stone_desc": "स्टोन टाइप डायमंड या रत्न का चयन करें।"
+  "mob_select_stone_desc": "स्टोन टाइप डायमंड या रत्न का चयन करें।",
+  "mob_quantity_exceeds_stock": "उत्पाद के लिए अपर्याप्त स्टॉक"
 }

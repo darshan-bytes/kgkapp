@@ -1524,6 +1524,27 @@ class AppRepository extends ApiService {
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, ProductCustomizeData>?> getCustomization({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<ProductCustomizeData>(ApiClient.customizationSuid(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, ProductCustomizeData>?> getCustomizationName({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<ProductCustomizeData>(ApiClient.customization, body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, BagListDataModel>?> getCustomizationBag({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMultipartMethod<BagListDataModel>(ApiClient.customizationBag, body, withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

@@ -32,10 +32,20 @@ final class ProductCustomizationChangeEvent extends ProductDetailsEvent {
   final int index;
   final int childIndex;
 
-  const ProductCustomizationChangeEvent({required this.index, required this.childIndex});
+  final BuildContext context;
+  final bool isVariant;
+  final int? selectedVariantIndex;
+
+  const ProductCustomizationChangeEvent({
+    required this.index,
+    required this.childIndex,
+    required this.context,
+    this.isVariant = false,
+    this.selectedVariantIndex,
+  });
 
   @override
-  List<Object> get props => [index, childIndex];
+  List<Object?> get props => [index, childIndex, context, isVariant, selectedVariantIndex];
 }
 
 final class ProductDiamondDetailsToggleEvent extends ProductDetailsEvent {
@@ -130,6 +140,15 @@ final class ProductDetailsAddToCartEvent extends ProductDetailsEvent {
   final BuildContext context;
 
   const ProductDetailsAddToCartEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class ProductDetailsGetCustomizationNameEvent extends ProductDetailsEvent {
+  final BuildContext context;
+
+  const ProductDetailsGetCustomizationNameEvent({required this.context});
 
   @override
   List<Object> get props => [context];

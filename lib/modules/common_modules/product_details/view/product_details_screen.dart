@@ -14,7 +14,7 @@ class ProductDetailsScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is ProductDetailsLoadedState,
           builder: (context, state) {
             return SmartAppBar(
-              title: bloc.isCustomisation ? APPStrings.customiseProduct.tr : bloc.productName,
+              title: bloc.productName,
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
               },
@@ -61,8 +61,9 @@ class ProductDetailsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (bloc.isCustomisation) ...[
-              if (bloc.userType == UserType.b2cUser) ..._buildB2CCustomisationDetails(style),
-              if (bloc.userType == UserType.b2bUser) ..._buildB2BCustomisationDetails(bloc, style),
+              /// Below code is commented as of now because initially there was different views for B2C and B2B
+              /*if (bloc.userType == UserType.b2cUser)*/ ..._buildB2CCustomisationDetails(bloc, style),
+              // if (bloc.userType == UserType.b2bUser) ..._buildB2BCustomisationDetails(bloc, style),
             ],
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -141,33 +142,36 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildB2CCustomisationDetails(ProductDetailsStyle style) {
+  List<Widget> _buildB2CCustomisationDetails(ProductDetailsBloc bloc, ProductDetailsStyle style) {
     return [
       SizedBox(height: 10.h),
       Row(
         children: [
           SmartText(APPStrings.totalApproxPrice.tr, style: style.totalApproxStyle),
           const Spacer(),
-          SmartText("\$1,470.00", style: style.totalApproxStyle),
+          SmartText(bloc.productDetails?.originalPrice ?? '-', style: style.totalApproxStyle),
         ],
       ),
       SizedBox(height: 14.h),
       Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartText('14K Rose and White Gold', style: style.totalApproxSubStyle),
+          Flexible(child: SmartText(bloc.productName, style: style.totalApproxSubStyle)),
           const Spacer(),
-          SmartText("\$120.00", style: style.totalApproxSubStyle),
+          SmartText(bloc.productDetails?.originalPrice ?? '-', style: style.totalApproxSubStyle),
         ],
       ),
       SizedBox(height: 14.h),
-      Row(
-        children: [
-          SmartText('Round Diamond 0.5 ct', style: style.totalApproxSubStyle),
-          const Spacer(),
-          SmartText("\$1350.00", style: style.totalApproxSubStyle),
-        ],
-      ),
-      SizedBox(height: 14.h),
+
+      /// Below Code is commented as of now because this data is not coming from the API
+      // Row(
+      //   children: [
+      //     SmartText('Round Diamond 0.5 ct', style: style.totalApproxSubStyle),
+      //     const Spacer(),
+      //     SmartText("\$1350.00", style: style.totalApproxSubStyle),
+      //   ],
+      // ),
+      // SizedBox(height: 14.h),
     ];
   }
 
@@ -176,7 +180,7 @@ class ProductDetailsScreen extends StatelessWidget {
       Row(
         children: [
           SmartImage(
-            path: bloc.productDetails?.imageUrl ?? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
+            path: bloc.productDetails?.imageUrl ?? '',
             height: 73.w,
             width: 73.w,
             imageBorderRadius: BorderRadius.circular(7.66.r),
@@ -407,21 +411,26 @@ class ProductDetailsScreen extends StatelessWidget {
           // Divider(height: 48.h),
           // _buildCustomizationList(bloc),
           // if (bloc.screenIdentifier == ScreenIdentifier.productForRing) Divider(height: 48.h),
-          if (!bloc.isCustomisation && bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
+          if (!bloc.isCustomisation &&
+              bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+              bloc.productDetails != null &&
+              bloc.productDetails!.customizationSuid.isNotNullNorEmpty) ...[
             ProductCustomiseDescriptionWidget(
               onTap: () {
                 context.pushNamed(
                   AppRoutes.productDetailsPage,
                   arguments: {
                     RoutesData.isCustomisationPage: true,
-                    RoutesData.productId: bloc.productDetails?.productId,
+                    RoutesData.productId: bloc.productDetails?.customizationSuid,
                     RoutesData.isPageFor: bloc.screenIdentifier,
                   },
                 );
               },
             ),
             Divider(height: 48.h),
-          ],
+          ] else
+            _buildCustomizationList(bloc),
+          Divider(height: 48.h),
           Row(
             children: [
               SmartImage(path: AppImages.icDiamond, height: 24.w, width: 24.w),
@@ -632,13 +641,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildCustomizationList(ProductDetailsBloc bloc) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: bloc.productCustomizations.length,
-      itemBuilder: (context, index) => ProductDetailsCustomizations(index: index),
-      separatorBuilder: (_, __) => Divider(height: 48.h),
-    );
+    return BuildCustomizationList(bloc: bloc);
   }
 
   Widget _settingWidget(String type, String value, BuildContext context) {

@@ -367,8 +367,12 @@ class MyBagScreen extends StatelessWidget {
                   ],
                 );
               case Commodity.jewellery:
+              case Commodity.customization:
                 return CartProductItem(
-                  isOutOfStock: (product.stockQty ?? 0) < (product.quantity ?? 0),
+                  isOutOfStock:
+                      (bloc.commodity == Commodity.customization || bloc.userType == UserType.b2bUser)
+                          ? false
+                          : (product.stockQty ?? 0) < (product.quantity ?? 0),
                   onTap: () {
                     _onProductTap(context, product, bloc);
                   },
