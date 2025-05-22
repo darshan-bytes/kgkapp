@@ -47,11 +47,12 @@ final class ProductCustomizationChangeState extends ProductDetailsState {
   final int index;
   final int childIndex;
   final int oldChildIndex;
+  final bool isVariant;
 
-  const ProductCustomizationChangeState(this.index, this.childIndex, this.oldChildIndex);
+  const ProductCustomizationChangeState(this.index, this.childIndex, this.oldChildIndex, this.isVariant);
 
   @override
-  List<Object> get props => [index, childIndex, oldChildIndex];
+  List<Object> get props => [index, childIndex, oldChildIndex, isVariant];
 }
 
 final class ProductDiamondDetailsToggleState extends ProductDetailsState {

@@ -2,20 +2,6 @@ import '../kgk.dart';
 
 enum ImageType { asset, network, file, svg }
 
-enum ProductCustomizationType {
-  image('image'),
-  metal('metal'),
-  head('head'),
-  metalKaratage('metal_karatage'),
-  ringSize('ring_size'),
-  diamondQuality('diamond_quality'),
-  other('other');
-
-  final String value;
-
-  const ProductCustomizationType(this.value);
-}
-
 enum ProjectStatus {
   blueInProgress('blue_in_progress'),
   orangeInProgress('orange_in_progress'),
@@ -113,7 +99,8 @@ enum Commodity {
   skuLibrary('sku_library', 'product-library/sku'),
   cadLibrary('cad_library', 'product-library/cad'),
   designLibrary('design_library', 'product-library/design'),
-  diy('diy', 'diy');
+  diy('diy', 'diy'),
+  customization('customization', 'customization');
 
   const Commodity(this.value, this.webPath);
 

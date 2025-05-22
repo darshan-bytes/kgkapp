@@ -4,7 +4,11 @@ import 'dart:developer' as kgk_logger;
 
 class ApiService implements ApiProvider {
   // Common method to get headers
-  Map<String, String> _getCommonHeaders({Map<String, String>? additionalHeaders, required bool withCurrencyHeader}) {
+  Map<String, String> _getCommonHeaders({
+    Map<String, String>? additionalHeaders,
+    required bool withCurrencyHeader,
+    bool isMultipart = false,
+  }) {
     String? token = StorageManager().getAuthToken();
     // String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ5NjgiLCJpc19hZG1pbiI6ZmFsc2UsInVzZXJfdHlwZSI6ImludGVybmFsIiwiY291bnRyeV9jb2RlIjoiSU4iLCJyb2xlIjoic3VwZXItYWRtaW4yIiwiZGVmYXVsdF9jc2NfY29kZSI6bnVsbCwiaWF0IjoxNzQyOTYxNDgyLCJleHAiOjE3NDI5ODMwODJ9.0NhDOwNWhFuPAxv4Arw8Ro58UfaXY8AJAPpUutkG1kc';
     // Ankita User Token
@@ -14,7 +18,7 @@ class ApiService implements ApiProvider {
 
     Map<String, String> headers = {
       if (token.isNotNullNorEmpty) HttpHeaders.authorizationHeader: 'Bearer $token',
-      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.contentTypeHeader: isMultipart ? 'multipart/form-data' : 'application/json',
       ApiKey.xApiKey: apiKey,
       ApiKey.acceptLanguage: acceptLanguage ?? 'en',
     };
@@ -240,7 +244,7 @@ class ApiService implements ApiProvider {
 
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader).forEach((key, value) {
+        _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader, isMultipart: true).forEach((key, value) {
           request.headers[key] = value;
         });
 
@@ -322,7 +326,7 @@ class ApiService implements ApiProvider {
 
         var request = http.MultipartRequest('PUT', Uri.parse(url));
 
-        _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader).forEach((key, value) {
+        _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader, isMultipart: true).forEach((key, value) {
           request.headers[key] = value;
         });
 

@@ -871,5 +871,6 @@
   "mob_approve_presentation": "批准演示文稿",
   "mob_cancelled": "取消",
   "mob_select_gemstone": "选择宝石",
-  "mob_select_stone_desc": "选择石材型钻石或宝石。"
+  "mob_select_stone_desc": "选择石材型钻石或宝石。",
+  "mob_quantity_exceeds_stock": "产品库存不足"
 }
