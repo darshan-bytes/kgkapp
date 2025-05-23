@@ -64,7 +64,7 @@ class SettingDetailScreen extends StatelessWidget {
                       onTap: () {
                         bloc.handleSelectSetting(context);
                       },
-                      title: APPStrings.selectSetting.tr,
+                      title: APPStrings.selectJewellery.tr,
                       height: 55.h,
                     ),
                   ),

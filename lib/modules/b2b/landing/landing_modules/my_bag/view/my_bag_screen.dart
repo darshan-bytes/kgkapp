@@ -20,7 +20,9 @@ class MyBagScreen extends StatelessWidget {
               context.pushNamed(AppRoutes.searchPage);
             },
             onFavorite: () {
-              context.pushNamed(AppRoutes.wishListPage);
+              context.pushNamed(AppRoutes.wishListPage).then((value) {
+                bloc.add(InitialMyBagEvent(context: context));
+              });
             },
           ),
           body: _getBody(bloc, style),

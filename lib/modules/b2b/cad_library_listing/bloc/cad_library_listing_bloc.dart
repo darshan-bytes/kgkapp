@@ -285,6 +285,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       emit(const CadListingLoadingState());
       filterData = appliedFilterData;
       gridPaginationScrollController.pullToRefresh();
+      cadList.clear();
       if (screenIdentifier == ScreenIdentifier.productForLibraryStyle) {
         await _callStyleLibraryListingApi(context: context, isLoadMore: false);
       } else {
