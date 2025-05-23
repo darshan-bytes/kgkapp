@@ -10,6 +10,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   int selectedRating = 0;
   final ImagePicker _picker = ImagePicker();
   List<XFile> imageFileList = [];
+  List<XFile> newAddedFiles = [];
   List<String> imageUrls = [];
   List<String> removedImages = [];
 
@@ -93,6 +94,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     XFile? pickedImage = await _picker.pickImage(source: source);
     if (pickedImage != null) {
       imageFileList.add(pickedImage);
+      newAddedFiles.add(pickedImage);
       emit(const PickImageState());
     }
   }
@@ -104,6 +106,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
       Utils.showMessage(APPStrings.errorSelectUpToFiveImages.tr);
     } else {
       imageFileList.addAll(pickedImages);
+      newAddedFiles.addAll(pickedImages);
       emit(const PickImageState());
     }
   }
@@ -158,9 +161,11 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
       if (removedImages.isNotEmpty) {
         body[ApiKey.removeFiles] = removedImages.map((e) => e.replaceAll(''.setMediaUrl, '')).join(',');
       }
-      response = await AppRepository(
-        event.context,
-      ).editProductReview(myReview?.id ?? '', body, images: imageFileList.map((e) => e.path).toList());
+      response = await AppRepository(event.context).editProductReview(
+        myReview?.id ?? '',
+        body,
+        images: imageFileList.where((e) => !imageUrls.contains(e.path)).map((e) => e.path).toList(),
+      );
     } else {
       response = await AppRepository(event.context).addProductReview(body, images: imageFileList.map((e) => e.path).toList());
     }

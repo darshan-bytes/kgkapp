@@ -218,6 +218,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
     paginationScrollController.pullToRefresh();
     skuLibraryList.clear();
     filterData = appliedFilterData;
+    skuLibraryList.clear();
     await _callSkuLibraryApi(context: context, emit: emit);
     emit(const SkuLibraryLoadedState());
   }
