@@ -92,6 +92,7 @@ class CadLibraryListItem extends StatelessWidget {
   }
 
   Widget cadDetailsSection(CadLibraryListingItemStyle style, BuildContext context) {
+    final ProductItemStyle productStyle = AppTheme.of(context).productItemStyle;
     ProjectStatus? status = ProjectStatus.values.firstWhereOrNull((element) => element == designModel.designApprovalStatus);
     return Expanded(
       child: Container(
@@ -145,9 +146,42 @@ class CadLibraryListItem extends StatelessWidget {
                 ),
               ],
             ],
+            diamondAndGramSection(productStyle),
           ],
         ),
       ),
+    );
+  }
+
+  Widget diamondAndGramSection(ProductItemStyle style) {
+    if (designModel.strCarats.isNullOrEmpty && designModel.strGrams.isNullOrEmpty) {
+      return SizedBox(height: 24.h);
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 4.h),
+        if (designModel.strCarats.isNotNullNorEmpty) ...[
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
+              SizedBox(width: 4.w),
+              SmartText(designModel.strCarats, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+            ],
+          ),
+          SizedBox(height: 8.h),
+        ],
+        if (designModel.strGrams.isNotNullNorEmpty)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
+              SizedBox(width: 4.w),
+              SmartText(designModel.strGrams, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+            ],
+          ),
+      ],
     );
   }
 }

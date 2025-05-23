@@ -46,7 +46,7 @@ class SmartCarouselSlider extends StatelessWidget {
                   options: CarouselOptions(
                     autoPlay: imgList.length > 1 && onVideoTap != null,
                     enableInfiniteScroll: imgList.length > 1,
-                    viewportFraction: 1.5,
+                    viewportFraction: 1,
                     aspectRatio: 1,
                     onPageChanged: (index, reason) {
                       currentPage.value = index;

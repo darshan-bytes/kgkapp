@@ -78,6 +78,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
           productDetails = ProductDetailsModel(
             suid: r.sku,
             productId: r.sku,
+            jewelleryType: item.jewelleryTypeName,
             imageUrl: item.imageSketch,
             subTitle: item.autoDescription,
             originalPrice: item.finalPrice?.toString().setCurrency,

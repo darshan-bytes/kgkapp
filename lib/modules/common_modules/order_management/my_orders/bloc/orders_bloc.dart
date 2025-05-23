@@ -130,7 +130,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     appBloc = BlocProvider.of<AppBloc>(context);
     userType = appBloc.userType;
     _initializePagination(context);
-    _fetchFilterData(context, emit);
+    await _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || orderPaginationScrollController.currentPage <= totalNumberOfPages!) {
       await fetchOrderListData(context, emit);
     }
@@ -147,10 +147,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   /// Fetches filter data
-  void _fetchFilterData(BuildContext context, Emitter<OrdersState> emit) async {
+  Future<void> _fetchFilterData(BuildContext context, Emitter<OrdersState> emit) async {
     if (filterData.isEmpty) {
       await _setupFilters(context);
-      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
   }
 
@@ -204,7 +203,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     originalOrderList.clear();
 
     /// set applied filter data base on current tab
-    appliedFilterData[currentTab] = newAppliedFilterData.map((e) => e).toList();
+    appliedFilterData[currentTab] = newAppliedFilterData;
 
     await fetchOrderListData(context, emit);
     emit(OrdersListLoadedState());
@@ -269,7 +268,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       ApiKey.limit: pageLimit,
       ApiKey.dir: AppConst.sortValueDesc,
       ApiKey.field: AppConst.uniqueId,
-      if (tabController.index != 2) ApiKey.commodity: commodity,
+      ApiKey.commodity: commodity,
     });
     return query;
   }
@@ -285,13 +284,16 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     String commodity = _getCommodityForTab(tabController.index);
 
     /// Build the query base on the current tab applied filters data
-    query = buildQuery(
+    buildQuery(
       filterData: appliedFilterData[tabController.index] ?? [],
       searchQuery: orderSearchController.text,
       currentPage: orderPaginationScrollController.currentPage,
       pageLimit: AppConst.pageLimit,
       commodity: commodity,
-    );
+    ).forEach((key, value) {
+      query ??= {};
+      query![key] = value;
+    });
     Either<ErrorResponse, PaginationData<OrderItem>>? response = await AppRepository(
       context,
     ).getMyOrderList(body: query, isLoadMore: isLoadMore);

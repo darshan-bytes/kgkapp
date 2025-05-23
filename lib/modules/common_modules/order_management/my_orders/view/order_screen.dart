@@ -47,6 +47,9 @@ class OrderScreen extends StatelessWidget {
             child: FilterBottomActionBar(
               controller: ordersBloc.orderPaginationScrollController.controller,
               onFilterTap: () {
+                BlocProvider.of<AdvanceSortFilterBloc>(
+                  context,
+                ).add(AddAdvanceSortFilterDataEvent(filterOptionList: ordersBloc.filterData, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder:
