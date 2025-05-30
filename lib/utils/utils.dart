@@ -535,6 +535,8 @@ class Utils {
       auctionId: diamond.auctionId,
       video: diamond.video,
       location: diamond.location,
+      polish: diamond.polish,
+      symmetry: diamond.symmetry,
     );
   }
 

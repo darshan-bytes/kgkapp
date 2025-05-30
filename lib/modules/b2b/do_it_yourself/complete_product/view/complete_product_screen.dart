@@ -205,7 +205,10 @@ class CompleteProductScreen extends StatelessWidget {
           ),
           Divider(height: 1.h),
           SizedBox(height: 32.h),
-          SmartText(APPStrings.gemstoneDetails.tr, style: style.priceStyle),
+          SmartText(
+            (bloc.diyType == DIYType.gemstone ? APPStrings.gemstoneDetails : APPStrings.diamondDetails).tr,
+            style: style.priceStyle,
+          ),
           Divider(height: 1.h),
           ProductDetailsComponentsView(
             commodity: bloc.diyType == DIYType.diamond ? Commodity.diamond : Commodity.gemstone,

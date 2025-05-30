@@ -23,7 +23,7 @@ class FaqScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             SizedBox(height: 24.h),
-                            SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.titleStyle),
+                            SmartText(faqBloc.supportTitle, style: style.titleStyle),
 
                             /// Below code is commented as search functionality is not implemented in the API for now
                             /*SizedBox(height: 24.h),

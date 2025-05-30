@@ -36,7 +36,7 @@ class SupportScreen extends StatelessWidget {
                   const Divider(),
                   SizedBox(height: 32.h),
                   if (supportBloc.faqs.isNotNullNorEmpty) ...[
-                    SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.frequentlyAskedQuestionStyle),
+                    SmartText(supportBloc.supportTitle, style: style.frequentlyAskedQuestionStyle),
                     SizedBox(height: 16.h),
                     _buildFAQSection(supportBloc, style),
                     SizedBox(height: 16.h),
