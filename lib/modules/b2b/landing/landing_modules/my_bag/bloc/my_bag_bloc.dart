@@ -155,6 +155,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
                   gms: item.gms,
                   rappaportPrice: item.rappaportPrice,
                   polish: item.polish,
+                  symmetry: item.symmetry,
                   measurements: item.measurements,
                   table: item.table,
                   depth: item.depth,

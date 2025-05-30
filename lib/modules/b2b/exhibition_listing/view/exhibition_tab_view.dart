@@ -125,7 +125,7 @@ class ExhibitionTabView extends StatelessWidget {
           children: [
             Stack(
               children: [
-                SmartImage(path: item.image ?? "", width: context.width, fit: BoxFit.scaleDown),
+                SmartImage(path: item.image ?? "", fit: BoxFit.cover),
                 if (item.status != null) PositionedDirectional(top: 16.h, start: 16.w, child: _buildStatusBadge(style, item.status!)),
               ],
             ),

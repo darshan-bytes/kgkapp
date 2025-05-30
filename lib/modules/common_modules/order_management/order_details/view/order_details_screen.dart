@@ -356,7 +356,7 @@ class _OrderCreatorDetailsCard extends StatelessWidget {
           _CreatorDetailItem(
             title: APPStrings.createdBy.tr,
             iconImage: placeOrderResponse?.createdByDetails?.profilePicUrl?.setMediaUrl ?? AppImages.icPlaceholder,
-            value: placeOrderResponse?.createdByDetails?.organisationName ?? APPStrings.dash.tr,
+            value: placeOrderResponse?.createdByDetails?.fullName ?? APPStrings.dash.tr,
             style: style,
           ),
           SizedBox(height: 24.h),

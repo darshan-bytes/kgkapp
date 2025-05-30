@@ -10,6 +10,7 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
   List<Support> support = [];
   bool isLoading = true;
   String stillNeedHelp = '';
+  String supportTitle = '';
 
   FaqBloc() : super(FaqInitial()) {
     on<FaqInitialEvent>(_onInitialFaqListEvent);
@@ -31,6 +32,7 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
         (r) {
           FaqAttributes? faqStrapiModel = r;
           if (faqStrapiModel == null) return;
+          supportTitle = faqStrapiModel.title?.toString() ?? '';
           List<FaqData> faqStrapiList = faqStrapiModel.faqs;
           List<Map<String, dynamic>> faqData = faqStrapiList.map((e) => e.toJson()).toList();
           List<FaqWrapper> faqWrappers = parseFaqs(faqData);

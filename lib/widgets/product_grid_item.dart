@@ -32,7 +32,7 @@ class ProductGridItem extends StatelessWidget {
   final bool isHomeView;
   final bool isHidePriceView;
 
-  const ProductGridItem({
+  ProductGridItem({
     super.key,
     this.boxHeight,
     this.boxWidth,
@@ -63,8 +63,8 @@ class ProductGridItem extends StatelessWidget {
     this.isFromWatchlist = false,
     this.isKGKCouture = false,
     this.isHomeView = false,
-    this.isHidePriceView = false,
-  });
+    bool isHidePriceView = false,
+  }) : isHidePriceView = (isHidePriceView || (productDetails.finalPrice.isNullOrEmpty && productDetails.originalPrice.isNullOrEmpty));
 
   @override
   Key get key => ValueKey(productDetails.suid ?? productDetails.productId);
