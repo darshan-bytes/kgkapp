@@ -24,7 +24,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       emailController.text = "bhati.rmb+2@gmail.com";
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "sivaraj.dharuman@sparklesoft.co.in";
-      // emailController.text = "darshan.vachhani+112@bytestechnolab.com";
+      emailController.text = "darshan.vachhani+112@bytestechnolab.com";
       // emailController.text = "ankitachudasama99@yopmail.com";
 
       //B2B
@@ -39,6 +39,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "jainamm.diamonds@yopmail.com"; //Diamond
       // emailController.text = "parash2@yopmail.com"; // Jewellery
+      emailController.text = "ankita2@yopmail.com"; //Gemstone
+      // emailController.text = "ankitachudasama963@yopmail.com"; //Diamond
 
       passwordController.text = "Asdf@1234";
       passwordController.text = "Test@123";

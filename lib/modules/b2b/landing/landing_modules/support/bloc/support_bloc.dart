@@ -7,6 +7,7 @@ part 'support_state.dart';
 class SupportBloc extends Bloc<SupportEvent, SupportState> {
   List<ProfileListModel> supportActionList = [];
   List<FAQ> faqs = [];
+  String supportTitle = '';
 
   SupportBloc() : super(SupportInitial()) {
     on<SupportInitialEvent>(_onInitialSupportListEvent);
@@ -49,7 +50,7 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
     if (faqs.isNullOrEmpty) {
       final FaqBloc faqBloc = BlocProvider.of<FaqBloc>(context);
       await faqBloc.getFaqList(context);
-
+      supportTitle = faqBloc.supportTitle;
       List<FaqWrapper> faqWrappers = faqBloc.faq;
       if (faqWrappers.isNotNullNorEmpty && faqWrappers.length > 1) {
         faqs = faqWrappers[1].faqs ?? [];

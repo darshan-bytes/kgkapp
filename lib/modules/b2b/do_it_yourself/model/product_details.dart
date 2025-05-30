@@ -55,6 +55,7 @@ class ProductDetailsModel {
   String? cts;
   List<String>? colorsCode;
   String? polish;
+  String? symmetry;
   String? measurements;
   String? certificateNumber;
   String? table;
@@ -135,6 +136,7 @@ class ProductDetailsModel {
     this.cts,
     this.colorsCode,
     this.polish,
+    this.symmetry,
     this.measurements,
     this.certificateNumber,
     this.table,

@@ -237,26 +237,28 @@ class MyBagScreen extends StatelessWidget {
                       },
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
-                          carat: product.ctsOrGms?.toString(),
+                          origin: product.location,
+                          stock: product.location,
                           commodity: product.commodity?.value,
-                          rapRate: product.rappaportPrice?.setCurrency,
                           productId: product.productId,
                           productName: product.name,
-                          ct: product.cut,
-                          stock: product.location,
                           shape: product.shape,
+                          lotNumber: product.productSku,
+                          lab: product.labs,
+                          rap: product.lsp?.setCurrency,
+                          fluorescence: product.fluorescence,
+                          carat: product.ctsOrGms?.toString(),
+                          ct: product.cut,
                           colour: product.color,
                           clarity: product.clarity,
-                          lotNumber: product.lotCode,
                           certificateNumber: product.certificateNumber,
                           measurements: product.measurements,
-                          lab: product.labs,
                           cut: product.cut,
                           polish: product.polish,
-                          fluorescence: product.fluorescence,
+                          symmetry: product.symmetry,
                           tablePercentage: product.table,
                           depthPercentage: product.depth,
-                          rap: product.rappaportPrice,
+                          rapRate: product.rappaportPrice?.setCurrency,
                           discount: product.discountPercentageString,
                           perCts: product.yourRate?.setCurrency,
                           amount: product.totalPrice?.setCurrency,
@@ -435,9 +437,6 @@ class MyBagScreen extends StatelessWidget {
                   productDetails: product,
                   onRemoveTap: () {
                     bloc.add(MyBagRemoveProductEvent(context: context, index: index));
-                  },
-                  onMoveToWishListTap: () {
-                    bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
                   },
                 );
               default:
