@@ -319,7 +319,6 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   void _fetchFilterData(BuildContext context, Emitter<WatchlistState> emit) async {
     if (filterData.isEmpty) {
       await _setupFilters(context);
-      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
   }
 

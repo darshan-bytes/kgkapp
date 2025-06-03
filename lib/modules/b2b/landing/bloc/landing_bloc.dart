@@ -105,13 +105,19 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
 
   void _initializeB2BUser(BuildContext context) {
     currentIndex = homeIndex;
-    pages = [const HomeScreen(), const CategoriesScreen(), const MyBagScreen(), const CompanyScreen(), const ProfileScreen()];
+    pages = [
+      const HomeScreen(),
+      const CategoriesScreen(),
+      const MyBagScreen(),
+      userType == UserType.internal ? const CompanyScreen() : const SupportScreen(),
+      const ProfileScreen(),
+    ];
 
     blocList = [
       BlocProvider.of<HomeBloc>(context),
       BlocProvider.of<CategoriesBloc>(context),
       BlocProvider.of<MyBagBloc>(context),
-      BlocProvider.of<CompanyBloc>(context),
+      userType == UserType.internal ? BlocProvider.of<CompanyBloc>(context) : BlocProvider.of<SupportBloc>(context),
       BlocProvider.of<ProfileBloc>(context),
     ];
 
@@ -124,7 +130,13 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         label: APPStrings.bag,
         notificationCount: 0,
       ),
-      BottomNavigationBarDataModel(icon: AppImages.icCompanyBottomNavbar, activeIcon: AppImages.icCompanyActive, label: APPStrings.company),
+      userType == UserType.internal
+          ? BottomNavigationBarDataModel(
+            icon: AppImages.icCompanyBottomNavbar,
+            activeIcon: AppImages.icCompanyActive,
+            label: APPStrings.company,
+          )
+          : BottomNavigationBarDataModel(icon: AppImages.icSupport, activeIcon: AppImages.icSupportActive, label: APPStrings.support),
       BottomNavigationBarDataModel(
         icon: StorageManager().getUserData()?.profilePicUrl?.setMediaUrl ?? AppImages.icProfilePic,
         activeIcon: "",
@@ -171,7 +183,11 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
             break;
 
           case companyIndex:
-            blocList[currentIndex].add(InitialCompanyListEvent(context: event.context));
+            if (userType == UserType.internal) {
+              blocList[currentIndex].add(InitialCompanyListEvent(context: event.context));
+            } else {
+              blocList[currentIndex].add(SupportInitialEvent(context: event.context));
+            }
             break;
 
           case profileIndex:

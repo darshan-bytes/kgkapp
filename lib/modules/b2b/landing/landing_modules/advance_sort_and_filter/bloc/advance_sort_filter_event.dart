@@ -67,3 +67,9 @@ class ChangeAdvanceDateRangeEvent extends AdvanceSortFilterEvent {
 
   const ChangeAdvanceDateRangeEvent({required this.dateRange});
 }
+
+class ChangeAdvanceDateEvent extends AdvanceSortFilterEvent {
+  final DateTime date;
+
+  const ChangeAdvanceDateEvent({required this.date});
+}

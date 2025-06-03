@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+93
+version: 1.0.0+94
 
 environment:
   sdk: ^3.7.2
@@ -87,7 +87,7 @@ dependencies:
   permission_handler: ^12.0.0+1
 
   #For Date Time Conversion
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   #For Qr Code Scanner
   mobile_scanner: ^6.0.10

@@ -54,11 +54,13 @@ class ProductMenuBottomSheet extends StatelessWidget {
                         SizedBox(height: 16.h),
                         _buildButtons(context),
                         SizedBox(height: 16.h),
-                        if (!StorageManager.instance.getIsSkipLogin() &&
-                            BlocProvider.of<AppBloc>(context).userType == UserType.b2bUser) ...[
-                          _buildActionGrid(style, context),
-                          SizedBox(height: 16.h),
-                        ],
+
+                        /// Below code is commented because it is not used in the app for now. It will be used in future for B2B implementation.
+                        // if (!StorageManager.instance.getIsSkipLogin() &&
+                        //     BlocProvider.of<AppBloc>(context).userType == UserType.b2bUser) ...[
+                        //   _buildActionGrid(style, context),
+                        //   SizedBox(height: 16.h),
+                        // ],
                       ],
                     );
                   },

@@ -195,7 +195,36 @@ class B2BColumnDetailItem extends StatelessWidget {
 
   Widget _buildValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
     if (field.subFields.isNotNullNorEmpty) {
-      return SmartGridView(
+      return Wrap(
+        spacing: 12.w,
+        runSpacing: 12.h,
+        children: List.generate(field.subFields!.length, (index) {
+          B2BItemField subField = field.subFields![index];
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (subField.imageUrl != null)
+                Padding(
+                  padding: EdgeInsetsDirectional.only(end: 8.w),
+                  child: SmartImage(
+                    path: subField.imageUrl!,
+                    height: subField.imageSize ?? 24.w,
+                    width: subField.imageSize ?? 24.w,
+                    fit: BoxFit.contain,
+                    imageBorderRadius: subField.isCircleImage ? BorderRadius.circular(((subField.imageSize ?? 24.w) / 2).r) : null,
+                  ),
+                ),
+              Flexible(
+                child:
+                    subField.isCircleWithValue
+                        ? _buildCircleWithValue(subField, auctionListItemStyle, style)
+                        : _buildTextValue(subField, auctionListItemStyle),
+              ),
+            ],
+          );
+        }),
+      );
+      /*return SmartGridView(
         isLastFullWidthRequired: true,
         items: List.generate(field.subFields!.length, (index) {
           B2BItemField subField = field.subFields![index];
@@ -221,7 +250,7 @@ class B2BColumnDetailItem extends StatelessWidget {
             ],
           );
         }),
-      );
+      );*/
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -271,7 +300,6 @@ class B2BColumnDetailItem extends StatelessWidget {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: auctionListItemStyle.valueStyle,
-      isAutoSizeText: true,
     );
   }
 }
