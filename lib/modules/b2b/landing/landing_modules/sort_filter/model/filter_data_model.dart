@@ -11,6 +11,7 @@ class FilterData {
   SfRangeValues? rangeValues;
   SfRangeValues? minMaxValues;
   DateTimeRange? dateRange;
+  DateTime? date;
 
   FilterData({
     this.name,
@@ -23,6 +24,7 @@ class FilterData {
     this.rangeValues,
     this.minMaxValues,
     this.dateRange,
+    this.date,
   });
 
   @override
@@ -38,7 +40,8 @@ class FilterData {
         other.subFilterCodes == subFilterCodes &&
         other.rangeValues == rangeValues &&
         other.minMaxValues == minMaxValues &&
-        other.dateRange == dateRange;
+        other.dateRange == dateRange &&
+        other.date == date;
   }
 
   @override
@@ -51,7 +54,9 @@ class FilterData {
       filterType.hashCode ^
       subFilterCodes.hashCode ^
       rangeValues.hashCode ^
-      minMaxValues.hashCode;
+      minMaxValues.hashCode ^
+      dateRange.hashCode ^
+      date.hashCode;
 }
 
 extension FilterDataExtension on FilterData {

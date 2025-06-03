@@ -10,7 +10,7 @@ class AuctionListingScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.auctions.tr),
       bottomNavigationBar: _buildBottomNavigationBar(auctionListingBloc, context),
-      floatingActionButton: BlocBuilder<PresentationBloc, PresentationState>(
+      floatingActionButton: BlocBuilder<AuctionListingBloc, AuctionListingState>(
         buildWhen: (previous, current) => current is PresentationLoadedState,
         builder: (context, state) {
           return ScrollToTopFAB(
