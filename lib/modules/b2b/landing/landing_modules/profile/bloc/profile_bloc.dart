@@ -802,7 +802,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icNewsFeed,
         title: APPStrings.newsFeed,
-        subTitle: APPStrings.createAndSeeNewsFeeds,
+
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.newsletterPage);
@@ -811,7 +811,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileListModel(
         image: AppImages.icPreferences,
         title: APPStrings.preferences,
-        subTitle: APPStrings.defaultCountryLanguageAndCurrency,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {
           context.pushNamed(AppRoutes.preferencesPage);

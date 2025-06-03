@@ -106,6 +106,7 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
   ///
   /// @param jsonData A `Map<String, dynamic>` containing the JSON data to be processed.
   Future<void> loadJsonData(Map<String, dynamic> jsonData) async {
+    jsonData = jsonData['data'] as Map<String, dynamic>? ?? {};
     // Extract styles, assets, and pages from the JSON data.
     final styles = jsonData['styles'] as List<dynamic>;
     final assets = jsonData['assets'] as List<dynamic>;

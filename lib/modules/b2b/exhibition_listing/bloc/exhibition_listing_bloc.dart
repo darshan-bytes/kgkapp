@@ -114,6 +114,13 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
             ];
           }
           break;
+        case FilterType.date:
+          if (element.date != null) {
+            filters[ApiKey.dynamicObject]?[element.code ?? ''] = element.date?.dateToStringFormat(
+              outputDateFormat: DateFormatter.dateFormatYYYYMMDD,
+            );
+          }
+          break;
         case FilterType.createdBySearch:
         case FilterType.checkbox:
           List<String?>? selectedCodes = element.secondaryFilterData?.where((e) => e.isSelected).map((e) => e.code).toList();

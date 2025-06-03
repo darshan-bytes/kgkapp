@@ -153,6 +153,9 @@ class AdvanceFilterScreen extends StatelessWidget {
             }
           case FilterType.dateRange:
             return _buildDateRangeSlide(filterBloc, style, context);
+          case FilterType.date:
+            return _buildDatePicker(filterBloc, style, context);
+
           case FilterType.undefined:
           default:
             return NoDataFoundWidget(text: APPStrings.thisTypeIsNotYetAdded.tr);
@@ -218,10 +221,42 @@ class AdvanceFilterScreen extends StatelessWidget {
             suffixIcon: Icon(Icons.calendar_month),
             isEnabled: false,
             contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-            hintText: "${APPStrings.createdOn.tr} - ",
+            hintText: filterBloc.selectedFilterData?.name,
             disabledBorderColor: style.itemBorderColor,
             controller: TextEditingController(text: filterBloc.selectedFilterData?.dateRange?.formatDateRange()),
             onTap: () async {},
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDatePicker(AdvanceSortFilterBloc filterBloc, FilterStyle style, BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () async {
+            await showDatePicker(
+              context: context,
+              initialDate: filterBloc.selectedFilterData?.date,
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2200),
+            ).then((value) {
+              if (value != null) {
+                filterBloc.add(ChangeAdvanceDateEvent(date: value));
+              }
+            });
+          },
+          child: SmartTextField(
+            suffixIcon: Icon(Icons.calendar_month),
+            isEnabled: false,
+            contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+            hintText: filterBloc.selectedFilterData?.name,
+            disabledBorderColor: style.itemBorderColor,
+            controller: TextEditingController(
+              text: filterBloc.selectedFilterData?.date?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
+            ),
+            onTap: () {},
           ),
         ),
       ],

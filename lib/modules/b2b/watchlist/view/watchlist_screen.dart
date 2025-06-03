@@ -143,6 +143,9 @@ class WatchlistScreen extends StatelessWidget {
               controller: bloc.paginationScrollController.controller,
               child: FilterBottomActionBar(
                 onFilterTap: () {
+                  BlocProvider.of<AdvanceSortFilterBloc>(
+                    context,
+                  ).add(AddAdvanceSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
                   Utils.showSmartModalBottomSheet(
                     context: context,
                     builder:
