@@ -32,7 +32,7 @@ class AllReviewScreen extends StatelessWidget {
                   },
                 );
               },
-              separatorBuilder: (_, __) => Divider(height: 32.h),
+              separatorBuilder: (_, _) => Divider(height: 32.h),
             );
           } else if (state is AllReviewLoadingState) {
             return const SmartCircularProgressIndicator();

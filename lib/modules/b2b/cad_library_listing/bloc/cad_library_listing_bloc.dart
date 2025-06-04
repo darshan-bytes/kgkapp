@@ -276,7 +276,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     await _handleApplyFilter(context: event.context, emit: emit, appliedFilterData: event.filterData);
   }
 
-  _handleApplyFilter({
+  Future<void> _handleApplyFilter({
     required BuildContext context,
     required Emitter<CadLibraryListingState> emit,
     required List<FilterData> appliedFilterData,

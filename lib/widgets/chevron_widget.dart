@@ -42,7 +42,7 @@ class ChevronProgress extends StatelessWidget {
     );
   }
 
-  CustomClipper<Path> getClipperPainter(clipper) {
+  CustomClipper<Path> getClipperPainter(Clipper clipper) {
     switch (clipper) {
       case Clipper.start:
         return PointClipper(Edge.end);
@@ -50,8 +50,6 @@ class ChevronProgress extends StatelessWidget {
         return ChevronClipper(Edge.end);
       case Clipper.end:
         return LabelClipper(Edge.start);
-      default:
-        return ChevronClipper(edge);
     }
   }
 }

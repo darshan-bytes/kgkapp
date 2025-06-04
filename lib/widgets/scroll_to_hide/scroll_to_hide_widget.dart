@@ -78,7 +78,7 @@ class ScrollToHideWidget extends StatelessWidget {
     final scrollToHide = controller.scrollToHide(hashCode, visibility, deltaFactor);
     return ValueListenableBuilder<double>(
       valueListenable: scrollToHide.visibilityNotifier,
-      builder: (_, factor, __) {
+      builder: (_, factor, _) {
         return Align(
           heightFactor: factor,
           alignment: const Alignment(0, -1),

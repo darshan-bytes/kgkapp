@@ -417,7 +417,7 @@ class SignUpScreen extends StatelessWidget {
                   },
                 );
               },
-              separatorBuilder: (_, __) {
+              separatorBuilder: (_, _) {
                 return SizedBox(height: 8.h);
               },
             ),

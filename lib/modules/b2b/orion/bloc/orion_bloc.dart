@@ -232,7 +232,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   }
 
   /// Initialize pagination
-  _initializePagination(BuildContext context) {
+  void _initializePagination(BuildContext context) {
     paginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {
@@ -241,7 +241,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     );
   }
 
-  Future<void> fetchUniqueShapes(context, Emitter<OrionState> emit) async {
+  Future<void> fetchUniqueShapes(BuildContext context, Emitter<OrionState> emit) async {
     Either<ErrorResponse, List<OrionShapeModel>>? response = await AppRepository(context).fetchUniqueShapes();
     response?.fold(
       (l) {
@@ -264,7 +264,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     );
   }
 
-  Future<void> fetchOrionList(context, Emitter<OrionState> emit, Map<String, String> body, {bool isLoadMore = true}) async {
+  Future<void> fetchOrionList(BuildContext context, Emitter<OrionState> emit, Map<String, String> body, {bool isLoadMore = true}) async {
     final response = await AppRepository(context).fetchOrionList(isLoadMore, body: body);
 
     return response?.fold((error) => Utils.showMessage(error.message), (PaginationData<OrionDataModel> success) async {
