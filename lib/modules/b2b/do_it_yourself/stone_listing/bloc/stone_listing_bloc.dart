@@ -169,7 +169,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   /// Initialize pagination
-  _initializePagination(BuildContext context) {
+  void _initializePagination(BuildContext context) {
     paginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {

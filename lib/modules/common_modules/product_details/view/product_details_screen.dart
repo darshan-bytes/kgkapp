@@ -508,7 +508,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   primary: false,
                   itemCount: bloc.reviewList.length > 5 ? 5 : bloc.reviewList.length,
                   itemBuilder: (context, index) => ProductCustomerReviewWidget(reviewDataModel: bloc.reviewList[index]),
-                  separatorBuilder: (_, __) => Divider(height: 32.h),
+                  separatorBuilder: (_, _) => Divider(height: 32.h),
                 );
               },
             ),
@@ -757,7 +757,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _showQrCodeDialog({required BuildContext context, required String data}) {
+  Future _showQrCodeDialog({required BuildContext context, required String data}) {
     final QRCodeDialogStyle style = AppTheme.of(context).qrCodeDialogStyle;
     return showDialog(
       context: context,

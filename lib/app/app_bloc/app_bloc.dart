@@ -161,7 +161,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapFavorite(context, {required ProductDetailsModel productDetails, Function()? onFavTap}) {
+  void onTapFavorite(BuildContext context, {required ProductDetailsModel productDetails, Function()? onFavTap}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (productDetails.isFavourite && productDetails.wishlistId.isNotNullNorEmpty) {
@@ -172,14 +172,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapWatchList(context, {required ProductDetailsModel productDetails}) {
+  void onTapWatchList(BuildContext context, {required ProductDetailsModel productDetails}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       add(ProductAddToWatchListEvent(productDetails, context));
     });
   }
 
-  void onTapBag(context, {required ProductDetailsModel productDetails, VoidCallback? onProductAdded}) {
+  void onTapBag(BuildContext context, {required ProductDetailsModel productDetails, VoidCallback? onProductAdded}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       add(ProductAddToBagEvent(productDetails, context, onProductAdded: onProductAdded));

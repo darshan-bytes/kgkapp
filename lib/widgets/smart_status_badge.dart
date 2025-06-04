@@ -142,8 +142,6 @@ class SmartStatusBadge extends StatelessWidget {
         return style.yellowBgColor;
       case ProjectStatus.expired:
         return style.lostBackgroundColor;
-      default:
-        return style.activeBackgroundColor;
     }
   }
 
@@ -197,8 +195,6 @@ class SmartStatusBadge extends StatelessWidget {
         return style.yellowTextColor;
       case ProjectStatus.expired:
         return style.lostTextColor;
-      default:
-        return style.activeTextColor;
     }
   }
 }

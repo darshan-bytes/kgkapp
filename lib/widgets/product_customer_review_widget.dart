@@ -68,7 +68,7 @@ class ProductCustomerReviewWidget extends StatelessWidget {
                       );
                     },
                   ),
-              separatorBuilder: (_, __) => SizedBox(width: 12.w),
+              separatorBuilder: (_, _) => SizedBox(width: 12.w),
             ),
           ),
         ],

@@ -81,7 +81,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     emit(const ContactUsChangeSelectProductState());
   }
 
-  Future<void> fetchContactUsStrapiData(context, Emitter<ContactUsState> emit) async {
+  Future<void> fetchContactUsStrapiData(BuildContext context, Emitter<ContactUsState> emit) async {
     Either<ErrorResponse, List<ContactUs>?> response = await AppRepository(context).fetchStrapiContactUsData();
     response.fold(
       (l) {
@@ -97,7 +97,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     );
   }
 
-  Future<void> fetchInquiryType(context, Emitter<ContactUsState> emit) async {
+  Future<void> fetchInquiryType(BuildContext context, Emitter<ContactUsState> emit) async {
     await AppRepository(context).fetchInquiryType().then((value) {
       value?.fold(
         (l) {
@@ -131,7 +131,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     emit(const ContactUsSubmitState());
   }
 
-  Future<void> submitContactUs(context, Emitter<ContactUsState> emit) async {
+  Future<void> submitContactUs(BuildContext context, Emitter<ContactUsState> emit) async {
     FocusManager.instance.primaryFocus?.unfocus();
     Map<String, dynamic> params = {
       ApiKey.fullName: fullNameController.text,
@@ -155,7 +155,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     });
   }
 
-  bool checkValidation(context, Emitter<ContactUsState> emit) {
+  bool checkValidation(BuildContext context, Emitter<ContactUsState> emit) {
     if (fullNameController.text.isEmpty) {
       Utils.showMessage(APPStrings.errorFullNameRequired.tr);
       return false;

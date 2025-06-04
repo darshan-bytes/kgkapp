@@ -385,9 +385,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'Collection':
         return AppRoutes.collectionPage;
       case 'Jewellery':
-        return AppRoutes.productListGridPage;
       default:
-        return defaultAction();
+        return AppRoutes.productListGridPage;
     }
   }
 
@@ -650,7 +649,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   // This function returns the default action for the route
-  defaultAction() {
+  Null defaultAction() {
     return null;
   }
 }

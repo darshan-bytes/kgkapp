@@ -125,7 +125,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   /// Clear all fields
-  clearAllFields() {
+  void clearAllFields() {
     emailController.clear();
     passwordController.clear();
   }

@@ -65,7 +65,7 @@ class SmartImagePickDialogSheet extends StatelessWidget {
     );
   }
 
-  Widget pickOption(context, {required String icon, required String label, VoidCallback? onTap}) {
+  Widget pickOption(BuildContext context, {required String icon, required String label, VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
