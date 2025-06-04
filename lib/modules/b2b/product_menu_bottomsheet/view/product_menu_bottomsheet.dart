@@ -90,22 +90,6 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildInfoRows(style) {
-    return [
-      _buildProductDetailsItem(APPStrings.totalDiamonds.tr, '9', '', style),
-      SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.totalCarats.tr, '9.00', '', style),
-      SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.averageDiscount.tr, '15%', '', style),
-      SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.round.tr, '3 ct', '\$30,000.00', style),
-      SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.oval.tr, '3 ct', '\$30,000.00', style),
-      SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.marquise.tr, '3 ct', '\$30,000.00', style),
-    ];
-  }
-
   Widget _buildProductDetailsItem(String title, String quantity, String amount, ProductMenuBottomSheetStyle style) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

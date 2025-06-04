@@ -241,7 +241,7 @@ class ContactUsScreen extends StatelessWidget {
               ListView.separated(
                 shrinkWrap: true,
                 itemCount: options.length,
-                separatorBuilder: (_, __) => Divider(height: 1),
+                separatorBuilder: (_, _) => Divider(height: 1),
                 itemBuilder: (context, index) {
                   final option = options[index];
                   return ListTile(

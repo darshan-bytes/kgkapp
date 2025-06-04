@@ -77,7 +77,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   }
 
   /// Initialize pagination
-  _initializePagination(BuildContext context) {
+  void _initializePagination(BuildContext context) {
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(LoadMoreWishlistEvent(context, currentPage));

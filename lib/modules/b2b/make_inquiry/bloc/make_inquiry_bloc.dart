@@ -67,7 +67,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     emit(const ToggleMakeInquiryState());
   }
 
-  getArgumentsData(BuildContext context) {
+  void getArgumentsData(BuildContext context) {
     final routesData = context.routesData;
     B2BCustomListingDataModel? inquiryData = routesData?[RoutesData.inquiryData] as B2BCustomListingDataModel?;
 
@@ -96,13 +96,13 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     }
   }
 
-  setupInitialData() {
+  void setupInitialData() {
     UserIdDetails? userResponse = StorageManager().getUserData();
     fullNameController.text = userResponse?.fullName ?? '';
     emailController.text = userResponse?.email ?? '';
   }
 
-  Future<void> fetchInquiryType(context) async {
+  Future<void> fetchInquiryType(BuildContext context) async {
     await AppRepository(context).fetchInquiryType().then((value) {
       value?.fold(
         (l) {
@@ -176,7 +176,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     });
   }
 
-  clearData() {
+  void clearData() {
     selectedInquiryType = null;
     selectedStatus = null;
     selectedProduct = null;

@@ -12,7 +12,7 @@ class BuildCustomizationList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: bloc.productCustomizations.length,
       itemBuilder: (context, index) => ProductDetailsCustomizations(index: index),
-      separatorBuilder: (_, __) => Divider(height: 48.h),
+      separatorBuilder: (_, _) => Divider(height: 48.h),
     );
   }
 }

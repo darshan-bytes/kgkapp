@@ -273,7 +273,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
   }
 
   /// Clear data
-  clearData() {
+  void clearData() {
     myInquiryList.clear();
     smartPaginationScrollController.pullToRefresh();
     // smartPaginationScrollController.isPageLoaded.complete(false);

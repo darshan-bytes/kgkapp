@@ -286,7 +286,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(SignUpReloadState());
   }
 
-  Future<void> selectFirstBusinessLocation(context, Emitter<SignUpState> emit) async {
+  Future<void> selectFirstBusinessLocation(BuildContext context, Emitter<SignUpState> emit) async {
     //TODO: Remove when business types UI is done
     if (businessTypes.isNotEmpty) {
       businessTypes.firstOrNull?.isSelected = true;

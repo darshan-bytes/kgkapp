@@ -7,7 +7,7 @@ class WatchlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final WatchlistBloc bloc = BlocProvider.of<WatchlistBloc>(context);
     return PopScope(
-      onPopInvokedWithResult: (_, __) {
+      onPopInvokedWithResult: (_, _) {
         bloc.add(const WatchListCloseEvent());
       },
       child: Scaffold(

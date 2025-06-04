@@ -64,18 +64,7 @@ extension DateTimeExt on DateTime {
   String get monthNameFull {
     return DateFormat.MMMM().format(this);
   }
-}
 
-extension DateTimeRangeExt on DateTimeRange {
-  formatDateRange() {
-    final start = this.start;
-    final end = this.end;
-    return '${start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)} to ${end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)}';
-  }
-}
-
-/// Getter to Get Week Number of the Year
-extension ISOWeekOfYear on DateTime {
   String get isoWeekOfYear {
     // Find the first day of the year for the given date
     DateTime firstDayOfYear = DateTime(year, 1, 1);
@@ -111,5 +100,13 @@ extension ISOWeekOfYear on DateTime {
 
     // Return the ISO week number and year
     return '$weekNumber/$year';
+  }
+}
+
+extension DateTimeRangeExt on DateTimeRange {
+  String formatDateRange() {
+    final start = this.start;
+    final end = this.end;
+    return '${start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)} to ${end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)}';
   }
 }
