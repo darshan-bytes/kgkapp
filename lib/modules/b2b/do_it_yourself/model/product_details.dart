@@ -65,6 +65,7 @@ class ProductDetailsModel {
   String? shapeImage;
   List<Component>? components;
   String? location;
+  String? origin;
   int? stockQty;
   double? yourDiscount;
   String? yourRate;
@@ -146,6 +147,7 @@ class ProductDetailsModel {
     this.shapeImage,
     this.components,
     this.location,
+    this.origin,
     this.stockQty,
     this.yourRate,
     this.yourAmount,

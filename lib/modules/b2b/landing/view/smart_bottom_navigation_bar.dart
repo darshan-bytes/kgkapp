@@ -84,7 +84,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
         if (notificationCount > 0) {
           item = Badge(
             padding: EdgeInsetsDirectional.symmetric(horizontal: 6.w),
-            label: SmartText(notificationCount > 9 ? '9+' : notificationCount.toString(), color: style.backgroundColor),
+            label: SmartText(notificationCount.toString(), color: style.backgroundColor),
             child: item,
           );
         }

@@ -736,8 +736,12 @@ class AppRepository extends ApiService {
   }
 
   // For Gemstone Filter Secondary Option
-  Future<Either<ErrorResponse, List<SecondaryFilterModel>>?> getSecondaryFilterData({required String slug, required String codes}) async {
-    var response = await getMethod<SecondaryFilterModel>(ApiClient.secondaryFilterOptions(slug, codes));
+  Future<Either<ErrorResponse, List<SecondaryFilterModel>>?> getSecondaryFilterData({
+    required String slug,
+    required String codes,
+    String? type,
+  }) async {
+    var response = await getMethod<SecondaryFilterModel>(ApiClient.secondaryFilterOptions(slug, codes, type: type));
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

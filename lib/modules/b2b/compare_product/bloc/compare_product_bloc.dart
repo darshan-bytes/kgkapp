@@ -170,6 +170,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     if (!productList[index].isAddedToCart) {
       BlocProvider.of<AppBloc>(context).onTapBag(context, productDetails: productList[index]);
       productList[index].isAddedToCart = true;
+      compareResult[index]['isAddedToCart'] = true;
     } else {
       BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
       context.popUntil((route) => route.settings.name == AppRoutes.landingPage);

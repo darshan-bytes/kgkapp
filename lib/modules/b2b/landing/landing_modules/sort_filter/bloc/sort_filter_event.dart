@@ -61,11 +61,12 @@ final class ApplyFilterDataEvent extends SortFilterEvent {
 final class AddSortFilterDataEvent extends SortFilterEvent {
   final BuildContext context;
   final List<FilterData> filterOptionList;
+  final String? type;
 
-  const AddSortFilterDataEvent({required this.context, required this.filterOptionList});
+  const AddSortFilterDataEvent({required this.context, required this.filterOptionList, this.type});
 
   @override
-  List<Object> get props => [filterOptionList];
+  List<Object> get props => [filterOptionList, context, type ?? ''];
 }
 
 final class SortFilterScreenTypeEvent extends SortFilterEvent {

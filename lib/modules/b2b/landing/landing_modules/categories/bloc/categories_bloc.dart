@@ -649,7 +649,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   // This function returns the default action for the route
-  Null defaultAction() {
+  dynamic defaultAction() {
     return null;
   }
 }
