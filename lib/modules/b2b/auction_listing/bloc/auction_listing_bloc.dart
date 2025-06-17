@@ -30,7 +30,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
     on<InitialAuctionListingEvent>(_onInitialAuctionListingEvent);
     on<AuctionListLoadMoreEvent>(_onAuctionListLoadMoreEvent);
     on<AuctionListPullToRefreshEvent>(_onAuctionListPullToRefreshEvent);
-    on<AuctionListSearchEvent>(_onAuctionListSearchEvent);
+    on<AuctionListSearchEvent>(_onAuctionListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<AuctionListFilterEvent>(_onAuctionListFilterEvent);
   }
 
@@ -58,23 +58,10 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
 
   Future<void> _onAuctionListSearchEvent(AuctionListSearchEvent event, Emitter<AuctionListingState> emit) async {
     emit(AuctionListingReloadState());
-    if (auctionSearchController.text.isNotEmpty) {
-      String query = auctionSearchController.text.toLowerCase();
-      auctionList =
-          originalAuctionList
-              .where(
-                (auction) =>
-                    (auction.name ?? '').toLowerCase().contains(query) ||
-                    (auction.skuNo ?? '').toLowerCase().contains(query) ||
-                    (auction.type ?? '').toLowerCase().contains(query) ||
-                    (auction.bidAmount ?? '').toLowerCase().contains(query) ||
-                    (auction.bidPlacedOn ?? '').toLowerCase().contains(query),
-              )
-              .toList();
-    } else {
-      auctionList = List.from(originalAuctionList);
-    }
-    emit(AuctionListingLoadedState());
+    paginationScrollController.pullToRefresh();
+    originalAuctionList.clear();
+    auctionList.clear();
+    await fetchAuctionListData(event.context, emit, isLoadMore: false);
   }
 
   /// Initialization Logic
@@ -142,6 +129,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
 
     /// Add pagination, search, and sorting parameters
     query.addAll({
+      ApiKey.search: auctionSearchController.text.trim(),
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
@@ -180,7 +168,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   Future<void> _handleLoadMore(BuildContext context, Emitter<AuctionListingState> emit, int currentPage) async {
     if (currentPage <= totalNumberOfPages!) {
       emit(AuctionListLoadingMoreState());
-      await fetchAuctionListData(context, emit, isLoadMore: true);
+      await fetchAuctionListData(context, emit, isLoadMore: false);
       emit(AuctionListLoadedMoreState(currentPage: currentPage));
     }
   }
@@ -213,7 +201,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
         skuNo: data.productSku,
         orderStatus: data.status,
         bidAmount: data.bidAmount?.setCurrency,
-        bidPlacedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA),
+        bidPlacedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         type: data.type,
         productId: data.productId,
       );

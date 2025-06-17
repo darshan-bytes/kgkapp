@@ -20,6 +20,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   );
 
   List<FilterData> filterData = [];
+  String? type;
   bool isLoading = false;
 
   FilterData? selectedFilterData;
@@ -142,6 +143,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   Future<void> _onAddSortFilterDataEvent(AddSortFilterDataEvent event, Emitter<SortFilterState> emit) async {
     emit(SortReloadState());
     filterData = [];
+    type = event.type;
     for (int i = 0; i < event.filterOptionList.length; i++) {
       final item = event.filterOptionList[i];
       FilterData filter = FilterData(
@@ -209,8 +211,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     if (!needToFetchData) return secondaryFilterData;
 
     isLoading = true;
-
-    final response = await AppRepository(context).getSecondaryFilterData(slug: slug, codes: codes);
+    final response = await AppRepository(context).getSecondaryFilterData(slug: slug, codes: codes, type: type);
 
     response?.fold(
       (l) {

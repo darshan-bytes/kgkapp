@@ -94,13 +94,14 @@ class WriteReviewScreen extends StatelessWidget {
                     _showImagePickDialog(context, bloc);
                   },
                   child: DottedBorder(
-                    padding: EdgeInsets.zero,
-                    borderPadding: EdgeInsets.zero,
-                    dashPattern: const [8, 4],
-                    radius: Radius.circular(4.r),
-                    borderType: BorderType.RRect,
-                    strokeWidth: 1.5.w,
-                    color: style.borderColor,
+                    options: RoundedRectDottedBorderOptions(
+                      padding: EdgeInsets.zero,
+                      borderPadding: EdgeInsets.zero,
+                      dashPattern: const [8, 4],
+                      radius: Radius.circular(4.r),
+                      strokeWidth: 1.5.w,
+                      color: style.borderColor,
+                    ),
                     child: SizedBox(height: 96.w, width: 96.w, child: const Center(child: SmartImage(path: AppImages.icPlus))),
                   ),
                 ),

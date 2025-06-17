@@ -425,7 +425,7 @@ class StoneListingScreen extends StatelessWidget {
                               perCts: product.finalPrice?.setCurrency,
                               discount: product.discountPercentageString,
                               amount: product.finalPrice?.setCurrency,
-                              origin: product.location,
+                              origin: product.origin,
                               stock: product.location,
                               commodity: product.commodity?.value,
                               productId: product.productId,
@@ -669,7 +669,13 @@ class StoneListingScreen extends StatelessWidget {
           return FilterBottomActionBar(
             controller: bloc.paginationScrollController.controller,
             onFilterTap: () {
-              BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
+              BlocProvider.of<SortFilterBloc>(context).add(
+                AddSortFilterDataEvent(
+                  filterOptionList: bloc.filterData,
+                  context: context,
+                  type: bloc.isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal,
+                ),
+              );
               Utils.showSmartModalBottomSheet(
                 context: context,
                 builder:

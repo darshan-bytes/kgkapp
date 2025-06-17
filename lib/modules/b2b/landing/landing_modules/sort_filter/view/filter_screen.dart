@@ -232,6 +232,7 @@ class FilterScreen extends StatelessWidget {
                           width: 24.w,
                           fit: BoxFit.contain,
                           color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
+                          isMemCacheEnabled: false,
                         ),
                       ),
                       SizedBox(width: 8.w),

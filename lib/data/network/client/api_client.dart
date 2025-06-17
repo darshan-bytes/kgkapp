@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 /// All api endpoints are defined here
 class ApiClient {
   ApiClient._();
@@ -86,7 +88,13 @@ class ApiClient {
 
   static String filterOptions(String type) => '$apiBaseUrl/filter-options/$type';
 
-  static String secondaryFilterOptions(String slug, String codes) => '$apiBaseUrl/common-modules/$slug?codes=$codes';
+  static String secondaryFilterOptions(String slug, String codes, {String? type}) {
+    String result = '$apiBaseUrl/common-modules/$slug?codes=$codes';
+    if (type.isNotNullNorEmpty) {
+      result += '&type=$type';
+    }
+    return result;
+  }
 
   static const String languageList = '$apiBaseUrl/language/filter';
 
