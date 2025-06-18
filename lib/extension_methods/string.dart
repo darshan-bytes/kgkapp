@@ -16,7 +16,15 @@ extension NullableStringExtensions<E> on String? {
   int? get toInt => int.tryParse(toString());
 
   String? get getFirstTwoOrNull {
-    return isNotNullNorEmpty ? this?.substring(0, 2) : null;
+    if (isNotNullNorEmpty) {
+      if ((this?.length ?? 0) >= 2) {
+        return this?.substring(0, 2);
+      } else {
+        return this;
+      }
+    } else {
+      return null;
+    }
   }
 }
 

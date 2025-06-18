@@ -25,6 +25,7 @@ class ProductDetailsModel {
   double? ctsOrGms;
   String? rappaportPrice;
   String? priceCts;
+  String? price;
   String? discountPrice;
   String? finalPrice;
   String? lotCode;
@@ -81,6 +82,7 @@ class ProductDetailsModel {
   String? contractNoSkuNo;
   List<DiyBagItemProductDetailsModel>? diyBagItemProductDetailsList;
   String? customizationSuid;
+  String? stoneCommodityName;
 
   ProductDetailsModel({
     this.productId,
@@ -163,6 +165,8 @@ class ProductDetailsModel {
     this.contractNoSkuNo,
     this.diyBagItemProductDetailsList,
     this.customizationSuid,
+    this.stoneCommodityName,
+    this.price,
   });
 
   @override

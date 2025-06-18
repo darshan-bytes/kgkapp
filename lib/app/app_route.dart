@@ -811,6 +811,7 @@ enum RoutesData {
   isEdited,
   myReview,
   type,
+  isNeedToReloadListOnBack,
 }
 
 enum ScreenIdentifier {

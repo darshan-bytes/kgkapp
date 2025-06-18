@@ -207,17 +207,26 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       if (!businessTypes[0].isSelected && !businessTypes[1].isSelected) {
         businessTypes[event.index].isSelected = event.isSelected;
         emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+      } else {
+        return;
       }
     } else {
       if (!businessTypes[2].isSelected) {
         businessTypes[event.index].isSelected = event.isSelected;
         emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+      } else {
+        return;
       }
     }
     _timer?.cancel();
     officeLocations = [];
     selectedOfficeLocation = null;
     isOfficeLocationListFetched = false;
+    final businessTypeIds = businessTypes.every((e) => e.isSelected == false);
+    if (businessTypeIds) {
+      emit(SignUpChangeOfficeLocationState(selectedOfficeLocation));
+      return;
+    }
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       await getOfficeLocations(event.context, emit);
       if (isOfficeLocationListFetched) {

@@ -315,9 +315,16 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     }).toList();
   }
 
-  void _navigateToPreview(NavigateToPddPreviewEvent event, Emitter<PddListingState> emit) {
+  Future<void> _navigateToPreview(NavigateToPddPreviewEvent event, Emitter<PddListingState> emit) async {
     final presentationNumber = presentationList[event.index].strPresentationNumber;
-    event.context.pushNamed(AppRoutes.presentationPreviewPage, arguments: {RoutesData.presentationId: presentationNumber});
+    final result = await event.context.pushNamed(
+      AppRoutes.presentationPreviewPage,
+      arguments: {RoutesData.presentationId: presentationNumber},
+    );
+
+    if (result != null && result[RoutesData.isNeedToReloadListOnBack] == true) {
+      add(PddListPullToRefreshEvent(event.context));
+    }
   }
 
   Future<void> _onPddListLoadMoreEvent(PddListLoadMoreEvent event, Emitter<PddListingState> emit) async {

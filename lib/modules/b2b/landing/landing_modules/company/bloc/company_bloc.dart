@@ -16,16 +16,14 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
 
   Future<void> _onInitialCompanyListEvent(InitialCompanyListEvent event, Emitter<CompanyState> emit) async {
     selectData = StorageManager().getSelectedCsc();
-    if (companyList.isEmpty) {
-      await loadCompanyList(event.context, emit);
-      if (selectData == null) {
-        UserResponse? userResponse = StorageManager().getUserResponse();
-        String? defaultCscCode = userResponse?.defaultCscCode;
-        if (defaultCscCode != null) {
-          selectData = companyList.firstWhereOrNull((element) => element.cscCode == defaultCscCode) ?? companyList.firstOrNull;
-          if (selectData != null) {
-            await StorageManager().setSelectedCsc(selectData!);
-          }
+    await loadCompanyList(event.context, emit);
+    if (selectData == null) {
+      UserResponse? userResponse = StorageManager().getUserResponse();
+      String? defaultCscCode = userResponse?.defaultCscCode;
+      if (defaultCscCode != null) {
+        selectData = companyList.firstWhereOrNull((element) => element.cscCode == defaultCscCode) ?? companyList.firstOrNull;
+        if (selectData != null) {
+          await StorageManager().setSelectedCsc(selectData!);
         }
       }
     }

@@ -21,6 +21,10 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
 
   Map<String, String> imageMap = {};
 
+  bool isNeedToReloadListOnBack = false;
+
+  bool canPop = false;
+
   PddPreviewBloc() : super(InitialPddPreviewState()) {
     on<InitialPddPreviewEvent>(_onInitialPddListingEvent);
     on<VersionHistoryChangeEvent>(_onVersionHistoryChangeEvent);
@@ -251,8 +255,14 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
       (r) {
         presentation?.status = ApiKey.approved;
         Utils.showMessage(r.message);
+        isNeedToReloadListOnBack = true;
         emit(PddPreviewLoadedState());
       },
     );
+  }
+
+  void popWithData(BuildContext context) {
+    canPop = true;
+    context.pop(arguments: {RoutesData.isNeedToReloadListOnBack: isNeedToReloadListOnBack});
   }
 }
