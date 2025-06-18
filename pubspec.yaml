@@ -96,13 +96,13 @@ dependencies:
   webview_flutter: ^4.13.0
 
   #For Google Map
-  google_maps_flutter: ^2.12.2
+  google_maps_flutter: ^2.12.3
 
   #For Range Sliders
   syncfusion_flutter_sliders: ^29.2.11
 
   #For Calendar
-  syncfusion_flutter_calendar: ^29.2.11
+  syncfusion_flutter_calendar: ^29.2.11+1
 
   syncfusion_flutter_charts: ^29.2.11
 

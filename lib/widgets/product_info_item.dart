@@ -182,13 +182,15 @@ class ProductInfoItem extends StatelessWidget {
   Widget _buildSlotSecondWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
     return SmartGridView(
       runSpacing: 8.h,
+      isLastFullWidthRequired: true,
       items: [
         if (!isDiamond) ...[
-          _buildRowDetailItem(APPStrings.commodity.tr, chart.commodity, style, productInfoItemStyle),
           _buildRowDetailItem(APPStrings.shape.tr, chart.shape, style, productInfoItemStyle),
           _buildRowDetailItem(APPStrings.lab.tr, chart.lab, style, productInfoItemStyle),
           _buildRowDetailItem(APPStrings.color.tr, chart.colour, style, productInfoItemStyle),
           _buildRowDetailItem(APPStrings.origin.tr, chart.origin, style, productInfoItemStyle),
+          _buildRowDetailItem(APPStrings.carat.tr, chart.carat, style, productInfoItemStyle),
+          _buildRowDetailItem(APPStrings.commodity.tr, chart.commodity, style, productInfoItemStyle),
         ],
         if (isDiamond) ...[
           _buildRowDetailItem(APPStrings.rapRate.tr, chart.rapRate, style, productInfoItemStyle),
@@ -196,7 +198,6 @@ class ProductInfoItem extends StatelessWidget {
           _buildRowDetailItem(APPStrings.amt.tr, chart.amount, style, productInfoItemStyle),
           _buildRowDetailItem(APPStrings.discountPercentage.tr, chart.discount, style, productInfoItemStyle, isDiscount: true),
         ],
-        if (!isDiamond) ...[_buildRowDetailItem(APPStrings.carat.tr, chart.carat, style, productInfoItemStyle)],
       ],
     );
   }
@@ -337,12 +338,6 @@ class ProductInfoItem extends StatelessWidget {
                   keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (p0) {
-                    onYourDiscountChange?.call(yourDiscountController.text);
-                  },
-                  onTapOutside: (p0) {
-                    onYourDiscountChange?.call(yourDiscountController.text);
-                  },
-                  onEditingComplete: () {
                     onYourDiscountChange?.call(yourDiscountController.text);
                   },
                 ),
