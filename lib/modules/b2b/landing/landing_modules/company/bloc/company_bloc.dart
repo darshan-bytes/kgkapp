@@ -5,7 +5,6 @@ part 'company_event.dart';
 part 'company_state.dart';
 
 class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
-  bool _isInitialized = false;
   CscDetails? selectData;
 
   List<CscDetails> companyList = [];
@@ -16,7 +15,6 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
   }
 
   Future<void> _onInitialCompanyListEvent(InitialCompanyListEvent event, Emitter<CompanyState> emit) async {
-    if (_isInitialized) return;
     selectData = StorageManager().getSelectedCsc();
     if (companyList.isEmpty) {
       await loadCompanyList(event.context, emit);
@@ -31,13 +29,12 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
         }
       }
     }
-    emit(CompanyListLoadedState(companyList: companyList, selectedData: selectData));
     if (selectData != null) {
       companyList.remove(selectData);
       companyList.insert(0, selectData!);
     }
     if (companyList.isNotEmpty) {
-      _isInitialized = true;
+      emit(CompanyListLoadedState(companyList: companyList, selectedData: selectData));
     }
   }
 

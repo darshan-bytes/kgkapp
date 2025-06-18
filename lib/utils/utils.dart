@@ -579,6 +579,7 @@ class Utils {
       stoneElements: gemstone.components,
       productQuality: CartProductQuality(name: gemstone.quality),
       location: gemstone.location,
+      origin: gemstone.origin,
     );
   }
 

@@ -12,7 +12,7 @@ class PaginationData<T> {
   PaginationData({this.filteredRecords, this.dataList, this.avgRating, this.totalRecords, this.kgkCollectionList});
 
   PaginationData.fromJson(Map<String, dynamic> json) {
-    filteredRecords = json['filteredRecords']?.toString().toInt;
+    filteredRecords = (json['filteredRecords'] ?? json['filterRecords'])?.toString().toInt;
     totalRecords = json['totalRecords']?.toString().toInt;
     avgRating = json['avgRating']?.toString().toDouble;
     dataList = json.containsKey('data') && json['data'] != null ? getResponseData(json['data']) : null;

@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+94
+version: 1.0.0+95
 
 environment:
   sdk: ^3.7.2
@@ -32,7 +32,7 @@ dependencies:
   http: ^1.4.0
 
   # For Device Info
-  device_info_plus: ^11.4.0
+  device_info_plus: ^11.5.0
 
   # For Connectivity
   connectivity_plus: ^6.1.4
@@ -46,10 +46,10 @@ dependencies:
   equatable: ^2.0.7
 
   # For Snackbar Message
-  toastification: ^3.0.2
+  toastification: ^3.0.3
 
   # For SVG Image File
-  flutter_svg: ^2.1.0
+  flutter_svg: ^2.2.0
 
   # For Cached Network Image
   cached_network_image: ^3.4.1
@@ -66,7 +66,7 @@ dependencies:
     # path: ../country_picker
 
   # For Carousel image Slider
-  carousel_slider: ^5.0.0
+  carousel_slider: ^5.1.1
 
   # For Rating Bar
   flutter_rating_bar: ^4.0.1
@@ -78,7 +78,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
 
   #For Dotted Border
-  dotted_border: ^2.1.0
+  dotted_border: ^3.0.1
 
   #For Image Pick
   image_picker: ^1.1.2
@@ -90,7 +90,7 @@ dependencies:
   intl: ^0.20.2
 
   #For Qr Code Scanner
-  mobile_scanner: ^7.0.0
+  mobile_scanner: ^7.0.1
 
   #For Webview
   webview_flutter: ^4.13.0
@@ -99,12 +99,12 @@ dependencies:
   google_maps_flutter: ^2.12.2
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^29.2.7
+  syncfusion_flutter_sliders: ^29.2.11
 
   #For Calendar
-  syncfusion_flutter_calendar: ^29.2.8
+  syncfusion_flutter_calendar: ^29.2.11
 
-  syncfusion_flutter_charts: ^29.2.8
+  syncfusion_flutter_charts: ^29.2.11
 
   #For QR Code
   qr_flutter: ^4.1.0
@@ -116,7 +116,7 @@ dependencies:
   flutter_bounceable: ^1.2.0
 
   #For Video Player
-  video_player: ^2.9.5
+  video_player: ^2.10.0
 
   html: ^0.15.6
 
@@ -140,8 +140,8 @@ dependencies:
   photo_view: ^0.15.0
   model_viewer_plus: ^1.9.3
 
-  firebase_core: ^3.13.1
-  firebase_crashlytics: ^4.3.6
+  firebase_core: ^3.14.0
+  firebase_crashlytics: ^4.3.7
 
   flutter_langdetect: ^0.0.2
 

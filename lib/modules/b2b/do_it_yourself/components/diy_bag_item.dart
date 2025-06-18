@@ -16,7 +16,6 @@ class DIYBagItem extends StatelessWidget {
   final Function(bool?)? onChangedCheckbox;
   final bool isCheckboxShow;
   final TextStyle? priceTextStyle;
-  final bool isEnableAddToWishList;
   final bool isOutOfStock;
 
   const DIYBagItem({
@@ -35,7 +34,6 @@ class DIYBagItem extends StatelessWidget {
     this.isSelectedProduct = false,
     this.onChangedCheckbox,
     this.isCheckboxShow = false,
-    this.isEnableAddToWishList = true,
     this.priceTextStyle,
     this.isOutOfStock = false,
   });
@@ -84,8 +82,9 @@ class DIYBagItem extends StatelessWidget {
                       },
                     ),
                   ),
-                  Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
-                  if (isEnableAddToWishList)
+                  if (onMoveToWishListTap != null && onRemoveTap != null)
+                    Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
+                  if (onMoveToWishListTap != null)
                     Expanded(
                       child: SmartButton(
                         activeBackgroundColor: style.backgroundColor,

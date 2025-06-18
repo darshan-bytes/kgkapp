@@ -229,11 +229,11 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     BuildContext context,
     Emitter<PddListingState> emit, {
     bool isLoadMore = false,
-    Map<String, dynamic>? query,
+    Map<String, dynamic>? body,
     String searchString = '',
   }) async {
     /// Build the query dynamically
-    query = buildQuery(
+    body = buildQuery(
       filterData: filterData,
       searchString: presentationSearchController.text,
       currentPage: gridPaginationScrollController.currentPage,
@@ -242,7 +242,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
     Either<ErrorResponse, PaginationData<PddDataModel>>? response = await AppRepository(
       context,
-    ).getPresentationFilters(body: query, isLoadMore: isLoadMore);
+    ).getPresentationFilters(body: body, isLoadMore: isLoadMore);
 
     response?.fold(
       (error) {

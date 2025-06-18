@@ -75,7 +75,7 @@ class PresentationGridItem extends StatelessWidget {
   Widget _buildImage() {
     return SmartImage(
       path: b2bCustomListingDataModel.strPresentationImageUrl ?? '',
-      height: imageHeight ?? 224.h,
+      height: imageHeight,
       width: double.infinity,
       fit: BoxFit.contain,
     );
