@@ -295,7 +295,13 @@ class SmartTextFieldState extends State<SmartTextField> {
                   widget.onFieldSubmitted!(value);
                 }
               },
-              onEditingComplete: widget.onEditingComplete,
+              onEditingComplete: () {
+                if (widget.onEditingComplete != null) {
+                  widget.onEditingComplete!();
+                } else {
+                  FocusScope.of(context).unfocus();
+                }
+              },
             ),
           ),
           AnimatedSize(

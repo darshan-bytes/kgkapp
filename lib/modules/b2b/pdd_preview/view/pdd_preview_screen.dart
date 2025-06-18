@@ -6,25 +6,35 @@ class PddPreviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PddPreviewBloc bloc = BlocProvider.of<PddPreviewBloc>(context);
-    return Scaffold(
-      backgroundColor: AppTheme.of(context).colors.colorF7F9FA,
-      appBar: _buildAppBar(bloc, context),
-      body: SafeArea(
-        child: Column(
-          children: [
-            BlocBuilder<PddPreviewBloc, PddPreviewState>(
-              buildWhen: (previous, current) => current is PddPreviewLoadedState,
-              builder: (context, state) {
-                if (state is PddPreviewLoadedState) {
-                  return Padding(padding: EdgeInsetsDirectional.all(16.0.w), child: _previewOptions(bloc, context));
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
-            const Divider(),
-            _buildWebView(bloc),
-          ],
+    final style = AppTheme.of(context).pddVersionHistoryStyle;
+    return PopScope(
+      canPop: bloc.canPop,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        bloc.popWithData(context);
+      },
+      child: Scaffold(
+        backgroundColor: style.backgroundColor,
+        appBar: _buildAppBar(bloc, context),
+        body: SafeArea(
+          child: Column(
+            children: [
+              BlocBuilder<PddPreviewBloc, PddPreviewState>(
+                buildWhen: (previous, current) => current is PddPreviewLoadedState,
+                builder: (context, state) {
+                  if (state is PddPreviewLoadedState) {
+                    return Padding(padding: EdgeInsetsDirectional.all(16.0.w), child: _previewOptions(bloc, context));
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+              const Divider(),
+              _buildWebView(bloc),
+            ],
+          ),
         ),
       ),
     );
@@ -38,7 +48,12 @@ class PddPreviewScreen extends StatelessWidget {
           return current is PddPreviewLoadedState;
         },
         builder: (context, state) {
-          return SmartAppBar(title: bloc.presentationId);
+          return SmartAppBar(
+            title: bloc.presentationId,
+            onBack: () {
+              bloc.popWithData(context);
+            },
+          );
         },
       ),
     );

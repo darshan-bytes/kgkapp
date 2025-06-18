@@ -179,6 +179,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
                   originalPrice: item.finalPrice?.toString().setCurrency,
                   finalPrice: item.yourAmount?.toString().setCurrency,
                   video: item.video,
+                  origin: item.origin,
 
                   /// Below code is commented as backend API is changing the keys
                   // finalPrice: item.finalPrice?.setCurrency,

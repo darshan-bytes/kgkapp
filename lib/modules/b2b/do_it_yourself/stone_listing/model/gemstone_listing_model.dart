@@ -325,7 +325,7 @@ class GemstoneDatum {
   String? pavilionDepth;
   int? pcs;
   dynamic polish;
-  int? price;
+  String? price;
   String? quality;
   String? rmDescription;
   dynamic rappaportDate;
@@ -506,7 +506,7 @@ class GemstoneDatum {
       pavilionDepth: json["pavilion_depth"].toString(),
       pcs: json["pcs"],
       polish: json["polish"],
-      price: json["price"],
+      price: json["price"]?.toString(),
       quality: json["quality"],
       rmDescription: json["rm_description"],
       rappaportDate: json["rappaport_date"],

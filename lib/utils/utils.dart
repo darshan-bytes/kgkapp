@@ -580,6 +580,8 @@ class Utils {
       productQuality: CartProductQuality(name: gemstone.quality),
       location: gemstone.location,
       origin: gemstone.origin,
+      stoneCommodityName: gemstone.commodityName,
+      price: gemstone.price,
     );
   }
 

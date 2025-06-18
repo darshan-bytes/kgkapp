@@ -237,7 +237,8 @@ class MyBagScreen extends StatelessWidget {
                       },
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
-                          origin: product.location,
+                          /// Below code is commented as of now to keep it in the backup as here made the major change to make it same as the listing screen.
+                          /*origin: product.location,
                           stock: product.location,
                           commodity: product.commodity?.value,
                           productId: product.productId,
@@ -264,7 +265,31 @@ class MyBagScreen extends StatelessWidget {
                           amount: product.totalPrice?.setCurrency,
                           your: product.yourDiscount?.toString(),
                           yourRate: product.yourRate?.setCurrency,
-                          yourValue: product.yourAmount?.setCurrency,
+                          yourValue: product.yourAmount?.setCurrency,*/
+                          lotNumber: product.lotCode,
+                          rapRate: product.rappaportPrice?.setCurrency,
+                          perCts: product.finalPrice?.setCurrency,
+                          discount: product.discountPercentageString,
+                          amount: product.finalPrice?.setCurrency,
+                          origin: product.origin,
+                          stock: product.location,
+                          commodity: product.stoneCommodityName,
+                          productId: product.productId,
+                          productName: product.name,
+                          shape: product.shape,
+                          lab: product.labs,
+                          rap: product.lsp?.setCurrency,
+                          fluorescence: product.fluorescence,
+                          carat: product.ctsOrGms?.toString(),
+                          ct: product.cut,
+                          colour: product.color,
+                          clarity: product.clarity,
+                          certificateNumber: product.certificateNumber,
+                          measurements: product.measurements,
+                          cut: product.cut,
+                          polish: product.polish,
+                          tablePercentage: product.table,
+                          depthPercentage: product.depth,
                         ),
                         productId: product.productId,
                         imageUrl: product.imageUrl,
@@ -329,6 +354,12 @@ class MyBagScreen extends StatelessWidget {
                       isSelectedBackground: false,
                       onTap: () {
                         _onProductTap(context, product, bloc);
+                      },
+                      onYourDiscountChange: (value) {
+                        FocusScope.of(context).unfocus();
+                        if (value != null) {
+                          bloc.add(MyBagYourDiscountChangedEvent(context: context, index: index, yourDiscount: value));
+                        }
                       },
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
