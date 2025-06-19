@@ -71,6 +71,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   /// Stream subscription for wishlist updates
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
 
+  GlobalKey staggeredGridKey = GlobalKey();
+
   /// Constructor: Sets up event handlers
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);

@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-class ProductGridItem extends StatelessWidget {
+class ProductGridItem extends StatefulWidget {
   final ProductDetailsModel productDetails;
   final double? boxHeight;
   final double? boxWidth;
@@ -70,15 +70,24 @@ class ProductGridItem extends StatelessWidget {
   Key get key => ValueKey(productDetails.suid ?? productDetails.productId);
 
   @override
+  State<ProductGridItem> createState() => _ProductGridItemState();
+}
+
+class _ProductGridItemState extends State<ProductGridItem> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final ProductItemStyle style = AppTheme.of(context).productItemStyle;
     final double productItemWidth = (context.width - 46.w) / 2;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
-        padding: padding,
-        margin: margin,
+        padding: widget.padding,
+        margin: widget.margin,
         width: productItemWidth,
         decoration: BoxDecoration(color: style.backgroundColor, border: Border.all(color: style.borderColor)),
         child: Column(
@@ -94,24 +103,24 @@ class ProductGridItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: boxHeight ?? 172.h,
+          height: widget.boxHeight ?? 172.h,
           width: width,
           alignment: AlignmentDirectional.center,
           color: style.productBackgroundColor,
           child: SmartImage(
-            path: productDetails.imageUrl ?? '',
-            height: imageHeight ?? 172.h,
-            width: imageWidth,
-            fit: fit,
-            isMemCacheEnabled: true,
+            path: widget.productDetails.imageUrl ?? '',
+            height: widget.imageHeight ?? 172.h,
+            width: widget.imageWidth,
+            fit: widget.fit,
+            isMemCacheEnabled: false,
           ),
         ),
-        if (productDetails.isForAuction)
+        if (widget.productDetails.isForAuction)
           PositionedDirectional(
             start: -4.w,
             child: SmartImage(path: AppImages.icAuctionLabel(AppLocalizations.of(context)?.locale?.languageCode ?? 'en'), fit: BoxFit.fill),
           ),
-        if (isOutOfStock)
+        if (widget.isOutOfStock)
           PositionedDirectional(
             top: 8.h,
             start: 8.w,
@@ -127,23 +136,25 @@ class ProductGridItem extends StatelessWidget {
           end: 8.w,
           child: Row(
             children: [
-              if (onEyeTap != null)
+              if (widget.onEyeTap != null)
                 buildIcon(
                   path: AppImages.icAddEye,
                   onTap: () {
-                    BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
+                    BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: widget.productDetails);
                   },
                   style: style,
                 ),
               SizedBox(width: 8.w),
-              if (onFavTap != null)
+              if (widget.onFavTap != null)
                 BlocBuilder<AppBloc, AppState>(
                   buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
                   builder: (context, state) {
                     return buildIcon(
-                      path: productDetails.isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
+                      path: widget.productDetails.isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
                       onTap: () {
-                        BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails, onFavTap: onFavTap);
+                        BlocProvider.of<AppBloc>(
+                          context,
+                        ).onTapFavorite(context, productDetails: widget.productDetails, onFavTap: widget.onFavTap);
                       },
                       style: style,
                     );
@@ -157,17 +168,17 @@ class ProductGridItem extends StatelessWidget {
   }
 
   Widget _buildTopPositionView(ProductItemStyle style) {
-    if (onCommentTap != null) {
+    if (widget.onCommentTap != null) {
       return buildIcon(
         path: AppImages.icMessages,
-        onTap: onCommentTap,
+        onTap: widget.onCommentTap,
         style: style,
-        backgroundColor: isCommentSelected ? style.myBagDividerColor : null,
-        iconColor: isCommentSelected ? style.commentSelectedColor : null,
+        backgroundColor: widget.isCommentSelected ? style.myBagDividerColor : null,
+        iconColor: widget.isCommentSelected ? style.commentSelectedColor : null,
       );
-    } else if (onCancelTap != null) {
-      return buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent);
-    } else if (isCustomisable) {
+    } else if (widget.onCancelTap != null) {
+      return buildIcon(path: AppImages.icCancel, onTap: widget.onCancelTap, style: style, backgroundColor: Colors.transparent);
+    } else if (widget.isCustomisable) {
       return buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor);
     } else {
       return const SizedBox.shrink();
@@ -188,7 +199,7 @@ class ProductGridItem extends StatelessWidget {
       child: Badge(
         label: SmartText('2', style: style.badgeTextStyle),
         backgroundColor: style.primaryColor,
-        isLabelVisible: isBadgeVisible,
+        isLabelVisible: widget.isBadgeVisible,
         child: Container(
           decoration: BoxDecoration(
             color: backgroundColor ?? style.backgroundColor,
@@ -215,13 +226,13 @@ class ProductGridItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SmartText(
-              productDetails.title ?? productDetails.productSku ?? productDetails.contractNoSkuNo,
+              widget.productDetails.title ?? widget.productDetails.productSku ?? widget.productDetails.contractNoSkuNo,
               style: style.diamondTextStyle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             SmartText(
-              "${productDetails.subTitle ?? productDetails.name ?? ''}\n\n",
+              "${widget.productDetails.subTitle ?? widget.productDetails.name ?? ''}\n\n",
               style: style.productNameStyle,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -244,7 +255,7 @@ class ProductGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),*/
             SizedBox(height: 8.h),
-            if (!isHidePriceView)
+            if (!widget.isHidePriceView)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,30 +265,33 @@ class ProductGridItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SmartText(
-                          productDetails.finalPrice.isNotNullNorEmpty ? "${productDetails.finalPrice}\n" : productDetails.originalPrice,
+                          widget.productDetails.finalPrice.isNotNullNorEmpty
+                              ? "${widget.productDetails.finalPrice}\n"
+                              : widget.productDetails.originalPrice,
                           style: style.priceTextStyle,
                           optionalPadding: EdgeInsetsDirectional.only(end: 8.w),
                           maxLines: 1,
                         ),
-                        if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
+                        if (widget.productDetails.finalPrice.isNotNullNorEmpty && widget.productDetails.isShowDiscountPrice) ...[
                           SmartText(
-                            productDetails.originalPrice,
+                            widget.productDetails.originalPrice ?? ' ',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: style.checkedPriceStyle,
                           ),
                         ] else ...[
-                          if (!isKGKCouture) SmartText(""),
+                          if (!widget.isKGKCouture)
+                            SmartText(" \n", maxLines: 1, overflow: TextOverflow.ellipsis, style: style.checkedPriceStyle),
                         ],
                       ],
                     ),
                   ),
-                  if ((isStoneWithPrice && productDetails.ctsOrGms != null))
+                  if ((widget.isStoneWithPrice && widget.productDetails.ctsOrGms != null))
                     SmartImage(
                       path:
-                          productDetails.ctsOrGms! > 0.1
+                          widget.productDetails.ctsOrGms! > 0.1
                               ? AppImages.icOneRing
-                              : productDetails.ctsOrGms! > 0.2
+                              : widget.productDetails.ctsOrGms! > 0.2
                               ? AppImages.icTwoRing
                               : AppImages.icThreeRing,
                       height: 20.w,
@@ -296,32 +310,32 @@ class ProductGridItem extends StatelessWidget {
             //     style: style.discountTextStyle,
             //   ),
             // ],
-            if (!isHomeView && (isCrtAndGramVisible || isFromWatchlist)) diamondAndGramSection(style),
-            if (isForAuction) SizedBox(height: 40.w),
-            if (onAddToBagTap != null)
+            if (!widget.isHomeView && (widget.isCrtAndGramVisible || widget.isFromWatchlist)) diamondAndGramSection(style),
+            if (widget.isForAuction) SizedBox(height: 40.w),
+            if (widget.onAddToBagTap != null)
               SmartButton(
                 height: 32.w,
                 margin: EdgeInsetsDirectional.only(top: 8.h),
                 padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: () {
-                  if (buttonText.isNullOrEmpty) {
-                    if (productDetails.isAddedToCart) {
+                  if (widget.buttonText.isNullOrEmpty) {
+                    if (widget.productDetails.isAddedToCart) {
                       BlocProvider.of<LandingBloc>(
                         context,
                       ).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context, isForce: true));
                       context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
                     } else {
-                      BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                      BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(widget.productDetails, context));
                     }
                   } else {
-                    onAddToBagTap?.call();
+                    widget.onAddToBagTap?.call();
                   }
                 },
-                title: buttonText ?? (productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr),
-                prefixImage: prefixImage,
+                title: widget.buttonText ?? (widget.productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr),
+                prefixImage: widget.prefixImage,
                 isShadow: false,
-                imageSize: imageSize ?? 16.w,
+                imageSize: widget.imageSize ?? 16.w,
               ),
           ],
         ),
@@ -330,7 +344,7 @@ class ProductGridItem extends StatelessWidget {
   }
 
   Widget diamondAndGramSection(ProductItemStyle style) {
-    if (productDetails.cts.isNullOrEmpty && productDetails.gms.isNullOrEmpty) {
+    if (widget.productDetails.cts.isNullOrEmpty && widget.productDetails.gms.isNullOrEmpty) {
       return SizedBox(height: 24.h);
     }
     return Padding(
@@ -341,7 +355,7 @@ class ProductGridItem extends StatelessWidget {
           Flexible(
             child: Row(
               children: [
-                if (productDetails.cts.isNotNullNorEmpty) ...[
+                if (widget.productDetails.cts.isNotNullNorEmpty) ...[
                   Flexible(
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -349,14 +363,19 @@ class ProductGridItem extends StatelessWidget {
                         SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
                         SizedBox(width: 4.w),
                         Flexible(
-                          child: SmartText(productDetails.cts, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                          child: SmartText(
+                            widget.productDetails.cts,
+                            style: style.diamondTextStyle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(width: 8.w),
                 ],
-                if (productDetails.gms.isNotNullNorEmpty)
+                if (widget.productDetails.gms.isNotNullNorEmpty)
                   Flexible(
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -364,7 +383,12 @@ class ProductGridItem extends StatelessWidget {
                         SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
                         SizedBox(width: 4.w),
                         Flexible(
-                          child: SmartText(productDetails.gms, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                          child: SmartText(
+                            widget.productDetails.gms,
+                            style: style.diamondTextStyle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
