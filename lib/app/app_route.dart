@@ -151,7 +151,7 @@ class AppRoutes {
         builder = (context) {
           return BlocProvider<ProductListBloc>(
             create: (context) => ProductListBloc()..add(InitialProductListEvent(context)),
-            child: const ProductListScreen(),
+            child: ProductListScreen(),
           );
         };
         break;

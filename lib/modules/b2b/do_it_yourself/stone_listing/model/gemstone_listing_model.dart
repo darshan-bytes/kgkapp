@@ -1,18 +1,16 @@
 import 'package:kgk/kgk.dart';
 
 class GemstoneListingModel {
-  GemstoneListingModel({required this.data, required this.filteredRecords, required this.pagination, required this.totalRecords});
+  GemstoneListingModel({required this.data, required this.filteredRecords, required this.totalRecords});
 
   List<GemstoneDatum> data;
   int? filteredRecords;
-  Pagination? pagination;
   int? totalRecords;
 
   factory GemstoneListingModel.fromJson(Map<String, dynamic> json) {
     return GemstoneListingModel(
       data: json["data"] == null ? [] : List<GemstoneDatum>.from(json["data"]!.map((x) => GemstoneDatum.fromJson(x))),
       filteredRecords: json["filteredRecords"],
-      pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]),
       totalRecords: json["totalRecords"],
     );
   }
@@ -20,13 +18,12 @@ class GemstoneListingModel {
   Map<String, dynamic> toJson() => {
     "data": data.map((x) => x.toJson()).toList(),
     "filteredRecords": filteredRecords,
-    "pagination": pagination?.toJson(),
     "totalRecords": totalRecords,
   };
 
   @override
   String toString() {
-    return "$data, $filteredRecords, $pagination, $totalRecords, ";
+    return "$data, $filteredRecords, $totalRecords, ";
   }
 }
 

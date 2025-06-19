@@ -1,7 +1,9 @@
 import 'package:kgk/kgk.dart';
 
 class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({super.key});
+  ProductListScreen({super.key});
+
+  final List<ProductGridItem> productGridItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +188,9 @@ class ProductListScreen extends StatelessWidget {
               current is ProductAddToFavoriteState ||
               current is ProductRemoveFromFavoriteState,
       builder: (context, state) {
+        if (bloc.paginationScrollController.currentPage == 1) {
+          productGridItems.clear();
+        }
         return bloc.isGrid ? _buildGridView(bloc, state, context: context) : _buildListView(bloc, state);
       },
     );
@@ -194,7 +199,60 @@ class ProductListScreen extends StatelessWidget {
   Widget _buildGridView(ProductListBloc bloc, ProductListState state, {required BuildContext context}) {
     return Column(
       children: [
-        SmartGridView(
+        MasonryGridView.count(
+          key: bloc.staggeredGridKey,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          primary: false,
+          crossAxisCount: 2,
+          crossAxisSpacing: 12.w,
+          mainAxisSpacing: 12.h,
+          itemCount: bloc.productList.length,
+          itemBuilder: (context, index) {
+            // Check if the index is in productGridItems, then directly return the item else create a new item add it to the list and return it
+            if (productGridItems.isEmpty || productGridItems.length < index + 1) {
+              final productDetails = bloc.productList[index];
+              productGridItems.add(
+                ProductGridItem(
+                  key: ValueKey(productDetails.suid),
+                  productDetails: productDetails,
+                  isCustomisable: _isCustomisable(bloc, productDetails),
+                  isOutOfStock: productDetails.isOutOfStock,
+                  onAddToBagTap: _getAddToBagTap(bloc),
+                  onEyeTap: () => {},
+                  isFavourite: productDetails.isFavourite,
+                  onFavTap: () {
+                    /// We have implemented this feature in the ProductGridItem
+                    /// so that we can use the same widget for both grid and list view and here we don't need to implement it
+                  },
+                  prefixImage: AppImages.icShoppingBag,
+                  imageSize: 16.w,
+                  onTap: () => _onProductTap(context, bloc, productDetails),
+                ),
+              );
+            }
+            return productGridItems[index];
+            // final productDetails = bloc.productList[index];
+            //
+            // return ProductGridItem(
+            //   key: ValueKey(productDetails.suid),
+            //   productDetails: productDetails,
+            //   isCustomisable: _isCustomisable(bloc, productDetails),
+            //   isOutOfStock: productDetails.isOutOfStock,
+            //   onAddToBagTap: _getAddToBagTap(bloc),
+            //   onEyeTap: () => {},
+            //   isFavourite: productDetails.isFavourite,
+            //   onFavTap: () {
+            //     /// We have implemented this feature in the ProductGridItem
+            //     /// so that we can use the same widget for both grid and list view and here we don't need to implement it
+            //   },
+            //   prefixImage: AppImages.icShoppingBag,
+            //   imageSize: 16.w,
+            //   onTap: () => _onProductTap(context, bloc, productDetails),
+            // );
+          },
+        ),
+        /*SmartGridView(
           items:
               bloc.productList.map((productDetails) {
                 return ProductGridItem(
@@ -214,7 +272,7 @@ class ProductListScreen extends StatelessWidget {
                   onTap: () => _onProductTap(context, bloc, productDetails),
                 );
               }).toList(),
-        ),
+        ),*/
         if (state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
         SizedBox(height: 17.h),
       ],
