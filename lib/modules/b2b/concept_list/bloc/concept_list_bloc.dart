@@ -191,7 +191,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     emit(ConceptListLoadingState());
     paginationScrollController.pullToRefresh();
     conceptList.clear();
-    await apiCallForConceptList(context, emit, isLoadMore: false);
+    await apiCallForConceptList(context, emit, isLoadMore: true);
     emit(ConceptListLoadedState());
   }
 
@@ -283,5 +283,16 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
       tempSecondaryData = filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
     }
     return tempSecondaryData;
+  }
+
+  Future<void> handleViewAllPresentationTap(BuildContext context, int index) async {
+    final result = await context.pushNamed(
+      AppRoutes.presentationPage,
+      arguments: {RoutesData.presentationList: conceptList[index].presentationList},
+    );
+
+    if (result != null && result[RoutesData.isNeedToReloadListOnBack] == true && context.mounted) {
+      add(ConceptListPullToRefreshEvent(context: context));
+    }
   }
 }

@@ -872,5 +872,6 @@
   "mob_cancelled": "Cancelled",
   "mob_select_gemstone": "Select Gemstone",
   "mob_select_stone_desc": "Select Stone type Diamond or Gemstone.",
-  "mob_quantity_exceeds_stock": "Insufficient stock for the product"
+  "mob_quantity_exceeds_stock": "Insufficient stock for the product",
+  "mob_service_not_available": "Service not available"
 }

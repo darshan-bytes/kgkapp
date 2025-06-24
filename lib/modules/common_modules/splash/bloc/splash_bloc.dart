@@ -13,6 +13,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   Future<void> navigateToGetReadyScreen(LoadSplashEvent event, Emitter<SplashState> emit) async {
     // Trigger a language change event
+    ApiService.isServiceEnabled = true;
     BlocProvider.of<AppBloc>(event.context).add(LanguageChangedEvent(null, context: event.context));
 
     // Initialize and play the splash screen video

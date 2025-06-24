@@ -7,48 +7,62 @@ class PresentationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final PresentationBloc bloc = BlocProvider.of<PresentationBloc>(context);
 
-    return Scaffold(
-      appBar: SmartAppBar(title: APPStrings.presentations.tr.toUpperCamelCase),
-      bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
-      floatingActionButton: BlocBuilder<PresentationBloc, PresentationState>(
-        buildWhen: (previous, current) => current is PresentationLoadedState || current is PaginationControllerLoadedState,
-        builder: (context, state) {
-          if (!bloc.paginationScrollController.isInitialised) {
-            return SizedBox.shrink();
-          }
-          return ScrollToTopFAB(
-            canScrollToTop: bloc.paginationScrollController.canScrollToTop,
-            onTap: bloc.paginationScrollController.scrollToTop,
-          );
-        },
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
-          child: BlocBuilder<PresentationBloc, PresentationState>(
-            buildWhen: (previous, current) => current is PresentationLoadedState,
-            builder: (context, state) {
-              if (state is PresentationLoadedState) {
-                return _buildPresentationList(bloc);
+    return PopScope(
+      canPop: bloc.canPop,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        bloc.popWithData(context);
+      },
+      child: Scaffold(
+        appBar: SmartAppBar(
+          title: APPStrings.presentations.tr.toUpperCamelCase,
+          onBack: () {
+            bloc.popWithData(context);
+          },
+        ),
+        bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
+        floatingActionButton: BlocBuilder<PresentationBloc, PresentationState>(
+          buildWhen: (previous, current) => current is PresentationLoadedState || current is PaginationControllerLoadedState,
+          builder: (context, state) {
+            if (!bloc.paginationScrollController.isInitialised) {
+              return SizedBox.shrink();
+            }
+            return ScrollToTopFAB(
+              canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+              onTap: bloc.paginationScrollController.scrollToTop,
+            );
+          },
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
+            child: BlocBuilder<PresentationBloc, PresentationState>(
+              buildWhen: (previous, current) => current is PresentationLoadedState,
+              builder: (context, state) {
+                if (state is PresentationLoadedState) {
+                  return _buildPresentationList(bloc);
 
-                /// Below code is commented as of now as for now it is removed from the features
-                // return Column(
-                //   crossAxisAlignment: CrossAxisAlignment.stretch,
-                //   children: [
-                // SizedBox(height: 24.h),
-                // SmartTextField(
-                //   hintText: APPStrings.searchPresentation.tr,
-                //   controller: bloc.presentationSearchController,
-                //   suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
-                //   onTapOutside: (val) {},
-                //   textInputAction: TextInputAction.search,
-                // ),
-                // ],
-                // );
-              } else {
-                return const SmartCircularProgressIndicator();
-              }
-            },
+                  /// Below code is commented as of now as for now it is removed from the features
+                  // return Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //   children: [
+                  // SizedBox(height: 24.h),
+                  // SmartTextField(
+                  //   hintText: APPStrings.searchPresentation.tr,
+                  //   controller: bloc.presentationSearchController,
+                  //   suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+                  //   onTapOutside: (val) {},
+                  //   textInputAction: TextInputAction.search,
+                  // ),
+                  // ],
+                  // );
+                } else {
+                  return const SmartCircularProgressIndicator();
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -73,19 +87,18 @@ class PresentationScreen extends StatelessWidget {
           type: B2BListingType.presentationType,
           listingItemModel: presentationItem,
           onTapMenuButton:
-              bloc.userType == UserType.internal
+              (presentationItem.status != ProjectStatus.approved && bloc.userType == UserType.internal)
                   ? () {
-                    handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
+                    handleMenuButtonTap(context, bloc, index);
                   }
                   : null,
-          onTap: () {},
         );
       },
       separatorBuilder: (_, _) => SizedBox(height: 16.h),
     );
   }
 
-  void handleMenuButtonTap(BuildContext mainContext, PresentationBloc bloc, strPresentationNumber) {
+  void handleMenuButtonTap(BuildContext mainContext, PresentationBloc bloc, int index) {
     Utils.showSmartModalBottomSheet(
       context: mainContext,
       shape: RoundedRectangleBorder(
@@ -96,7 +109,7 @@ class PresentationScreen extends StatelessWidget {
             title: APPStrings.presentationDialogTitle.tr,
             message: APPStrings.presentationDialogMsg.tr,
             onApproved: () {
-              bloc.add(PresentationReviewStateEvent(context: mainContext, isApproved: true, presentationNumber: strPresentationNumber));
+              bloc.add(PresentationReviewStateEvent(context: mainContext, isApproved: true, index: index));
             },
             onApprovedText: APPStrings.approve.tr,
             onDeniedText: APPStrings.reject.tr,
