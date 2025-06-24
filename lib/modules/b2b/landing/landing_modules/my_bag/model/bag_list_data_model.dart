@@ -133,6 +133,7 @@ class MyBagResult {
     required this.jewelleryData,
     required this.customizationId,
     required this.origin,
+    required this.commodityName,
   });
 
   final String? suid;
@@ -182,6 +183,7 @@ class MyBagResult {
   final MyBagResult? jewelleryData;
   final String? customizationId;
   final String? origin;
+  final String? commodityName;
 
   factory MyBagResult.fromJson(Map<String, dynamic> json) {
     return MyBagResult(
@@ -232,6 +234,7 @@ class MyBagResult {
       jewelleryData: json["jewellery"] != null ? MyBagResult.fromJson(json["jewellery"]) : null,
       customizationId: json["customization_id"],
       origin: json["origin"],
+      commodityName: json["commodity_name"],
     );
   }
 
@@ -283,6 +286,7 @@ class MyBagResult {
     "jewellery": jewelleryData?.toJson(),
     "customization_id": customizationId,
     "origin": origin,
+    "commodity_name": commodityName,
   };
 
   @override

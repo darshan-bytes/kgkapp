@@ -143,4 +143,6 @@ class ApiKey {
   static const String contextId = 'context_id';
   static const String removeFiles = 'remove_files';
   static const String customizationData = 'customization_data';
+  static const String sortField = 'sortField';
+  static const String direction = 'direction';
 }
