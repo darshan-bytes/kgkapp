@@ -23,21 +23,3 @@ final class PaginationControllerLoadedState extends PresentationState {
   @override
   List<Object> get props => [];
 }
-
-/// This method is used to pull to refresh but for now it is removed from the features
-// final class PresentationListLoadingMoreState extends PresentationState {
-//   const PresentationListLoadingMoreState();
-//
-//   @override
-//   List<Object> get props => [];
-// }
-
-/// This method is used to pull to refresh but for now it is removed from the features
-// final class PresentationListLoadedMoreState extends PresentationState {
-//   final int currentPage;
-//
-//   const PresentationListLoadedMoreState(this.currentPage);
-//
-//   @override
-//   List<Object> get props => [currentPage];
-// }

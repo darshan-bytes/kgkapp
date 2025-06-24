@@ -38,6 +38,7 @@ class ConceptListScreen extends StatelessWidget {
                           }
                           return RefreshIndicator.adaptive(
                             child: ListView.separated(
+                              key: conceptListBloc.paginationScrollController.listKey,
                               physics: const ClampingScrollPhysics(),
                               padding: EdgeInsetsDirectional.only(bottom: 60.h),
                               controller: conceptListBloc.paginationScrollController.scrollController,
@@ -65,13 +66,8 @@ class ConceptListScreen extends StatelessWidget {
                                           // },
                                           onTapCircleWithText:
                                               conceptListBloc.conceptList[index].presentationList.isNotNullNorEmpty
-                                                  ? () {
-                                                    context.pushNamed(
-                                                      AppRoutes.presentationPage,
-                                                      arguments: {
-                                                        RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList,
-                                                      },
-                                                    );
+                                                  ? () async {
+                                                    await conceptListBloc.handleViewAllPresentationTap(context, index);
                                                   }
                                                   : null,
                                           type: B2BListingType.conceptListingType,
@@ -156,11 +152,8 @@ class ConceptListScreen extends StatelessWidget {
                 context,
                 text: APPStrings.viewAllPresentation.tr,
                 style: orderPopupStyle.optionTextStyle,
-                onTap: () {
-                  context.popAndPushNamed(
-                    AppRoutes.presentationPage,
-                    arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList},
-                  );
+                onTap: () async {
+                  await conceptListBloc.handleViewAllPresentationTap(context, index);
                 },
               ),
             ],

@@ -3,6 +3,8 @@ import 'package:kgk/kgk.dart';
 import 'dart:developer' as kgk_logger;
 
 class ApiService implements ApiProvider {
+  static bool isServiceEnabled = true;
+
   // Common method to get headers
   Map<String, String> _getCommonHeaders({
     Map<String, String>? additionalHeaders,
@@ -106,7 +108,7 @@ class ApiService implements ApiProvider {
 
       var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
-      if (commonResponse.isTokenExpired) {
+      if (commonResponse.isTokenExpired && isServiceEnabled) {
         if (!StorageManager().getIsSkipLogin()) {
           await StorageManager().clearSession();
           Utils.showSmartModalBottomSheet(context: getNavigatorKeyContext, builder: (context) => const TokenExpireDialog());

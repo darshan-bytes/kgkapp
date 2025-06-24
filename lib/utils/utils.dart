@@ -349,6 +349,7 @@ class Utils {
   }
 
   static Future<void> handleAuthSuccessResponse(BuildContext context, UserResponse r, bool isFromLoginRequired) async {
+    ApiService.isServiceEnabled = true;
     await StorageManager().setAuthToken(r.accessToken ?? '');
     await StorageManager().setUserId(r.userId ?? '');
     await StorageManager().setUserResponse(r);
