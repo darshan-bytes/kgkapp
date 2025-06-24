@@ -13,31 +13,13 @@ final class InitialPresentationEvent extends PresentationEvent {
   List<Object> get props => [context];
 }
 
-/// This method is used to pull to refresh but for now it is removed from the features
-// final class PresentationLoadMoreEvent extends PresentationEvent {
-//   final int currentPage;
-//
-//   const PresentationLoadMoreEvent(this.currentPage);
-//
-//   @override
-//   List<Object> get props => [currentPage];
-// }
-
-/// This method is used to pull to refresh but for now it is removed from the features
-// final class PresentationPullToRefreshEvent extends PresentationEvent {
-//   const PresentationPullToRefreshEvent();
-//
-//   @override
-//   List<Object> get props => [];
-// }
-
 final class PresentationReviewStateEvent extends PresentationEvent {
   final bool isApproved;
-  final String presentationNumber;
+  final int index;
   final BuildContext context;
 
-  const PresentationReviewStateEvent({required this.context, required this.isApproved, required this.presentationNumber});
+  const PresentationReviewStateEvent({required this.context, required this.isApproved, required this.index});
 
   @override
-  List<Object> get props => [context, isApproved, presentationNumber];
+  List<Object> get props => [context, isApproved, index];
 }

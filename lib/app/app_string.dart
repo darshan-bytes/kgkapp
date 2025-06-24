@@ -4,7 +4,6 @@ class APPStrings {
   /// NOTE: Below strings will not be translated/changed in any language so we will use it directly and not use .tr extension to translate it.
   static const String appName = 'KGK';
   static const String languageEn = 'en';
-
   static const String languageTh = 'th';
   static const String languageZh = 'zh';
   static const String languageJa = 'ja';
@@ -12,7 +11,6 @@ class APPStrings {
   static const String languageAr = 'ar';
   static const String plusMinus = '+/-';
   static const String percentage = '%';
-
   static const String forgotPassword = 'mob_forgot_password';
   static const String forgotPasswordWithQuestion = 'mob_forgot_password_with_question';
   static const String signIn = 'mob_sign_in';
@@ -29,7 +27,6 @@ class APPStrings {
   static const String login = 'mob_login';
   static const String register = 'mob_register';
   static const String skip = 'mob_skip';
-
   static const String somethingWrong = 'mob_something_wrong';
   static const String checkInternet = 'mob_check_internet';
   static const String failedFetchData = 'mob_failed_fetch_data';
@@ -102,7 +99,6 @@ class APPStrings {
   //Product item
   static const String addToBag = 'mob_add_to_bag';
   static const String select = 'mob_select';
-
   static const String remove = 'mob_remove';
   static const String moveToWishlist = 'mob_move_to_wishlist';
 
@@ -157,21 +153,18 @@ class APPStrings {
   static const String diy = 'mob_diy';
   static const String compareProduct = 'mob_compare_product';
   static const String change = 'mob_change';
-
   static const String shape = 'mob_shape';
   static const String quantity = 'mob_quantity';
   static const String totalCarat = 'mob_total_carat';
   static const String color = 'mob_color';
   static const String clarity = 'mob_clarity';
   static const String setting = 'mob_setting';
-
   static const String diamondShape = 'mob_diamond_shape';
   static const String metalKaratage = 'mob_metal_karatage';
   static const String diamondQuality = 'mob_diamond_quality';
   static const String ringSize = 'mob_ring_size';
   static const String customiseDescription = 'mob_customise_description';
   static const String craftingDescription = 'mob_crafting_description';
-
   static const String customerReviews = 'mob_customer_reviews';
   static const String writeAReview = 'mob_write_a_review';
   static const String readMore = 'mob_read_more';
@@ -222,7 +215,6 @@ class APPStrings {
   static const String yourOrderNumber = 'mob_your_order_number';
   static const String orderConfirmWithTrackInfo = 'mob_order_confirm_with_track_info';
   static const String continueShopping = 'mob_continue_shopping';
-
   static const String subTotal = 'mob_sub_total';
   static const String head = 'mob_head';
   static const String totalApproxPrice = 'mob_total_approx_price';
@@ -272,7 +264,6 @@ class APPStrings {
   static const String yourValue = 'mob_your_value';
   static const String dash = 'mob_dash';
   static const String addAddress = 'mob_add_address';
-
   static const String myOrders = 'mob_my_orders';
   static const String searchOrder = 'mob_search_order';
   static const String orderId = 'mob_order_id';
@@ -311,7 +302,6 @@ class APPStrings {
   static const String type = 'mob_type';
   static const String bidAmount = 'mob_bid_amount';
   static const String bidPlacedOn = 'mob_bid_placed_on';
-
   static const String buyNow = 'mob_buy_now';
   static const String discuss = 'mob_discuss';
   static const String meeting = 'mob_meeting';
@@ -406,7 +396,6 @@ class APPStrings {
   static const String originalRatePerCarat = 'mob_original_rate_per_carat';
   static const String totalRequestedDiscount = 'mob_total_requested_discount';
   static const String totalValueAfterDiscount = 'mob_total_value_after_discount';
-
   static const String myAccount = 'mob_my_account';
   static const String myOrder = 'mob_my_orders';
   static const String listOfAllTheOrdersYouPlaced = 'mob_list_of_all_the_orders_you_placed';
@@ -485,7 +474,6 @@ class APPStrings {
   static const String getInTouchWithUs = 'mob_get_in_touch_with_us';
   static const String searchByCategory = 'mob_search_by_category';
   static const String selectACompany = 'mob_select_a_company';
-
   static const String business = 'mob_business';
   static const String generalQuestions = 'mob_general_questions';
   static const String faqs = 'mob_faqs';
@@ -496,7 +484,6 @@ class APPStrings {
   static const String questionOrQueriesGetInTouch = 'mob_question_or_queries_get_in_touch';
   static const String findYourNearestXStore = 'mob_find_your_nearest_X_store';
   static const String storeDirectory = 'mob_store_directory';
-
   static const String language = 'mob_language';
   static const String currency = 'mob_currency';
 
@@ -592,7 +579,6 @@ class APPStrings {
   static const String concepts = 'mob_concepts';
   static const String searchConcept = 'mob_search_concept';
   static const String noConceptFound = 'mob_no_concept_found';
-
   static const String presentations = 'mob_presentations';
   static const String searchPresentation = 'mob_search_presentation';
 
@@ -694,7 +680,6 @@ class APPStrings {
   static const String discountPercentage = 'mob_discount_percentage';
   static const String amt = 'mob_amt';
   static const String delay = 'mob_delay';
-
   static const String hintEmail = 'mob_hint_email';
   static const String hintFirstName = 'mob_hint_first_name';
   static const String hintLastName = 'mob_hint_last_name';
@@ -765,7 +750,6 @@ class APPStrings {
   static const String startWithSetting = 'mob_start_with_setting';
   static const String startWithDiamond = 'mob_start_with_diamond';
   static const String create = 'mob_create';
-
   static const String selectAndComment = 'mob_select_and_comments';
 
   // Watchlist
@@ -784,7 +768,6 @@ class APPStrings {
   //Watchlist Detail
   static const String noOfProducts = 'mob_no_of_products';
   static const String edit = 'mob_edit';
-
   static const String notifyWhenProductIsInStock = 'mob_notify_when_product_is_in_stock';
   static const String notifyWhenPriceDrops = 'mob_notify_when_price_drops';
   static const String notifyWhenDiscountApplied = 'mob_notify_when_discount_applied';
@@ -793,7 +776,6 @@ class APPStrings {
 
   // Order Management
   static const String noOrderListFound = 'mob_no_order_list_found';
-
   static const String deliveryDate = 'mob_delivery_date';
 
   //User master
@@ -819,26 +801,21 @@ class APPStrings {
   static const String dueDate = 'mob_due_date';
   static const String description = 'mob_description';
   static const String assignFrom = 'mob_assign_from';
-
   static const String orders = 'mob_orders';
   static const String products = 'mob_products';
   static const String ordersReceived = 'mob_orders_received';
   static const String avgOrderValue = 'mob_avg_order_value';
-
   static const String returnProduct = 'mob_return_product';
   static const String xReturn = 'mob_xReturn';
   static const String imSure = 'mob_im_sure';
   static const String searchDesign = 'mob_search_design';
   static const String searchCAD = 'mob_search_cad';
   static const String pending = 'mob_pending';
-
   static const String day = 'mob_day';
   static const String week = 'mob_week';
   static const String month = 'mob_month';
   static const String year = 'mob_year';
-
   static const String viewColon = 'mob_view_colon';
-
   static const String all = 'mob_all';
   static const String tasks = 'mob_tasks';
   static const String meetings = 'mob_meetings';
@@ -848,13 +825,11 @@ class APPStrings {
   static const String newsletter = 'mob_newsletter';
   static const String template = 'mob_template';
   static const String subscribers = 'mob_subscribers';
-
   static const String searchSubscribers = 'mob_search_subscribers';
   static const String searchCategory = 'mob_search_category';
   static const String searchTemplate = 'mob_search_template';
   static const String validity = 'mob_validity';
   static const String viewMore = 'mob_view_more';
-
   static const String shopByX = 'mob_shop_by_x';
   static const String manufacturingStatus = 'mob_manufacturing_status';
 
@@ -882,15 +857,12 @@ class APPStrings {
   static const String sessionExpired = 'mob_session_expired';
   static const String sessionExpiredDesc = 'mob_session_expired_desc';
   static const String dna = 'mob_dna';
-
   static const String percentageOffInterpolating = 'mob_percentage_off_interpolating';
   static const String retry = 'mob_retry';
   static const String pleaseSelectWatchlist = 'mob_please_select_watchlist';
   static const String noProductsAddedInWatchlist = 'mob_no_products_added_in_watchlist';
-
   static const String errorTitleRequired = 'mob_error_title_required';
   static const String errorReviewRequired = 'mob_error_review_required';
-
   static const String errorFirstNameRequired = 'mob_error_first_name_required';
   static const String errorLastNameRequired = 'mob_error_last_name_required';
   static const String errorContactNumberRequired = 'mob_error_contact_number_required';
@@ -968,10 +940,8 @@ class APPStrings {
   static const String removeProductFromCart = 'mob_remove_product_from_cart';
   static const String loginToUseThisFeature = 'mob_login_to_use_this_feature';
   static const String errorDurationRequired = 'mob_error_duration_required';
-
   static const String appliedPromoCode = 'mob_applied_promo_code';
   static const String applied = 'mob_applied';
-
   static const String errorEnterYourComment = 'mob_enter_your_comment';
   static const String errorSelectInquiryType = 'mob_select_inquiry_type';
   static const String errorFullNameRequired = 'mob_full_name_required';
@@ -979,7 +949,6 @@ class APPStrings {
   static const String goToBag = 'mob_go_to_bag';
   static const String errorZipCodeValid = 'mob_error_zip_code_valid';
   static const String viewAllCoupons = 'mob_view_all_coupons';
-
   static const String verifyYourAccount = 'mob_verify_your_account';
   static const String verifyYourAccountDesc = 'mob_verify_your_account_desc';
   static const String otp = 'mob_otp';
@@ -1039,7 +1008,6 @@ class APPStrings {
   static const String strNew = 'mob_new';
   static const String open = 'mob_open';
   static const String progress = 'mob_progress';
-
   static const String errorSelectStatus = 'mob_error_select_status';
   static const String errorEnterComment = 'mob_error_enter_comment';
   static const String totalQuantity = 'mob_total_quantity';
@@ -1052,7 +1020,6 @@ class APPStrings {
   static const String productNo = 'mob_product_no';
   static const String selectContact = 'mob_select_contact';
   static const String editReview = 'mob_edit_review';
-
   static const String complete = 'mob_complete';
   static const String choose = 'mob_choose';
   static const String price = 'mob_price';
@@ -1061,7 +1028,6 @@ class APPStrings {
   static const String userStatusChangeMsg = 'mob_user_status_change_msg';
   static const String clickHeretoView = 'mob_click_here_to_view';
   static const String viewAllPresentation = 'mob_view_all_presentation';
-
   static const String removeSelectedPresentation = 'mob_remove_selected_presentation';
   static const String removeSelectedPresentationMsg = 'mob_remove_selected_presentation_msg';
   static const String deletePresentation = 'mob_delete_presentation';
@@ -1069,4 +1035,5 @@ class APPStrings {
   static const String selectGemstone = 'mob_select_gemstone';
   static const String selectStoneDesc = 'mob_select_stone_desc';
   static const String quantityExceedsStock = 'mob_quantity_exceeds_stock';
+  static const String serviceNotAvailable = 'mob_service_not_available';
 }

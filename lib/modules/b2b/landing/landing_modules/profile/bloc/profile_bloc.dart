@@ -821,23 +821,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   /// Logout event to clear session and navigate to login page
   Future<void> _handleLogout({required BuildContext context, required Emitter<ProfileState> emit}) async {
-    Either<ErrorResponse, CommonResponse>? response = await UserRepository(context).logoutUser({});
+    await UserRepository(context).logoutUser({});
     clearData();
-    await response?.fold(
-      (l) async {
-        BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-        BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-        await StorageManager().clearSession();
-        context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
-      },
-      (r) async {
-        BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-        BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-        await StorageManager().clearSession();
-
-        context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
-      },
-    );
+    ApiService.isServiceEnabled = false;
+    BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
+    BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+    await StorageManager().clearSession();
+    context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
   }
 
   /// Delete profile event to clear session and navigate to login page

@@ -6,6 +6,8 @@ part 'presentation_state.dart';
 
 class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   bool _isInitialized = false;
+  bool isNeedToReloadListOnBack = false;
+  bool canPop = false;
 
   // Controller for search
   final TextEditingController presentationSearchController = TextEditingController();
@@ -25,15 +27,9 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   // Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
-  Completer<bool> refreshCompleter = Completer<bool>();
-
   PresentationBloc() : super(PresentationInitial()) {
     on<InitialPresentationEvent>(_onInitialPresentationEvent);
-    // on<PresentationLoadMoreEvent>(_onPresentationLoadMoreEvent);
     on<PresentationReviewStateEvent>(_onPresentationReviewStateEvent);
-
-    /// This method is used to pull to refresh but for now it is removed from the features
-    // on<PresentationPullToRefreshEvent>(_onPresentationPullToRefreshEvent);
   }
 
   bool hasRouteData(BuildContext context) {
@@ -55,82 +51,19 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     hasRouteData(event.context);
     presentationList = _generatePresentationList(presentationDataList);
 
-    /// This method is used to pull to refresh but for now it is removed from the features
-    if (refreshCompleter.isCompleted) {
-      refreshCompleter = Completer<bool>();
-    }
-
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
       paginationScrollController = SmartPaginationScrollController();
     }
 
-    paginationScrollController.init(
-      loadAction: (int currentPage) {},
-
-      /// This method is used to pull to refresh but for now it is removed from the features
-      // loadAction: (int currentPage) async {
-      // add(PresentationLoadMoreEvent(currentPage));
-      // }
-    );
+    paginationScrollController.init(loadAction: (_) {});
     clearData();
-    refreshCompleter.complete(true);
+
     emit(PresentationLoadedState());
-  }
-
-  /// Build the complete query dynamically
-  Map<String, dynamic> buildQuery({
-    required List<FilterData> filterData,
-    required String searchString,
-    required int currentPage,
-    required int pageLimit,
-  }) {
-    Map<String, dynamic> query = {};
-    query[ApiKey.filters] = buildFilters(filterData);
-
-    /// Add pagination, search, and sorting parameters
-    query.addAll({
-      ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
-      ApiKey.search: searchString,
-      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
-    });
-    return query;
-  }
-
-  /// Build the filters dynamically
-  Map<String, dynamic> buildFilters(List<FilterData> filterData) {
-    Map<String, dynamic> filters = {ApiKey.dynamicObject: {}};
-
-    for (FilterData element in filterData) {
-      switch (element.filterType) {
-        case FilterType.dateRange:
-          if (element.dateRange != null) {
-            filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
-              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-            ];
-          }
-          break;
-        case FilterType.createdBySearch:
-        case FilterType.checkbox:
-          List<String?>? selectedCodes = element.secondaryFilterData?.where((e) => e.isSelected).map((e) => e.code).toList();
-          if (selectedCodes != null && selectedCodes.isNotEmpty) {
-            filters[ApiKey.dynamicObject]?[element.code ?? ''] = selectedCodes;
-          }
-          break;
-
-        default:
-          break;
-      }
-    }
-
-    return filters;
   }
 
   List<B2BCustomListingDataModel> _generateB2BListingModel(List<Presentation> presentationList) {
     return presentationList.map((concept) {
-      // Use map and spread operator for cleaner list transformation
-      // List<String> dummy = concept.files.map((file) => file['path'].toString().setMediaUrl).toList();
       List<String> dummy = [];
       return B2BCustomListingDataModel(
         id: concept.id,
@@ -139,41 +72,26 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
         status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
         fields: generateB2BItemFields(concept.assignedToDetails),
         strCreatedBy: concept.createdByDetails?.fullName,
-        strCreatedByImageUrl: concept.createdByDetails?.profilePic ?? '',
+        strCreatedByImageUrl: concept.createdByDetails?.profilePic,
         strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
-        strPresentationNumber: "-",
-        strConceptBy: "-",
+
         strName: concept.conceptName,
-        strDescription: '-',
         descriptionImageList: dummy,
-        presentationList: [],
+
         strRevisedDate: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
       );
     }).toList();
   }
 
-  /// This method is used to pull to refresh but for now it is removed from the features
-  // Future<void> _onPresentationLoadMoreEvent(PresentationLoadMoreEvent event, Emitter<PresentationState> emit) async {
-  //   emit(const PresentationListLoadingMoreState());
-  //   await Future.delayed(const Duration(seconds: 2));
-  //   presentationList.addAll(_generatePresentationList([]));
-  //   paginationScrollController.isPageLoaded.complete(event.currentPage == 5);
-  //   emit(PresentationListLoadedMoreState(event.currentPage + 1));
-  // }
-
   // Event for approval
   Future<void> _onPresentationReviewStateEvent(PresentationReviewStateEvent event, Emitter<PresentationState> emit) async {
     emit(PresentationListReloadState());
-    await apiCallForPresentationStatus(context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
+    await apiCallForPresentationStatus(context: event.context, index: event.index, isApproved: event.isApproved);
     emit(PresentationLoadedState());
   }
 
-  Future<void> apiCallForPresentationStatus({
-    required BuildContext context,
-    required String presentationNumber,
-    required bool isApproved,
-  }) async {
-    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
+  Future<void> apiCallForPresentationStatus({required BuildContext context, required int index, required bool isApproved}) async {
+    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationList[index].strPresentationNumber, ApiKey.status: ApiKey.approved};
     await AppRepository(context)
         .apiCallForPresentationStatus(body: body)
         .then(
@@ -184,6 +102,8 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
               }
             },
             (r) {
+              presentationList[index].status = ProjectStatus.approved;
+              isNeedToReloadListOnBack = true;
               return null;
             },
           ),
@@ -209,7 +129,6 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       return B2BCustomListingDataModel(
         id: presentationList[index].id,
         strPresentationNumber: presentationList[index].presentationNumber,
-        strProject: '0',
         strConceptNumber: presentationList[index].conceptNumber,
         strConceptName: presentationList[index].conceptName,
         strCreatedBy: presentationList[index].createdByDetails?.fullName,
@@ -218,8 +137,8 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
           outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA,
         ),
         fields: generateB2BItemFields(presentationList[index].assignedToDetails),
-        strApprovedBy: presentationList[index].approvedByDetails?.fullName ?? '',
-        strApprovedByImageUrl: presentationList[index].approvedByDetails?.profilePicUrl?.setMediaUrl ?? '',
+        strApprovedBy: presentationList[index].approvedByDetails?.fullName,
+        strApprovedByImageUrl: presentationList[index].approvedByDetails?.profilePicUrl?.setMediaUrl,
         status: presentationList[index].status != null ? getOrderStatus(orderStatus: presentationList[index].status!) : null,
       );
     });
@@ -249,10 +168,15 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
 
     return assignedToDetails.map((detail) {
       String fullName = detail.fullName;
-      String imageUrl = detail.profilePicUrl?.setMediaUrl ?? '';
+      String? imageUrl = detail.profilePicUrl?.setMediaUrl;
 
       return B2BItemField(label: APPStrings.assignTo.tr, value: fullName, imageUrl: imageUrl);
     }).toList();
+  }
+
+  void popWithData(BuildContext context) {
+    canPop = true;
+    context.pop(arguments: {RoutesData.isNeedToReloadListOnBack: isNeedToReloadListOnBack});
   }
 
   /// This method is used to pull to refresh but for now it is removed from the features

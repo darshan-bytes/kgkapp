@@ -20,11 +20,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
       // Client's User B2C
       // emailController.text = "ramesh.kumar@sparklesoft.co.in";
-      // emailController.text = "bhati.rmb+2@gmail.com";
+      emailController.text = "bhati.rmb+2@gmail.com";
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "sivaraj.dharuman@sparklesoft.co.in";
       // emailController.text = "darshan.vachhani+112@bytestechnolab.com";
-      emailController.text = "amit.jindal@gmail.com";
+      // emailController.text = "amit.jindal@gmail.com";
       // emailController.text = "ankitachudasama99@yopmail.com";
 
       //B2B
@@ -42,9 +42,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // emailController.text = "parash2@yopmail.com"; // Jewellery
       // emailController.text = "ankita2@yopmail.com"; //Gemstone
       // emailController.text = "ankitachudasama963@yopmail.com"; //Diamond
-      // emailController.text = " chudasama9@yahoo.com"; //Internal
+      emailController.text = " chudasama9@yahoo.com"; //Internal
 
-      passwordController.text = "Asdf@1234";
+      // passwordController.text = "Asdf@1234";
       passwordController.text = "Test@123";
       // passwordController.text = "Admin@123";
       // passwordController.text = "Admin@123";
@@ -120,6 +120,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   void onSkipLogin(BuildContext context) async {
+    ApiService.isServiceEnabled = true;
     await StorageManager.instance.setIsSkipLogin(true);
     BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
     BlocProvider.of<LandingBloc>(context).add(LandingLogoutEvent());
