@@ -364,7 +364,7 @@ class MyBagScreen extends StatelessWidget {
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
                           carat: product.ctsOrGms?.toString(),
-                          commodity: product.commodity?.value,
+                          commodity: product.stoneCommodityName,
                           rapRate: product.rappaportPrice?.setCurrency,
                           productId: product.productId,
                           productName: product.name,

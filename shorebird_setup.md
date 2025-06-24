@@ -41,7 +41,7 @@ shorebird release android
 ```
 
 ```bash
-shorebird release ios
+shorebird release ios --export-method development
 ```
 
 ---
