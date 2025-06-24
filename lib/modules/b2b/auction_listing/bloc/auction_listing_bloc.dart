@@ -11,9 +11,6 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   /// This list holds the original data
   List<AuctionListModel> originalAuctionList = [];
 
-  /// This list is used to show the filtered auction listings in screen view
-  List<AuctionListModel> auctionList = [];
-
   /// paginationScrollController is used to control the pagination
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
@@ -60,7 +57,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
     emit(AuctionListingReloadState());
     paginationScrollController.pullToRefresh();
     originalAuctionList.clear();
-    auctionList.clear();
+
     await fetchAuctionListData(event.context, emit, isLoadMore: false);
   }
 
@@ -130,8 +127,10 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
     /// Add pagination, search, and sorting parameters
     query.addAll({
       ApiKey.search: auctionSearchController.text.trim(),
-      ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
-      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
+      ApiKey.page: currentPage,
+      ApiKey.limit: pageLimit,
+      ApiKey.sortField: ApiKey.id,
+      ApiKey.direction: AppConst.sortValueDesc.toUpperCase(),
     });
     return query;
   }
@@ -157,7 +156,6 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
           originalAuctionList.clear();
         }
         originalAuctionList.addAll(_populateAuctionList(success.data));
-        auctionList = List.from(originalAuctionList);
         paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
         emit(AuctionListingLoadedState());
       },
@@ -177,7 +175,6 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   Future<void> _handlePullToRefresh(BuildContext context, Emitter<AuctionListingState> emit) async {
     emit(AuctionListingLoadingState());
     paginationScrollController.pullToRefresh();
-    auctionList.clear();
     await fetchAuctionListData(context, emit, isLoadMore: false);
     emit(AuctionListingLoadedState());
   }
@@ -185,7 +182,6 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   Future<void> _handleApplyFilter(BuildContext context, Emitter<AuctionListingState> emit, List<FilterData> appliedFilterData) async {
     emit(AuctionListingLoadingState());
     paginationScrollController.pullToRefresh();
-    auctionList.clear();
     filterData = appliedFilterData;
     await fetchAuctionListData(context, emit, isLoadMore: false);
     emit(AuctionListingLoadedState());

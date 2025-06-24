@@ -74,7 +74,7 @@ class AuctionListingScreen extends StatelessWidget {
       child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
         buildWhen: (previous, current) => current is AuctionListLoadedMoreState || current is AuctionListLoadingMoreState,
         builder: (context, state) {
-          if (auctionListingBloc.auctionList.isEmpty) {
+          if (auctionListingBloc.originalAuctionList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr);
           }
           return SmartSingleChildScrollView(
@@ -86,12 +86,12 @@ class AuctionListingScreen extends StatelessWidget {
             child: Column(
               children: [
                 ListView.separated(
-                  itemCount: auctionListingBloc.auctionList.length,
+                  itemCount: auctionListingBloc.originalAuctionList.length,
                   shrinkWrap: true,
                   padding: EdgeInsets.only(bottom: 40.h),
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
+                    AuctionListModel auctionListModel = auctionListingBloc.originalAuctionList[index];
                     return AuctionListItem(auctionListModel: auctionListModel, stoneTypeImage: AppImages.icRingThin);
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 16.h),
