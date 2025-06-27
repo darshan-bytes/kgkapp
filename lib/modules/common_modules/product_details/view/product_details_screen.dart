@@ -72,7 +72,6 @@ class ProductDetailsScreen extends StatelessWidget {
                 Expanded(
                   flex: 6,
                   child: SizedBox(
-                    height: 66.h,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +80,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         SizedBox(width: 8.w),
                         Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SmartText(
@@ -94,19 +93,15 @@ class ProductDetailsScreen extends StatelessWidget {
                               ),
                               if (bloc.productDetails?.finalPrice.isNotNullNorEmpty == true &&
                                   (bloc.productDetails?.finalPrice != bloc.productDetails?.originalPrice))
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                Column(
                                   children: [
-                                    Flexible(
-                                      child: SmartText(
-                                        bloc.productDetails?.originalPrice,
-                                        style: style.originalPriceStyle.copyWith(decoration: TextDecoration.lineThrough, fontSize: 12.sp),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                    SmartText(
+                                      bloc.productDetails?.originalPrice,
+                                      style: style.originalPriceStyle.copyWith(decoration: TextDecoration.lineThrough, fontSize: 12.sp),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    SizedBox(width: 2.w),
+                                    SizedBox(height: 2.h),
                                     SmartText(bloc.productDetails?.discountPercentageString, style: style.discountStyle, maxLines: 1),
                                   ],
                                 ),

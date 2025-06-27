@@ -16,27 +16,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   /// List of filter data
   List<FilterData> filterData = [];
 
-  /// List of applied filter data
-  final Map<int, List<FilterData>> appliedFilterData = {};
-
   /// Identify Current user type
   UserType userType = UserType.b2cUser;
-
-  /// TabController for managing tabs in the UI.
-  late TabController tabController;
-
-  /// For keeping track of the current tab and stop same tab on click event
-  int currentTab = -1;
-
-  /// List of tabs
-  final List<Widget> tabs = <Widget>[
-    Tab(text: APPStrings.diamond.tr),
-    Tab(text: APPStrings.gemstone.tr),
-    Tab(text: APPStrings.jewellery.tr),
-  ];
-
-  /// TODO: selected stone type for filter is currently not in use as discussed with JD.
-  // OrderStoneTypeModel? selectedStoneType;
 
   /// Order search controller
   final TextEditingController orderSearchController = TextEditingController();
@@ -50,30 +31,16 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   /// Focus node
   FocusNode focusNode = FocusNode();
 
-  /// TODO: selected stone type for filter is currently not in use as discussed with JD.
-  // final List<OrderStoneTypeModel> arrStoneType = [
-  //   const OrderStoneTypeModel(name: "Regular"),
-  //   const OrderStoneTypeModel(name: "Special"),
-  //   const OrderStoneTypeModel(name: "Diamond"),
-  //   const OrderStoneTypeModel(name: "Gemstone"),
-  //   const OrderStoneTypeModel(name: "Jewellery"),
-  // ];
-
   /// Constructor for OrdersBloc
   OrdersBloc() : super(const OrdersInitialState()) {
     on<OrdersInitialEvent>(_onInitOrdersEvent);
-    on<ChangeOrderTabsEvent>(_onChangeTabEvent);
     on<MyOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<OrdersListPullToRefreshEvent>(_onListPullToRefreshEvent);
     on<OrdersListSearchEvent>(_onListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<OrdersListFilterEvent>(_onListFilterEvent);
     on<NavigateToOrderDetailsEvent>(_onNavigateToOrderDetailsEvent);
-
-    /// TODO: selected stone type for filter is currently not in use as discussed with JD.
-    // on<ChangeOrdersStoneTypeEvent>(_onChangeStoneType);
   }
 
-  /// Closes the OrdersBloc
   @override
   Future<void> close() {
     orderPaginationScrollController.dispose();
@@ -83,11 +50,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   /// Initializes the OrdersBloc by fetching order data
   Future<void> _onInitOrdersEvent(OrdersInitialEvent event, Emitter<OrdersState> emit) async {
     await _initializeBloc(event.context, emit);
-  }
-
-  /// Handles the ChangeOrderTabsEvent for tab switching
-  Future<void> _onChangeTabEvent(ChangeOrderTabsEvent event, Emitter<OrdersState> emit) async {
-    await _handleTabSelection(event.context, event.index, emit);
   }
 
   /// Handles the load more event for order listings
@@ -114,15 +76,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   Future<void> _onNavigateToOrderDetailsEvent(NavigateToOrderDetailsEvent event, Emitter<OrdersState> emit) async {
     await _handleNavigateToOrderDetails(event, emit);
   }
-
-  /// TODO: selected stone type for filter is currently not in use as discussed with JD.
-  // void _onChangeStoneType(ChangeOrdersStoneTypeEvent event, Emitter<OrdersState> emit) {
-  //   emit(const OrdersReloadState());
-  //   selectedStoneType = event.selectedStoneType;
-  //   if (selectedStoneType != null) {
-  //     emit(ChangeOrdersStoneTypeState(selectedStoneType!));
-  //   }
-  // }
 
   /// Initializes the OrdersBloc with pagination and initial data fetching
   Future<void> _initializeBloc(BuildContext context, Emitter<OrdersState> emit) async {
@@ -151,22 +104,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     if (filterData.isEmpty) {
       await _setupFilters(context);
     }
-  }
-
-  /// Handles tab selection and reloads order data accordingly
-  Future<void> _handleTabSelection(BuildContext context, int index, Emitter<OrdersState> emit) async {
-    if (currentTab == index) return;
-    currentTab = index;
-    emit(const OrdersLoadingState());
-
-    /// Update filter data for the current tab
-    BlocProvider.of<AdvanceSortFilterBloc>(
-      context,
-    ).add(AddAdvanceSortFilterDataEvent(filterOptionList: appliedFilterData[currentTab] ?? [], context: context));
-
-    /// Reload order data
-    await _reloadOrderData(context, emit);
-    emit(ChangeOrderTabsState());
   }
 
   /// Reloads the order data for the specified category
@@ -201,10 +138,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     emit(OrdersLoadingState());
     orderPaginationScrollController.pullToRefresh();
     originalOrderList.clear();
-
-    /// set applied filter data base on current tab
-    appliedFilterData[currentTab] = newAppliedFilterData;
-
+    filterData = newAppliedFilterData;
     await fetchOrderListData(context, emit);
     emit(OrdersListLoadedState());
   }
@@ -268,7 +202,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       ApiKey.limit: pageLimit,
       ApiKey.dir: AppConst.sortValueDesc,
       ApiKey.field: AppConst.uniqueId,
-      ApiKey.commodity: commodity,
+      if (commodity != null) ApiKey.commodity: commodity,
     });
     return query;
   }
@@ -280,16 +214,12 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     bool isLoadMore = false,
     Map<String, dynamic>? query,
   }) async {
-    /// Here we need commodity base order data so we Get the commodity for the current tab
-    String commodity = _getCommodityForTab(tabController.index);
-
     /// Build the query base on the current tab applied filters data
     buildQuery(
-      filterData: appliedFilterData[tabController.index] ?? [],
+      filterData: filterData,
       searchQuery: orderSearchController.text,
       currentPage: orderPaginationScrollController.currentPage,
       pageLimit: AppConst.pageLimit,
-      commodity: commodity,
     ).forEach((key, value) {
       query ??= {};
       query![key] = value;
@@ -317,39 +247,20 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   /// Populates the order list from the API data
   List<MyOrderDetailsModel> _populateOrderList(List<OrderItem> dataList) {
-    return dataList
-        .where((data) {
-          /// Tab Index 0: Diamond Orders Only
-          if (tabController.index == 0) {
-            return data.commodity == Commodity.diamond.value;
-          }
-          /// Tab Index 1: Gemstone Orders Only
-          else if (tabController.index == 1) {
-            return data.commodity == Commodity.gemstone.value;
-          }
-          /// Tab Index 2: All other commodities (excluding Diamond & Gemstone)
-          else if (tabController.index == 2) {
-            return data.commodity != Commodity.diamond.value && data.commodity != Commodity.gemstone.value;
-          }
-          return false;
-        })
-        .map<MyOrderDetailsModel>((OrderItem data) {
-          return MyOrderDetailsModel(
-            id: data.uniqueId?.toString(),
-            orderId: data.uniqueId?.toString(),
-            orderStatus: getOrderStatus(orderStatus: data.orderStatus ?? ''),
-            orderDate: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
-            orderTotal: data.totalPrice?.setCurrency,
-            orderItems: data.items?.toString(),
-            orderQuantity: data.totalQuantity?.toString(),
-
-            /// Need to discuss for Image
-            orderImages: [data.createdByDetails?.profilePic ?? ''],
-            orderedBy: data.createdByDetails?.fullName ?? '',
-            commodity: data.commodity ?? '',
-          );
-        })
-        .toList();
+    return dataList.map<MyOrderDetailsModel>((OrderItem data) {
+      return MyOrderDetailsModel(
+        id: data.uniqueId?.toString(),
+        orderId: data.uniqueId?.toString(),
+        orderStatus: getOrderStatus(orderStatus: data.orderStatus ?? ''),
+        orderDate: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        orderTotal: data.totalPrice?.setCurrency,
+        orderItems: data.items?.toString(),
+        orderQuantity: data.totalQuantity?.toString(),
+        orderImages: [data.createdByDetails?.profilePic?.setMediaUrl ?? ''],
+        orderedBy: data.createdByDetails?.fullName ?? '',
+        commodity: data.commodity ?? '',
+      );
+    }).toList();
   }
 
   /// Sets up the filters for each tab
@@ -372,35 +283,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
             );
             filterData.add(filter);
           }
-
-          /// Parse the new filters list instead of referencing the map.
-          List.generate(tabs.length, (index) {
-            return appliedFilterData[index] =
-                filterData.map((e) {
-                  FilterData filter = FilterData(
-                    code: e.code,
-                    name: e.name,
-                    inputType: e.inputType,
-                    filterType: e.filterType,
-                    dateRange: e.dateRange,
-                    isAdvanceFilter: e.isAdvanceFilter,
-                    minMaxValues: e.minMaxValues,
-                    rangeValues: e.rangeValues,
-                    subFilterCodes: e.subFilterCodes,
-                  );
-                  filter.secondaryFilterData =
-                      e.secondaryFilterData?.map((se) {
-                        SecondaryFilterData secondaryFilterData = SecondaryFilterData(
-                          name: se.name,
-                          code: se.code,
-                          image: se.image,
-                          isSelected: se.isSelected,
-                        );
-                        return secondaryFilterData;
-                      }).toList();
-                  return filter;
-                }).toList();
-          });
         }
       },
     );
@@ -414,19 +296,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       tempSecondaryData = filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
     }
     return tempSecondaryData;
-  }
-
-  String _getCommodityForTab(int index) {
-    switch (index) {
-      case 0:
-        return AppConst.diamond;
-      case 1:
-        return AppConst.gemstone;
-      case 2:
-        return AppConst.jewellery;
-      default:
-        return AppConst.diamond;
-    }
   }
 
   ProjectStatus getOrderStatus({required String orderStatus}) {

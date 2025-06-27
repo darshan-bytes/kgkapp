@@ -18,22 +18,6 @@ final class OrdersReloadState extends OrdersState {
   List<Object> get props => [];
 }
 
-final class ChangeOrdersStoneTypeState extends OrdersState {
-  final OrderStoneTypeModel selectedStoneType;
-
-  const ChangeOrdersStoneTypeState(this.selectedStoneType);
-
-  @override
-  List<Object> get props => [selectedStoneType];
-}
-
-final class ChangeOrderTabsState extends OrdersState {
-  const ChangeOrderTabsState();
-
-  @override
-  List<Object> get props => [];
-}
-
 class OrdersLoadingMoreState extends OrdersState {
   const OrdersLoadingMoreState();
 

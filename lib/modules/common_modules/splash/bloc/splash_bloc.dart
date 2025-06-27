@@ -6,15 +6,18 @@ part 'splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   late VideoPlayerController playerController;
+  late AppBloc appBloc;
 
   SplashBloc() : super(SplashInitial()) {
     on<LoadSplashEvent>(navigateToGetReadyScreen);
   }
 
   Future<void> navigateToGetReadyScreen(LoadSplashEvent event, Emitter<SplashState> emit) async {
+    final BuildContext context = event.context;
+    appBloc = BlocProvider.of<AppBloc>(context);
     // Trigger a language change event
     ApiService.isServiceEnabled = true;
-    BlocProvider.of<AppBloc>(event.context).add(LanguageChangedEvent(null, context: event.context));
+    appBloc.add(LanguageChangedEvent(null, context: context));
 
     // Initialize and play the splash screen video
     try {
@@ -30,14 +33,14 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     }
 
     await CachedNetworkImageProvider.defaultCacheManager.emptyCache();
-
-    // Perform API calls for currency and language labels
-    await _frontendLinkApiCall(event.context);
-    await _currencyApiCall(event.context, emit);
-    await _languageLabelApiCall(event.context, emit); // This is mainly use for get CMS Pages
-    await BlocProvider.of<AppBloc>(event.context).sortOptionListApiCall(event.context);
-    await BlocProvider.of<AppBloc>(event.context).getDIYJewelleryFilters(event.context);
-    await navigateToNextScreen(event.context);
+    await Future.wait([
+      _frontendLinkApiCall(context),
+      _currencyApiCall(context, emit),
+      _languageLabelApiCall(context, emit),
+      appBloc.sortOptionListApiCall(context),
+      appBloc.getDIYJewelleryFilters(context),
+    ]);
+    await navigateToNextScreen(context);
   }
 
   Future<void> _currencyApiCall(BuildContext context, Emitter<SplashState> emit) async {

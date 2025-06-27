@@ -13,25 +13,6 @@ final class OrdersInitialEvent extends OrdersEvent {
   List<Object> get props => [context];
 }
 
-final class ChangeOrdersStoneTypeEvent extends OrdersEvent {
-  final OrderStoneTypeModel selectedStoneType;
-
-  const ChangeOrdersStoneTypeEvent(this.selectedStoneType);
-
-  @override
-  List<Object> get props => [selectedStoneType];
-}
-
-final class ChangeOrderTabsEvent extends OrdersEvent {
-  final int index;
-  final BuildContext context;
-
-  const ChangeOrderTabsEvent({required this.index, required this.context});
-
-  @override
-  List<Object> get props => [index, context];
-}
-
 class MyOrderListingLoadMoreEvent extends OrdersEvent {
   final int currentPage;
   final BuildContext context;
