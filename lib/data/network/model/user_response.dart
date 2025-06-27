@@ -93,6 +93,7 @@ class UserIdDetails {
     this.customerCode,
     this.companyName,
     this.companySlug,
+    this.businessType,
   });
 
   String? firstname;
@@ -111,6 +112,9 @@ class UserIdDetails {
   String? companyName;
   String? companySlug;
 
+  //business_type
+  String? businessType;
+
   factory UserIdDetails.fromJson(Map<String, dynamic> json) {
     return UserIdDetails(
       firstname: json["firstname"],
@@ -128,6 +132,7 @@ class UserIdDetails {
       customerCode: json["customer_code"],
       companyName: json["company_name"],
       companySlug: json["company_slug"],
+      businessType: json["business_type"],
     );
   }
 
@@ -147,12 +152,8 @@ class UserIdDetails {
     "customer_code": customerCode,
     "company_name": companyName,
     "company_slug": companySlug,
+    "business_type": businessType,
   };
-
-  @override
-  String toString() {
-    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, $phoneCode, $phone, $organisationName, $accountType, $customerAliasName, $customerCode, ";
-  }
 }
 
 extension UserIdDetailsExtension on UserIdDetails {

@@ -872,5 +872,6 @@
   "mob_cancelled": "ยกเลิก",
   "mob_select_gemstone": "เลือกเซ็มสตอน",
   "mob_select_stone_desc": "เลือกเพชรประเภทหินหรืออัญมณี",
-  "mob_quantity_exceeds_stock": "สต๊อกสินค้าไม่เพียงพอ"
+  "mob_quantity_exceeds_stock": "สต๊อกสินค้าไม่เพียงพอ",
+  "mob_service_not_available": "บริการไม่พร้อมใช้งาน"
 }
