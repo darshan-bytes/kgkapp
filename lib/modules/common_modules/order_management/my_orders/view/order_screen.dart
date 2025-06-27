@@ -16,15 +16,11 @@ class OrderScreen extends StatelessWidget {
             children: [
               SizedBox(height: 17.0.h),
               Expanded(
-                child: SmartTabBar(
-                  length: ordersBloc.tabs.length,
-                  onTabInitialized: (tabController) {
-                    // Here TabController is initialized
-                    ordersBloc.tabController = tabController;
+                child: BlocBuilder<OrdersBloc, OrdersState>(
+                  buildWhen: (previous, current) => current is OrdersListLoadedState,
+                  builder: (context, state) {
+                    return JewelleryTabView(ordersBloc: ordersBloc);
                   },
-                  onTapTab: (int index) => ordersBloc.add(ChangeOrderTabsEvent(index: index, context: context)),
-                  tabs: ordersBloc.tabs,
-                  tabBarView: _buildTabBarView(ordersBloc),
                 ),
               ),
             ],
@@ -34,15 +30,11 @@ class OrderScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildTabBarView(OrdersBloc ordersBloc) {
-    return [DiamondTabView(ordersBloc: ordersBloc), GemstoneTabView(ordersBloc: ordersBloc), JewelleryTabView(ordersBloc: ordersBloc)];
-  }
-
   Widget _buildBottomNavigationBar(OrdersBloc ordersBloc) {
     return BlocBuilder<OrdersBloc, OrdersState>(
-      buildWhen: (previous, current) => current is OrdersListLoadedState || current is ChangeOrderTabsState,
+      buildWhen: (previous, current) => current is OrdersListLoadedState,
       builder: (context, state) {
-        if (state is OrdersListLoadedState || state is ChangeOrderTabsState) {
+        if (state is OrdersListLoadedState) {
           return SafeArea(
             child: FilterBottomActionBar(
               controller: ordersBloc.orderPaginationScrollController.controller,
