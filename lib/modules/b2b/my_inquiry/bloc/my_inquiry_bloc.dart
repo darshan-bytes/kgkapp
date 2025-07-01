@@ -22,6 +22,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     on<MyInquiryInitialEvent>(_onMyInquiryInitialEvent);
     on<MyInquiryUpdateEvent>(_onMyInquiryUpdateEvent);
     on<MyInquiryRemoveEvent>(_onMyInquiryRemoveEvent);
+    on<FilterMyInquiryEvent>(_onFilterMyInquiryEvent);
   }
 
   /// This function is used to handle the initial event of the bloc
@@ -136,7 +137,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
         strProduct: data.commodity ?? '',
         strName: data.name ?? '',
         strEmail: data.email ?? '',
-        strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA) ?? '',
+        strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ?? '',
         status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
         fields: generateB2BItemFields(data.assignedToDetails),
       );
@@ -301,5 +302,12 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     } catch (e) {
       debugPrint('An error occurred: $e');
     }
+  }
+
+  Future<void> _onFilterMyInquiryEvent(FilterMyInquiryEvent event, Emitter<MyInquiryState> emit) async {
+    emit(MyInquiryReloadState());
+    filterData = event.filterData;
+    smartPaginationScrollController.pullToRefresh();
+    await fetchMyInquiries(event.context, emit, isLoadMore: true);
   }
 }

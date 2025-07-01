@@ -99,12 +99,12 @@ dependencies:
   google_maps_flutter: ^2.12.3
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^29.2.11
+  syncfusion_flutter_sliders: ^30.1.37
 
   #For Calendar
-  syncfusion_flutter_calendar: ^29.2.11+1
+  syncfusion_flutter_calendar: ^30.1.37
 
-  syncfusion_flutter_charts: ^29.2.11
+  syncfusion_flutter_charts: ^30.1.37
 
   #For QR Code
   qr_flutter: ^4.1.0
