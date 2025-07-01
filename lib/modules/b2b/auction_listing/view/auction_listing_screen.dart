@@ -117,14 +117,18 @@ class AuctionListingScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder:
-                      (context) => AdvanceFilterScreen(
-                        onApply: (value) {
-                          if (value != null && value is List<FilterData>) {
-                            auctionListingBloc.add(AuctionListFilterEvent(filterData: value, context: context));
-                          }
-                        },
-                      ),
+                  builder: (context) {
+                    BlocProvider.of<AdvanceSortFilterBloc>(
+                      context,
+                    ).add(AddAdvanceSortFilterDataEvent(filterOptionList: auctionListingBloc.filterData, context: context));
+                    return AdvanceFilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          auctionListingBloc.add(AuctionListFilterEvent(filterData: value, context: context));
+                        }
+                      },
+                    );
+                  },
                 );
               },
             ),

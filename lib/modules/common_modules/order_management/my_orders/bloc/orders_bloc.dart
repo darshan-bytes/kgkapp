@@ -197,7 +197,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     Map<String, dynamic> query = {};
     query.addAll(buildFilters(filterData));
     query.addAll({
-      ApiKey.search: searchQuery,
+      if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
       ApiKey.page: currentPage,
       ApiKey.limit: pageLimit,
       ApiKey.dir: AppConst.sortValueDesc,
@@ -309,6 +309,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       case "cancelled":
         return ProjectStatus.cancelled;
       case "in_progress":
+      case "inprogress":
         return ProjectStatus.orangeInProgress;
       default:
         return ProjectStatus.pending;

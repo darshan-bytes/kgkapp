@@ -132,7 +132,7 @@ class UserIdDetails {
       customerCode: json["customer_code"],
       companyName: json["company_name"],
       companySlug: json["company_slug"],
-      businessType: json["business_type"],
+      businessType: json["business_type"]?.toString(),
     );
   }
 
