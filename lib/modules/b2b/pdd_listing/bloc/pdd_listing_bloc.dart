@@ -270,6 +270,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
       case "cancelled":
         return ProjectStatus.cancelled;
       case "in_progress":
+      case "inprogress":
         return ProjectStatus.orangeInProgress;
       default:
         return ProjectStatus.pending;

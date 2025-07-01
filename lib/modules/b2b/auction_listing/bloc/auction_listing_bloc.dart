@@ -65,17 +65,16 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   Future<void> _initializeBloc(BuildContext context, Emitter<AuctionListingState> emit) async {
     emit(AuctionListingLoadingState());
     _initializePagination(context);
-    _fetchFilterData(context, emit);
+    await _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       await fetchAuctionListData(context, emit, isLoadMore: false);
     }
     emit(AuctionListingLoadedState());
   }
 
-  void _fetchFilterData(BuildContext context, Emitter<AuctionListingState> emit) async {
+  Future<void> _fetchFilterData(BuildContext context, Emitter<AuctionListingState> emit) async {
     if (filterData.isEmpty) {
       await _setupFilters(context);
-      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
   }
 

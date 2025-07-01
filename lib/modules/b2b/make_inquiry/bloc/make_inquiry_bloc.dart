@@ -86,7 +86,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     inquiryId = inquiryData.strInquiryId;
     fullNameController.text = inquiryData.strName ?? '';
     emailController.text = inquiryData.strEmail ?? '';
-
+    commentController.text = inquiryData.strComment ?? '';
     selectedInquiryType = inquiryTypeList.firstWhereOrNull((type) => type.name == inquiryData.strType);
 
     StatusModel? selectedStatus = statusList.firstWhereOrNull((status) => status.name.toLowerCase() == inquiryData.status?.value);

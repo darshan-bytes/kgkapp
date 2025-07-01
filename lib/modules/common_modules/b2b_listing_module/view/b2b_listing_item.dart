@@ -300,6 +300,7 @@ class B2BColumnDetailItem extends StatelessWidget {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: auctionListItemStyle.valueStyle,
+      isAutoSizeText: true,
     );
   }
 }
