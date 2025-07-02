@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+97
+version: 1.0.0+98
 
 environment:
   sdk: ^3.7.2
@@ -78,7 +78,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
 
   #For Dotted Border
-  dotted_border: ^3.0.1
+  dotted_border: ^3.1.0
 
   #For Image Pick
   image_picker: ^1.1.2
@@ -99,12 +99,12 @@ dependencies:
   google_maps_flutter: ^2.12.3
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^30.1.37
+  syncfusion_flutter_sliders: ^30.1.38
 
   #For Calendar
-  syncfusion_flutter_calendar: ^30.1.37
+  syncfusion_flutter_calendar: ^30.1.38
 
-  syncfusion_flutter_charts: ^30.1.37
+  syncfusion_flutter_charts: ^30.1.38
 
   #For QR Code
   qr_flutter: ^4.1.0
@@ -126,7 +126,7 @@ dependencies:
   http_parser: ^4.1.2
 
   # access location
-  geolocator: ^14.0.1
+  geolocator: ^14.0.2
 
   # For Url Launcher
   url_launcher: ^6.3.1
@@ -140,8 +140,8 @@ dependencies:
   photo_view: ^0.15.0
   model_viewer_plus: ^1.9.3
 
-  firebase_core: ^3.14.0
-  firebase_crashlytics: ^4.3.7
+  firebase_core: ^3.15.0
+  firebase_crashlytics: ^4.3.8
 
   flutter_langdetect: ^0.0.2
   flutter_staggered_grid_view: ^0.7.0
