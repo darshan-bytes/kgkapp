@@ -38,8 +38,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   PaymentCondition? selectedPaymentCondition;
 
-  bool isReadMoreDetailsOpen = false;
-
   TextEditingController variationController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
@@ -50,13 +48,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   MyBagBloc() : super(MyBagInitial()) {
     on<InitialMyBagEvent>(_onInitialMyBagEvent);
     on<MyBagChangeProductQuality>(_onMyBagChangeProductQuality);
-    on<MyBagChangeProductQuantity>(_onMyBagChangeProductQuantity);
     on<MyBagRemoveProductEvent>(_onMyBagRemoveProduct);
     on<MyBagSelectAllProductChangedEvent>(_onMyBagSelectAllProductChangedEvent);
     on<MyBagSelectProductChangedEvent>(_onMyBagSelectProductChangedEvent);
     on<ShowFullProductDetailsEvent>(_onShowFullProductDetailsEvent);
     on<MyBagPaymentConditionChangedEvent>(_onMyBagPaymentConditionChangedEvent);
-    on<MyBagToggleReadMoreDetailsEvent>(_onMyBagToggleReadMoreDetailsEvent);
     on<MyBagToggleViewModeEvent>(_onMyBagToggleViewModeEvent);
     on<MyBagMoveToWishListEvent>(_onMyBagMoveToWishListEvent);
     on<MyBagRemovePromoCodeEvent>(_onMyBagRemovePromoCode);
@@ -67,6 +63,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<ClearMyBagEvent>(_onClearMyBag);
     on<FetchOrderSummaryDataEvent>(_onFetchOrderSummaryData);
     on<MyBagRemoveAllProductEvent>(_onMyBagRemoveAllProductEvent);
+    on<MyBagVariationChangeEvent>(_onMyBagVariationChangeEvent, transformer: BlocEventDeBouncer.debounceTransformer());
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
@@ -328,6 +325,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       },
       (r) {
         bagOrderSummaryData = r;
+        variationController.text = (bagOrderSummaryData?.percentage ?? 0).toString();
+
         emit(MyBagOrderSummaryDataLoadedState());
         onSuccess?.call();
       },
@@ -339,14 +338,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     if (myBagProductList[event.index].productQuality?.name != event.productQuality.name) {
       myBagProductList[event.index].productQuality = event.productQuality;
       emit(MyBagProductQualityChangedState(index: event.index, productQuality: event.productQuality));
-    }
-  }
-
-  void _onMyBagChangeProductQuantity(MyBagChangeProductQuantity event, Emitter<MyBagState> emit) {
-    emit(MyBagReloadState());
-    if (myBagProductList[event.index].productQuantity?.name != event.productQuantity.name) {
-      myBagProductList[event.index].productQuantity = event.productQuantity;
-      emit(MyBagProductQuantityChangedState(index: event.index, productQuantity: event.productQuantity));
     }
   }
 
@@ -453,11 +444,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     emit(MyBagReloadState());
     selectedPaymentCondition = event.paymentCondition;
     emit(MyBagPaymentConditionChangedState(paymentCondition: selectedPaymentCondition!));
-  }
-
-  void _onMyBagToggleReadMoreDetailsEvent(MyBagToggleReadMoreDetailsEvent event, Emitter<MyBagState> emit) {
-    isReadMoreDetailsOpen = !isReadMoreDetailsOpen;
-    emit(MyBagToggleReadMoreDetailsState(isReadMoreDetailsOpen));
   }
 
   Future<void> _onMyBagRemovePromoCode(MyBagRemovePromoCodeEvent event, Emitter<MyBagState> emit) async {
@@ -686,6 +672,30 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         BlocProvider.of<LandingBloc>(event.context.mounted ? event.context : getNavigatorKeyContext).add(LandingChangeMyBagCountEvent(0));
         emit(const MyBagLoadedState());
         emit(MyBagSalesmanListLoadedState());
+        emit(MyBagOrderSummaryDataLoadedState());
+      },
+    );
+  }
+
+  Future<void> _onMyBagVariationChangeEvent(MyBagVariationChangeEvent event, Emitter<MyBagState> emit) async {
+    await handlePaymentConditionChange(event.context, emit);
+  }
+
+  Future<void> handlePaymentConditionChange(BuildContext context, Emitter<MyBagState> emit) async {
+    FocusScope.of(context).unfocus();
+    double percentage = variationController.text.trim().toDouble ?? 0;
+    final Map<String, dynamic> body = {ApiKey.percentage: percentage};
+    final response = await AppRepository(context).bagAddDiscountPercentage(body: body);
+
+    await response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        emit(MyBagLoadedState());
+        await fetchListOfBag(context, emit);
+        emit(MyBagLoadedState());
+        await fetchBagOrderSummaryData(context, emit);
         emit(MyBagOrderSummaryDataLoadedState());
       },
     );
