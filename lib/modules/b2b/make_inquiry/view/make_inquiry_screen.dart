@@ -16,8 +16,10 @@ class MakeInquiryScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SmartImage(path: 'https://i.ibb.co/RPzDQqL/Rectangle-656.png', height: 464.h, width: context.width, fit: BoxFit.cover),
-              SizedBox(height: 14.h),
+              /// Below code is commented as per the discussion with the team
+              /// Reference: https://thekgk.atlassian.net/browse/TA-675
+              // SmartImage(path: 'https://i.ibb.co/RPzDQqL/Rectangle-656.png', height: 464.h, width: context.width, fit: BoxFit.cover),
+              // SizedBox(height: 14.h),
               _buildFullNameField(bloc),
               SizedBox(height: 14.h),
               _buildEmailField(bloc),
