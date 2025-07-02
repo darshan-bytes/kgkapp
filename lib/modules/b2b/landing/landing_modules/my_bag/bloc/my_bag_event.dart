@@ -23,16 +23,6 @@ final class MyBagChangeProductQuality extends MyBagEvent {
   List<Object> get props => [index, productQuality];
 }
 
-final class MyBagChangeProductQuantity extends MyBagEvent {
-  final int index;
-  final CartProductQuantity productQuantity;
-
-  const MyBagChangeProductQuantity({required this.index, required this.productQuantity});
-
-  @override
-  List<Object> get props => [index, productQuantity];
-}
-
 final class MyBagRemoveProductEvent extends MyBagEvent {
   final int index;
   final BuildContext context;
@@ -76,13 +66,6 @@ final class MyBagPaymentConditionChangedEvent extends MyBagEvent {
 
   @override
   List<Object> get props => [paymentCondition];
-}
-
-final class MyBagToggleReadMoreDetailsEvent extends MyBagEvent {
-  const MyBagToggleReadMoreDetailsEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 final class MyBagToggleViewModeEvent extends MyBagEvent {
@@ -179,4 +162,13 @@ final class MyBagRemoveAllProductEvent extends MyBagEvent {
 
   @override
   List<Object> get props => [context];
+}
+
+final class MyBagVariationChangeEvent extends MyBagEvent {
+  final BuildContext context;
+
+  const MyBagVariationChangeEvent({required this.context});
+
+  @override
+  List<Object?> get props => [context];
 }
