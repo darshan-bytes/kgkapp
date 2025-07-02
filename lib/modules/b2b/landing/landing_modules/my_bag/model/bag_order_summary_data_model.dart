@@ -1,12 +1,23 @@
 import 'package:kgk/kgk.dart';
 
 class BagOrderSummaryDataModel {
-  BagOrderSummaryDataModel({required this.subTotal, required this.totalAmount, required this.charges, required this.promoCode});
+  BagOrderSummaryDataModel({
+    required this.subTotal,
+    required this.totalAmount,
+    required this.charges,
+    required this.promoCode,
+    required this.percentage,
+    required this.afterDiscountSubtractAmount,
+    required this.totalAmountInNumber,
+  });
 
   final String? subTotal;
   final String? totalAmount;
   final List<BagOrderCharge> charges;
   final BagOrderCharge? promoCode;
+  final double? percentage;
+  final String? afterDiscountSubtractAmount;
+  final double? totalAmountInNumber;
 
   factory BagOrderSummaryDataModel.fromJson(Map<String, dynamic> json) {
     return BagOrderSummaryDataModel(
@@ -14,6 +25,9 @@ class BagOrderSummaryDataModel {
       totalAmount: json["totalAmount"],
       charges: json["charges"] == null ? [] : List<BagOrderCharge>.from(json["charges"]!.map((x) => BagOrderCharge.fromJson(x))),
       promoCode: json["promoCode"] == null ? null : BagOrderCharge.fromJson(json["promoCode"]),
+      percentage: json["percentage"]?.toString().toDouble,
+      afterDiscountSubtractAmount: json["afterDiscountSubtractAmount"],
+      totalAmountInNumber: json["totalAmountInNumber"],
     );
   }
 
@@ -22,6 +36,9 @@ class BagOrderSummaryDataModel {
     "totalAmount": totalAmount,
     "charges": charges.map((x) => x.toJson()).toList(),
     "promoCode": promoCode?.toJson(),
+    "percentage": percentage,
+    "afterDiscountSubtractAmount": afterDiscountSubtractAmount,
+    "totalAmountInNumber": totalAmountInNumber,
   };
 }
 

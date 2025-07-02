@@ -691,6 +691,7 @@ class MyBagScreen extends StatelessWidget {
                       nextFocus: bloc.noteFocusNode,
                       textInputFormatter: [DoubleInputFormatter()],
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                      onValueChanges: (p0) => bloc.add(MyBagVariationChangeEvent(context: context)),
                     ),
                     SizedBox(height: 24.h),
                     SmartTextField(

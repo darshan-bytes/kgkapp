@@ -33,16 +33,6 @@ final class MyBagProductQualityChangedState extends MyBagState {
   List<Object> get props => [index, productQuality];
 }
 
-final class MyBagProductQuantityChangedState extends MyBagState {
-  final int index;
-  final CartProductQuantity productQuantity;
-
-  const MyBagProductQuantityChangedState({required this.index, required this.productQuantity});
-
-  @override
-  List<Object> get props => [index, productQuantity];
-}
-
 final class MyBagProductRemovedState extends MyBagState {
   final int index;
 
@@ -83,15 +73,6 @@ final class MyBagPaymentConditionChangedState extends MyBagState {
 
   @override
   List<Object> get props => [paymentCondition];
-}
-
-final class MyBagToggleReadMoreDetailsState extends MyBagState {
-  final bool isReadMoreDetailsOpen;
-
-  const MyBagToggleReadMoreDetailsState(this.isReadMoreDetailsOpen);
-
-  @override
-  List<Object> get props => [isReadMoreDetailsOpen];
 }
 
 final class MyBagToggleViewModeState extends MyBagState {
