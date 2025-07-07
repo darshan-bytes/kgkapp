@@ -824,8 +824,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     await UserRepository(context).logoutUser({});
     clearData();
     ApiService.isServiceEnabled = false;
-    BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-    BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+    BlocProvider.of<AppBloc>(context).userType = UserType.b2cUser;
     await StorageManager().clearSession();
     context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
   }

@@ -249,7 +249,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         description: data.cscCode,
         image: data.catalogueCoverImage?.setMediaUrl,
         productCount: data.products.length.toString(),
-        date: data.updatedAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
+        date: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         status: ProjectStatus.values.firstWhereOrNull((e) => e.value == data.status?.toLowerCase()),
       );
     }).toList();
