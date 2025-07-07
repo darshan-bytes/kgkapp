@@ -16,6 +16,7 @@ class SmartImage extends StatelessWidget {
   final BoxBorder? border;
   final bool isMemCacheEnabled;
   final bool matchTextDirection;
+  final AlignmentDirectional? alignment;
 
   const SmartImage({
     super.key,
@@ -33,6 +34,7 @@ class SmartImage extends StatelessWidget {
     this.border,
     this.isMemCacheEnabled = true,
     this.matchTextDirection = false,
+    this.alignment,
   });
 
   @override
@@ -48,6 +50,7 @@ class SmartImage extends StatelessWidget {
         padding: padding,
         margin: margin,
         clipBehavior: Clip.hardEdge,
+        alignment: alignment,
         decoration: BoxDecoration(borderRadius: imageBorderRadius, border: border),
         child: Image.asset(
           AppImages.icPlaceholder,
@@ -68,6 +71,7 @@ class SmartImage extends StatelessWidget {
             padding: padding,
             margin: margin,
             clipBehavior: Clip.hardEdge,
+            alignment: alignment,
             decoration: BoxDecoration(borderRadius: imageBorderRadius, border: border, color: bgColor),
             child: SvgPicture.asset(
               path,
@@ -86,6 +90,7 @@ class SmartImage extends StatelessWidget {
             padding: padding,
             margin: margin,
             clipBehavior: Clip.hardEdge,
+            alignment: alignment,
             decoration: BoxDecoration(borderRadius: imageBorderRadius, border: border, color: bgColor),
             child: Image.asset(path, height: height, width: width, fit: fit ?? BoxFit.cover, matchTextDirection: matchTextDirection),
           );
@@ -97,6 +102,7 @@ class SmartImage extends StatelessWidget {
             padding: padding,
             margin: margin,
             clipBehavior: Clip.hardEdge,
+            alignment: alignment,
             decoration: BoxDecoration(borderRadius: imageBorderRadius, border: border, color: bgColor),
             child: Image.file(File(path), height: height, width: width, fit: fit ?? BoxFit.cover, matchTextDirection: matchTextDirection),
           );
@@ -108,6 +114,7 @@ class SmartImage extends StatelessWidget {
             padding: padding,
             margin: margin,
             clipBehavior: Clip.hardEdge,
+            alignment: alignment,
             decoration: BoxDecoration(borderRadius: imageBorderRadius, border: border, color: bgColor),
             child:
                 path.isSvgUrl

@@ -422,9 +422,11 @@ class StoneListingScreen extends StatelessWidget {
                             suid: product.suid,
                             productInfoClarityChat: ProductInfoClarityChat(
                               rapRate: product.rappaportPrice?.setCurrency,
-                              perCts: product.price?.setCurrency,
+                              perCts:
+                                  product.commodity == Commodity.diamond ? product.finalPrice?.setCurrency : product.priceCts?.setCurrency,
                               discount: product.discountPercentageString,
-                              amount: product.priceCts?.setCurrency,
+                              amount:
+                                  product.commodity == Commodity.diamond ? product.priceCts?.setCurrency : product.finalPrice?.setCurrency,
                               origin: product.origin,
                               stock: product.location,
                               commodity: product.stoneCommodityName,
