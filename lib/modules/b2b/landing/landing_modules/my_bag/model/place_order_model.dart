@@ -189,6 +189,7 @@ class OrderProduct {
     required this.yourRate,
     required this.yourDiscount,
     required this.yourAmount,
+    required this.ourAmount,
     required this.originalAmount,
     required this.originalRate,
     required this.image,
@@ -205,43 +206,10 @@ class OrderProduct {
   final String? yourRate;
   final String? yourDiscount;
   final String? yourAmount;
+  final String? ourAmount;
   final String? originalAmount;
   final String? originalRate;
   final String? image;
-
-  OrderProduct copyWith({
-    String? suid,
-    int? quantity,
-    double? discPercentage,
-    String? id,
-    String? productId,
-    String? productProductId,
-    String? productDescription,
-    double? ctsOrGms,
-    String? yourRate,
-    String? yourDiscount,
-    String? yourAmount,
-    String? originalAmount,
-    String? originalRate,
-    String? image,
-  }) {
-    return OrderProduct(
-      suid: suid ?? this.suid,
-      quantity: quantity ?? this.quantity,
-      discPercentage: discPercentage ?? this.discPercentage,
-      id: id ?? this.id,
-      productId: productId ?? this.productId,
-      productProductId: productProductId ?? this.productProductId,
-      productDescription: productDescription ?? this.productDescription,
-      ctsOrGms: ctsOrGms ?? this.ctsOrGms,
-      yourRate: yourRate ?? this.yourRate,
-      yourDiscount: yourDiscount ?? this.yourDiscount,
-      yourAmount: yourAmount ?? this.yourAmount,
-      originalAmount: originalAmount ?? this.originalAmount,
-      originalRate: originalRate ?? this.originalRate,
-      image: image ?? this.image,
-    );
-  }
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
     return OrderProduct(
@@ -256,6 +224,7 @@ class OrderProduct {
       yourRate: json["your_rate"]?.toString(),
       yourDiscount: json["your_discount"]?.toString(),
       yourAmount: json["your_amount"]?.toString(),
+      ourAmount: json["our_amount"]?.toString(),
       originalAmount: json["original_amount"]?.toString(),
       originalRate: json["original_rate"]?.toString(),
       image: json["image"],
@@ -274,6 +243,7 @@ class OrderProduct {
     "your_rate": yourRate,
     "your_discount": yourDiscount,
     "your_amount": yourAmount,
+    "our_amount": ourAmount,
     "original_amount": originalAmount,
     "original_rate": originalRate,
     "image": image,

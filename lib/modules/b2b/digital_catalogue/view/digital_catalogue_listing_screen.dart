@@ -110,7 +110,13 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                SmartImage(path: item.image ?? "", height: 200.h, width: context.width, fit: BoxFit.fill),
+                                SmartImage(
+                                  path: item.image ?? "",
+                                  width: context.width,
+                                  fit: BoxFit.cover,
+                                  isMemCacheEnabled: false,
+                                  alignment: AlignmentDirectional.center,
+                                ),
                                 PositionedDirectional(
                                   top: 10.w,
                                   end: 10.w,

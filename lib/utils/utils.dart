@@ -369,7 +369,7 @@ class Utils {
       BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
       await mergeCart(context);
       BlocProvider.of<LandingBloc>(context).add(LandingLogoutEvent());
-
+      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
       if (!isFromLoginRequired) {
         context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
       } else {
