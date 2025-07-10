@@ -99,7 +99,10 @@ class ProductListItem extends StatelessWidget {
             end: 8.w,
             child: Row(
               children: [
-                if (onEyeTap != null)
+                if (onEyeTap != null &&
+                    (StorageManager.instance.getIsSkipLogin() ||
+                        (Utils.getPermissionByModuleName(moduleName: ModuleKey.watchlist)?.create?.allowed == true &&
+                            Utils.getPermissionByModuleName(moduleName: ModuleKey.watchlist)?.update?.allowed == true)))
                   buildIcon(
                     path: AppImages.icAddEye,
                     onTap: () {
@@ -108,7 +111,9 @@ class ProductListItem extends StatelessWidget {
                     style: style,
                   ),
                 SizedBox(width: 8.w),
-                if (onFavTap != null)
+                if (onFavTap != null &&
+                    (StorageManager.instance.getIsSkipLogin() ||
+                        (Utils.getPermissionByModuleName(moduleName: ModuleKey.wishlist)?.create?.allowed == true)))
                   BlocBuilder<AppBloc, AppState>(
                     buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
                     builder: (context, state) {

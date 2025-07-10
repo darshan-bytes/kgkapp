@@ -203,6 +203,8 @@ class CommonResponse<T> {
         return DiyJewelleryType.fromJson(json);
       case const (ProductCustomizeData):
         return ProductCustomizeData.fromJson(json);
+      case const (UserPermissions):
+        return UserPermissions.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):

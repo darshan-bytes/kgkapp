@@ -82,12 +82,18 @@ class PreviewCatalogueScreen extends StatelessWidget {
                     (bloc.productList[index].commodity != Commodity.diamond) && (bloc.productList[index].commodity != Commodity.gemstone),
                 isHidePriceView: _isHidePriceView(bloc.productList[index].commodity!),
                 isCommentSelected: bloc.productList[index].isCommentVisible,
-                onCommentTap: () {
-                  context.pushNamed(
-                    AppRoutes.commentListingPage,
-                    arguments: {RoutesData.catalogueId: bloc.catalogueId, RoutesData.productId: bloc.productList[index].productId ?? ""},
-                  );
-                },
+                onCommentTap:
+                    bloc.isCommentPermission
+                        ? () {
+                          context.pushNamed(
+                            AppRoutes.commentListingPage,
+                            arguments: {
+                              RoutesData.catalogueId: bloc.catalogueId,
+                              RoutesData.productId: bloc.productList[index].productId ?? "",
+                            },
+                          );
+                        }
+                        : null,
               );
             }),
           ),

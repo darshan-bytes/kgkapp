@@ -39,6 +39,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       _languageLabelApiCall(context, emit),
       appBloc.sortOptionListApiCall(context),
       appBloc.getDIYJewelleryFilters(context),
+      appBloc.getUserPermissions(context),
     ]);
     await navigateToNextScreen(context);
   }

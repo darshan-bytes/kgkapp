@@ -47,6 +47,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   DiyStyleListModel? diyStyleForDIY;
 
   List<DiyJewelleryType> diyJewelleryTypeList = [];
+  UserPermissions? userPermissions;
 
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
@@ -206,12 +207,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     await AppRepository(event.context).createWishList(body: body).then((response) {
       response?.fold((l) {}, (data) {
         Utils.showMessage(data.message);
-        WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
-        event.productDetails.wishlistId = model.id;
+        WishlistResponseModel? model = data.responseData.firstOrNull as WishlistResponseModel?;
+        event.productDetails.wishlistId = model?.id;
         event.productDetails.isFavourite = true;
         BlocProvider.of<WishlistUpdaterServiceBloc>(
           event.context.mounted ? event.context : getNavigatorKeyContext,
-        ).add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: model.id ?? ''));
+        ).add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: model?.id ?? ''));
 
         event.onFavTap?.call();
         emit(const ProductAddToFavoriteState());
@@ -597,6 +598,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     response = await AppRepository(context).diyJewelleryFilters();
     response?.fold((error) {}, (diyJewelleryTypes) async {
       diyJewelleryTypeList = diyJewelleryTypes;
+    });
+  }
+
+  Future<void> getUserPermissions(BuildContext context) async {
+    if (StorageManager.instance.getIsSkipLogin()) {
+      return;
+    }
+    Either<ErrorResponse, UserPermissions>? response;
+    response = await UserRepository(context).getUserPermissions();
+    await response?.fold((error) => null, (UserPermissions permissions) async {
+      await StorageManager.instance.setUserPermission(permissions);
+      userPermissions = permissions;
     });
   }
 }

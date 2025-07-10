@@ -13,6 +13,9 @@ class DesignListingGridItem extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final _GridViewType _viewType;
+  final Function()? onAddToBagTap;
+  final String? buttonText;
+  final String? prefixImage;
 
   const DesignListingGridItem({
     super.key,
@@ -25,6 +28,9 @@ class DesignListingGridItem extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.padding = EdgeInsetsDirectional.zero,
     this.margin = EdgeInsetsDirectional.zero,
+    this.onAddToBagTap,
+    this.buttonText,
+    this.prefixImage,
   }) : _viewType = _GridViewType.designGridItem;
 
   const DesignListingGridItem.designGridItem({
@@ -38,6 +44,9 @@ class DesignListingGridItem extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.padding = EdgeInsetsDirectional.zero,
     this.margin = EdgeInsetsDirectional.zero,
+    this.onAddToBagTap,
+    this.buttonText,
+    this.prefixImage,
   }) : _viewType = _GridViewType.designGridItem;
 
   const DesignListingGridItem.cadLibrary({
@@ -51,6 +60,9 @@ class DesignListingGridItem extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.padding = EdgeInsetsDirectional.zero,
     this.margin = EdgeInsetsDirectional.zero,
+    this.onAddToBagTap,
+    this.buttonText,
+    this.prefixImage,
   }) : _viewType = _GridViewType.cadLibrary;
 
   @override
@@ -71,7 +83,7 @@ class DesignListingGridItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             productImageSection(productItemWidth, style),
-            productDetailsSection(productItemWidth, style, designListingGridItemStyle),
+            productDetailsSection(productItemWidth, style, designListingGridItemStyle, context),
           ],
         ),
       ),
@@ -114,7 +126,12 @@ class DesignListingGridItem extends StatelessWidget {
     );
   }
 
-  Widget productDetailsSection(double width, ProductItemStyle style, DesignListingGridItemStyle designListingGridItemStyle) {
+  Widget productDetailsSection(
+    double width,
+    ProductItemStyle style,
+    DesignListingGridItemStyle designListingGridItemStyle,
+    BuildContext context,
+  ) {
     return Flexible(
       child: Container(
         width: width,
@@ -123,22 +140,26 @@ class DesignListingGridItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: _buildDetails(style, designListingGridItemStyle),
+          children: _buildDetails(style, designListingGridItemStyle, context),
         ),
       ),
     );
   }
 
-  List<Widget> _buildDetails(ProductItemStyle style, DesignListingGridItemStyle designListingGridItemStyle) {
+  List<Widget> _buildDetails(ProductItemStyle style, DesignListingGridItemStyle designListingGridItemStyle, BuildContext context) {
     switch (_viewType) {
       case _GridViewType.designGridItem:
-        return _buildDesignGridItemDetails(style, designListingGridItemStyle);
+        return _buildDesignGridItemDetails(style, designListingGridItemStyle, context);
       case _GridViewType.cadLibrary:
         return _buildCADLibraryDetails(designListingGridItemStyle, style);
     }
   }
 
-  List<Widget> _buildDesignGridItemDetails(ProductItemStyle style, DesignListingGridItemStyle designListingGridItemStyle) {
+  List<Widget> _buildDesignGridItemDetails(
+    ProductItemStyle style,
+    DesignListingGridItemStyle designListingGridItemStyle,
+    BuildContext context,
+  ) {
     return [
       if (designModel.strDesignNumber.isNotNullNorEmpty) ...[
         SmartText(designModel.strDesignNumber, style: style.productNameStyle, maxLines: 2, overflow: TextOverflow.ellipsis),
@@ -180,6 +201,29 @@ class DesignListingGridItem extends StatelessWidget {
         ),
 
       diamondAndGramSection(style),
+      if (onAddToBagTap != null)
+        SmartButton(
+          height: 32.w,
+          margin: EdgeInsetsDirectional.only(top: 8.h),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
+          titleStyle: style.buttonTextStyle,
+          onTap: () {
+            if (buttonText.isNullOrEmpty) {
+              if (designModel.isAddedToCart) {
+                BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context, isForce: true));
+                context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+              } else {
+                BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(ProductDetailsModel(), context));
+              }
+            } else {
+              onAddToBagTap?.call();
+            }
+          },
+          title: buttonText ?? (designModel.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr),
+          prefixImage: prefixImage,
+          isShadow: false,
+          imageSize: 16.w,
+        ),
     ];
   }
 

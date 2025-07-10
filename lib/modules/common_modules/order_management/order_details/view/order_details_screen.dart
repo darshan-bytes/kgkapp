@@ -292,7 +292,7 @@ class _OrderDetailsInfoCard extends StatelessWidget {
                       spans: [
                         SmartTextSpan(text: APPStrings.orderOn.tr, style: style.orderDateStyle),
                         SmartTextSpan(text: " : ", style: style.orderDateStyle),
-                        SmartTextSpan(text: placeOrderResponse!.getOrderDate, style: style.orderDateStyle),
+                        SmartTextSpan(text: placeOrderResponse?.getOrderDate ?? '', style: style.orderDateStyle),
                       ],
                     ),
                   ],
