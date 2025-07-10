@@ -61,7 +61,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     emit(PddListingLoadedState());
   }
 
-  void _fetchModulePermission() async {
+  void _fetchModulePermission() {
     PermissionData? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.presentations);
     if (permission != null) {
       modulePermission = permission;

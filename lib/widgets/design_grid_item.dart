@@ -30,7 +30,7 @@ class DesignListingGridItem extends StatelessWidget {
     this.margin = EdgeInsetsDirectional.zero,
     this.onAddToBagTap,
     this.buttonText,
-    this.prefixImage,
+    this.prefixImage = AppImages.icShoppingBag,
   }) : _viewType = _GridViewType.designGridItem;
 
   const DesignListingGridItem.designGridItem({
@@ -46,7 +46,7 @@ class DesignListingGridItem extends StatelessWidget {
     this.margin = EdgeInsetsDirectional.zero,
     this.onAddToBagTap,
     this.buttonText,
-    this.prefixImage,
+    this.prefixImage = AppImages.icShoppingBag,
   }) : _viewType = _GridViewType.designGridItem;
 
   const DesignListingGridItem.cadLibrary({
@@ -62,7 +62,7 @@ class DesignListingGridItem extends StatelessWidget {
     this.margin = EdgeInsetsDirectional.zero,
     this.onAddToBagTap,
     this.buttonText,
-    this.prefixImage,
+    this.prefixImage = AppImages.icShoppingBag,
   }) : _viewType = _GridViewType.cadLibrary;
 
   @override
@@ -140,7 +140,42 @@ class DesignListingGridItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: _buildDetails(style, designListingGridItemStyle, context),
+          children: [
+            ..._buildDetails(style, designListingGridItemStyle, context),
+            if (onAddToBagTap != null)
+              SmartButton(
+                height: 32.w,
+                margin: EdgeInsetsDirectional.only(top: 8.h),
+                padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
+                titleStyle: style.buttonTextStyle,
+                onTap: () {
+                  if (buttonText.isNullOrEmpty) {
+                    if (designModel.isAddedToCart) {
+                      BlocProvider.of<LandingBloc>(
+                        context,
+                      ).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context, isForce: true));
+                      context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                    } else {
+                      BlocProvider.of<AppBloc>(context).add(
+                        ProductAddToBagEvent(
+                          ProductDetailsModel(commodity: designModel.commodity, suid: designModel.id),
+                          context,
+                          onProductAdded: () {
+                            designModel.isAddedToCart = true;
+                          },
+                        ),
+                      );
+                    }
+                  } else {
+                    onAddToBagTap?.call();
+                  }
+                },
+                title: buttonText ?? (designModel.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr),
+                prefixImage: prefixImage,
+                isShadow: false,
+                imageSize: 16.w,
+              ),
+          ],
         ),
       ),
     );
@@ -201,29 +236,6 @@ class DesignListingGridItem extends StatelessWidget {
         ),
 
       diamondAndGramSection(style),
-      if (onAddToBagTap != null)
-        SmartButton(
-          height: 32.w,
-          margin: EdgeInsetsDirectional.only(top: 8.h),
-          padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
-          titleStyle: style.buttonTextStyle,
-          onTap: () {
-            if (buttonText.isNullOrEmpty) {
-              if (designModel.isAddedToCart) {
-                BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context, isForce: true));
-                context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
-              } else {
-                BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(ProductDetailsModel(), context));
-              }
-            } else {
-              onAddToBagTap?.call();
-            }
-          },
-          title: buttonText ?? (designModel.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr),
-          prefixImage: prefixImage,
-          isShadow: false,
-          imageSize: 16.w,
-        ),
     ];
   }
 

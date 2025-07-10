@@ -171,6 +171,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                         arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: item.id},
                       );
                     },
+                    onAddToBagTap: () {},
                   ),
                 )
                 .toList(),
@@ -201,6 +202,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                     arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: bloc.cadList[index].id},
                   );
                 },
+                onAddToBagTap: () {},
               ),
               if (state is CadListLoadingMoreState && index == bloc.cadList.length - 1) const SmartCircularProgressIndicator(),
             ],

@@ -147,6 +147,7 @@ class DesignListingScreen extends StatelessWidget {
             onTap: () {
               context.pushNamed(AppRoutes.designLibraryFeedbackPage);
             },
+            onAddToBagTap: () {},
           ),
         ),
       ),

@@ -137,6 +137,7 @@ class SkuLibraryScreen extends StatelessWidget {
                 },
               );
             },
+            onAddToBagTap: () {},
           ),
         ),
         isLoadingMore: state is SkuLibraryLoadingMoreState,
@@ -166,6 +167,7 @@ class SkuLibraryScreen extends StatelessWidget {
                     },
                   );
                 },
+                onAddToBagTap: () {},
               ),
               if (state is SkuLibraryLoadingMoreState && index == bloc.skuLibraryList.length - 1) const SmartCircularProgressIndicator(),
             ],
