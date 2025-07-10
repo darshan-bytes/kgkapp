@@ -101,7 +101,7 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     emit(UserMasterListingLoadedState());
   }
 
-  void _fetchModulePermission() async {
+  void _fetchModulePermission() {
     PermissionData? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.users);
     if (permission != null) {
       modulePermission = permission;

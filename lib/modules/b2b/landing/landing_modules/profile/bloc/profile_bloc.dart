@@ -212,7 +212,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     profileCMSList = _getCMSProfileActions();
   }
 
-  void _fetchModulePermission() async {
+  void _fetchModulePermission() {
     isOrderEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.orders)?.list?.allowed ?? false);
     isMyEnquiryEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.inquiries)?.list?.allowed ?? false);
     isWatchlistEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.watchlist)?.list?.allowed ?? false);

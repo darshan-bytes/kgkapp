@@ -96,6 +96,7 @@ class B2BCustomListingDataModel {
   String? tagImagePath;
   bool isAddedToCart;
   bool isCreatedByMe;
+  Commodity? commodity;
 
   B2BCustomListingDataModel({
     this.id,
@@ -193,5 +194,6 @@ class B2BCustomListingDataModel {
     this.tagImagePath,
     this.isAddedToCart = false,
     this.isCreatedByMe = false,
+    this.commodity,
   });
 }

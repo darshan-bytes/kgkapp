@@ -180,6 +180,8 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
       strCarats: sourceModel.crt.isNotNullNorEmpty ? "${sourceModel.crt} ${APPStrings.crt.tr}" : null,
       strGrams: sourceModel.gms.isNotNullNorEmpty ? "${sourceModel.gms} ${APPStrings.grms.tr}" : null,
       tagImagePath: getTagImagePath(sourceModel),
+      commodity: Commodity.skuLibrary,
+      isAddedToCart: sourceModel.isAddedToCart,
     );
   }
 
