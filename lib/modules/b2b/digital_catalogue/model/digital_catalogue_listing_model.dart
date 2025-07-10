@@ -8,8 +8,18 @@ class DigitalCatalogueListingModel {
   String? productCount;
   String? date;
   ProjectStatus? status;
+  bool isCreatedByMe;
 
-  DigitalCatalogueListingModel({this.id, this.name, this.description, this.image, this.productCount, this.date, this.status});
+  DigitalCatalogueListingModel({
+    this.id,
+    this.name,
+    this.description,
+    this.image,
+    this.productCount,
+    this.date,
+    this.status,
+    this.isCreatedByMe = false,
+  });
 
   @override
   bool operator ==(Object other) {

@@ -66,6 +66,14 @@ class StorageManager {
     return userResponse.isNotNullNorEmpty ? UserResponse.fromJson(jsonDecode(userResponse!)) : null;
   }
 
+  Future<void> setUserPermission(UserPermissions userPermission) async {
+    UserResponse? userResponse = getUserResponse();
+    if (userResponse != null) {
+      userResponse.userPermissions = userPermission;
+      await setUserResponse(userResponse);
+    }
+  }
+
   Future<void> setUserData(UserIdDetails userIdDetails) async {
     await _box.put(_userData, jsonEncode(userIdDetails.toJson()));
   }

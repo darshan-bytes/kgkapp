@@ -5,9 +5,8 @@ class BlocGenerator {
     return [
       BlocProvider<GetReadyBloc>(create: (_) => GetReadyBloc()),
       BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent(context: context)), lazy: false),
-      BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
+      BlocProvider<CategoriesBloc>(create: (context) => CategoriesBloc(context)),
       BlocProvider<HomeBloc>(create: (_) => HomeBloc()),
-      BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<MyBagBloc>(create: (_) => MyBagBloc()),
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
       BlocProvider<CompanyBloc>(create: (_) => CompanyBloc()),

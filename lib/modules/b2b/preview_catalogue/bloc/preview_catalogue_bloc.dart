@@ -18,6 +18,9 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
   /// List of product details displayed in the catalogue.
   List<ProductDetailsModel> productList = [];
 
+  /// This modulePermission is used to store the module permission
+  bool isCommentPermission = false;
+
   PreviewCatalogueBloc() : super(const PreviewCatalogueInitial()) {
     on<InitialPreviewCatalogueEvent>(_onInitialPreviewCatalogueEvent);
     on<PreviewCatalogueShareEvent>(_onPreviewCatalogueShareEvent);
@@ -26,6 +29,8 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
   /// Handles the initial loading of the preview catalogue.
   Future<void> _onInitialPreviewCatalogueEvent(InitialPreviewCatalogueEvent event, Emitter<PreviewCatalogueState> emit) async {
     _getRouteData(context: event.context);
+    PermissionData? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.digitalCatalogue);
+    isCommentPermission = permission?.comment?.allowed ?? false;
 
     await _callPreviewCatalogueApi(context: event.context);
     emit(const PreviewCatalogueLoadedState());

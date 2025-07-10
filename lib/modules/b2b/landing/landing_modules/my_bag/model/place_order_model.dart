@@ -193,11 +193,19 @@ class OrderProduct {
     required this.originalAmount,
     required this.originalRate,
     required this.image,
+    required this.customizationData,
+    required this.orderProductId,
+    required this.ourRate,
+    required this.ourDiscount,
+    required this.yourOriginalAmount,
+    required this.jewellery,
+    required this.diamond,
   });
 
   final String? suid;
   final int? quantity;
   final double? discPercentage;
+  final dynamic customizationData;
   final String? id;
   final String? productId;
   final String? productProductId;
@@ -210,6 +218,12 @@ class OrderProduct {
   final String? originalAmount;
   final String? originalRate;
   final String? image;
+  final String? orderProductId;
+  final String? ourRate;
+  final String? ourDiscount;
+  final String? yourOriginalAmount;
+  final OrderJewelleryProduct? jewellery;
+  final OrderDiamondProduct? diamond;
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
     return OrderProduct(
@@ -228,6 +242,13 @@ class OrderProduct {
       originalAmount: json["original_amount"]?.toString(),
       originalRate: json["original_rate"]?.toString(),
       image: json["image"],
+      customizationData: json["customization_data"],
+      orderProductId: json["id"],
+      ourRate: json["our_rate"]?.toString(),
+      ourDiscount: json["our_discount"]?.toString(),
+      yourOriginalAmount: json["your_original_amount"]?.toString(),
+      jewellery: json["jewellery"] == null ? null : OrderJewelleryProduct.fromJson(json["jewellery"]),
+      diamond: json["diamond"] == null ? null : OrderDiamondProduct.fromJson(json["diamond"]),
     );
   }
 
@@ -247,6 +268,13 @@ class OrderProduct {
     "original_amount": originalAmount,
     "original_rate": originalRate,
     "image": image,
+    "customization_data": customizationData,
+    "order_product_id": orderProductId,
+    "our_rate": ourRate,
+    "our_discount": ourDiscount,
+    "your_original_amount": yourOriginalAmount,
+    "jewellery": jewellery?.toJson(),
+    "diamond": diamond?.toJson(),
   };
 }
 
@@ -254,6 +282,10 @@ extension PlaceOrderModelExt on PlaceOrderResponse {
   String get getOrderDate {
     if (createdAt == null) return '';
     return createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ?? '';
+  }
+
+  Commodity? get getCommodity {
+    return Commodity.values.firstWhereOrNull((element) => element.name.toLowerCase() == commodity?.toLowerCase());
   }
 
   ProjectStatus? get getOrderStatus {
@@ -270,4 +302,140 @@ extension PlaceOrderModelExt on PlaceOrderResponse {
         return null;
     }
   }
+}
+
+class OrderDiamondProduct {
+  OrderDiamondProduct({
+    required this.id,
+    required this.productDescription,
+    required this.productId,
+    required this.rappaportPrice,
+    required this.yourRate,
+    required this.yourDiscount,
+    required this.yourAmount,
+    required this.yourOriginalAmount,
+    required this.originalAmount,
+    required this.originalRate,
+    required this.image,
+    required this.suid,
+  });
+
+  final String? id;
+  final String? productDescription;
+  final String? productId;
+  final String? rappaportPrice;
+  final double? yourRate;
+  final double? yourDiscount;
+  final double? yourAmount;
+  final double? yourOriginalAmount;
+  final double? originalAmount;
+  final double? originalRate;
+  final String? image;
+  final String? suid;
+
+  factory OrderDiamondProduct.fromJson(Map<String, dynamic> json) {
+    return OrderDiamondProduct(
+      id: json["id"],
+      productDescription: json["product_description"],
+      productId: json["productId"],
+      rappaportPrice: json["rappaport_price"],
+      yourRate: json["your_rate"]?.toString().toDouble,
+      yourDiscount: json["your_discount"]?.toString().toDouble,
+      yourAmount: json["your_amount"]?.toString().toDouble,
+      yourOriginalAmount: json["your_original_amount"]?.toString().toDouble,
+      originalAmount: json["original_amount"]?.toString().toDouble,
+      originalRate: json["original_rate"]?.toString().toDouble,
+      image: json["image"],
+      suid: json["suid"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "product_description": productDescription,
+    "productId": productId,
+    "rappaport_price": rappaportPrice,
+    "your_rate": yourRate,
+    "your_discount": yourDiscount,
+    "your_amount": yourAmount,
+    "your_original_amount": yourOriginalAmount,
+    "original_amount": originalAmount,
+    "original_rate": originalRate,
+    "image": image,
+    "suid": suid,
+  };
+}
+
+class OrderJewelleryProduct {
+  OrderJewelleryProduct({
+    required this.id,
+    required this.productId,
+    required this.productDescription,
+    required this.kgkCollection,
+    required this.yourRate,
+    required this.yourDiscount,
+    required this.yourAmount,
+    required this.yourOriginalAmount,
+    required this.originalAmount,
+    required this.originalRate,
+    required this.suid,
+    required this.styleNo,
+    required this.image,
+    required this.jewelleryType,
+    required this.metalKaratage,
+  });
+
+  final String? id;
+  final String? productId;
+  final String? productDescription;
+  final String? kgkCollection;
+  final double? yourRate;
+  final double? yourDiscount;
+  final double? yourAmount;
+  final double? yourOriginalAmount;
+  final double? originalAmount;
+  final double? originalRate;
+  final String? suid;
+  final String? styleNo;
+  final String? image;
+  final String? jewelleryType;
+  final dynamic metalKaratage;
+
+  factory OrderJewelleryProduct.fromJson(Map<String, dynamic> json) {
+    return OrderJewelleryProduct(
+      id: json["id"],
+      productId: json["productId"],
+      productDescription: json["product_description"],
+      kgkCollection: json["kgk_collection"],
+      yourRate: json["your_rate"]?.toString().toDouble,
+      yourDiscount: json["your_discount"]?.toString().toDouble,
+      yourAmount: json["your_amount"]?.toString().toDouble,
+      yourOriginalAmount: json["your_original_amount"]?.toString().toDouble,
+      originalAmount: json["original_amount"]?.toString().toDouble,
+      originalRate: json["original_rate"]?.toString().toDouble,
+      suid: json["suid"],
+      styleNo: json["style_no"],
+      image: json["image"],
+      jewelleryType: json["jewellery_type"],
+      metalKaratage: json["metal_karatage"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "productId": productId,
+    "product_description": productDescription,
+    "kgk_collection": kgkCollection,
+    "your_rate": yourRate,
+    "your_discount": yourDiscount,
+    "your_amount": yourAmount,
+    "your_original_amount": yourOriginalAmount,
+    "original_amount": originalAmount,
+    "original_rate": originalRate,
+    "suid": suid,
+    "style_no": styleNo,
+    "image": image,
+    "jewellery_type": jewelleryType,
+    "metal_karatage": metalKaratage,
+  };
 }

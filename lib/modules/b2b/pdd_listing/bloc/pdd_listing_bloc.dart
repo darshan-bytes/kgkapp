@@ -24,6 +24,9 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   /// Focus node is used to control the focus
   FocusNode focusNode = FocusNode();
 
+  /// This modulePermission is used to store the module permission
+  PermissionData? modulePermission;
+
   PddListingBloc() : super(PddListingInitial()) {
     on<InitialPddListingEvent>(_onInitialPresentationListEvent);
     on<PresentationChangeListingTypeEvent>(_onChangeListingTypeEvent);
@@ -36,6 +39,12 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     on<PddListDeleteEvent>(_onPddListDeleteEvent);
   }
 
+  bool get canViewPresentation => modulePermission?.view?.allowed ?? false;
+
+  bool get canApprovePresentation => modulePermission?.update?.allowed ?? false;
+
+  bool get canDeletePresentation => modulePermission?.delete?.allowed ?? false;
+
   Future<void> _onInitialPresentationListEvent(InitialPddListingEvent event, Emitter<PddListingState> emit) async {
     await _initializeBloc(event.context, emit);
   }
@@ -43,12 +52,20 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<PddListingState> emit) async {
     emit(PddListLoadingState());
+    _fetchModulePermission();
     _initializePagination(context);
     _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || gridPaginationScrollController.currentPage <= totalNumberOfPages!) {
       await fetchPresentationList(context, emit, isLoadMore: false);
     }
     emit(PddListingLoadedState());
+  }
+
+  void _fetchModulePermission() async {
+    PermissionData? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.presentations);
+    if (permission != null) {
+      modulePermission = permission;
+    }
   }
 
   /// Initialize pagination
@@ -299,6 +316,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
         strConceptNumber: data.conceptNumber ?? '',
         strPresentationImageUrl: data.coverImage?.setMediaUrl ?? '',
         fields: generateB2BItemFields(data.assignedToDetails),
+        isCreatedByMe: data.createdByDetails.userAccountId == StorageManager.instance.getUserId(),
       );
     }).toList();
   }

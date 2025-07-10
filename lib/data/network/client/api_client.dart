@@ -281,6 +281,8 @@ class ApiClient {
   static const String customizationBag = '$apiBaseUrl/bag/customization';
 
   static const String bagAddDiscountPercentage = '$apiBaseUrl/bag/add-discount-percentage';
+
+  static String userPermissions(String id) => '$apiBaseUrl/user-permissions/user/$id';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

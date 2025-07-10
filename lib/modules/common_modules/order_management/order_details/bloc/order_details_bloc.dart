@@ -111,7 +111,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
       (CommonResponse<PlaceOrderResponse> success) {
         final responseData = success.responseData as List<PlaceOrderResponse>?;
         if (responseData.isNotNullNorEmpty) {
-          placeOrderResponse = responseData?.first;
+          placeOrderResponse = responseData?.firstOrNull;
           if (userType == UserType.b2bUser) {
             orderProductDetailsList = _generateOrderDetailsProductListForB2B(orderProductList: placeOrderResponse?.products ?? []);
           } else {
@@ -127,19 +127,21 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   List<ProductDetailsModel> _generateOrderDetailsListForB2C({required List<OrderProduct> orderProductList}) {
     return List.generate(orderProductList.length, (index) {
       final OrderProduct product = orderProductList[index];
+
       return ProductDetailsModel(
-        productId: product.productProductId,
-        imageUrl: product.image,
-        name: product.productDescription,
-        productSku: product.productProductId,
+        productId: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.productId : product.productProductId,
+        imageUrl: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.image : product.image,
+        name: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.productDescription : product.productDescription,
+        productSku: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.productId : product.productProductId,
         quantity: product.quantity,
         ctsOrGms: product.ctsOrGms,
-        yourRate: product.yourRate,
-        yourAmount: product.yourAmount,
+        yourRate: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.yourRate?.toString() : product.yourRate,
+        yourAmount:
+            placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.yourAmount?.toString().setCurrency : product.yourAmount,
         finalPrice: product.yourAmount?.setCurrency,
         originalPrice: product.yourAmount?.setCurrency,
         cts: product.ctsOrGms?.toString(),
-        suid: product.suid,
+        suid: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.suid : product.suid,
       );
     });
   }

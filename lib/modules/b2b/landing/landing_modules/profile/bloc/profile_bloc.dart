@@ -80,6 +80,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ];
   late Country selectedCountry;
 
+  bool isOrderEnabled = false;
+  bool isMyEnquiryEnabled = false;
+  bool isWatchlistEnabled = false;
+  bool isAuctionEnabled = false;
+  bool isExhibitionEnabled = false;
+  bool isActivityLogEnabled = false;
+
   ProfileBloc() : super(ProfileInitialState()) {
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
     on<InitialProfileListEvent>(_onInitialProfileListEvent);
@@ -203,6 +210,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     /// Add CMS related profile actions
     profileCMSList = _getCMSProfileActions();
+  }
+
+  void _fetchModulePermission() async {
+    isOrderEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.orders)?.list?.allowed ?? false);
+    isMyEnquiryEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.inquiries)?.list?.allowed ?? false);
+    isWatchlistEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.watchlist)?.list?.allowed ?? false);
+    isAuctionEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.auctions)?.list?.allowed ?? false);
+    isExhibitionEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.exhibitions)?.list?.allowed ?? false);
+    isActivityLogEnabled = (Utils.getPermissionByModuleName(moduleName: ModuleKey.activityLogs)?.list?.allowed ?? false);
   }
 
   /// Get user details from storage
@@ -429,14 +445,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   /// Helper function to get profile actions for internal users
   List<ProfileListModel> _getInternalUserProfileActions(BuildContext context) {
     return [
-      ProfileListModel(
-        image: AppImages.icMyOrders,
-        title: APPStrings.orderManagement,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.orderPage);
-        },
-      ),
+      if (isOrderEnabled)
+        ProfileListModel(
+          image: AppImages.icMyOrders,
+          title: APPStrings.orderManagement,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.orderPage);
+          },
+        ),
       ProfileListModel(
         image: AppImages.icProfileCalendar,
         title: APPStrings.calendar,
@@ -483,55 +500,61 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   /// Helper function to get profile actions for B2B users
   List<ProfileListModel> _getB2BUserProfileActions(BuildContext context) {
     return [
-      ProfileListModel(
-        image: AppImages.icMyOrders,
-        title: APPStrings.myOrder,
+      if (isOrderEnabled)
+        ProfileListModel(
+          image: AppImages.icMyOrders,
+          title: APPStrings.myOrder,
 
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.orderPage);
-        },
-      ),
-      ProfileListModel(
-        image: AppImages.icActions,
-        title: APPStrings.auctions,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.auctionListingPage);
-        },
-      ),
-      ProfileListModel(
-        image: AppImages.icInquiries,
-        title: APPStrings.myInquiries,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.myInquiryScreen);
-        },
-      ),
-      ProfileListModel(
-        image: AppImages.icWatchlist,
-        title: APPStrings.watchlist,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.watchListPage);
-        },
-      ),
-      ProfileListModel(
-        image: AppImages.icExhibition,
-        title: APPStrings.exhibition,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.exhibitionListingPage);
-        },
-      ),
-      ProfileListModel(
-        image: AppImages.icActivityLog,
-        title: APPStrings.activityLog,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.activityLogScreenPage);
-        },
-      ),
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.orderPage);
+          },
+        ),
+      if (isAuctionEnabled)
+        ProfileListModel(
+          image: AppImages.icActions,
+          title: APPStrings.auctions,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.auctionListingPage);
+          },
+        ),
+      if (isMyEnquiryEnabled)
+        ProfileListModel(
+          image: AppImages.icInquiries,
+          title: APPStrings.myInquiries,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.myInquiryScreen);
+          },
+        ),
+      if (isWatchlistEnabled)
+        ProfileListModel(
+          image: AppImages.icWatchlist,
+          title: APPStrings.watchlist,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.watchListPage);
+          },
+        ),
+      if (isExhibitionEnabled)
+        ProfileListModel(
+          image: AppImages.icExhibition,
+          title: APPStrings.exhibition,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.exhibitionListingPage);
+          },
+        ),
+      if (isActivityLogEnabled)
+        ProfileListModel(
+          image: AppImages.icActivityLog,
+          title: APPStrings.activityLog,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.activityLogScreenPage);
+          },
+        ),
       ProfileListModel(
         image: AppImages.icNewsFeed,
         title: APPStrings.newsFeed,
@@ -600,14 +623,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   /// Helper function to get default profile actions
   List<ProfileListModel> _getDefaultProfileActions(BuildContext context) {
     return [
-      ProfileListModel(
-        image: AppImages.icMyOrders,
-        title: APPStrings.myOrder,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.orderPage);
-        },
-      ),
+      if (isOrderEnabled)
+        ProfileListModel(
+          image: AppImages.icMyOrders,
+          title: APPStrings.myOrder,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.orderPage);
+          },
+        ),
       ProfileListModel(
         image: AppImages.icActions,
         title: APPStrings.auctions,
@@ -616,22 +640,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           context.pushNamed(AppRoutes.auctionListingPage);
         },
       ),
-      ProfileListModel(
-        image: AppImages.icInquiries,
-        title: APPStrings.myInquiries,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.myInquiryScreen);
-        },
-      ),
-      ProfileListModel(
-        image: AppImages.icWatchlist,
-        title: APPStrings.watchlist,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.watchListPage);
-        },
-      ),
+      if (isMyEnquiryEnabled)
+        ProfileListModel(
+          image: AppImages.icInquiries,
+          title: APPStrings.myInquiries,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.myInquiryScreen);
+          },
+        ),
+      if (isWatchlistEnabled)
+        ProfileListModel(
+          image: AppImages.icWatchlist,
+          title: APPStrings.watchlist,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.watchListPage);
+          },
+        ),
       ProfileListModel(
         image: AppImages.icNewsFeed,
         title: APPStrings.newsFeed,

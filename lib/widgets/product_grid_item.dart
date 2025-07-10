@@ -136,7 +136,10 @@ class _ProductGridItemState extends State<ProductGridItem> with AutomaticKeepAli
           end: 8.w,
           child: Row(
             children: [
-              if (widget.onEyeTap != null)
+              if (widget.onEyeTap != null &&
+                  (StorageManager.instance.getIsSkipLogin() ||
+                      (Utils.getPermissionByModuleName(moduleName: ModuleKey.watchlist)?.create?.allowed == true &&
+                          Utils.getPermissionByModuleName(moduleName: ModuleKey.watchlist)?.update?.allowed == true)))
                 buildIcon(
                   path: AppImages.icAddEye,
                   onTap: () {
@@ -145,7 +148,9 @@ class _ProductGridItemState extends State<ProductGridItem> with AutomaticKeepAli
                   style: style,
                 ),
               SizedBox(width: 8.w),
-              if (widget.onFavTap != null)
+              if (widget.onFavTap != null &&
+                  (StorageManager.instance.getIsSkipLogin() ||
+                      (Utils.getPermissionByModuleName(moduleName: ModuleKey.wishlist)?.create?.allowed == true)))
                 BlocBuilder<AppBloc, AppState>(
                   buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
                   builder: (context, state) {

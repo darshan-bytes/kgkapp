@@ -139,29 +139,43 @@ class PddListingScreen extends StatelessWidget {
                   children: [
                     bloc.isGrid
                         ? PresentationGridItem(
-                          onTapMenuButton: () {
-                            _showMenuButtonTap(context, bloc, index);
-                          },
+                          onTapMenuButton:
+                              ((bloc.canDeletePresentation && bloc.presentationList[index].isCreatedByMe) ||
+                                      (bloc.presentationList[index].status == ProjectStatus.pending && bloc.canApprovePresentation))
+                                  ? () {
+                                    _showMenuButtonTap(context, bloc, index);
+                                  }
+                                  : null,
                           margin: EdgeInsetsDirectional.only(
                             bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h,
                           ),
-                          onTap: () {
-                            bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
-                          },
+                          onTap:
+                              bloc.canViewPresentation
+                                  ? () {
+                                    bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
+                                  }
+                                  : null,
                           b2bCustomListingDataModel: bloc.presentationList[index],
                         )
                         : B2BListingItem(
                           margin: EdgeInsetsDirectional.only(
                             bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h,
                           ),
-                          onTapMenuButton: () {
-                            _showMenuButtonTap(context, bloc, index);
-                          },
+                          onTapMenuButton:
+                              ((bloc.canDeletePresentation && bloc.presentationList[index].isCreatedByMe) ||
+                                      (bloc.presentationList[index].status == ProjectStatus.pending && bloc.canApprovePresentation))
+                                  ? () {
+                                    _showMenuButtonTap(context, bloc, index);
+                                  }
+                                  : null,
                           type: B2BListingType.presentationListingType,
                           listingItemModel: bloc.presentationList[index],
-                          onTap: () {
-                            bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
-                          },
+                          onTap:
+                              bloc.canViewPresentation
+                                  ? () {
+                                    bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
+                                  }
+                                  : null,
                         ),
                     if (state is PddListLoadingMoreState && index == bloc.presentationList.length - 1)
                       const SmartCircularProgressIndicator(),
@@ -194,7 +208,7 @@ class PddListingScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (bloc.presentationList[index].status == ProjectStatus.pending)
+              if (bloc.presentationList[index].status == ProjectStatus.pending && bloc.canApprovePresentation)
                 _buildPopupOption(
                   mainContext,
                   text: APPStrings.approvePresentation.tr,
@@ -204,35 +218,36 @@ class PddListingScreen extends StatelessWidget {
                     handleApproveMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
                   },
                 ),
-              _buildPopupOption(
-                context,
-                text: APPStrings.deletePresentation.tr,
-                style: orderPopupStyle.cancelTextStyle,
-                onTap: () {
-                  context.pop();
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    builder:
-                        (bottomSheetContext) => ConfirmationDialog(
-                          title: APPStrings.removeSelectedPresentation.tr,
-                          message: APPStrings.removeSelectedPresentationMsg.tr,
-                          onApproved: () {
-                            bloc.add(
-                              PddListDeleteEvent(
-                                context: bottomSheetContext,
-                                presentationNumber: bloc.presentationList[index].strPresentationNumber ?? '',
-                              ),
-                            );
-                          },
-                          onDenied: () {
-                            bottomSheetContext.pop();
-                          },
-                          onApprovedText: APPStrings.delete.tr,
-                          onDeniedText: APPStrings.cancel.tr,
-                        ),
-                  );
-                },
-              ),
+              if (bloc.canDeletePresentation && bloc.presentationList[index].isCreatedByMe)
+                _buildPopupOption(
+                  context,
+                  text: APPStrings.deletePresentation.tr,
+                  style: orderPopupStyle.cancelTextStyle,
+                  onTap: () {
+                    context.pop();
+                    Utils.showSmartModalBottomSheet(
+                      context: context,
+                      builder:
+                          (bottomSheetContext) => ConfirmationDialog(
+                            title: APPStrings.removeSelectedPresentation.tr,
+                            message: APPStrings.removeSelectedPresentationMsg.tr,
+                            onApproved: () {
+                              bloc.add(
+                                PddListDeleteEvent(
+                                  context: bottomSheetContext,
+                                  presentationNumber: bloc.presentationList[index].strPresentationNumber ?? '',
+                                ),
+                              );
+                            },
+                            onDenied: () {
+                              bottomSheetContext.pop();
+                            },
+                            onApprovedText: APPStrings.delete.tr,
+                            onDeniedText: APPStrings.cancel.tr,
+                          ),
+                    );
+                  },
+                ),
             ],
           ),
         );
