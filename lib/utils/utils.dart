@@ -287,7 +287,7 @@ class Utils {
   }
 
   static PermissionData? getPermissionByModuleName({required ModuleKey moduleName}) {
-    final userResponse = StorageManager().getUserResponse();
+    final userResponse = StorageManager.instance.getUserResponse();
     if (userResponse?.userPermissions?.permissions != null) {
       Map<String, dynamic>? moduleData = userResponse?.userPermissions?.permissions?.toJson()[moduleName.value];
       if (moduleData is Map<String, dynamic>) {
@@ -365,8 +365,8 @@ class Utils {
     if (r.userIdDetails?.userTypeEnum != null) {
       await AppCrashlytics.instance.setUserId(r.userIdDetails?.userAccountId ?? "----");
       await StorageManager.instance.setIsSkipLogin(false);
-
       BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
+      await BlocProvider.of<AppBloc>(context).getUserPermissions(context);
       await mergeCart(context);
       BlocProvider.of<LandingBloc>(context).add(LandingLogoutEvent());
       BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));

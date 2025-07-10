@@ -162,4 +162,10 @@ class UserRepository extends ApiService {
     var response = await getMethod<UserIdDetails>(ApiClient.getUserProfile, withFullResponse: true);
     return response?.fold((ErrorResponse l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, UserPermissions>?> getUserPermissions() async {
+    String id = StorageManager.instance.getUserResponse()?.userId ?? '';
+    var response = await getMethod<UserPermissions>(ApiClient.userPermissions(id));
+    return response?.fold((ErrorResponse l) => Left(l), (r) => Right(r));
+  }
 }

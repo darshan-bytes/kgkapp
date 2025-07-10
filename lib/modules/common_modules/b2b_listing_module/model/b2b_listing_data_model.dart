@@ -94,6 +94,8 @@ class B2BCustomListingDataModel {
   String? strCarats;
   String? strGrams;
   String? tagImagePath;
+  bool isAddedToCart;
+  bool isCreatedByMe;
 
   B2BCustomListingDataModel({
     this.id,
@@ -189,5 +191,7 @@ class B2BCustomListingDataModel {
     this.strCarats,
     this.strGrams,
     this.tagImagePath,
+    this.isAddedToCart = false,
+    this.isCreatedByMe = false,
   });
 }

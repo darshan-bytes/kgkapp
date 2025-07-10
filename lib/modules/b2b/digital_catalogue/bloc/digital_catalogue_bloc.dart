@@ -7,6 +7,8 @@ part 'digital_catalogue_state.dart';
 enum PopupMenuOption { share, remove }
 
 class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueState> {
+  late AppBloc appBloc;
+
   /// This controller is used to control the search
   final TextEditingController searchController = TextEditingController();
 
@@ -66,6 +68,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
 
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<DigitalCatalogueState> emit) async {
+    appBloc = BlocProvider.of<AppBloc>(context);
     emit(DigitalCatalogueLoadingState());
     _fetchModulePermission();
     _initializePagination(context);
@@ -251,6 +254,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         productCount: data.products.length.toString(),
         date: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         status: ProjectStatus.values.firstWhereOrNull((e) => e.value == data.status?.toLowerCase()),
+        isCreatedByMe: data.createdByDetails?.userAccountId?.toString() == StorageManager.instance.getUserId(),
       );
     }).toList();
   }

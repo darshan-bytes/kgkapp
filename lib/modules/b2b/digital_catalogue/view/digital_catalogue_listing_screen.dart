@@ -117,46 +117,50 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                   isMemCacheEnabled: false,
                                   alignment: AlignmentDirectional.center,
                                 ),
-                                PositionedDirectional(
-                                  top: 10.w,
-                                  end: 10.w,
-                                  child: PopupMenuButton<PopupMenuOption>(
-                                    initialValue: null,
-                                    color: style.whiteColor,
-                                    style: ButtonStyle(
-                                      shadowColor: WidgetStateProperty.all(style.borderColor),
-                                      backgroundColor: WidgetStateProperty.all(style.whiteColor),
+                                if (digitalCatalogueBloc.modulePermission?.share?.allowed == true ||
+                                    digitalCatalogueBloc.modulePermission?.delete?.allowed == true)
+                                  PositionedDirectional(
+                                    top: 10.w,
+                                    end: 10.w,
+                                    child: PopupMenuButton<PopupMenuOption>(
+                                      initialValue: null,
+                                      color: style.whiteColor,
+                                      style: ButtonStyle(
+                                        shadowColor: WidgetStateProperty.all(style.borderColor),
+                                        backgroundColor: WidgetStateProperty.all(style.whiteColor),
+                                      ),
+                                      icon: SmartImage(path: AppImages.icMoreVertical, height: 24.w, width: 24.w),
+                                      shadowColor: style.borderColor,
+                                      position: PopupMenuPosition.under,
+                                      onSelected: (PopupMenuOption option) {
+                                        switch (option) {
+                                          case PopupMenuOption.share:
+                                            digitalCatalogueBloc.add(DigitalCatalogueShareEvent(context: context, index: index));
+                                            break;
+                                          case PopupMenuOption.remove:
+                                            Utils.showDoubleActionDialog(
+                                              title: APPStrings.removeCatalogue.tr,
+                                              content: APPStrings.removeCatalogueMsg.tr,
+                                              okButtonText: APPStrings.remove.tr,
+                                              cancelButtonText: APPStrings.cancel.tr,
+                                              onOkPressed: () {
+                                                digitalCatalogueBloc.add(
+                                                  DeleteDigitalCatalogueEvent(context: context, catalogueId: item.id ?? ""),
+                                                );
+                                              },
+                                            );
+                                            break;
+                                        }
+                                      },
+                                      itemBuilder:
+                                          (BuildContext context) => [
+                                            if (digitalCatalogueBloc.modulePermission?.share?.allowed == true)
+                                              PopupMenuItem(value: PopupMenuOption.share, child: SmartText(APPStrings.share.tr)),
+                                            if (digitalCatalogueBloc.modulePermission?.delete?.allowed == true && item.isCreatedByMe)
+                                              PopupMenuItem(value: PopupMenuOption.remove, child: SmartText(APPStrings.remove.tr)),
+                                          ],
                                     ),
-                                    icon: SmartImage(path: AppImages.icMoreVertical, height: 24.w, width: 24.w),
-                                    shadowColor: style.borderColor,
-                                    position: PopupMenuPosition.under,
-                                    onSelected: (PopupMenuOption option) {
-                                      switch (option) {
-                                        case PopupMenuOption.share:
-                                          digitalCatalogueBloc.add(DigitalCatalogueShareEvent(context: context, index: index));
-                                          break;
-                                        case PopupMenuOption.remove:
-                                          Utils.showDoubleActionDialog(
-                                            title: APPStrings.removeCatalogue.tr,
-                                            content: APPStrings.removeCatalogueMsg.tr,
-                                            okButtonText: APPStrings.remove.tr,
-                                            cancelButtonText: APPStrings.cancel.tr,
-                                            onOkPressed: () {
-                                              digitalCatalogueBloc.add(
-                                                DeleteDigitalCatalogueEvent(context: context, catalogueId: item.id ?? ""),
-                                              );
-                                            },
-                                          );
-                                          break;
-                                      }
-                                    },
-                                    itemBuilder:
-                                        (BuildContext context) => [
-                                          PopupMenuItem(value: PopupMenuOption.share, child: SmartText(APPStrings.share.tr)),
-                                          PopupMenuItem(value: PopupMenuOption.remove, child: SmartText(APPStrings.remove.tr)),
-                                        ],
                                   ),
-                                ),
                                 PositionedDirectional(
                                   start: 16.w,
                                   top: 16.w,
@@ -165,7 +169,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.all(16.0.w),
+                              padding: EdgeInsetsDirectional.all(16.w),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

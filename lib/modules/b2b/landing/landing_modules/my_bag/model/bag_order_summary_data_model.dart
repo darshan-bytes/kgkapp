@@ -27,7 +27,7 @@ class BagOrderSummaryDataModel {
       promoCode: json["promoCode"] == null ? null : BagOrderCharge.fromJson(json["promoCode"]),
       percentage: json["percentage"]?.toString().toDouble,
       afterDiscountSubtractAmount: json["afterDiscountSubtractAmount"],
-      totalAmountInNumber: json["totalAmountInNumber"],
+      totalAmountInNumber: json["totalAmountInNumber"]?.toString().toDouble,
     );
   }
 

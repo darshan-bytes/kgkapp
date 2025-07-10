@@ -15,14 +15,12 @@ class UserResponse {
 
   final String? accessToken;
   final String? userId;
-  final UserPermissions? userPermissions;
+  UserPermissions? userPermissions;
   final Role? role;
   final String? bagId;
   final String? defaultCscCode;
   final UserIdDetails? userIdDetails;
   final bool? isVerified;
-
-  //customer_organization_id
   final String? customerOrganizationId;
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
@@ -209,8 +207,8 @@ class UserPermissions {
   final Diamond? gemstone;
   final Diamond? diamond;
   final bool? deleted;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final int? v;
 
   factory UserPermissions.fromJson(Map<String, dynamic> json) {
@@ -222,8 +220,8 @@ class UserPermissions {
       gemstone: json["gemstone"] == null ? null : Diamond.fromJson(json["gemstone"]),
       diamond: json["diamond"] == null ? null : Diamond.fromJson(json["diamond"]),
       deleted: json["deleted"],
-      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
-      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+      createdAt: json["createdAt"],
+      updatedAt: json["updatedAt"],
       v: json["__v"],
     );
   }
@@ -236,8 +234,8 @@ class UserPermissions {
     "gemstone": gemstone?.toJson(),
     "diamond": diamond?.toJson(),
     "deleted": deleted,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
     "__v": v,
   };
 }
@@ -302,13 +300,13 @@ class VisibilityAndSequence {
   }
 }
 
-class Comment {
-  Comment({required this.allowed});
+class PermissionAllowedData {
+  PermissionAllowedData({required this.allowed});
 
   final bool? allowed;
 
-  factory Comment.fromJson(Map<String, dynamic> json) {
-    return Comment(allowed: json["allowed"]);
+  factory PermissionAllowedData.fromJson(Map<String, dynamic> json) {
+    return PermissionAllowedData(allowed: json["allowed"]);
   }
 
   Map<String, dynamic> toJson() => {"allowed": allowed};
@@ -371,6 +369,7 @@ class Permissions {
     this.watchlist,
     this.wishlist,
     this.gemstoneShapes,
+    this.diy,
   });
 
   final PermissionData? activityLogs;
@@ -423,6 +422,7 @@ class Permissions {
   final PermissionData? watchlist;
   final PermissionData? wishlist;
   final PermissionData? gemstoneShapes;
+  final PermissionData? diy;
 
   factory Permissions.fromJson(Map<String, dynamic> json) {
     return Permissions(
@@ -476,6 +476,7 @@ class Permissions {
       watchlist: json["watchlist"] == null ? null : PermissionData.fromJson(json["watchlist"]),
       wishlist: json["wishlist"] == null ? null : PermissionData.fromJson(json["wishlist"]),
       gemstoneShapes: json["gemstone_shapes"] == null ? null : PermissionData.fromJson(json["gemstone_shapes"]),
+      diy: json["diy"] == null ? null : PermissionData.fromJson(json["diy"]),
     );
   }
 
@@ -530,6 +531,7 @@ class Permissions {
     "watchlist": watchlist?.toJson(),
     "wishlist": wishlist?.toJson(),
     "gemstone_shapes": gemstoneShapes?.toJson(),
+    "diy": diy?.toJson(),
   };
 }
 
@@ -546,27 +548,27 @@ class PermissionData {
     required this.view,
   });
 
-  final Comment? list;
-  final Comment? activityLogsExport;
-  final Comment? comment;
-  final Comment? create;
-  final Comment? delete;
-  final Comment? activityLogsImport;
-  final Comment? share;
-  final Comment? update;
-  final Comment? view;
+  final PermissionAllowedData? list;
+  final PermissionAllowedData? activityLogsExport;
+  final PermissionAllowedData? comment;
+  final PermissionAllowedData? create;
+  final PermissionAllowedData? delete;
+  final PermissionAllowedData? activityLogsImport;
+  final PermissionAllowedData? share;
+  final PermissionAllowedData? update;
+  final PermissionAllowedData? view;
 
   factory PermissionData.fromJson(Map<String, dynamic> json) {
     return PermissionData(
-      list: json["list"] == null ? null : Comment.fromJson(json["list"]),
-      activityLogsExport: json["export"] == null ? null : Comment.fromJson(json["export"]),
-      comment: json["comment"] == null ? null : Comment.fromJson(json["comment"]),
-      create: json["create"] == null ? null : Comment.fromJson(json["create"]),
-      delete: json["delete"] == null ? null : Comment.fromJson(json["delete"]),
-      activityLogsImport: json["import"] == null ? null : Comment.fromJson(json["import"]),
-      share: json["share"] == null ? null : Comment.fromJson(json["share"]),
-      update: json["update"] == null ? null : Comment.fromJson(json["update"]),
-      view: json["view"] == null ? null : Comment.fromJson(json["view"]),
+      list: json["list"] == null ? null : PermissionAllowedData.fromJson(json["list"]),
+      activityLogsExport: json["export"] == null ? null : PermissionAllowedData.fromJson(json["export"]),
+      comment: json["comment"] == null ? null : PermissionAllowedData.fromJson(json["comment"]),
+      create: json["create"] == null ? null : PermissionAllowedData.fromJson(json["create"]),
+      delete: json["delete"] == null ? null : PermissionAllowedData.fromJson(json["delete"]),
+      activityLogsImport: json["import"] == null ? null : PermissionAllowedData.fromJson(json["import"]),
+      share: json["share"] == null ? null : PermissionAllowedData.fromJson(json["share"]),
+      update: json["update"] == null ? null : PermissionAllowedData.fromJson(json["update"]),
+      view: json["view"] == null ? null : PermissionAllowedData.fromJson(json["view"]),
     );
   }
 
@@ -586,19 +588,19 @@ class PermissionData {
 class CmsPageBuilder extends Equatable {
   const CmsPageBuilder({required this.create, required this.delete, required this.list, required this.update, required this.share});
 
-  final Comment? create;
-  final Comment? delete;
-  final Comment? list;
-  final Comment? update;
-  final Comment? share;
+  final PermissionAllowedData? create;
+  final PermissionAllowedData? delete;
+  final PermissionAllowedData? list;
+  final PermissionAllowedData? update;
+  final PermissionAllowedData? share;
 
   factory CmsPageBuilder.fromJson(Map<String, dynamic> json) {
     return CmsPageBuilder(
-      create: json["create"] == null ? null : Comment.fromJson(json["create"]),
-      delete: json["delete"] == null ? null : Comment.fromJson(json["delete"]),
-      list: json["list"] == null ? null : Comment.fromJson(json["list"]),
-      update: json["update"] == null ? null : Comment.fromJson(json["update"]),
-      share: json["share"] == null ? null : Comment.fromJson(json["share"]),
+      create: json["create"] == null ? null : PermissionAllowedData.fromJson(json["create"]),
+      delete: json["delete"] == null ? null : PermissionAllowedData.fromJson(json["delete"]),
+      list: json["list"] == null ? null : PermissionAllowedData.fromJson(json["list"]),
+      update: json["update"] == null ? null : PermissionAllowedData.fromJson(json["update"]),
+      share: json["share"] == null ? null : PermissionAllowedData.fromJson(json["share"]),
     );
   }
 
@@ -617,10 +619,10 @@ class CmsPageBuilder extends Equatable {
 class Orion extends Equatable {
   const Orion({required this.view});
 
-  final Comment? view;
+  final PermissionAllowedData? view;
 
   factory Orion.fromJson(Map<String, dynamic> json) {
-    return Orion(view: json["view"] == null ? null : Comment.fromJson(json["view"]));
+    return Orion(view: json["view"] == null ? null : PermissionAllowedData.fromJson(json["view"]));
   }
 
   Map<String, dynamic> toJson() => {"view": view?.toJson()};

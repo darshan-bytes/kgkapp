@@ -7,6 +7,7 @@ part 'categories_state.dart';
 enum ArrowPosition { leftTop, centerTop, rightTop }
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
+  late AppBloc appBloc;
   UserType userType = UserType.b2cUser;
   List<DiyJewelleryType> diyJewelleryTypes = [];
   int? selectedRowIndex;
@@ -60,11 +61,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Landing', image: ''),
   ];
 
-  List<ProductDetailModel> librarySubOptionsList = [
-    ProductDetailModel(name: 'Design Library', image: ''),
-    ProductDetailModel(name: 'Style Library', image: ''),
-    ProductDetailModel(name: 'CAD Library', image: ''),
-    ProductDetailModel(name: 'SKU Library', image: ''),
+  List<ProductDetailModel> get librarySubOptionsList => [
+    if (appBloc.userPermissions?.permissions?.designLibrary?.list?.allowed == true) ProductDetailModel(name: 'Design Library', image: ''),
+    if (appBloc.userPermissions?.permissions?.styleLibrary?.list?.allowed == true) ProductDetailModel(name: 'Style Library', image: ''),
+    if (appBloc.userPermissions?.permissions?.cadLibrary?.list?.allowed == true) ProductDetailModel(name: 'CAD Library', image: ''),
+    if (appBloc.userPermissions?.permissions?.skuLibrary?.list?.allowed == true) ProductDetailModel(name: 'SKU Library', image: ''),
   ];
 
   List<ProductDetailModel> digitalCatalogueSubOptionsB2BList = [ProductDetailModel(name: 'Collection', image: '')];
@@ -77,18 +78,28 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ];
   List<ProductDetailModel> orionSubCategoryList = [ProductDetailModel(name: 'Collection', image: '')];
 
-  CategoriesBloc() : super(CategoriesInitial()) {
+  CategoriesBloc(BuildContext context) : super(CategoriesInitial()) {
+    appBloc = BlocProvider.of<AppBloc>(context);
     on<CategoriesInitialEvent>(onCategoriesInitialEvent);
     on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);
   }
 
   void onCategoriesInitialEvent(CategoriesInitialEvent event, Emitter<CategoriesState> emit) {
-    AppBloc appBloc = BlocProvider.of<AppBloc>(event.context);
     userType = appBloc.userType;
     selectedRowIndex = null;
     diyJewelleryTypes = appBloc.diyJewelleryTypeList;
+
     categories.clear();
+    bool isDiyEnabled = appBloc.userPermissions?.permissions?.diy?.list?.allowed == true;
     if (userType == UserType.b2bUser || userType == UserType.internal) {
+      bool isOrionEnabled = appBloc.userPermissions?.permissions?.orion?.view?.allowed == true;
+      bool isLibrariesEnabled =
+          (appBloc.userPermissions?.permissions?.cadLibrary?.list?.allowed == true ||
+              appBloc.userPermissions?.permissions?.designLibrary?.list?.allowed == true ||
+              appBloc.userPermissions?.permissions?.styleLibrary?.list?.allowed == true ||
+              appBloc.userPermissions?.permissions?.skuLibrary?.list?.allowed == true);
+      bool isDigitalCatalogueEnabled = appBloc.userPermissions?.permissions?.digitalCatalogue?.list?.allowed == true;
+      bool isExhibitionEnabled = appBloc.userPermissions?.permissions?.exhibitions?.view?.allowed == true;
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
         CategoriesModel(
@@ -102,29 +113,34 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png',
           productsDetailsList: gemstoneSubOptionsB2BList,
         ),
-        CategoriesModel(
-          name: 'Libraries',
-          image: 'https://i.ibb.co/ScfcyDw/Libraries-Category.png',
-          productsDetailsList: librarySubOptionsList,
-        ),
-        CategoriesModel(
-          name: 'Digital \nCatalogue',
-          image: 'https://i.ibb.co/7tr0GFf/Digital-Catalogue-Category.png',
-          productsDetailsList: digitalCatalogueSubOptionsB2BList,
-          isExpanded: false,
-        ),
-        CategoriesModel(
-          name: 'Do It \nYourself',
-          image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
-          productsDetailsList: doItYourselfSubOptionsB2BList,
-        ),
-        CategoriesModel(
-          name: 'Orion',
-          image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
-          productsDetailsList: orionSubCategoryList,
-          isExpanded: false,
-        ),
-        CategoriesModel(name: 'Exhibition', image: 'https://i.ibb.co/VxhKkNW/Mask-group.png', productsDetailsList: [], isExpanded: false),
+        if (isLibrariesEnabled)
+          CategoriesModel(
+            name: 'Libraries',
+            image: 'https://i.ibb.co/ScfcyDw/Libraries-Category.png',
+            productsDetailsList: librarySubOptionsList,
+          ),
+        if (isDigitalCatalogueEnabled)
+          CategoriesModel(
+            name: 'Digital \nCatalogue',
+            image: 'https://i.ibb.co/7tr0GFf/Digital-Catalogue-Category.png',
+            productsDetailsList: digitalCatalogueSubOptionsB2BList,
+            isExpanded: false,
+          ),
+        if (isDiyEnabled)
+          CategoriesModel(
+            name: 'Do It \nYourself',
+            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+            productsDetailsList: doItYourselfSubOptionsB2BList,
+          ),
+        if (isOrionEnabled)
+          CategoriesModel(
+            name: 'Orion',
+            image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
+            productsDetailsList: orionSubCategoryList,
+            isExpanded: false,
+          ),
+        if (isExhibitionEnabled)
+          CategoriesModel(name: 'Exhibition', image: 'https://i.ibb.co/VxhKkNW/Mask-group.png', productsDetailsList: [], isExpanded: false),
       ]);
     } else {
       categories.addAll([
@@ -148,11 +164,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png',
           productsDetailsList: jewellerySubOptionsB2CList,
         ),
-        CategoriesModel(
-          name: 'Do It \nYourself',
-          image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
-          productsDetailsList: doItYourselfSubOptionsB2CList,
-        ),
+        if (isDiyEnabled)
+          CategoriesModel(
+            name: 'Do It \nYourself',
+            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+            productsDetailsList: doItYourselfSubOptionsB2CList,
+          ),
         CategoriesModel(
           name: 'About Us',
           image: 'https://i.ibb.co/QD2Tw8M/About-Us-Category.png',
