@@ -187,6 +187,8 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
       strCarats: sourceModel.crt.isNotNullNorEmpty ? "${sourceModel.crt} ${APPStrings.crt.tr}" : null,
       strGrams: sourceModel.approximateModelWeight.isNotNullNorEmpty ? "${sourceModel.approximateModelWeight} ${APPStrings.grms.tr}" : null,
       tagImagePath: getTagImagePath(sourceModel),
+      commodity: Commodity.designLibrary,
+      isAddedToCart: sourceModel.isAddedToCart,
     );
   }
 

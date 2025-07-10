@@ -12,8 +12,8 @@ class CadLibraryListItem extends StatelessWidget {
   final BoxFit fit;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
-
   final _ListViewType _viewType;
+  final Function()? onAddToBagTap;
 
   const CadLibraryListItem({
     super.key,
@@ -26,6 +26,7 @@ class CadLibraryListItem extends StatelessWidget {
     this.padding = EdgeInsetsDirectional.zero,
     this.margin = EdgeInsetsDirectional.zero,
     required this.designModel,
+    this.onAddToBagTap,
   }) : _viewType = _ListViewType.cadListLibrary;
 
   const CadLibraryListItem.designListItem({
@@ -39,6 +40,7 @@ class CadLibraryListItem extends StatelessWidget {
     this.padding = EdgeInsetsDirectional.zero,
     this.margin = EdgeInsetsDirectional.zero,
     required this.designModel,
+    this.onAddToBagTap,
   }) : _viewType = _ListViewType.designListItem;
 
   @override
@@ -147,6 +149,31 @@ class CadLibraryListItem extends StatelessWidget {
               ],
             ],
             diamondAndGramSection(productStyle),
+            if (onAddToBagTap != null)
+              SmartButton(
+                height: 32.w,
+                margin: EdgeInsetsDirectional.only(top: 8.h, end: 8.w),
+                padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
+                onTap: () {
+                  if (designModel.isAddedToCart) {
+                    BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                    context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                  } else {
+                    BlocProvider.of<AppBloc>(context).add(
+                      ProductAddToBagEvent(
+                        ProductDetailsModel(commodity: designModel.commodity, suid: designModel.id),
+                        context,
+                        onProductAdded: () {
+                          designModel.isAddedToCart = true;
+                        },
+                      ),
+                    );
+                  }
+                },
+                title: designModel.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
+                prefixImage: AppImages.icShoppingBag,
+                imageSize: 16.w,
+              ),
           ],
         ),
       ),

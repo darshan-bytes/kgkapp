@@ -143,13 +143,16 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       (success) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
         final localList = success.dataList ?? [];
-        cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
+        cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e, isCadLibrary: false)).toList());
       },
     );
     gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
   }
 
-  B2BCustomListingDataModel convertToB2BCustomListingDataModel({required CadLibraryListItemDataModel sourceModel}) {
+  B2BCustomListingDataModel convertToB2BCustomListingDataModel({
+    required CadLibraryListItemDataModel sourceModel,
+    bool isCadLibrary = true,
+  }) {
     return B2BCustomListingDataModel(
       id: sourceModel.suid,
       strCADLibraryImageUrl:
@@ -162,6 +165,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       strCarats: "${sourceModel.crt ?? 0} ${APPStrings.crt.tr}",
       strGrams: "${sourceModel.approximateModelWeight ?? 0} ${APPStrings.grms.tr}",
       tagImagePath: getTagImagePath(sourceModel),
+      commodity: isCadLibrary ? Commodity.cadLibrary : Commodity.styleLibrary,
+      isAddedToCart: sourceModel.isAddedToCart,
     );
   }
 

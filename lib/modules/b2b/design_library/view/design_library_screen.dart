@@ -157,6 +157,7 @@ class DesignLibraryScreen extends StatelessWidget {
                 },
               );
             },
+            onAddToBagTap: () {},
           ),
         ),
         isLoadingMore: state is DesignLibraryLoadingMoreState,
@@ -186,6 +187,7 @@ class DesignLibraryScreen extends StatelessWidget {
                     },
                   );
                 },
+                onAddToBagTap: () {},
               ),
               if (state is DesignLibraryLoadingMoreState && index == bloc.designLibraryList.length - 1)
                 const SmartCircularProgressIndicator(),

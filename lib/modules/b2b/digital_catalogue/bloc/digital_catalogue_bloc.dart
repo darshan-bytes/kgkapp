@@ -88,7 +88,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
     }
   }
 
-  void _fetchModulePermission() async {
+  void _fetchModulePermission() {
     PermissionData? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.digitalCatalogue);
     if (permission != null) {
       modulePermission = permission;

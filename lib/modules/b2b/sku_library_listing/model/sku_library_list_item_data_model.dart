@@ -58,7 +58,7 @@ class SkuLibraryListItemDataModel {
     required this.discountPrice,
     required this.originalPrice,
     required this.images,
-    required this.isAddedToCart,
+    this.isAddedToCart = false,
     required this.productSize,
     this.components,
   });
@@ -119,7 +119,7 @@ class SkuLibraryListItemDataModel {
   final String? discountPrice;
   final double? originalPrice;
   final List<String> images;
-  final bool? isAddedToCart;
+  final bool isAddedToCart;
   final String? productSize;
   List<Component>? components;
 
