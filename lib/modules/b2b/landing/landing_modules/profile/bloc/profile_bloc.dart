@@ -191,6 +191,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     /// Set the user type
     userType = BlocProvider.of<AppBloc>(context).userType;
 
+    _fetchModulePermission();
+
     /// Clear and initialize profile actions list
     profileActionList.clear();
 

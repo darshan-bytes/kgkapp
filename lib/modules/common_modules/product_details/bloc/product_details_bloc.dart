@@ -518,7 +518,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         },
         (SkuLibraryListItemDataModel skuLibraryData) {
           isErrorInLoadingData = false;
-          isAddedToCart = skuLibraryData.isAddedToCart ?? false;
+          isAddedToCart = skuLibraryData.isAddedToCart;
           productName = skuLibraryData.productDescription ?? '';
           imgList = [];
           for (MultipleFinishedViewImage element in (skuLibraryData.multipleFinishedViewImage)) {

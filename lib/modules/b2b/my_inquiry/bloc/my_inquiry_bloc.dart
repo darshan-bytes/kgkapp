@@ -134,7 +134,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
       return B2BCustomListingDataModel(
         strInquiryId: data.id ?? '',
         strType: data.inquiryType ?? '',
-        strProduct: data.commodity ?? '',
+        strProduct: data.contextId ?? '',
         strName: data.name ?? '',
         strEmail: data.email ?? '',
         strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ?? '',
@@ -188,7 +188,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()},
+      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }
