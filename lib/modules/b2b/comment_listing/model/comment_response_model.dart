@@ -72,4 +72,6 @@ class Comments {
   }
 
   String? get displayDate => createdAt?.stringToDateTime()?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2);
+
+  bool get isCreatedByMe => updatedIdDetails?.userAccountId == StorageManager.instance.getUserId();
 }

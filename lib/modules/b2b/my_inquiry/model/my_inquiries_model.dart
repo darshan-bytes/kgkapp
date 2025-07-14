@@ -27,8 +27,8 @@ class MyInquiriesModel {
   final String? assignTo;
   final String? inquiryType;
   final String? commodity;
-  final dynamic inquiryContextId;
-  final dynamic contextId;
+  final String? inquiryContextId;
+  final String? contextId;
   final String? createdBy;
   final String? status;
   final List<UserIdDetails> assignedToDetails;

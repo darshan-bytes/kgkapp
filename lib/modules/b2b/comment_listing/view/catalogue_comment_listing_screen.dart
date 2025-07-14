@@ -42,12 +42,18 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                       createdAt: commentModel.displayDate ?? '',
                       message: commentModel.message ?? '',
                       userImage: commentModel.updatedIdDetails?.profilePic ?? '',
-                      onEditPressed: () {
-                        _onTapAddComment(bloc, context, commentId: commentModel.sId, initialMessage: commentModel.message);
-                      },
-                      onRemovePressed: () {
-                        bloc.add(CommentDeletedApiCallEvent(commentId: commentModel.sId ?? '', context: context));
-                      },
+                      onEditPressed:
+                          commentModel.isCreatedByMe
+                              ? () {
+                                _onTapAddComment(bloc, context, commentId: commentModel.sId, initialMessage: commentModel.message);
+                              }
+                              : null,
+                      onRemovePressed:
+                          commentModel.isCreatedByMe
+                              ? () {
+                                bloc.add(CommentDeletedApiCallEvent(commentId: commentModel.sId ?? '', context: context));
+                              }
+                              : null,
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 8.h),
@@ -191,27 +197,30 @@ class CommentListItem extends StatelessWidget {
               ],
             ),
           ),
-          PopupMenuButton<CommentListingPopupMenuOption>(
-            initialValue: null,
-            color: style.whiteColor,
-            icon: SmartImage(path: AppImages.icMoreVertical, height: 24.w, width: 24.w),
-            position: PopupMenuPosition.under,
-            onSelected: (CommentListingPopupMenuOption option) {
-              switch (option) {
-                case CommentListingPopupMenuOption.edit:
-                  onEditPressed?.call();
-                  break;
-                case CommentListingPopupMenuOption.remove:
-                  onRemovePressed?.call();
-                  break;
-              }
-            },
-            itemBuilder:
-                (BuildContext context) => [
-                  PopupMenuItem(value: CommentListingPopupMenuOption.edit, child: SmartText(APPStrings.edit.tr)),
-                  PopupMenuItem(value: CommentListingPopupMenuOption.remove, child: SmartText(APPStrings.remove.tr)),
-                ],
-          ),
+          if (onEditPressed != null || onRemovePressed != null)
+            PopupMenuButton<CommentListingPopupMenuOption>(
+              initialValue: null,
+              color: style.whiteColor,
+              icon: SmartImage(path: AppImages.icMoreVertical, height: 24.w, width: 24.w),
+              position: PopupMenuPosition.under,
+              onSelected: (CommentListingPopupMenuOption option) {
+                switch (option) {
+                  case CommentListingPopupMenuOption.edit:
+                    onEditPressed?.call();
+                    break;
+                  case CommentListingPopupMenuOption.remove:
+                    onRemovePressed?.call();
+                    break;
+                }
+              },
+              itemBuilder:
+                  (BuildContext context) => [
+                    if (onEditPressed != null)
+                      PopupMenuItem(value: CommentListingPopupMenuOption.edit, child: SmartText(APPStrings.edit.tr)),
+                    if (onRemovePressed != null)
+                      PopupMenuItem(value: CommentListingPopupMenuOption.remove, child: SmartText(APPStrings.remove.tr)),
+                  ],
+            ),
         ],
       ),
     );
