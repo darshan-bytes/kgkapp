@@ -13,14 +13,14 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (kDebugMode) {
       //B2C
       // emailController.text = "ankita7@yopmail.com";
-      // emailController.text = "chudasama985@yopmail.com";
+      emailController.text = "chudasama985@yopmail.com";
       // emailController.text = "chudasama9@yopmail.com";
       // emailController.text = "nayela.desai+1@bytestechnolab.com";
       // emailController.text = "user.email+16@yopmail.com";
 
       // Client's User B2C
       // emailController.text = "ramesh.kumar@sparklesoft.co.in";
-      emailController.text = "bhati.rmb+2@gmail.com";
+      // emailController.text = "bhati.rmb+2@gmail.com";
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "sivaraj.dharuman@sparklesoft.co.in";
       // emailController.text = "darshan.vachhani+112@bytestechnolab.com";
@@ -33,7 +33,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // emailController.text = "customer48008@kgkmail.com";
       // emailController.text = "kachinbali@yopmail.com";
       // emailController.text = "karthigeyan.m@sparklesoft.co.in"; // Siva User
-      emailController.text = "customer500060@kgkmail.com"; // Siva User
+      // emailController.text = "customer500060@kgkmail.com"; // Siva User
       // emailController.text = "mrunalini.saindane@sparklesoft.co.in"; // Internal
 
       // emailController.text = "customer48008@kgkmail.com";

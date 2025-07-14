@@ -100,9 +100,12 @@ class WatchlistScreen extends StatelessWidget {
         return Column(
           children: [
             B2BListingItem(
-              onTapMenuButton: () {
-                _showWatchlistBottomSheet(screenContext, bloc, index: index);
-              },
+              onTapMenuButton:
+                  (bloc.canEditWatchlist || bloc.canDeleteWatchlist)
+                      ? () {
+                        _showWatchlistBottomSheet(screenContext, bloc, index: index);
+                      }
+                      : null,
               type: B2BListingType.watchlistType,
               listingItemModel: bloc.watchListingList[index],
               margin: EdgeInsetsDirectional.only(bottom: 16.h),
@@ -189,38 +192,40 @@ class WatchlistScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _buildPopupOption(
-                    context,
-                    text: APPStrings.editWatchlist.tr,
-                    style: orderPopupStyle.optionTextStyle,
-                    onTap: () async {
-                      context.pop();
-                      BlocProvider.of<EditWatchlistBloc>(
-                        context,
-                      ).add(EditWatchlistInitialEvent(isEdit: true, watchlistData: bloc.watchlistDataList[index]));
+                  if (bloc.canEditWatchlist)
+                    _buildPopupOption(
+                      context,
+                      text: APPStrings.editWatchlist.tr,
+                      style: orderPopupStyle.optionTextStyle,
+                      onTap: () async {
+                        context.pop();
+                        BlocProvider.of<EditWatchlistBloc>(
+                          context,
+                        ).add(EditWatchlistInitialEvent(isEdit: true, watchlistData: bloc.watchlistDataList[index]));
 
-                      final result = await Utils.showSmartModalBottomSheet(
-                        context: context,
-                        enableDrag: false,
-                        builder: (context) {
-                          return const EditWatchlistScreen();
-                        },
-                      );
-                      if (result?[RoutesData.isWatchlistUpdated] == true) {
-                        bloc.pullToRefresh(context: screenContext);
-                      }
-                    },
-                  ),
-                  _buildPopupOption(
-                    context,
-                    text: APPStrings.removeWatchlist.tr,
-                    style: orderPopupStyle.cancelTextStyle,
-                    onTap: () {
-                      context.pop();
-                      WatchlistData watchlistData = WatchlistData.fromJson(bloc.watchlistDataList[index].toJson());
-                      _buildRemoveWatchlistPopup(screenContext, bloc, watchlistData: watchlistData);
-                    },
-                  ),
+                        final result = await Utils.showSmartModalBottomSheet(
+                          context: context,
+                          enableDrag: false,
+                          builder: (context) {
+                            return const EditWatchlistScreen();
+                          },
+                        );
+                        if (result?[RoutesData.isWatchlistUpdated] == true) {
+                          bloc.pullToRefresh(context: screenContext);
+                        }
+                      },
+                    ),
+                  if (bloc.canDeleteWatchlist)
+                    _buildPopupOption(
+                      context,
+                      text: APPStrings.removeWatchlist.tr,
+                      style: orderPopupStyle.cancelTextStyle,
+                      onTap: () {
+                        context.pop();
+                        WatchlistData watchlistData = WatchlistData.fromJson(bloc.watchlistDataList[index].toJson());
+                        _buildRemoveWatchlistPopup(screenContext, bloc, watchlistData: watchlistData);
+                      },
+                    ),
                 ],
               ),
             ),

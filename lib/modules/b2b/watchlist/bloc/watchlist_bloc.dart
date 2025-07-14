@@ -24,6 +24,9 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
 
   Timer? timer;
 
+  bool canEditWatchlist = false;
+  bool canDeleteWatchlist = false;
+
   WatchlistBloc() : super(const WatchlistInitial()) {
     on<WatchlistInitialEvent>(_onWatchlistInitialEvent);
     on<WatchlistLoadMoreEvent>(_onWatchlistLoadMoreEvent);
@@ -45,6 +48,11 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   void _onWatchlistInitialEvent(WatchlistInitialEvent event, Emitter<WatchlistState> emit) async {
     if (isInitialized) return;
     isInitialized = true;
+    final PermissionData? permissionData = Utils.getPermissionByModuleName(moduleName: ModuleKey.watchlist);
+    if (permissionData != null) {
+      canEditWatchlist = permissionData.update?.allowed ?? false;
+      canDeleteWatchlist = permissionData.delete?.allowed ?? false;
+    }
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
       paginationScrollController = SmartPaginationScrollController();

@@ -190,7 +190,6 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (onSearch != null) actionsList.add(_buildIconButton(onSearch!, AppImages.icSearch, size: 24.w));
     if (onFavorite != null &&
         (StorageManager.instance.getIsSkipLogin() ||
-            (Utils.getPermissionByModuleName(moduleName: ModuleKey.wishlist)?.view?.allowed == true) ||
             (Utils.getPermissionByModuleName(moduleName: ModuleKey.wishlist)?.list?.allowed == true))) {
       actionsList.add(
         _buildIconButton(
