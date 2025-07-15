@@ -84,7 +84,7 @@ dependencies:
   image_picker: ^1.1.2
 
   #For Permission Handle
-  permission_handler: ^12.0.0+1
+  permission_handler: ^12.0.1
 
   #For Date Time Conversion
   intl: ^0.20.2
@@ -99,12 +99,12 @@ dependencies:
   google_maps_flutter: ^2.12.3
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^30.1.38
+  syncfusion_flutter_sliders: ^30.1.40
 
   #For Calendar
-  syncfusion_flutter_calendar: ^30.1.38
+  syncfusion_flutter_calendar: ^30.1.40
 
-  syncfusion_flutter_charts: ^30.1.38
+  syncfusion_flutter_charts: ^30.1.40
 
   #For QR Code
   qr_flutter: ^4.1.0
@@ -129,7 +129,7 @@ dependencies:
   geolocator: ^14.0.2
 
   # For Url Launcher
-  url_launcher: ^6.3.1
+  url_launcher: ^6.3.2
 
   # For Deep Linking
   flutter_branch_sdk: ^8.5.0
@@ -140,8 +140,8 @@ dependencies:
   photo_view: ^0.15.0
   model_viewer_plus: ^1.9.3
 
-  firebase_core: ^3.15.0
-  firebase_crashlytics: ^4.3.8
+  firebase_core: ^3.15.1
+  firebase_crashlytics: ^4.3.9
 
   flutter_langdetect: ^0.0.2
   flutter_staggered_grid_view: ^0.7.0
