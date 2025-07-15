@@ -287,7 +287,7 @@ class StoneListingScreen extends StatelessWidget {
                       }).toList(),
                 ),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
-                SizedBox(height: 17.h),
+                SizedBox(height: 120.h),
               ],
             );
           } else {
@@ -654,7 +654,7 @@ class StoneListingScreen extends StatelessWidget {
                 //   separatorBuilder: (context, index) => SizedBox(height: 17.h),
                 // ),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
-                SizedBox(height: 17.h),
+                SizedBox(height: 120.h),
               ],
             );
           }
@@ -690,15 +690,21 @@ class StoneListingScreen extends StatelessWidget {
                     ),
               );
             },
-            onSortTap: () {
-              Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: bloc.sortOptions)).then((
-                onValue,
-              ) {
-                if (onValue != null) {
-                  bloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
-                }
-              });
-            },
+
+            /// Here we are checking if the screen is DIY or not, if it is DIY then we don't show the sort option.
+            /// Ref: https://thekgk.atlassian.net/browse/TA-775
+            onSortTap:
+                (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY || bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                    ? null
+                    : () {
+                      Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: bloc.sortOptions)).then((
+                        onValue,
+                      ) {
+                        if (onValue != null) {
+                          bloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
+                        }
+                      });
+                    },
           );
         } else {
           return const SizedBox.shrink();

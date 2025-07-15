@@ -337,6 +337,9 @@ class ProductInfoItem extends StatelessWidget {
                   textInputFormatter: [DoubleInputFormatter()],
                   keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
                   textInputAction: TextInputAction.done,
+                  onValueChanges: (p0) {
+                    onYourDiscountChange?.call(yourDiscountController.text);
+                  },
                   onEditingComplete: () {
                     onYourDiscountChange?.call(yourDiscountController.text);
                   },

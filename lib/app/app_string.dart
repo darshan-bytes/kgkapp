@@ -397,7 +397,6 @@ class APPStrings {
   static const String totalRequestedDiscount = 'mob_total_requested_discount';
   static const String totalValueAfterDiscount = 'mob_total_value_after_discount';
   static const String myAccount = 'mob_my_account';
-  static const String myOrder = 'mob_my_orders';
   static const String listOfAllTheOrdersYouPlaced = 'mob_list_of_all_the_orders_you_placed';
   static const String listOfAuctionsYouAppliedTo = 'mob_list_of_auctions_you_applied_to';
   static const String myInquiries = 'mob_my_inquiries';

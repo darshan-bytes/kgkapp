@@ -45,10 +45,13 @@ class SettingListingScreen extends StatelessWidget {
                       ),
                 );
               },
-              onSortTap: () async {
-                /// Fetch this from local and pass here as sortData based on commodity type
-                Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: []));
-              },
+
+              /// Below code is commented because sort functionality is not required in DIY
+              /// Ref: https://thekgk.atlassian.net/browse/TA-775
+              // onSortTap: () async {
+              //   /// Fetch this from local and pass here as sortData based on commodity type
+              //   Utils.showSmartModalBottomSheet(context: context, builder: (context) => SortScreen(sortData: []));
+              // },
             );
           }
           return const SizedBox.shrink();
@@ -59,11 +62,7 @@ class SettingListingScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is SettingLoadedState) {
             return SafeArea(
-              child: SmartSingleChildScrollView(
-                controller: settingListingBloc.paginationScrollController.scrollController,
-                onRefresh: () async {
-                  settingListingBloc.add(SettingListPullToRefreshEvent(context: context));
-                },
+              child: Padding(
                 padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                 child: Column(
                   children: [
@@ -99,7 +98,10 @@ class SettingListingScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([100]), style: style.filterProductCountTextStyle),
+              SmartText(
+                APPStrings.showingListLengthX.tr.interpolate([settingListingBloc.totalFilteredRecords]),
+                style: style.filterProductCountTextStyle,
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -145,70 +147,86 @@ class SettingListingScreen extends StatelessWidget {
   }
 
   Widget _buildProductList(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
-    return BlocBuilder<SettingListingBloc, SettingListingState>(
-      buildWhen: (_, current) => current is SettingLoadingMoreState || current is SettingProductLoadedMoreState,
-      builder: (context, state) {
-        return Column(
-          children: [
-            BlocBuilder<SettingListingBloc, SettingListingState>(
-              buildWhen:
-                  (_, current) =>
-                      current is SettingLoadedState ||
-                      current is SettingProductLoadedMoreState ||
-                      current is SettingChangeListingTypeState ||
-                      current is SettingLoadingState,
-              builder: (context, state) {
-                if (state is SettingLoadingState) {
-                  return const SizedBox.shrink();
-                } else if (settingListingBloc.productList.isEmpty) {
-                  return NoDataFoundWidget(text: APPStrings.emptyProducts.tr);
-                } else {
-                  if (settingListingBloc.isGrid) {
-                    return Column(
-                      children: [
-                        SmartGridView(
-                          items: List.generate(settingListingBloc.productList.length, (index) {
-                            ProductDetailsModel productDetails = settingListingBloc.productList[index];
-                            return ProductGridItem(
-                              productDetails: productDetails,
-                              onTap: () {
-                                context.pushNamed(
-                                  AppRoutes.settingDetailPage,
-                                  arguments: {
-                                    RoutesData.settingId: productDetails.suid,
-                                    RoutesData.isPageFor: settingListingBloc.screenIdentifier,
-                                    RoutesData.type: settingListingBloc.diyType,
+    return Expanded(
+      child: BlocBuilder<SettingListingBloc, SettingListingState>(
+        buildWhen: (_, current) => current is SettingLoadingMoreState || current is SettingProductLoadedMoreState,
+        builder: (context, state) {
+          return SmartSingleChildScrollView(
+            controller: settingListingBloc.paginationScrollController.scrollController,
+            onRefresh: () async {
+              settingListingBloc.add(SettingListPullToRefreshEvent(context: context));
+            },
+
+            child: Column(
+              children: [
+                BlocBuilder<SettingListingBloc, SettingListingState>(
+                  buildWhen:
+                      (_, current) =>
+                          current is SettingLoadedState ||
+                          current is SettingProductLoadedMoreState ||
+                          current is SettingChangeListingTypeState ||
+                          current is SettingLoadingState,
+                  builder: (context, state) {
+                    if (state is SettingLoadingState) {
+                      return const SizedBox.shrink();
+                    } else if (settingListingBloc.productList.isEmpty) {
+                      return NoDataFoundWidget(text: APPStrings.emptyProducts.tr);
+                    } else {
+                      if (settingListingBloc.isGrid) {
+                        return Column(
+                          children: [
+                            SmartGridView(
+                              items: List.generate(settingListingBloc.productList.length, (index) {
+                                ProductDetailsModel productDetails = settingListingBloc.productList[index];
+                                return ProductGridItem(
+                                  productDetails: productDetails,
+                                  onTap: () {
+                                    context.pushNamed(
+                                      AppRoutes.settingDetailPage,
+                                      arguments: {
+                                        RoutesData.settingId: productDetails.suid,
+                                        RoutesData.isPageFor: settingListingBloc.screenIdentifier,
+                                        RoutesData.type: settingListingBloc.diyType,
+                                      },
+                                    );
                                   },
                                 );
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return ListView.separated(
-                      itemBuilder:
-                          (context, index) => ProductListItem(
-                            onTap: () {
-                              settingListingBloc.add(SettingListingOnTapEvent(context: context, index: index));
-                            },
-                            productDetails: settingListingBloc.productList[index],
-                          ),
-                      itemCount: settingListingBloc.productList.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) => SizedBox(height: 17.h),
-                    );
-                  }
-                }
-              },
+                              }),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return ListView.separated(
+                          itemBuilder:
+                              (context, index) => ProductListItem(
+                                onTap: () {
+                                  context.pushNamed(
+                                    AppRoutes.settingDetailPage,
+                                    arguments: {
+                                      RoutesData.settingId: settingListingBloc.productList[index].suid,
+                                      RoutesData.isPageFor: settingListingBloc.screenIdentifier,
+                                      RoutesData.type: settingListingBloc.diyType,
+                                    },
+                                  );
+                                },
+                                productDetails: settingListingBloc.productList[index],
+                              ),
+                          itemCount: settingListingBloc.productList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          separatorBuilder: (context, index) => SizedBox(height: 17.h),
+                        );
+                      }
+                    }
+                  },
+                ),
+                if (state is SettingLoadingMoreState) const SmartCircularProgressIndicator(),
+                SizedBox(height: 120.h),
+              ],
             ),
-            if (state is SettingLoadingMoreState) const SmartCircularProgressIndicator(),
-            SizedBox(height: 16.h),
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

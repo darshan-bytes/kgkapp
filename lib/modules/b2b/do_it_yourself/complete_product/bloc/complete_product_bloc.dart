@@ -66,9 +66,9 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
       },
       (r) {
         diyFinalDetailsModel = r;
+        imgList.clear();
         if (r.product != null) {
           DiyStyleListModel item = r.product!;
-          imgList.clear();
           for (MultipleFinishedViewImage element in item.multipleFinishedViewImage) {
             imgList.add(element.imageUrl ?? "");
             imgList.addAll(element.multiAngleUrl.where((e) => e.url.isNotNullNorEmpty).map((e) => e.url!));
@@ -92,6 +92,9 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
           );
         }
         if (r.diamondDetailed != null) {
+          if (r.diamondDetailed?.image.isNotNullNorEmpty == true && r.diamondDetailed!.image.firstOrNull?.url.isNotNullNorEmpty == true) {
+            imgList.insert(0, r.diamondDetailed!.image.firstOrNull?.url ?? '');
+          }
           DiamondDataModel diamondData = r.diamondDetailed!;
           diamondDetails = ProductDetailsModel(
             productId: diamondData.suid,

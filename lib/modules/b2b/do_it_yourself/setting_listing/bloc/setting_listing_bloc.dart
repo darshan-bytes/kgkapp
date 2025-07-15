@@ -39,6 +39,9 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   /// List to store available DIY styles
   final List<DiyStyleListModel> diyStyleList = [];
 
+  /// The total number of filtered records
+  int? totalFilteredRecords;
+
   /// Total number of pages available in pagination
   int? totalNumberOfPages;
 
@@ -206,6 +209,9 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
 
     response?.fold((error) => Utils.showMessage(error.message), (PaginationData<DiyStyleListModel> success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+
+      /// Show the total number of records in the UI side
+      totalFilteredRecords = success.filteredRecords;
       final List<DiyStyleListModel> localList = (success.dataList ?? []);
       diyStyleList.addAll(localList);
       productList.addAll(
@@ -220,6 +226,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
             commodity: Commodity.jewellery,
             businessCategoryName: item.businessCategoryName ?? "",
             colorsCode: [item.metalColor1HexCode ?? ""],
+            productSku: item.styleNumber,
           );
         }).toList(),
       );

@@ -54,12 +54,10 @@ class StoneDetailScreen extends StatelessWidget {
         child: SafeArea(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 flex: 6,
                 child: SizedBox(
-                  height: 55.h,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -68,6 +66,7 @@ class StoneDetailScreen extends StatelessWidget {
                       SizedBox(width: 8.w),
                       Expanded(
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -80,30 +79,23 @@ class StoneDetailScreen extends StatelessWidget {
                               isAutoSizeText: true,
                             ),
                             if (bloc.productDetails?.finalPrice.isNotNullNorEmpty == true &&
-                                (bloc.productDetails?.finalPrice != bloc.productDetails?.originalPrice))
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: SmartText(
-                                      bloc.productDetails?.originalPrice,
-                                      style: productDetailsStyle.originalPriceStyle.copyWith(
-                                        decoration: TextDecoration.lineThrough,
-                                        fontSize: 12.sp,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  SizedBox(width: 2.w),
-                                  SmartText(
-                                    bloc.productDetails?.discountPercentageString,
-                                    style: productDetailsStyle.discountStyle,
-                                    maxLines: 1,
-                                  ),
-                                ],
+                                (bloc.productDetails?.finalPrice != bloc.productDetails?.originalPrice)) ...[
+                              SmartText(
+                                bloc.productDetails?.originalPrice,
+                                style: productDetailsStyle.originalPriceStyle.copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 12.sp,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
+                              SizedBox(height: 2.h),
+                              SmartText(
+                                bloc.productDetails?.discountPercentageString,
+                                style: productDetailsStyle.discountStyle,
+                                maxLines: 1,
+                              ),
+                            ],
                           ],
                         ),
                       ),

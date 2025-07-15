@@ -5,25 +5,25 @@ class AuctionListingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuctionListingBloc auctionListingBloc = BlocProvider.of<AuctionListingBloc>(context);
+    final AuctionListingBloc bloc = BlocProvider.of<AuctionListingBloc>(context);
 
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.auctions.tr),
-      bottomNavigationBar: _buildBottomNavigationBar(auctionListingBloc, context),
+      bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       floatingActionButton: BlocBuilder<AuctionListingBloc, AuctionListingState>(
         buildWhen: (previous, current) => current is PresentationLoadedState,
         builder: (context, state) {
           return ScrollToTopFAB(
-            canScrollToTop: auctionListingBloc.paginationScrollController.canScrollToTop,
-            onTap: auctionListingBloc.paginationScrollController.scrollToTop,
+            canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+            onTap: bloc.paginationScrollController.scrollToTop,
           );
         },
       ),
-      body: _getBody(auctionListingBloc),
+      body: _getBody(bloc),
     );
   }
 
-  Widget _getBody(AuctionListingBloc auctionListingBloc) {
+  Widget _getBody(AuctionListingBloc bloc) {
     return SafeArea(
       child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
         buildWhen:
@@ -38,12 +38,7 @@ class AuctionListingScreen extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 24.h),
-                  _buildSearchTextField(auctionListingBloc, context),
-                  SizedBox(height: 24.h),
-                  _buildAuctionList(auctionListingBloc),
-                ],
+                children: [SizedBox(height: 24.h), _buildSearchTextField(bloc, context), SizedBox(height: 24.h), _buildAuctionList(bloc)],
               ),
             );
           } else {
@@ -54,44 +49,44 @@ class AuctionListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchTextField(AuctionListingBloc auctionListingBloc, BuildContext context) {
+  Widget _buildSearchTextField(AuctionListingBloc bloc, BuildContext context) {
     return SmartTextField.search(
       height: 48.h,
       hintText: APPStrings.searchAuction.tr,
-      controller: auctionListingBloc.auctionSearchController,
+      controller: bloc.auctionSearchController,
       onTapOutside: (value) => FocusScope.of(context).unfocus(),
       onValueChanges: (value) {
-        auctionListingBloc.add(AuctionListSearchEvent(context: context));
+        bloc.add(AuctionListSearchEvent(context: context));
       },
       onFieldSubmitted: (value) {
-        auctionListingBloc.add(AuctionListSearchEvent(context: context));
+        bloc.add(AuctionListSearchEvent(context: context));
       },
     );
   }
 
-  Widget _buildAuctionList(AuctionListingBloc auctionListingBloc) {
+  Widget _buildAuctionList(AuctionListingBloc bloc) {
     return Expanded(
       child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
         buildWhen: (previous, current) => current is AuctionListLoadedMoreState || current is AuctionListLoadingMoreState,
         builder: (context, state) {
-          if (auctionListingBloc.originalAuctionList.isEmpty) {
+          if (bloc.originalAuctionList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr);
           }
           return SmartSingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             onRefresh: () async {
-              auctionListingBloc.add(AuctionListPullToRefreshEvent(context: context));
+              bloc.add(AuctionListPullToRefreshEvent(context: context));
             },
-            controller: auctionListingBloc.paginationScrollController.scrollController,
+            controller: bloc.paginationScrollController.scrollController,
             child: Column(
               children: [
                 ListView.separated(
-                  itemCount: auctionListingBloc.originalAuctionList.length,
+                  itemCount: bloc.originalAuctionList.length,
                   shrinkWrap: true,
                   padding: EdgeInsets.only(bottom: 40.h),
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    AuctionListModel auctionListModel = auctionListingBloc.originalAuctionList[index];
+                    AuctionListModel auctionListModel = bloc.originalAuctionList[index];
                     return AuctionListItem(auctionListModel: auctionListModel, stoneTypeImage: AppImages.icRingThin);
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 16.h),
@@ -106,25 +101,25 @@ class AuctionListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(AuctionListingBloc auctionListingBloc, BuildContext context) {
+  Widget _buildBottomNavigationBar(AuctionListingBloc bloc, BuildContext context) {
     return BlocBuilder<AuctionListingBloc, AuctionListingState>(
       buildWhen: (previous, current) => current is AuctionListingLoadedState,
       builder: (context, state) {
         if (state is AuctionListingLoadedState) {
           return SafeArea(
             child: FilterBottomActionBar(
-              controller: auctionListingBloc.paginationScrollController.controller,
+              controller: bloc.paginationScrollController.controller,
               onFilterTap: () {
+                BlocProvider.of<AdvanceSortFilterBloc>(
+                  context,
+                ).add(AddAdvanceSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    BlocProvider.of<AdvanceSortFilterBloc>(
-                      context,
-                    ).add(AddAdvanceSortFilterDataEvent(filterOptionList: auctionListingBloc.filterData, context: context));
                     return AdvanceFilterScreen(
                       onApply: (value) {
                         if (value != null && value is List<FilterData>) {
-                          auctionListingBloc.add(AuctionListFilterEvent(filterData: value, context: context));
+                          bloc.add(AuctionListFilterEvent(filterData: value, context: context));
                         }
                       },
                     );
