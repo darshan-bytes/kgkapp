@@ -491,7 +491,7 @@ class DiamondDataModel {
       location: json["location"],
       lotCodeRefSuid: json["lot_code_ref_suid"],
       lotCodeSuid: json["lot_code_suid"],
-      lotCode: json["lot_code"],
+      lotCode: json["lot_code"] ?? json["lotcode"],
       lowerHalf: json["lower_half"],
       lsp: json["lsp"].toString(),
       maxSize: json["max_size"],

@@ -130,14 +130,17 @@ class SettingDetailScreen extends StatelessWidget {
                 ],
               ),*/
               Divider(height: 40.h),
-              Row(
+
+              /// Below code is commented because it is not in the feature as per the client team
+              /// Ref: https://thekgk.atlassian.net/browse/TA-784
+              /*Row(
                 children: [
                   SmartText(APPStrings.buyingInBulk.tr, style: style.buyInBulkStyle),
                   SizedBox(width: 12.w),
                   InkWell(onTap: () {}, child: SmartText(APPStrings.askForQuotation.tr, style: style.askQuestionStyle)),
                 ],
               ),
-              SizedBox(height: 8.h),
+              SizedBox(height: 8.h),*/
               SmartText(APPStrings.approxPriceNote.tr, style: style.approxPriceNoteStyle),
               SizedBox(height: 32.h),
               Row(

@@ -505,7 +505,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (isOrderEnabled)
         ProfileListModel(
           image: AppImages.icMyOrders,
-          title: APPStrings.myOrder,
+          title: APPStrings.myOrders,
 
           trailingIcon: AppImages.icArrowRight,
           onTap: (context) {
@@ -628,7 +628,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (isOrderEnabled)
         ProfileListModel(
           image: AppImages.icMyOrders,
-          title: APPStrings.myOrder,
+          title: APPStrings.myOrders,
           trailingIcon: AppImages.icArrowRight,
           onTap: (context) {
             context.pushNamed(AppRoutes.orderPage);
