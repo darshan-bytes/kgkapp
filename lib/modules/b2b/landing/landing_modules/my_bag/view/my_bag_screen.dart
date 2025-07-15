@@ -232,6 +232,7 @@ class MyBagScreen extends StatelessWidget {
                       onYourDiscountChange: (value) {
                         FocusScope.of(context).unfocus();
                         if (value != null) {
+                          bloc.isVariationLoading = true;
                           bloc.add(MyBagYourDiscountChangedEvent(context: context, index: index, yourDiscount: value));
                         }
                       },
@@ -361,6 +362,7 @@ class MyBagScreen extends StatelessWidget {
                       onYourDiscountChange: (value) {
                         FocusScope.of(context).unfocus();
                         if (value != null) {
+                          bloc.isVariationLoading = true;
                           bloc.add(MyBagYourDiscountChangedEvent(context: context, index: index, yourDiscount: value));
                         }
                       },

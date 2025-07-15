@@ -121,6 +121,9 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
       },
       (PaginationData<MyInquiriesModel> success) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        if (smartPaginationScrollController.currentPage == 0 || smartPaginationScrollController.currentPage == 1) {
+          myInquiryList.clear();
+        }
         List<MyInquiriesModel> dataList = success.dataList ?? [];
         myInquiryList.addAll(_populateMyInquiryList(dataList));
         smartPaginationScrollController.isPageLoaded.complete(smartPaginationScrollController.currentPage == totalNumberOfPages);

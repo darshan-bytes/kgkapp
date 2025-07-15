@@ -45,6 +45,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   FocusNode variationFocusNode = FocusNode();
   FocusNode noteFocusNode = FocusNode();
 
+  bool isVariationLoading = false;
+
   MyBagBloc() : super(MyBagInitial()) {
     on<InitialMyBagEvent>(_onInitialMyBagEvent);
     on<MyBagChangeProductQuality>(_onMyBagChangeProductQuality);
@@ -59,11 +61,17 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagApplyPromoCodeEvent>(_onMyBagApplyPromoCode);
     on<MyBagCheckoutEvent>(_onMyBagCheckout);
     on<MyBagProductQuantityChangedEvent>(_onMyBagProductQuantityChanged);
-    on<MyBagYourDiscountChangedEvent>(_onMyBagYourDiscountChanged);
+    on<MyBagYourDiscountChangedEvent>(
+      _onMyBagYourDiscountChanged,
+      transformer: BlocEventDeBouncer.debounceTransformer(duration: Duration(milliseconds: 1000)),
+    );
     on<ClearMyBagEvent>(_onClearMyBag);
     on<FetchOrderSummaryDataEvent>(_onFetchOrderSummaryData);
     on<MyBagRemoveAllProductEvent>(_onMyBagRemoveAllProductEvent);
-    on<MyBagVariationChangeEvent>(_onMyBagVariationChangeEvent, transformer: BlocEventDeBouncer.debounceTransformer());
+    on<MyBagVariationChangeEvent>(
+      _onMyBagVariationChangeEvent,
+      transformer: BlocEventDeBouncer.debounceTransformer(duration: Duration(milliseconds: 1000)),
+    );
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
@@ -544,6 +552,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onMyBagCheckout(MyBagCheckoutEvent event, Emitter<MyBagState> emit) async {
+    if (isVariationLoading) {
+      return;
+    }
     emit(MyBagReloadState());
     // Below code will be used in future implementation for B2B checkout
     // context.pushNamed(AppRoutes.addressListPage);
@@ -581,6 +592,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onMyBagYourDiscountChanged(MyBagYourDiscountChangedEvent event, Emitter<MyBagState> emit) async {
+    isVariationLoading = true;
     emit(MyBagLoadedState());
     double percentage = event.yourDiscount.toDouble ?? 0.0;
     myBagProductList[event.index].yourDiscount = percentage;
@@ -605,6 +617,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         emit(MyBagOrderSummaryDataLoadedState());
       },
     );
+    isVariationLoading = false;
   }
 
   Future<void> _onClearMyBag(ClearMyBagEvent event, Emitter<MyBagState> emit) async {
