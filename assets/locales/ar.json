@@ -873,5 +873,6 @@
   "mob_select_gemstone": "حدد الجيمستون",
   "mob_select_stone_desc": "حدد نوع الحجر الماس أو الأحجار الكريمة.",
   "mob_quantity_exceeds_stock": "مخزون غير كاف للمنتج",
-  "mob_service_not_available": "الخدمة غير متوفرة"
+  "mob_service_not_available": "الخدمة غير متوفرة",
+  "mob_jewellery_details": "تفاصيل المجوهرات"
 }

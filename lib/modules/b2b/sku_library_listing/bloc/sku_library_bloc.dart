@@ -19,6 +19,8 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   /// The total number of pages for pagination.
   int? totalNumberOfPages;
 
+  int? totalFilteredRecords;
+
   /// Controller for handling search input in the SKU library.
   final TextEditingController skuSearchController = TextEditingController();
 
@@ -140,6 +142,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
       },
       (success) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        totalFilteredRecords = success.filteredRecords;
         final localList = success.dataList ?? [];
         skuLibraryList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
       },

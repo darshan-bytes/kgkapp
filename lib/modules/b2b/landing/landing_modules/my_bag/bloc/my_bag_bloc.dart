@@ -61,17 +61,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagApplyPromoCodeEvent>(_onMyBagApplyPromoCode);
     on<MyBagCheckoutEvent>(_onMyBagCheckout);
     on<MyBagProductQuantityChangedEvent>(_onMyBagProductQuantityChanged);
-    on<MyBagYourDiscountChangedEvent>(
-      _onMyBagYourDiscountChanged,
-      transformer: BlocEventDeBouncer.debounceTransformer(duration: Duration(milliseconds: 1000)),
-    );
+    on<MyBagYourDiscountChangedEvent>(_onMyBagYourDiscountChanged);
     on<ClearMyBagEvent>(_onClearMyBag);
     on<FetchOrderSummaryDataEvent>(_onFetchOrderSummaryData);
     on<MyBagRemoveAllProductEvent>(_onMyBagRemoveAllProductEvent);
-    on<MyBagVariationChangeEvent>(
-      _onMyBagVariationChangeEvent,
-      transformer: BlocEventDeBouncer.debounceTransformer(duration: Duration(milliseconds: 1000)),
-    );
+    on<MyBagVariationChangeEvent>(_onMyBagVariationChangeEvent);
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {

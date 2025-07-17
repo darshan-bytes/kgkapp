@@ -11,6 +11,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   String appBarTitle = '';
   List<B2BCustomListingDataModel> cadList = [];
   int? totalNumberOfPages;
+  int? totalFilteredRecords;
   final TextEditingController cadLibrarySearchController = TextEditingController();
   final SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
@@ -108,6 +109,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       },
       (success) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        totalFilteredRecords = success.filteredRecords;
         final localList = success.dataList ?? [];
         cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
       },
@@ -142,6 +144,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       },
       (success) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        totalFilteredRecords = success.filteredRecords;
         final localList = success.dataList ?? [];
         cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e, isCadLibrary: false)).toList());
       },
