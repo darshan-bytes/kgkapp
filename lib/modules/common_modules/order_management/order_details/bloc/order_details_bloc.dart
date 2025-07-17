@@ -157,7 +157,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
         price: product.ourAmount?.setCurrency,
         quantity: product.quantity?.toString(),
         sku: product.productProductId,
-        suid: product.suid,
+        suid: product.styleNo,
       );
     });
   }

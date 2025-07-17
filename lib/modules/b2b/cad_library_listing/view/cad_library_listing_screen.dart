@@ -76,7 +76,7 @@ class CadLibraryListingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmartText(
-                APPStrings.showingListLengthX.tr.interpolate([bloc.cadList.length]),
+                APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
                 style: diamondListingStyle.filterProductCountTextStyle,
               ),
               Expanded(

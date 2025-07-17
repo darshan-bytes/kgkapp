@@ -200,6 +200,7 @@ class OrderProduct {
     required this.yourOriginalAmount,
     required this.jewellery,
     required this.diamond,
+    required this.styleNo,
   });
 
   final String? suid;
@@ -224,6 +225,9 @@ class OrderProduct {
   final String? yourOriginalAmount;
   final OrderJewelleryProduct? jewellery;
   final OrderDiamondProduct? diamond;
+  final String? styleNo;
+
+  //style_no
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
     return OrderProduct(
@@ -249,6 +253,7 @@ class OrderProduct {
       yourOriginalAmount: json["your_original_amount"]?.toString(),
       jewellery: json["jewellery"] == null ? null : OrderJewelleryProduct.fromJson(json["jewellery"]),
       diamond: json["diamond"] == null ? null : OrderDiamondProduct.fromJson(json["diamond"]),
+      styleNo: json["style_no"],
     );
   }
 
@@ -275,6 +280,7 @@ class OrderProduct {
     "your_original_amount": yourOriginalAmount,
     "jewellery": jewellery?.toJson(),
     "diamond": diamond?.toJson(),
+    "style_no": styleNo,
   };
 }
 

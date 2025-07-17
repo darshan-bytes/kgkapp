@@ -230,7 +230,6 @@ class MyBagScreen extends StatelessWidget {
                         _onProductTap(context, product, bloc);
                       },
                       onYourDiscountChange: (value) {
-                        FocusScope.of(context).unfocus();
                         if (value != null) {
                           bloc.isVariationLoading = true;
                           bloc.add(MyBagYourDiscountChangedEvent(context: context, index: index, yourDiscount: value));
@@ -360,7 +359,6 @@ class MyBagScreen extends StatelessWidget {
                         _onProductTap(context, product, bloc);
                       },
                       onYourDiscountChange: (value) {
-                        FocusScope.of(context).unfocus();
                         if (value != null) {
                           bloc.isVariationLoading = true;
                           bloc.add(MyBagYourDiscountChangedEvent(context: context, index: index, yourDiscount: value));
@@ -692,8 +690,17 @@ class MyBagScreen extends StatelessWidget {
                       focusNode: bloc.variationFocusNode,
                       nextFocus: bloc.noteFocusNode,
                       textInputFormatter: [DoubleInputFormatter()],
+                      textInputAction: TextInputAction.done,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                      onValueChanges: (p0) => bloc.add(MyBagVariationChangeEvent(context: context)),
+                      onFieldSubmitted: (p0) {
+                        bloc.add(MyBagVariationChangeEvent(context: context));
+                      },
+                      onEditingComplete: () {
+                        bloc.add(MyBagVariationChangeEvent(context: context));
+                      },
+                      onTapOutside: (event) {
+                        bloc.add(MyBagVariationChangeEvent(context: context));
+                      },
                     ),
                     SizedBox(height: 24.h),
                     SmartTextField(
