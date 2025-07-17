@@ -157,7 +157,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
     query.addAll({
       ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
       ApiKey.search: searchString,
-      ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
+      ApiKey.sort: {ApiKey.field: ApiKey.createdAt, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
   }

@@ -873,5 +873,6 @@
   "mob_select_gemstone": "விளக்கக்காட்சியை தேர்ந்தெடுக்கவும்",
   "mob_select_stone_desc": "கல் வகை வைர அல்லது ரத்தினத்தைத் தேர்ந்தெடுக்கவும்.",
   "mob_quantity_exceeds_stock": "தயாரிப்புக்கு போதுமான இருப்பு இல்லை",
-  "mob_service_not_available": "சேவை கிடைக்கவில்லை"
+  "mob_service_not_available": "சேவை கிடைக்கவில்லை",
+  "mob_jewellery_details": "நகை விவரங்கள்"
 }

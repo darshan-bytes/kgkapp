@@ -49,7 +49,7 @@ class SkuLibraryScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmartText(
-                APPStrings.showingListLengthX.tr.interpolate([bloc.skuLibraryList.length]),
+                APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
                 style: diamondListingStyle.filterProductCountTextStyle,
               ),
               _buildListStyleSwitch(bloc, diamondListingStyle),

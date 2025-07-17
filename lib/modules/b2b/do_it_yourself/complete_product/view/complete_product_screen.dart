@@ -196,7 +196,7 @@ class CompleteProductScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 32.h),
-          SmartText(APPStrings.productDetails.tr, style: style.priceStyle),
+          SmartText(APPStrings.jewelleryDetails.tr, style: style.priceStyle),
           Divider(height: 1.h),
           ProductDetailsComponentsView(
             commodity: Commodity.jewellery,

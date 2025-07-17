@@ -1035,4 +1035,5 @@ class APPStrings {
   static const String selectStoneDesc = 'mob_select_stone_desc';
   static const String quantityExceedsStock = 'mob_quantity_exceeds_stock';
   static const String serviceNotAvailable = 'mob_service_not_available';
+  static const String jewelleryDetails = 'mob_jewellery_details';
 }
