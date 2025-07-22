@@ -30,7 +30,13 @@ class StoneDetailScreen extends StatelessWidget {
                     selectedStep: bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ? 1 : 2,
                     screenIdentifier: bloc.screenIdentifier,
                   ),
-                SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
+                SmartCarouselSlider(
+                  imgList: bloc.imgList,
+                  controller: bloc.controller,
+                  onTapFullImage: (int index) {
+                    bloc.onTapFullImage(context: context, currentIndex: index);
+                  },
+                ),
                 SizedBox(height: 10.h),
                 _productDetail(context, bloc),
               ],

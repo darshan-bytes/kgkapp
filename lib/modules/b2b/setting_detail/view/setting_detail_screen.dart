@@ -20,7 +20,13 @@ class SettingDetailScreen extends StatelessWidget {
                   selectedStep: bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY ? 1 : 2,
                   screenIdentifier: bloc.screenIdentifier,
                 ),
-                SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
+                SmartCarouselSlider(
+                  imgList: bloc.imgList,
+                  controller: bloc.controller,
+                  onTapFullImage: (int index) {
+                    bloc.onTapFullImage(context: context, currentIndex: index);
+                  },
+                ),
                 SizedBox(height: 40.h),
                 _productDetail(context, bloc),
               ],

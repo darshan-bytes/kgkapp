@@ -70,7 +70,10 @@ class AuctionListItem extends StatelessWidget {
         SmartText(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.titleStyle),
         SizedBox(height: 4.h),
         isOrderStatus
-            ? SmartStatusBadge(height: 28.h, currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
+            ? SmartStatusBadge(
+              height: 28.h,
+              currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value?.toLowerCase()),
+            )
             : Row(
               children: [
                 if (stoneTypeImage != null)

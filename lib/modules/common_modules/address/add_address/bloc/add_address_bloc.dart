@@ -134,6 +134,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
       streetAddressController.text = address!.streetAddress ?? "";
       cityController.text = address!.city ?? "";
       zipCodeController.text = address!.zipCode ?? "";
+      isShippingAddress = AddressTypeEnum.values.firstWhereOrNull((element) => element.value == address!.type) ?? AddressTypeEnum.both;
       if (address!.phone.isNotEmpty) {
         phoneController.text = address!.phone.first.phoneNumber ?? "";
         selectedCountryCodes = CountryParser.tryParsePhoneCode(address!.phone.first.phoneCode ?? '') ?? selectedCountryCodes;

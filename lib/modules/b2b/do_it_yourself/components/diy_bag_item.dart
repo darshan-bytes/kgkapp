@@ -17,6 +17,8 @@ class DIYBagItem extends StatelessWidget {
   final bool isCheckboxShow;
   final TextStyle? priceTextStyle;
   final bool isOutOfStock;
+  final CartProductQuantity? selectedQuantity;
+  final Function(CartProductQuantity)? onQuantityChanged;
 
   const DIYBagItem({
     super.key,
@@ -36,6 +38,8 @@ class DIYBagItem extends StatelessWidget {
     this.isCheckboxShow = false,
     this.priceTextStyle,
     this.isOutOfStock = false,
+    this.selectedQuantity,
+    this.onQuantityChanged,
   });
 
   @override
@@ -64,6 +68,7 @@ class DIYBagItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [productImageSection(style), SizedBox(width: 16.w), productDetailsSection(style, context)],
             ),
+
             SizedBox(height: 10.h),
             Container(
               decoration: BoxDecoration(border: Border.symmetric(horizontal: BorderSide(color: style.borderColor))),
@@ -153,6 +158,64 @@ class DIYBagItem extends StatelessWidget {
                 separatorBuilder: (context, index) => Padding(padding: EdgeInsets.symmetric(vertical: 12.h), child: Divider()),
                 itemBuilder:
                     (context, index) => _displayProductView(model: productDetails.diyBagItemProductDetailsList![index], style: style),
+              ),
+              SizedBox(height: 16.h),
+              GestureDetector(
+                onTap: () async {
+                  final TextEditingController controller = TextEditingController(text: selectedQuantity?.name ?? '');
+                  await showDialog(
+                    context: context,
+                    builder: (dialogContext) {
+                      return Dialog(
+                        backgroundColor: Colors.white,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.all(20.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SmartText(APPStrings.selectQuantity.tr),
+                              SizedBox(height: 8.h),
+                              SmartTextField(
+                                autofocus: true,
+                                controller: controller,
+                                hintText: APPStrings.selectQuantity.tr,
+                                keyboardType: TextInputType.number,
+                                textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                                textInputAction: TextInputAction.done,
+                              ),
+                              SizedBox(height: 8.h),
+                              SmartButton(
+                                onTap: () async {
+                                  if (controller.text.isNotEmpty) {
+                                    dialogContext.pop();
+                                    await Future.delayed(Duration(milliseconds: 200));
+                                    onQuantityChanged?.call(
+                                      CartProductQuantity(name: controller.text.trim(), quantity: controller.text.trim().toInt),
+                                    );
+                                  }
+                                },
+                                title: APPStrings.selectQuantity.tr,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsetsDirectional.only(start: 30.w),
+                  decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.w, color: style.borderColor))),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SmartText(APPStrings.qtyX.tr.interpolate([selectedQuantity?.name]), maxLines: 1),
+                      SizedBox(width: 8.w),
+                      Icon(Icons.arrow_drop_down, size: 16.w),
+                    ],
+                  ),
+                ),
               ),
             ],
           ],

@@ -159,10 +159,9 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     return B2BCustomListingDataModel(
       id: sourceModel.suid,
       strCADLibraryImageUrl:
-          ((sourceModel.multipleFinishedViewImage).isNotNullNorEmpty &&
-                  sourceModel.multipleFinishedViewImage?.firstOrNull?.imageAvailable?.toLowerCase() == 'yes')
-              ? sourceModel.multipleFinishedViewImage?.firstOrNull?.imageUrl
-              : null,
+          (sourceModel.multipleFinishedViewImage).isNotNullNorEmpty
+              ? sourceModel.multipleFinishedViewImage?.firstOrNull?.multiAngleUrl.firstOrNull?.url
+              : '',
       strCADLibraryNumber: sourceModel.styleNumber,
       strCADLibraryProductName: sourceModel.autoDescription,
       strCarats: "${sourceModel.crt ?? 0} ${APPStrings.crt.tr}",

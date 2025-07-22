@@ -432,8 +432,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
           imgList = [];
           for (MultipleFinishedViewImage element in (designLibraryData.multipleFinishedViewImage ?? [])) {
-            if (element.imageUrl.isNotNullNorEmpty) {
-              imgList.add(element.imageUrl ?? '');
+            imgList.add(element.imageUrl ?? '');
+            if (element.multiAngleUrl.isNotNullNorEmpty) {
+              for (var multiAngleUrl in element.multiAngleUrl) {
+                imgList.add(multiAngleUrl.url ?? '');
+              }
             }
           }
           productDetails = ProductDetailsModel(
@@ -480,8 +483,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
           imgList = [];
           for (MultipleFinishedViewImage element in (designLibraryData.multipleFinishedViewImage ?? [])) {
-            if (element.imageUrl.isNotNullNorEmpty) {
-              imgList.add(element.imageUrl ?? '');
+            imgList.add(element.imageUrl ?? '');
+            if (element.multiAngleUrl.isNotNullNorEmpty) {
+              for (var multiAngleUrl in element.multiAngleUrl) {
+                imgList.add(multiAngleUrl.url ?? '');
+              }
             }
           }
           productDetails = ProductDetailsModel(
@@ -522,8 +528,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           productName = skuLibraryData.productDescription ?? '';
           imgList = [];
           for (MultipleFinishedViewImage element in (skuLibraryData.multipleFinishedViewImage)) {
-            if (element.imageUrl.isNotNullNorEmpty) {
-              imgList.add(element.imageUrl ?? '');
+            imgList.add(element.imageUrl ?? '');
+            if (element.multiAngleUrl.isNotNullNorEmpty) {
+              for (var multiAngleUrl in element.multiAngleUrl) {
+                imgList.add(multiAngleUrl.url ?? '');
+              }
             }
           }
           productDetails = ProductDetailsModel(
