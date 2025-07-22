@@ -23,7 +23,13 @@ class CompleteProductScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DiyProgressWidget(selectedStep: 3, screenIdentifier: bloc.screenIdentifier, diyType: bloc.diyType),
-                    SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
+                    SmartCarouselSlider(
+                      imgList: bloc.imgList,
+                      controller: bloc.controller,
+                      onTapFullImage: (int index) {
+                        bloc.onTapFullImage(context: context, currentIndex: index);
+                      },
+                    ),
                     SizedBox(height: 40.h),
                     _productDetail(style, bloc, context),
                   ],

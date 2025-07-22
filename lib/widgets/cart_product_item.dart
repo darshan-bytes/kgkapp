@@ -315,11 +315,7 @@ class CartProductItem extends StatelessWidget {
                           children: [
                             SmartText(APPStrings.qtyX.tr.interpolate([selectedQuantity?.name]), maxLines: 1),
                             SizedBox(width: 8.w),
-                            Icon(
-                              Icons.arrow_drop_down,
-                              size: 16.w,
-                              // color: style.iconColor,
-                            ),
+                            Icon(Icons.arrow_drop_down, size: 16.w),
                           ],
                         ),
                       ),

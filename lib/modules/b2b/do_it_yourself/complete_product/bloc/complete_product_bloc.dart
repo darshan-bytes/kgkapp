@@ -148,4 +148,16 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
       }
     }
   }
+
+  void onTapFullImage({required BuildContext context, required int currentIndex}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog.fullscreen(
+          backgroundColor: Colors.transparent,
+          child: ProductPhotoViewGallery(imageUrls: imgList, initialIndex: currentIndex),
+        );
+      },
+    );
+  }
 }

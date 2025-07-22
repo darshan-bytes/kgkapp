@@ -29,6 +29,7 @@ class OrderDetailsProductItem extends StatelessWidget {
                 ),
                 SizedBox(height: 16.h),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SmartImage(
                       path: productDetails.image ?? '',
@@ -53,7 +54,7 @@ class OrderDetailsProductItem extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     Expanded(
-                      child: SmartText(productDetails.name ?? '-', style: style.valueStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      child: SmartText(productDetails.name ?? '-', style: style.valueStyle, maxLines: 2, overflow: TextOverflow.ellipsis),
                     ),
                   ],
                 ),
