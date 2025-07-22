@@ -469,6 +469,13 @@ class MyBagScreen extends StatelessWidget {
               case Commodity.diy:
                 return DIYBagItem(
                   productDetails: product,
+                  selectedQuantity:
+                      product.quantity != null
+                          ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
+                          : null,
+                  onQuantityChanged: (quantity) {
+                    bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
+                  },
                   onRemoveTap: () {
                     bloc.add(MyBagRemoveProductEvent(context: context, index: index));
                   },
@@ -589,30 +596,31 @@ class MyBagScreen extends StatelessWidget {
               ),
             ],
           ),
-          BlocBuilder<MyBagBloc, MyBagState>(
-            buildWhen: (previous, current) => current is MyBagSalesmanListLoadedState,
-            builder: (context, state) {
-              return ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                primary: false,
-                padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
-                itemCount: bloc.salesmanList.length,
-                itemBuilder: (context, index) {
-                  AssignClient? salesman = bloc.salesmanList[index].assignClient;
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTextInfoColumn(APPStrings.contactEmail.tr, salesman?.email ?? '-', style),
-                      SizedBox(width: 12.w),
-                      _buildTextInfoColumn(APPStrings.contactPhone.tr, salesman?.internalUser?.phoneNumber ?? '-', style),
-                    ],
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 12.h),
-              );
-            },
-          ),
+          if (bloc.commodity != Commodity.diy)
+            BlocBuilder<MyBagBloc, MyBagState>(
+              buildWhen: (previous, current) => current is MyBagSalesmanListLoadedState,
+              builder: (context, state) {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  primary: false,
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
+                  itemCount: bloc.salesmanList.length,
+                  itemBuilder: (context, index) {
+                    AssignClient? salesman = bloc.salesmanList[index].assignClient;
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildTextInfoColumn(APPStrings.contactEmail.tr, salesman?.email ?? '-', style),
+                        SizedBox(width: 12.w),
+                        _buildTextInfoColumn(APPStrings.contactPhone.tr, salesman?.internalUser?.phoneNumber ?? '-', style),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                );
+              },
+            ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -655,7 +663,7 @@ class MyBagScreen extends StatelessWidget {
             ),
             SizedBox(height: 24.h),
           ],
-          if (bloc.userType == UserType.b2bUser)
+          if (bloc.userType == UserType.b2bUser && bloc.commodity != Commodity.diy)
             BlocBuilder<MyBagBloc, MyBagState>(
               buildWhen: (previous, current) => current is MyBagPaymentConditionsLoadedState,
               builder: (context, state) {

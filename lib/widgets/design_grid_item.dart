@@ -203,7 +203,7 @@ class DesignListingGridItem extends StatelessWidget {
       if (designModel.strDbfNumber.isNotNullNorEmpty) ...[
         SmartText(
           designModel.strDbfNumber,
-          maxLines: 1,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: designListingGridItemStyle.dbfNumberTextStyle,
           isAutoSizeText: true,

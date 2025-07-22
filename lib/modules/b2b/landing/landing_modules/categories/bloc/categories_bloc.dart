@@ -92,7 +92,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     categories.clear();
     bool isDiyEnabled = appBloc.userPermissions?.permissions?.diy?.list?.allowed == true;
     if (userType == UserType.b2bUser || userType == UserType.internal) {
-      bool isOrionEnabled = appBloc.userPermissions?.permissions?.orion?.view?.allowed == true;
+      /// Orion is disabled now in the app as per the discussion with Siva
+      // bool isOrionEnabled = appBloc.userPermissions?.permissions?.orion?.view?.allowed == true;
       bool isLibrariesEnabled =
           (appBloc.userPermissions?.permissions?.cadLibrary?.list?.allowed == true ||
               appBloc.userPermissions?.permissions?.designLibrary?.list?.allowed == true ||
@@ -132,13 +133,15 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
             image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
             productsDetailsList: doItYourselfSubOptionsB2BList,
           ),
-        if (isOrionEnabled)
-          CategoriesModel(
-            name: 'Orion',
-            image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
-            productsDetailsList: orionSubCategoryList,
-            isExpanded: false,
-          ),
+
+        /// Orion is disabled now in the app as per the discussion with Siva
+        // if (isOrionEnabled)
+        //   CategoriesModel(
+        //     name: 'Orion',
+        //     image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
+        //     productsDetailsList: orionSubCategoryList,
+        //     isExpanded: false,
+        //   ),
         if (isExhibitionEnabled)
           CategoriesModel(name: 'Exhibition', image: 'https://i.ibb.co/VxhKkNW/Mask-group.png', productsDetailsList: [], isExpanded: false),
       ]);

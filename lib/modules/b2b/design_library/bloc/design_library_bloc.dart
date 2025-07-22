@@ -181,7 +181,10 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   B2BCustomListingDataModel convertToB2BCustomListingDataModel({required DesignLibraryListItemDataModel sourceModel}) {
     return B2BCustomListingDataModel(
       id: sourceModel.suid,
-      strDesignListingImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
+      strDesignListingImageUrl:
+          (sourceModel.multipleFinishedViewImage).isNotNullNorEmpty
+              ? sourceModel.multipleFinishedViewImage?.firstOrNull?.multiAngleUrl.firstOrNull?.url
+              : '',
       strDesignNumber: sourceModel.contractNoSkuNo ?? "",
       strDbfNumber: sourceModel.designDescription,
       strCarats: sourceModel.crt.isNotNullNorEmpty ? "${sourceModel.crt} ${APPStrings.crt.tr}" : null,
