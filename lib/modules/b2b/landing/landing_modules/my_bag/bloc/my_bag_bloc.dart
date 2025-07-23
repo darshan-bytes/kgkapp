@@ -299,19 +299,20 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> fetchSalesmanList(BuildContext context, Emitter<MyBagState> emit) async {
-    Either<ErrorResponse, List<CustomerSalesmanModel>>? response;
-    response = await AppRepository(context).customerSalesman();
-    response?.fold(
-      (l) {
-        Utils.showMessage(l.message);
-      },
-      (r) {
-        if (r.isNotEmpty) {
-          salesmanList = r.where((element) => element.assignClient != null).toList();
-          emit(MyBagSalesmanListLoadedState());
-        }
-      },
-    );
+    /// Below code is commented as of now because the client is asking to remove the extra details from the bag screen.
+    // Either<ErrorResponse, List<CustomerSalesmanModel>>? response;
+    // response = await AppRepository(context).customerSalesman();
+    // response?.fold(
+    //   (l) {
+    //     Utils.showMessage(l.message);
+    //   },
+    //   (r) {
+    //     if (r.isNotEmpty) {
+    //       salesmanList = r.where((element) => element.assignClient != null).toList();
+    //       emit(MyBagSalesmanListLoadedState());
+    //     }
+    //   },
+    // );
   }
 
   Future<void> fetchBagOrderSummaryData(BuildContext context, Emitter<MyBagState> emit, {VoidCallback? onSuccess}) async {

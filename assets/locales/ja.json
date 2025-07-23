@@ -874,5 +874,8 @@
   "mob_select_stone_desc": "ストーンタイプのダイヤモンドまたは宝石を選択します。",
   "mob_quantity_exceeds_stock": "商品の在庫が不足しています",
   "mob_service_not_available": "サービスは利用できません",
-  "mob_jewellery_details": "ジュエリーの詳細"
+  "mob_jewellery_details": "ジュエリーの詳細",
+  "mob_inquiry_detail": "お問い合わせ内容",
+  "mob_type_your_message": "メッセージを入力してください",
+  "mob_send": "送信"
 }

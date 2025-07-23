@@ -145,4 +145,5 @@ class ApiKey {
   static const String customizationData = 'customization_data';
   static const String sortField = 'sortField';
   static const String direction = 'direction';
+  static const String inquiryId_ = 'inquiry_id';
 }

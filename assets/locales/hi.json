@@ -874,5 +874,8 @@
   "mob_select_stone_desc": "स्टोन टाइप डायमंड या रत्न का चयन करें।",
   "mob_quantity_exceeds_stock": "उत्पाद के लिए अपर्याप्त स्टॉक",
   "mob_service_not_available": "सेवा उपलब्ध नहीं है",
-  "mob_jewellery_details": "आभूषण विवरण"
+  "mob_jewellery_details": "आभूषण विवरण",
+  "mob_inquiry_detail": "जांच की जानकारी",
+  "mob_type_your_message": "अपना संदेश टाइप करें",
+  "mob_send": "भेजना"
 }

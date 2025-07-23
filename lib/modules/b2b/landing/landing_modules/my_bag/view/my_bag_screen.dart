@@ -596,7 +596,9 @@ class MyBagScreen extends StatelessWidget {
               ),
             ],
           ),
-          if (bloc.commodity != Commodity.diy)
+
+          /// Below code is commented as of now because the client is asking to remove the extra details from the bag screen.
+          /*if (bloc.commodity != Commodity.diy)
             BlocBuilder<MyBagBloc, MyBagState>(
               buildWhen: (previous, current) => current is MyBagSalesmanListLoadedState,
               builder: (context, state) {
@@ -620,7 +622,7 @@ class MyBagScreen extends StatelessWidget {
                   separatorBuilder: (context, index) => SizedBox(height: 12.h),
                 );
               },
-            ),
+            ),*/
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
