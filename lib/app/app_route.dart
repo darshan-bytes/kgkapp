@@ -81,6 +81,7 @@ class AppRoutes {
   static const commentListingPage = '/commentListingPage';
   static const applyPromoCodeScreen = '/applyPromoCodeScreen';
   static const myInquiryScreen = '/myInquiryScreen';
+  static const inquiryDetailPage = '/inquiryDetailPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -712,6 +713,14 @@ class AppRoutes {
         };
         break;
 
+      case inquiryDetailPage:
+        builder = (context) {
+          return BlocProvider<InquiryDetailBloc>(
+            create: (context) => InquiryDetailBloc()..add(InitialInquiryDetailEvent(context: context)),
+            child: const InquiryDetailScreen(),
+          );
+        };
+        break;
       default:
         return _errorRoute();
     }

@@ -874,5 +874,8 @@
   "mob_select_stone_desc": "选择石材型钻石或宝石。",
   "mob_quantity_exceeds_stock": "产品库存不足",
   "mob_service_not_available": "服务不可用",
-  "mob_jewellery_details": "珠宝详情"
+  "mob_jewellery_details": "珠宝详情",
+  "mob_inquiry_detail": "查询详情",
+  "mob_type_your_message": "输入您的消息",
+  "mob_send": "发送"
 }

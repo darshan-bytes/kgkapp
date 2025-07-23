@@ -121,6 +121,7 @@ class UserMasterListingScreen extends StatelessWidget {
                         type: B2BListingType.userListingType,
                         listingItemModel: userItem,
                         gridSpacing: 0.w,
+                        isLastFullWidthRequired: true,
                         onTapMenuButton: () {
                           _showUserMasterBottomSheet(context, bloc, index: index);
                         },

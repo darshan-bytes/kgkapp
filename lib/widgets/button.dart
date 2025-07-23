@@ -22,8 +22,8 @@ class SmartButton extends StatelessWidget {
   final Color? disableImageColor;
   final double? imageSize;
   final BoxShadow? boxShadow;
-
   final bool isWhite;
+  final bool isFullWidth;
 
   const SmartButton({
     super.key,
@@ -49,6 +49,7 @@ class SmartButton extends StatelessWidget {
     this.imageSize,
     this.boxShadow,
     this.isWhite = false,
+    this.isFullWidth = true,
   });
 
   const SmartButton.white({
@@ -74,6 +75,7 @@ class SmartButton extends StatelessWidget {
     this.disableImageColor,
     this.imageSize,
     this.boxShadow,
+    this.isFullWidth = true,
   }) : isWhite = true;
 
   @override
@@ -104,7 +106,7 @@ class SmartButton extends StatelessWidget {
               border: borderColor != null ? Border.all(width: 1.w, color: borderColor!) : null,
             ),
             height: height ?? 42.w,
-            width: width ?? double.infinity,
+            width: width ?? (isFullWidth ? double.infinity : null),
             padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 12.w),
             child:
                 prefixImage.isNotNullNorEmpty || suffixImage.isNotNullNorEmpty

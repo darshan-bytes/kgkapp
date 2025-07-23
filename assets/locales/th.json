@@ -874,5 +874,8 @@
   "mob_select_stone_desc": "เลือกเพชรประเภทหินหรืออัญมณี",
   "mob_quantity_exceeds_stock": "สต๊อกสินค้าไม่เพียงพอ",
   "mob_service_not_available": "บริการไม่พร้อมใช้งาน",
-  "mob_jewellery_details": "รายละเอียดอัญมณี"
+  "mob_jewellery_details": "รายละเอียดอัญมณี",
+  "mob_inquiry_detail": "รายละเอียดสอบถามรายละเอียด",
+  "mob_type_your_message": "พิมพ์ข้อความของคุณ",
+  "mob_send": "ส่ง"
 }
