@@ -1036,4 +1036,7 @@ class APPStrings {
   static const String quantityExceedsStock = 'mob_quantity_exceeds_stock';
   static const String serviceNotAvailable = 'mob_service_not_available';
   static const String jewelleryDetails = 'mob_jewellery_details';
+  static const String inquiryDetail = 'mob_inquiry_detail';
+  static const String typeYourMessage = 'mob_type_your_message';
+  static const String send = 'mob_send';
 }

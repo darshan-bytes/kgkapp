@@ -190,6 +190,8 @@ export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_product_deta
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_places_tab_view.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_tab_view.dart';
+export 'package:kgk/modules/b2b/inquiry_detail/bloc/inquiry_detail_bloc.dart';
+export 'package:kgk/modules/b2b/inquiry_detail/view/inquiry_detail_screen.dart';
 export 'package:kgk/modules/b2b/landing/bloc/landing_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/advance_sort_and_filter/bloc/advance_sort_filter_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/advance_sort_and_filter/view/advance_filter_screen.dart';

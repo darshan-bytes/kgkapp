@@ -23,7 +23,9 @@ class MyInquiryScreen extends StatelessWidget {
                 },
                 type: B2BListingType.myInquiryType,
                 listingItemModel: bloc.myInquiryList[index],
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(AppRoutes.inquiryDetailPage, arguments: {RoutesData.inquiryData: bloc.myInquiryDataList[index]});
+                },
               );
             },
           );

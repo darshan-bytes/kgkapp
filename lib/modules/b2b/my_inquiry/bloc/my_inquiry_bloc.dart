@@ -15,6 +15,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
   int? totalNumberOfPages;
 
   List<B2BCustomListingDataModel> myInquiryList = [];
+  List<MyInquiriesModel> myInquiryDataList = [];
 
   bool isInitialized = false;
 
@@ -123,8 +124,10 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
         if (smartPaginationScrollController.currentPage == 0 || smartPaginationScrollController.currentPage == 1) {
           myInquiryList.clear();
+          myInquiryDataList.clear();
         }
         List<MyInquiriesModel> dataList = success.dataList ?? [];
+        myInquiryDataList.addAll(dataList);
         myInquiryList.addAll(_populateMyInquiryList(dataList));
         smartPaginationScrollController.isPageLoaded.complete(smartPaginationScrollController.currentPage == totalNumberOfPages);
       },
