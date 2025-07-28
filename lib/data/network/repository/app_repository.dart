@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_strapi_data_model.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
@@ -112,6 +113,23 @@ class AppRepository extends ApiService {
         final jewelleryStrapiModel = JewelleryStrapiModel.fromJson(jsonDecode(response.body));
         List<Jewellery> jewelleryStrapiList = jewelleryStrapiModel.data.first.attributes?.jewelleries ?? [];
         return Right(jewelleryStrapiList);
+      } else {
+        return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? 'Unknown error'));
+      }
+    } catch (e) {
+      return Left(ErrorResponse(code: 500, message: APPStrings.errorOccurred.tr));
+    }
+  }
+
+  Future<Either<ErrorResponse, List<Exhibition>>> fetchStrapiExhibitionData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.bannerManagements, attribute: Attributes.exhibition);
+    try {
+      final response = await http.get(Uri.parse(url), headers: {HttpHeaders.authorizationHeader: 'Bearer ${AppConst.strapiApiToken}'});
+
+      if (response.statusCode == 200) {
+        final exhibitionStrapiModel = ExhibitionStrapiDataModel.fromJson(jsonDecode(response.body));
+        List<Exhibition> exhibitionStrapiList = exhibitionStrapiModel.data.first.attributes?.exhibition ?? [];
+        return Right(exhibitionStrapiList);
       } else {
         return Left(ErrorResponse(code: response.statusCode, message: response.reasonPhrase ?? 'Unknown error'));
       }

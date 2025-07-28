@@ -156,7 +156,7 @@ class SkuLibraryScreen extends StatelessWidget {
           return Column(
             children: [
               CadLibraryListItem.designListItem(
-                margin: EdgeInsetsDirectional.only(bottom: 24.h),
+                margin: EdgeInsetsDirectional.only(bottom: 8.h),
                 designModel: bloc.skuLibraryList[index],
                 onTap: () {
                   context.pushNamed(

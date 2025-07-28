@@ -255,31 +255,44 @@ class DesignListingGridItem extends StatelessWidget {
     if (designModel.strCarats.isNullOrEmpty && designModel.strGrams.isNullOrEmpty) {
       return SizedBox(height: 24.h);
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 4.h),
-        if (designModel.strCarats.isNotNullNorEmpty) ...[
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
-              SizedBox(width: 4.w),
-              SmartText(designModel.strCarats, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
-            ],
-          ),
-          SizedBox(height: 8.h),
+    return Padding(
+      padding: EdgeInsetsDirectional.only(top: 4.h),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // SizedBox(height: 4.h),
+          if (designModel.strCarats.isNotNullNorEmpty) ...[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
+                SizedBox(width: 4.w),
+                SmartText(
+                  designModel.strCarats?.replaceAll(APPStrings.crt.tr, '').trim(),
+                  style: style.diamondTextStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            SizedBox(width: 8.w),
+          ],
+          if (designModel.strGrams.isNotNullNorEmpty)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
+                SizedBox(width: 4.w),
+                SmartText(
+                  designModel.strGrams?.replaceAll(APPStrings.grms.tr, '').trim(),
+                  style: style.diamondTextStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
         ],
-        if (designModel.strGrams.isNotNullNorEmpty)
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
-              SizedBox(width: 4.w),
-              SmartText(designModel.strGrams, style: style.diamondTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
-            ],
-          ),
-      ],
+      ),
     );
   }
 }

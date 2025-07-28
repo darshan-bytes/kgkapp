@@ -31,7 +31,7 @@ class ExhibitionTabView extends StatelessWidget {
                 keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                 key: exhibitionListingBloc.paginationScrollController.listKey,
                 slivers: <Widget>[
-                  SliverToBoxAdapter(child: _buildImageAndText(exhibitionListingBloc, listingItemStyle)),
+                  SliverToBoxAdapter(child: _buildImageAndText(context, exhibitionListingBloc, listingItemStyle)),
                   SliverAppBar(
                     pinned: true,
                     floating: false,
@@ -74,21 +74,21 @@ class ExhibitionTabView extends StatelessWidget {
     );
   }
 
-  Widget _buildImageAndText(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
+  Widget _buildImageAndText(BuildContext context, ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
     return Column(
       children: [
         SizedBox(height: 16.h),
-        SmartImage(path: 'https://i.ibb.co/RQj8JGk/Rectangle-651.png', width: 390.w, height: 283.h),
+        if (bloc.imageUrl.isNotNullNorEmpty) SmartImage(path: bloc.imageUrl ?? '', width: context.width, fit: BoxFit.cover),
         Container(
           padding: EdgeInsetsDirectional.symmetric(vertical: 32.0.h, horizontal: 17.0.w),
           decoration: BoxDecoration(color: style.textBackgroundColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SmartText(APPStrings.maximizeYourReach.tr, style: style.titleStyle),
+              SmartText(bloc.strapiExhibition?.title ?? APPStrings.maximizeYourReach.tr, style: style.titleStyle),
               SizedBox(height: 4.0.h),
               SmartText(
-                APPStrings.showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform.tr,
+                bloc.strapiExhibition?.description ?? APPStrings.showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform.tr,
                 maxLines: 2,
                 style: style.subTitleStyle,
               ),

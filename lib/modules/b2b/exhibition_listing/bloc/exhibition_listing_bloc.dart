@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_strapi_data_model.dart';
 
 part 'exhibition_listing_event.dart';
 
@@ -34,6 +35,9 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
 
   /// List of tabs
   final List<Widget> tabs = <Widget>[Tab(text: APPStrings.all.tr), Tab(text: APPStrings.byVenues.tr)];
+
+  String? imageUrl;
+  Exhibition? strapiExhibition;
 
   ExhibitionListingBloc() : super(ExhibitionListingInitialState()) {
     on<InitialExhibitionListingEvent>(_onInitialExhibitionListingEvent);
@@ -73,6 +77,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   Future<void> _initializeBloc(BuildContext context, Emitter<ExhibitionListingState> emit) async {
     emit(ExhibitionListingLoadingState());
     _initializePagination(context);
+    await _fetchStrapiExhibitionData(context);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       await fetchExhibitionListingData(context, emit);
     }
@@ -150,6 +155,21 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
       ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueDesc.toUpperCase()},
     });
     return query;
+  }
+
+  Future<void> _fetchStrapiExhibitionData(BuildContext context) async {
+    final response = await AppRepository(context).fetchStrapiExhibitionData();
+    response.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (success) {
+        if (success.isNotEmpty) {
+          strapiExhibition = success.firstOrNull;
+          imageUrl = strapiExhibition?.image?.imageUrl;
+        }
+      },
+    );
   }
 
   Future<void> fetchExhibitionListingData(

@@ -292,6 +292,7 @@ class ApiClient {
 /// All api endpoints are defined here for the Strapi CMS
 class StrapiEndPoints {
   static const String baseUrl = 'https://qa-strapi-cms.kgk.magnetoinfotech.com/api'; // Replace with your actual base URL
+  static const String mediaUrl = 'https://qa-strapi-cms.kgk.magnetoinfotech.com/';
 
   static String get aboutUsPage => '$baseUrl/about-uses';
 
@@ -330,6 +331,8 @@ class StrapiEndPoints {
   static String get returnPolicies => '$baseUrl/return-policies';
 
   static String get termsOfUsesPage => '$baseUrl/terms-of-uses';
+
+  static String get bannerManagements => '$baseUrl/banner-mangements';
 }
 
 /// All attributes are defined here for the Strapi CMS
@@ -354,4 +357,5 @@ class Attributes {
   static const String educationLabGrownDiamondPage = 'lab_grown_diamonds';
   static const String findAStorePage = 'Find_a_store';
   static const String checkbox = 'checkbox';
+  static const String exhibition = 'Exhibition';
 }
