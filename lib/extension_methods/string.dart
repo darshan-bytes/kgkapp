@@ -124,6 +124,8 @@ extension StringExtensions on String {
 
   String get setMediaUrl => "${ApiClient.assetsBaseUrl}$this";
 
+  String get setStrapiMediaUrl => "${StrapiEndPoints.mediaUrl}$this";
+
   /// Converts a custom-formatted string into a Dart Map.
   /// Example input: "{commodity=jewellery, id=EFGSTOCK99045002297824, branch_link_type=product_share}"
   Map<String, dynamic>? get customStringToJson {

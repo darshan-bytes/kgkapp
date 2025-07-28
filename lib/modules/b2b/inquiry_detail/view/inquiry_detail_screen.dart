@@ -41,14 +41,16 @@ class InquiryDetailScreen extends StatelessWidget {
                       SmartText("#${bloc.inquiryData?.id}", style: style.orderIdStyle),
                       SizedBox(height: 4.h),
                     ],
-                    SmartRichText(
-                      spans: [
-                        SmartTextSpan(text: bloc.inquiryData?.inquiryType ?? '', style: style.orderDateStyle),
-                        SmartTextSpan(text: " : ", style: style.orderDateStyle),
-                        SmartTextSpan(text: bloc.inquiryData?.contextId ?? '', style: style.orderDateStyle),
-                      ],
-                    ),
-                    SizedBox(height: 8.h),
+                    if (bloc.inquiryData?.contextId != null) ...[
+                      SmartRichText(
+                        spans: [
+                          SmartTextSpan(text: bloc.inquiryData?.inquiryType ?? '', style: style.orderDateStyle),
+                          SmartTextSpan(text: " : ", style: style.orderDateStyle),
+                          SmartTextSpan(text: bloc.inquiryData?.contextId ?? '', style: style.orderDateStyle),
+                        ],
+                      ),
+                      SizedBox(height: 8.h),
+                    ],
                     SmartRichText(
                       spans: [
                         SmartTextSpan(text: APPStrings.receivedOn.tr, style: style.orderDateStyle),

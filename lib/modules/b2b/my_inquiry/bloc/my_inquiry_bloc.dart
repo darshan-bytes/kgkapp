@@ -24,6 +24,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     on<MyInquiryUpdateEvent>(_onMyInquiryUpdateEvent);
     on<MyInquiryRemoveEvent>(_onMyInquiryRemoveEvent);
     on<FilterMyInquiryEvent>(_onFilterMyInquiryEvent);
+    on<MyInquiryLoadMoreEvent>(_onMyInquiryLoadMoreEvent);
   }
 
   /// This function is used to handle the initial event of the bloc
@@ -315,5 +316,12 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     filterData = event.filterData;
     smartPaginationScrollController.pullToRefresh();
     await fetchMyInquiries(event.context, emit, isLoadMore: true);
+    emit(MyInquiryLoadedState());
+  }
+
+  Future<void> _onMyInquiryLoadMoreEvent(MyInquiryLoadMoreEvent event, Emitter<MyInquiryState> emit) async {
+    emit(MyInquiryLoadingMoreState());
+    await fetchMyInquiries(event.context, emit);
+    emit(MyInquiryLoadedState());
   }
 }

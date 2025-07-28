@@ -135,7 +135,7 @@ class SmartStatusBadge extends StatelessWidget {
       case ProjectStatus.open:
         return style.orangeInProgressBackgroundColor;
       case ProjectStatus.close:
-        return style.activeBackgroundColor;
+        return style.lostBackgroundColor;
       case ProjectStatus.progress:
         return style.yellowBgColor;
       case ProjectStatus.newStatus:
@@ -188,7 +188,7 @@ class SmartStatusBadge extends StatelessWidget {
       case ProjectStatus.open:
         return style.orangeInProgressTextColor;
       case ProjectStatus.close:
-        return style.activeTextColor;
+        return style.lostTextColor;
       case ProjectStatus.progress:
         return style.yellowTextColor;
       case ProjectStatus.newStatus:
