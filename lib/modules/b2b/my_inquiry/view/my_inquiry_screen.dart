@@ -12,11 +12,16 @@ class MyInquiryScreen extends StatelessWidget {
       body: BlocBuilder<MyInquiryBloc, MyInquiryState>(
         buildWhen: (previous, current) => current is MyInquiryLoadedState,
         builder: (context, state) {
+          if (state is! MyInquiryLoadedState) {
+            return const SizedBox.shrink();
+          }
           return ListView.builder(
-            padding: EdgeInsetsDirectional.all(17.w),
+            controller: bloc.smartPaginationScrollController.controller,
+            padding: EdgeInsetsDirectional.fromSTEB(17.w, 17.h, 17.w, 80.h),
+            physics: const ClampingScrollPhysics(),
             itemCount: bloc.myInquiryList.length,
             itemBuilder: (listContext, index) {
-              return B2BListingItem(
+              Widget child = B2BListingItem(
                 margin: EdgeInsetsDirectional.only(bottom: 24.h),
                 onTapMenuButton: () {
                   handleMenuButtonTap(context, index, bloc, bloc.myInquiryList[index].strInquiryId ?? '');
@@ -27,6 +32,12 @@ class MyInquiryScreen extends StatelessWidget {
                   context.pushNamed(AppRoutes.inquiryDetailPage, arguments: {RoutesData.inquiryData: bloc.myInquiryDataList[index]});
                 },
               );
+
+              if (state is MyInquiryLoadingMoreState && index == bloc.myInquiryList.length - 1) {
+                child = Column(children: [child, SizedBox(height: 16.h), const SmartCircularProgressIndicator()]);
+              }
+
+              return child;
             },
           );
         },

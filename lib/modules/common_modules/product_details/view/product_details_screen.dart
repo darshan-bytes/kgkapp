@@ -385,7 +385,10 @@ class ProductDetailsScreen extends StatelessWidget {
           SizedBox(height: 8.h),
           SmartText(bloc.productName, style: style.productNameStyle),
           if (bloc.productDetails?.reviewCount != null) ...[SizedBox(height: 8.h), _buildRatingBarAndReviews(style, bloc.productDetails)],
-          if (bloc.canCompare) ...[SizedBox(height: 12.h), _compareWidget(bloc, style)],
+          if (Utils.getPermissionByModuleName(moduleName: ModuleKey.inquiries)?.create?.allowed == true || bloc.canCompare) ...[
+            SizedBox(height: 12.h),
+            _compareWidget(bloc, style),
+          ],
           SizedBox(height: 16.h),
 
           /// AUCTION FLOW FOR DIAMOND
@@ -567,37 +570,39 @@ class ProductDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         return Row(
           children: [
-            Expanded(
-              child: SmartCheckbox(
-                value: bloc.isCompare,
-                onChanged: (value) {
-                  bloc.add(ToggleCompareProductEvent(context: context));
-                },
-                label: APPStrings.compareProduct.tr,
-                labelStyle: style.compareProductStyle,
-              ),
-            ),
-            SelectionButton(
-              height: 42.w,
-              width: 42.w,
-              padding: EdgeInsetsDirectional.all(6.w),
-              isSelected: false,
-              onTap: () {
-                context.pushNamed(
-                  AppRoutes.makeInquiryPage,
-                  arguments: {
-                    RoutesData.inquiryContextId: bloc.productDetails?.suid,
-                    RoutesData.contextId: bloc.productDetails?.contractNoSkuNo,
-                    RoutesData.commodity: bloc.productDetails?.commodity?.value,
+            if (bloc.canCompare)
+              Expanded(
+                child: SmartCheckbox(
+                  value: bloc.isCompare,
+                  onChanged: (value) {
+                    bloc.add(ToggleCompareProductEvent(context: context));
                   },
-                );
-              },
-              imageWidth: 20.w,
-              imageHeight: 20.w,
-              fit: BoxFit.contain,
-              image: AppImages.icInquiries,
-              matchTextDirection: true,
-            ),
+                  label: APPStrings.compareProduct.tr,
+                  labelStyle: style.compareProductStyle,
+                ),
+              ),
+            if (Utils.getPermissionByModuleName(moduleName: ModuleKey.inquiries)?.create?.allowed == true)
+              SelectionButton(
+                height: 42.w,
+                width: 42.w,
+                padding: EdgeInsetsDirectional.all(6.w),
+                isSelected: false,
+                onTap: () {
+                  context.pushNamed(
+                    AppRoutes.makeInquiryPage,
+                    arguments: {
+                      RoutesData.inquiryContextId: bloc.productDetails?.suid,
+                      RoutesData.contextId: bloc.productDetails?.contractNoSkuNo,
+                      RoutesData.commodity: bloc.productDetails?.commodity?.value,
+                    },
+                  );
+                },
+                imageWidth: 20.w,
+                imageHeight: 20.w,
+                fit: BoxFit.contain,
+                image: AppImages.icInquiries,
+                matchTextDirection: true,
+              ),
           ],
         );
       },

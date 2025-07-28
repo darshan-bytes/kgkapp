@@ -18,3 +18,10 @@ final class MyInquiryReloadState extends MyInquiryState {
   @override
   List<Object> get props => [];
 }
+
+final class MyInquiryLoadingMoreState extends MyInquiryState {
+  const MyInquiryLoadingMoreState();
+
+  @override
+  List<Object> get props => [];
+}
