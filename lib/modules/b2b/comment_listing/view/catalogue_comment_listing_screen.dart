@@ -26,7 +26,7 @@ class CatalogueCommentListingScreen extends StatelessWidget {
             if (state is CommentLoadingState) {
               return SmartCircularProgressIndicator();
             } else if (state is CommentListingLoadedState) {
-              if ((bloc.commentsAddedResponseModel?.comments).isNullOrEmpty) {
+              if ((bloc.commentsList).isNullOrEmpty) {
                 return NoDataFoundWidget();
               }
               return SmartSingleChildScrollView(
@@ -34,9 +34,9 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsetsDirectional.all(16.w),
-                  itemCount: (bloc.commentsAddedResponseModel?.comments ?? []).length,
+                  itemCount: (bloc.commentsList).length,
                   itemBuilder: (context, index) {
-                    Comments commentModel = (bloc.commentsAddedResponseModel?.comments?[index] ?? Comments());
+                    Comments commentModel = (bloc.commentsList[index]);
                     return CommentListItem(
                       id: commentModel.updatedIdDetails?.fullName ?? '',
                       createdAt: commentModel.displayDate ?? '',

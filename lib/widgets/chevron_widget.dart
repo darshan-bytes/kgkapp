@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-/// Chevron Progress Widget
+/// Chevron Progress Widget with RTL/LTR support
 class ChevronProgress extends StatelessWidget {
   const ChevronProgress({super.key, required this.child, required this.clipper, this.color = Colors.blue, this.edge = Edge.end});
 
@@ -19,12 +19,16 @@ class ChevronProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final double containerWidth = clipper != Clipper.center ? 130.w : 145.w;
     final Radius radiusValue = Radius.circular(4.r);
+    final bool isRTL = Directionality.of(context) == TextDirection.rtl;
+
+    // Adjust radius based on direction and clipper type
     final Radius startRadius = clipper == Clipper.start ? radiusValue : Radius.zero;
+    final Radius endRadius = clipper == Clipper.end ? Radius.zero : radiusValue;
 
     return CustomPaint(
-      painter: ClipShadowPainter(getClipperPainter(clipper), []),
+      painter: ClipShadowPainter(getClipperPainter(clipper, isRTL), []),
       child: ClipPath(
-        clipper: getClipperPainter(clipper),
+        clipper: getClipperPainter(clipper, isRTL),
         child: Container(
           width: containerWidth,
           decoration: BoxDecoration(
@@ -32,8 +36,8 @@ class ChevronProgress extends StatelessWidget {
             borderRadius: BorderRadiusDirectional.only(
               bottomStart: startRadius,
               topStart: startRadius,
-              topEnd: radiusValue,
-              bottomEnd: radiusValue,
+              topEnd: endRadius,
+              bottomEnd: endRadius,
             ),
           ),
           child: child,
@@ -42,14 +46,34 @@ class ChevronProgress extends StatelessWidget {
     );
   }
 
-  CustomClipper<Path> getClipperPainter(Clipper clipper) {
+  CustomClipper<Path> getClipperPainter(Clipper clipper, bool isRTL) {
+    // Adjust edge based on RTL direction
+    Edge adjustedEdge = _getAdjustedEdge(edge, isRTL);
+
     switch (clipper) {
       case Clipper.start:
-        return PointClipper(Edge.end);
+        return PointClipper(adjustedEdge);
       case Clipper.center:
-        return ChevronClipper(Edge.end);
+        return ChevronClipper(adjustedEdge);
       case Clipper.end:
-        return LabelClipper(Edge.start);
+        // For end clipper, we need to reverse the edge logic for RTL
+        Edge endEdge = !isRTL ? (edge == Edge.start ? Edge.end : Edge.start) : (edge);
+        return LabelClipper(endEdge);
+    }
+  }
+
+  Edge _getAdjustedEdge(Edge originalEdge, bool isRTL) {
+    if (!isRTL) return originalEdge;
+
+    // Mirror horizontal edges for RTL
+    switch (originalEdge) {
+      case Edge.start:
+        return Edge.end;
+      case Edge.end:
+        return Edge.start;
+      case Edge.top:
+      case Edge.bottom:
+        return originalEdge; // Vertical edges remain the same
     }
   }
 }
@@ -80,7 +104,7 @@ class ClipShadow {
   ClipShadow({required this.color, this.elevation = 5});
 }
 
-/// Start Clipper
+/// Start Clipper with RTL support
 class PointClipper extends CustomClipper<Path> {
   PointClipper(this.edge);
 
@@ -150,7 +174,7 @@ class PointClipper extends CustomClipper<Path> {
   }
 }
 
-/// Center Clipper
+/// Center Clipper with RTL support
 class ChevronClipper extends CustomClipper<Path> {
   ChevronClipper(this.edge);
 
@@ -182,6 +206,7 @@ class ChevronClipper extends CustomClipper<Path> {
     path.lineTo(size.width, size.height);
     path.lineTo(size.width, triangleHeight);
     path.lineTo(size.width / 2, 0.0);
+    path.close();
     return path;
   }
 
@@ -226,7 +251,7 @@ class ChevronClipper extends CustomClipper<Path> {
   }
 }
 
-/// End Clipper
+/// End Clipper with RTL support
 class LabelClipper extends CustomClipper<Path> {
   LabelClipper(this.edge);
 

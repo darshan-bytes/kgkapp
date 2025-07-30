@@ -43,8 +43,15 @@ class MyInquiryScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.pushNamed(AppRoutes.makeInquiryPage);
+        onPressed: () async {
+          await context.pushNamed(AppRoutes.makeInquiryPage).then((onValue) {
+            if (onValue != null) {
+              if (onValue[RoutesData.isInquiryUpdated]!) {
+                bloc.add(MyInquiryUpdateEvent(context));
+              }
+            }
+            return;
+          });
         },
         child: const Icon(Icons.add),
       ),
@@ -123,6 +130,10 @@ class MyInquiryScreen extends StatelessWidget {
           return FilterBottomActionBar(
             controller: myInquiryBloc.smartPaginationScrollController.controller,
             onFilterTap: () {
+              ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
+              BlocProvider.of<AdvanceSortFilterBloc>(
+                context,
+              ).add(AddAdvanceSortFilterDataEvent(filterOptionList: myInquiryBloc.filterData, context: context));
               Utils.showSmartModalBottomSheet(
                 context: context,
                 builder:

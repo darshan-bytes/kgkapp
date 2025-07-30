@@ -1,13 +1,12 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
-import 'package:kgk/kgk.dart';
 
 import '../model/diamonds_strapi_model.dart';
 
 part 'stones_landing_event.dart';
-
 part 'stones_landing_state.dart';
 
 class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
@@ -476,7 +475,15 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         );
 
       case LandingSlug.originOfDiamonds:
-        return _buildOriginOfDiamondsSection(stoneLandingBloc, style, context, homeScreenStyle, index);
+        return _buildOriginOfDiamondsSection(
+          stoneLandingBloc,
+          style,
+          context,
+          homeScreenStyle,
+          index,
+          diamondStrapiList[index].details,
+          diamondStrapiList[index].country,
+        );
 
       case LandingSlug.landingGetInspired:
         getInspiredList.clear();
@@ -697,7 +704,15 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         );
 
       case LandingSlug.originOfDiamonds:
-        return _buildOriginOfDiamondsSection(stoneLandingBloc, style, context, homeScreenStyle, index);
+        return _buildOriginOfDiamondsSection(
+          stoneLandingBloc,
+          style,
+          context,
+          homeScreenStyle,
+          index,
+          gemstoneStrapiList[index].details,
+          gemstoneStrapiList[index].country,
+        );
 
       case LandingSlug.landingGetInspired:
         getInspiredList.clear();
@@ -915,7 +930,15 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         );
 
       case LandingSlug.originOfDiamonds:
-        return _buildOriginOfDiamondsSection(stoneLandingBloc, style, context, homeScreenStyle, index);
+        return _buildOriginOfDiamondsSection(
+          stoneLandingBloc,
+          style,
+          context,
+          homeScreenStyle,
+          index,
+          jewelleryStrapiList[index].details,
+          jewelleryStrapiList[index].country,
+        );
 
       case LandingSlug.landingGetInspired:
         getInspiredList.clear();
@@ -1296,18 +1319,20 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     BuildContext context,
     HomeScreenStyle homeScreenStyle,
     int index,
+    Details? details,
+    List<Poster> country,
   ) {
-    String title = diamondStrapiList[index].details?.title ?? '';
-    String description = Utils.parseHtmlString(diamondStrapiList[index].details?.description ?? '');
+    String title = details?.title ?? '';
+    String description = Utils.parseHtmlString(details?.description ?? '');
     bloc.originOfDiamondsList.clear();
-    for (int i = 0; i < diamondStrapiList[index].country.length; i++) {
+    for (int i = 0; i < country.length; i++) {
       bloc.originOfDiamondsList.add(
         AuctionListModel(
           id: i.toString(),
-          name: diamondStrapiList[index].country[i].title ?? '',
+          name: country[i].title ?? '',
           imageUrl:
-              (diamondStrapiList[index].country[i].image?.data).isNotNullNorEmpty
-                  ? "${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].image?.data.first.attributes?.url ?? ''}"
+              (country[i].image?.data).isNotNullNorEmpty
+                  ? "${AppConst.strapiQaEnvImgBaseUrl}${country[i].image?.data.first.attributes?.url ?? ''}"
                   : "",
         ),
       );

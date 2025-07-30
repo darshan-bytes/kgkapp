@@ -82,9 +82,6 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   void _fetchFilterData(BuildContext context, Emitter<DigitalCatalogueState> emit) async {
     if (filterData.isEmpty) {
       await _setupFilters(context);
-
-      ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
-      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
   }
 
@@ -122,8 +119,8 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         case FilterType.dateRange:
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
-              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
+              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
             ];
           }
           break;

@@ -13,29 +13,37 @@ class MakeInquiryScreen extends StatelessWidget {
       body: SafeArea(
         child: SmartSingleChildScrollView(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 14.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// Below code is commented as per the discussion with the team
-              /// Reference: https://thekgk.atlassian.net/browse/TA-675
-              // SmartImage(path: 'https://i.ibb.co/RPzDQqL/Rectangle-656.png', height: 464.h, width: context.width, fit: BoxFit.cover),
-              // SizedBox(height: 14.h),
-              _buildFullNameField(bloc),
-              SizedBox(height: 14.h),
-              _buildEmailField(bloc),
-              SizedBox(height: 14.h),
-              _buildInquiryTypeDropdown(bloc),
-              SizedBox(height: 14.h),
-              _buildSelectStatusDropdown(bloc),
-              if (!bloc.isUpdateInquiry) ...[SizedBox(height: 14.h), _buildCommentField(bloc)],
-              SizedBox(height: 18.h),
-              SmartButton(
-                onTap: () {
-                  bloc.add(MakeInquirySubmitEvent(context: context, inquiryId: bloc.inquiryId ?? ''));
-                },
-                title: APPStrings.submit.tr,
-              ),
-            ],
+          child: BlocBuilder<MakeInquiryBloc, MakeInquiryState>(
+            buildWhen: (previous, current) => current is MakeInquiryLoadedState,
+            builder: (context, state) {
+              if (state is! MakeInquiryLoadedState) {
+                return const SizedBox.shrink();
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// Below code is commented as per the discussion with the team
+                  /// Reference: https://thekgk.atlassian.net/browse/TA-675
+                  // SmartImage(path: 'https://i.ibb.co/RPzDQqL/Rectangle-656.png', height: 464.h, width: context.width, fit: BoxFit.cover),
+                  // SizedBox(height: 14.h),
+                  _buildFullNameField(bloc),
+                  SizedBox(height: 14.h),
+                  _buildEmailField(bloc),
+                  SizedBox(height: 14.h),
+                  _buildInquiryTypeDropdown(bloc),
+                  SizedBox(height: 14.h),
+                  _buildSelectStatusDropdown(bloc),
+                  if (!bloc.isUpdateInquiry) ...[SizedBox(height: 14.h), _buildCommentField(bloc)],
+                  SizedBox(height: 18.h),
+                  SmartButton(
+                    onTap: () {
+                      bloc.add(MakeInquirySubmitEvent(context: context, inquiryId: bloc.inquiryId ?? ''));
+                    },
+                    title: APPStrings.submit.tr,
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -172,7 +180,7 @@ class MakeInquiryScreen extends StatelessWidget {
       builder: (context, state) {
         return SmartDropDown<StatusModel>(
           selectedItem: bloc.selectedStatus,
-          items: bloc.statusList.map((e) => SmartDropDownItem<StatusModel>(value: e, title: e.name)).toList(),
+          items: bloc.statusList.map((e) => SmartDropDownItem<StatusModel>(value: e, title: e.name.tr)).toList(),
           hintText: APPStrings.selectStatus.tr,
           labelText: APPStrings.selectStatus.tr,
           onChanged: (newValue) {

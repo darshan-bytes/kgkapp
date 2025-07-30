@@ -90,7 +90,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     diyJewelleryTypes = appBloc.diyJewelleryTypeList;
 
     categories.clear();
-    bool isDiyEnabled = appBloc.userPermissions?.permissions?.diy?.list?.allowed == true;
+    bool isDiyEnabled = (StorageManager.instance.getIsSkipLogin()) || (appBloc.userPermissions?.permissions?.diy?.list?.allowed == true);
     if (userType == UserType.b2bUser || userType == UserType.internal) {
       /// Orion is disabled now in the app as per the discussion with Siva
       // bool isOrionEnabled = appBloc.userPermissions?.permissions?.orion?.view?.allowed == true;

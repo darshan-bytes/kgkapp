@@ -87,7 +87,6 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
 
   Future<void> _fetchFilterData(BuildContext context, Emitter<ExhibitionListingState> emit) async {
     await _setupFilters(context, emit);
-    BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
   }
 
   void _initializePagination(BuildContext context) {
@@ -114,8 +113,8 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
         case FilterType.dateRange:
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
-              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
+              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
             ];
           }
           break;
@@ -123,6 +122,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
           if (element.date != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = element.date?.dateToStringFormat(
               outputDateFormat: DateFormatter.dateFormatYYYYMMDD,
+              isWithLanguage: false,
             );
           }
           break;
