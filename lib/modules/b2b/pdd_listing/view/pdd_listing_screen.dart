@@ -304,6 +304,10 @@ class PddListingScreen extends StatelessWidget {
           return FilterBottomActionBar(
             controller: pddListingBloc.gridPaginationScrollController.controller,
             onFilterTap: () {
+              ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
+              BlocProvider.of<AdvanceSortFilterBloc>(
+                context,
+              ).add(AddAdvanceSortFilterDataEvent(filterOptionList: pddListingBloc.filterData, context: context));
               Utils.showSmartModalBottomSheet(
                 context: context,
                 builder:

@@ -36,16 +36,22 @@ class InquiryDetailBloc extends Bloc<InquiryDetailEvent, InquiryDetailState> {
     //inquiryCommentsList
     final response = await AppRepository(context).inquiryCommentsList(inquiryData!.id ?? '');
 
-    response?.fold(
+    await response?.fold(
       (error) {
         Utils.showMessage(error.message);
         isListError = true;
       },
-      (inquiry) {
+      (inquiry) async {
         isListError = false;
         inquiryData = inquiry;
 
         emit(InquiryDetailLoaded(inquiryData: inquiryData!));
+        await Future.delayed(Duration(milliseconds: 100));
+        await scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeIn,
+        );
       },
     );
   }

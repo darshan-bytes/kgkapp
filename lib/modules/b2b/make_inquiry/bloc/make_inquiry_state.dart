@@ -9,6 +9,13 @@ final class MakeInquiryInitial extends MakeInquiryState {
   List<Object> get props => [];
 }
 
+final class MakeInquiryLoadedState extends MakeInquiryState {
+  const MakeInquiryLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class MakeInquiryReloadState extends MakeInquiryState {
   @override
   List<Object> get props => [];

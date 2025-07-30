@@ -105,6 +105,10 @@ class ConceptListScreen extends StatelessWidget {
             return FilterBottomActionBar(
               controller: conceptListBloc.paginationScrollController.controller,
               onFilterTap: () {
+                ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
+                BlocProvider.of<AdvanceSortFilterBloc>(
+                  context,
+                ).add(AddAdvanceSortFilterDataEvent(filterOptionList: conceptListBloc.filterData, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder:

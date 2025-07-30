@@ -57,7 +57,9 @@ class InquiryDetailScreen extends StatelessWidget {
                         SmartTextSpan(text: " : ", style: style.orderDateStyle),
                         SmartTextSpan(
                           text:
-                              bloc.inquiryData?.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ??
+                              bloc.inquiryData?.createdAt?.toLocal().dateToStringFormat(
+                                outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA,
+                              ) ??
                               '',
                           style: style.orderDateStyle,
                         ),
@@ -83,7 +85,7 @@ class InquiryDetailScreen extends StatelessWidget {
           MyInquiryComment comment = bloc.inquiryData!.commentList[index];
           return CommentListItem(
             id: comment.fullName ?? '',
-            createdAt: comment.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ?? '',
+            createdAt: comment.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? '',
             message: comment.comments ?? '',
             userImage: comment.profile?.setMediaUrl ?? '',
           );

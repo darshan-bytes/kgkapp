@@ -264,7 +264,9 @@ class ProductListItem extends StatelessWidget {
   }
 
   Widget priceSection(ProductItemStyle style) {
-    return Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Flexible(
           child: SmartText(
@@ -275,7 +277,6 @@ class ProductListItem extends StatelessWidget {
           ),
         ),
         if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
-          SizedBox(width: 10.w),
           Flexible(
             child: SmartText(productDetails.originalPrice, maxLines: 1, overflow: TextOverflow.ellipsis, style: style.checkedPriceStyle),
           ),

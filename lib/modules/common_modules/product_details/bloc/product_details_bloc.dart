@@ -432,13 +432,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
           imgList = [];
           for (MultipleFinishedViewImage element in (designLibraryData.multipleFinishedViewImage ?? [])) {
-            imgList.add(element.imageUrl ?? '');
             if (element.multiAngleUrl.isNotNullNorEmpty) {
               for (var multiAngleUrl in element.multiAngleUrl) {
                 imgList.add(multiAngleUrl.url ?? '');
               }
             }
           }
+          if (imgList.isEmpty) imgList.add('');
           productDetails = ProductDetailsModel(
             productId: designLibraryData.suid,
             suid: designLibraryData.suid,
@@ -483,13 +483,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
           imgList = [];
           for (MultipleFinishedViewImage element in (designLibraryData.multipleFinishedViewImage ?? [])) {
-            imgList.add(element.imageUrl ?? '');
             if (element.multiAngleUrl.isNotNullNorEmpty) {
               for (var multiAngleUrl in element.multiAngleUrl) {
                 imgList.add(multiAngleUrl.url ?? '');
               }
             }
           }
+          if (imgList.isEmpty) imgList.add('');
           productDetails = ProductDetailsModel(
             productId: designLibraryData.suid,
             suid: designLibraryData.suid,
@@ -535,6 +535,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               }
             }
           }
+          if (imgList.isEmpty) imgList.add('');
           productDetails = ProductDetailsModel(
             productId: skuLibraryData.suid,
             suid: skuLibraryData.suid,

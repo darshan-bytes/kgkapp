@@ -1,5 +1,7 @@
 import 'package:kgk/kgk.dart';
 
+import 'jewelleries_strapi_model.dart';
+
 class GemstoneStrapiModel {
   GemstoneStrapiModel({required this.data, required this.meta});
 
@@ -108,18 +110,18 @@ class Gemstone {
   final dynamic button;
   final UserType? userType;
   final BusinessType? businessType;
-  final About? poster;
+  final Poster? poster;
   final Info? info;
   final String? title;
   final String? description;
   final BackgroundImage? backgroundImage;
   final Details? details;
-  final List<About> country;
+  final List<Poster> country;
   final AboutImage? image;
   final AboutImage? mobileImage;
   final List<Banner> banner;
   final dynamic headline;
-  final About? about;
+  final Poster? about;
   final List<Faq> faQs;
   final List<Details> points;
 
@@ -131,18 +133,18 @@ class Gemstone {
       button: json["button"],
       userType: json["user_type"] == null ? null : UserType.fromJson(json["user_type"]),
       businessType: json["business_type"] == null ? null : BusinessType.fromJson(json["business_type"]),
-      poster: json["poster"] == null ? null : About.fromJson(json["poster"]),
+      poster: json["poster"] == null ? null : Poster.fromJson(json["poster"]),
       info: json["info"] == null ? null : Info.fromJson(json["info"]),
       title: json["title"],
       description: json["description"],
       backgroundImage: json["background_image"] == null ? null : BackgroundImage.fromJson(json["background_image"]),
       details: json["details"] == null ? null : Details.fromJson(json["details"]),
-      country: json["country"] == null ? [] : List<About>.from(json["country"]!.map((x) => About.fromJson(x))),
+      country: json["country"] == null ? [] : List<Poster>.from(json["country"]!.map((x) => Poster.fromJson(x))),
       image: json["image"] == null ? null : AboutImage.fromJson(json["image"]),
       mobileImage: json["mobile_image"] == null ? null : AboutImage.fromJson(json["mobile_image"]),
       banner: json["banner"] == null ? [] : List<Banner>.from(json["banner"]!.map((x) => Banner.fromJson(x))),
       headline: json["headline"],
-      about: json["about"] == null ? null : About.fromJson(json["about"]),
+      about: json["about"] == null ? null : Poster.fromJson(json["about"]),
       faQs: json["FAQs"] == null ? [] : List<Faq>.from(json["FAQs"]!.map((x) => Faq.fromJson(x))),
       points: json["points"] == null ? [] : List<Details>.from(json["points"]!.map((x) => Details.fromJson(x))),
     );
@@ -172,7 +174,7 @@ class Gemstone {
   };
 }
 
-class About {
+/*class About {
   About({
     required this.id,
     required this.title,
@@ -216,7 +218,7 @@ class About {
     "mobile_image": mobileImage?.toJson(),
     "image": image?.toJson(),
   };
-}
+}*/
 
 class AboutImage {
   AboutImage({required this.data});
@@ -579,7 +581,7 @@ class Button {
   }
 }
 
-class Details {
+/*class Details {
   Details({required this.id, required this.title, required this.description});
 
   final int? id;
@@ -596,7 +598,7 @@ class Details {
   String toString() {
     return "$id, $title, $description, ";
   }
-}
+}*/
 
 class Info {
   Info({required this.id, required this.title, required this.headline, required this.tagline, required this.sectionTitle});

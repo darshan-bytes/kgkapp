@@ -142,7 +142,7 @@ class DesignListingGridItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ..._buildDetails(style, designListingGridItemStyle, context),
-            if (onAddToBagTap != null)
+            if (onAddToBagTap != null && BlocProvider.of<AppBloc>(context).userType != UserType.internal)
               SmartButton(
                 height: 32.w,
                 margin: EdgeInsetsDirectional.only(top: 8.h),
@@ -260,7 +260,6 @@ class DesignListingGridItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // SizedBox(height: 4.h),
           if (designModel.strCarats.isNotNullNorEmpty) ...[
             Row(
               mainAxisSize: MainAxisSize.min,

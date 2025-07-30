@@ -149,7 +149,7 @@ class CadLibraryListItem extends StatelessWidget {
               ],
             ],
             diamondAndGramSection(productStyle),
-            if (onAddToBagTap != null)
+            if (onAddToBagTap != null && BlocProvider.of<AppBloc>(context).userType != UserType.internal)
               SmartButton(
                 height: 32.w,
                 margin: EdgeInsetsDirectional.only(top: 8.h, end: 8.w),

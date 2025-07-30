@@ -136,6 +136,8 @@ class AuctionDatum {
         return ProjectStatus.winner;
       case "LOST":
         return ProjectStatus.lost;
+      case "EXPIRED":
+        return ProjectStatus.expired;
       default:
         return ProjectStatus.onGoing;
     }

@@ -32,10 +32,10 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   bool isUpdateInquiry = false;
 
   List<StatusModel> statusList = [
-    StatusModel(id: 1, name: APPStrings.strNew.tr),
-    StatusModel(id: 2, name: APPStrings.open.tr),
-    StatusModel(id: 2, name: APPStrings.progress.tr),
-    StatusModel(id: 2, name: APPStrings.close.tr),
+    StatusModel(id: 1, name: APPStrings.strNew),
+    StatusModel(id: 2, name: APPStrings.open),
+    StatusModel(id: 2, name: APPStrings.progress),
+    StatusModel(id: 2, name: APPStrings.close),
   ];
 
   ProductModel? selectedProduct;
@@ -61,18 +61,20 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     if (isInitialized) return;
     emit(MakeInquiryReloadState());
     isInitialized = true;
+    event.context.setAppLoading(true);
     setupInitialData();
     await fetchInquiryType(event.context);
     getArgumentsData(event.context);
-    emit(const ToggleMakeInquiryState());
+    emit(const MakeInquiryLoadedState());
+    event.context.setAppLoading(false);
   }
 
   void getArgumentsData(BuildContext context) {
     final routesData = context.routesData;
     B2BCustomListingDataModel? inquiryData = routesData?[RoutesData.inquiryData] as B2BCustomListingDataModel?;
 
-    if (routesData?[RoutesData.inquiryContextId] != null &&
-        routesData?[RoutesData.contextId] != null &&
+    if (routesData?[RoutesData.inquiryContextId] != null ||
+        routesData?[RoutesData.contextId] != null ||
         routesData?[RoutesData.commodity] != null) {
       inquiryContextId = routesData?[RoutesData.inquiryContextId] as String?;
       contextId = routesData?[RoutesData.contextId] as String?;
@@ -88,8 +90,9 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     emailController.text = inquiryData.strEmail ?? '';
     commentController.text = inquiryData.strComment ?? '';
     selectedInquiryType = inquiryTypeList.firstWhereOrNull((type) => type.name == inquiryData.strType);
-
-    StatusModel? selectedStatus = statusList.firstWhereOrNull((status) => status.name.toLowerCase() == inquiryData.status?.value);
+    StatusModel? selectedStatus = statusList.firstWhereOrNull(
+      (status) => status.name.toLowerCase().replaceAll('mob_', '') == inquiryData.status?.value,
+    );
 
     if (selectedStatus != null) {
       this.selectedStatus = selectedStatus;
@@ -151,15 +154,14 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
       ApiKey.name: fullNameController.text,
       ApiKey.email: emailController.text,
       ApiKey.inquiryType: selectedInquiryType?.name,
-      ApiKey.status: selectedStatus?.name.toUpperCase(),
+      ApiKey.status: selectedStatus?.name.replaceAll('mob_', '').toUpperCase(),
       if (!isUpdateInquiry) ApiKey.comments: commentController.text, // Remove conditionally
     };
 
-    if (inquiryContextId != null && contextId != null && commodity != null) {
+    if (inquiryContextId != null || contextId != null || commodity != null) {
       params[ApiKey.inquiryContextId] = inquiryContextId;
       params[ApiKey.contextId] = contextId;
       params[ApiKey.commodity] = commodity;
-      params[ApiKey.comments] = commentController.text;
     }
 
     final repository = AppRepository(context);

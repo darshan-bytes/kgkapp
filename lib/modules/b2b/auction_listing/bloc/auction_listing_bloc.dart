@@ -96,8 +96,8 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
         case FilterType.dateRange:
           if (element.dateRange != null) {
             filters[element.code ?? ''] = [
-              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
+              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
             ];
           }
           break;
