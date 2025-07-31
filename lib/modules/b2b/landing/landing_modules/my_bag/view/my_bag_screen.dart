@@ -665,7 +665,7 @@ class MyBagScreen extends StatelessWidget {
             ),
             SizedBox(height: 24.h),
           ],
-          if (bloc.userType == UserType.b2bUser && bloc.commodity != Commodity.diy)
+          if (bloc.userType == UserType.b2bUser && (bloc.commodity == Commodity.diamond || bloc.commodity == Commodity.gemstone))
             BlocBuilder<MyBagBloc, MyBagState>(
               buildWhen: (previous, current) => current is MyBagPaymentConditionsLoadedState,
               builder: (context, state) {

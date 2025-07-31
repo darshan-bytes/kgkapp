@@ -15,8 +15,8 @@ extension DateTimeExt on DateTime {
     return DateTime(year, month + count, day);
   }
 
-  String dateToStringFormat({required String outputDateFormat}) {
-    DateFormat dateFormat = DateFormat(outputDateFormat, StorageManager().getLocale()?.mobileSymbol);
+  String dateToStringFormat({required String outputDateFormat, bool isWithLanguage = true}) {
+    DateFormat dateFormat = DateFormat(outputDateFormat, isWithLanguage ? StorageManager().getLocale()?.mobileSymbol : null);
     return dateFormat.format(this);
   }
 

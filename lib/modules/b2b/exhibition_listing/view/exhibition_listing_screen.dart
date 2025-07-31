@@ -61,6 +61,9 @@ class ExhibitionListingScreen extends StatelessWidget {
             child: FilterBottomActionBar(
               controller: bloc.paginationScrollController.controller,
               onFilterTap: () {
+                BlocProvider.of<AdvanceSortFilterBloc>(
+                  context,
+                ).add(AddAdvanceSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder:

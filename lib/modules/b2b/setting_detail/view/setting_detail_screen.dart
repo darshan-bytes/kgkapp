@@ -165,6 +165,11 @@ class SettingDetailScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 32.h),
+              const Divider(),
+              ProductDetailsComponentsView(
+                commodity: bloc.productDetails?.commodity ?? Commodity.jewellery,
+                components: bloc.productDetails?.components?.reversed.toList(),
+              ),
               Divider(height: 1.h),
               // _buildSettingDetails(settingDetailBloc, style),
               // const Divider(),

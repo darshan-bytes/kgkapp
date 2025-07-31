@@ -137,7 +137,12 @@ class Jewellery {
       description: json["description"],
       image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
       mobileImage: json["mobile_image"] == null ? null : BannerImage.fromJson(json["mobile_image"]),
-      banner: json["banner"] == null ? [] : List<Banner>.from(json["banner"]!.map((x) => Banner.fromJson(x))),
+      banner:
+          json["banner"] == null
+              ? []
+              : (json["banner"] is List)
+              ? List<Banner>.from(json["banner"]!.map((x) => Banner.fromJson(x)))
+              : [Banner.fromJson(json["banner"] as Map<String, dynamic>)],
       backgroundImage: json["background_image"] == null ? null : BackgroundImage.fromJson(json["background_image"]),
       button1: json["button_1"] == null ? null : Button.fromJson(json["button_1"]),
       button2: json["button_2"] == null ? null : Button.fromJson(json["button_2"]),

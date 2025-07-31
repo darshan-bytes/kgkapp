@@ -50,7 +50,7 @@ class ProductDetailsComponentsView extends StatelessWidget {
         final component = components![index];
         return SmartExpansionTile(
           onExpansionChanged: (value) {},
-          title: SmartText(component.title, style: style.settingSelectionTitleStyle),
+          title: SmartText(component.title?.tr, style: style.settingSelectionTitleStyle),
           children: _buildSubComponentWidgets(component.values, context),
         );
       },
@@ -65,7 +65,7 @@ class ProductDetailsComponentsView extends StatelessWidget {
         bool isUrl = valueElement.value?.isURL ?? false;
         widgets.add(
           _settingWidget(
-            valueElement.title ?? '',
+            (valueElement.mobSubLabel != valueElement.mobSubLabel?.tr ? valueElement.mobSubLabel?.tr : valueElement.title) ?? '',
             isUrl ? APPStrings.clickHeretoView : valueElement.value ?? '',
             context,
             url: isUrl ? valueElement.value : null,

@@ -297,20 +297,24 @@ class Component extends Equatable {
   List<Object?> get props => [title, values];
 }
 
-class ValueElement extends Equatable {
-  const ValueElement({this.title, this.value});
+class ValueElement {
+  ValueElement({required this.title, required this.value, required this.subLabel, required this.mobSubLabel});
 
   final String? title;
   final String? value;
+  final String? subLabel;
+  final String? mobSubLabel;
 
   factory ValueElement.fromJson(Map<String, dynamic> json) {
-    return ValueElement(title: json["title"]?.toString(), value: json["value"]?.toString());
+    return ValueElement(
+      title: json["title"]?.toString(),
+      value: json["value"]?.toString(),
+      subLabel: json["sub_label"]?.toString(),
+      mobSubLabel: json["mob_sub_label"]?.toString(),
+    );
   }
 
-  Map<String, dynamic> toJson() => {"title": title, "value": value};
-
-  @override
-  List<Object?> get props => [title, value];
+  Map<String, dynamic> toJson() => {"title": title, "value": value, "sub_label": subLabel, "mob_sub_label": mobSubLabel};
 }
 
 class StoneElement {

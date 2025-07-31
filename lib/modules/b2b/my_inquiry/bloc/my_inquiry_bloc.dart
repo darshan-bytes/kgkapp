@@ -54,9 +54,6 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
   void _fetchFilterData(BuildContext context, Emitter<MyInquiryState> emit) async {
     if (filterData.isEmpty) {
       await _setupFilters(context);
-
-      ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
-      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
   }
 
@@ -144,7 +141,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
         strProduct: data.contextId ?? '',
         strName: data.name ?? '',
         strEmail: data.email ?? '',
-        strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2) ?? '',
+        strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? '',
         status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
         fields: generateB2BItemFields(data.assignedToDetails),
       );
@@ -209,8 +206,8 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
         case FilterType.dateRange:
           if (element.dateRange != null) {
             filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
-              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
-              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
+              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD, isWithLanguage: false),
             ];
           }
           break;
@@ -237,7 +234,6 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     smartPaginationScrollController.pullToRefresh();
     await fetchMyInquiries(event.context, emit);
     emit(MyInquiryLoadedState());
-    smartPaginationScrollController.isPageLoaded.complete(false);
   }
 
   //_onMyInquiryRemoveEvent

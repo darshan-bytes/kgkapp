@@ -569,6 +569,8 @@ class ProductDetailsScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ProductCompareToggleState,
       builder: (context, state) {
         return Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             if (bloc.canCompare)
               Expanded(
@@ -581,7 +583,8 @@ class ProductDetailsScreen extends StatelessWidget {
                   labelStyle: style.compareProductStyle,
                 ),
               ),
-            if (Utils.getPermissionByModuleName(moduleName: ModuleKey.inquiries)?.create?.allowed == true)
+            if (Utils.getPermissionByModuleName(moduleName: ModuleKey.inquiries)?.create?.allowed == true &&
+                !StorageManager.instance.getIsSkipLogin())
               SelectionButton(
                 height: 42.w,
                 width: 42.w,
@@ -592,7 +595,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     AppRoutes.makeInquiryPage,
                     arguments: {
                       RoutesData.inquiryContextId: bloc.productDetails?.suid,
-                      RoutesData.contextId: bloc.productDetails?.contractNoSkuNo,
+                      RoutesData.contextId: bloc.productDetails?.contractNoSkuNo ?? bloc.productDetails?.productSku,
                       RoutesData.commodity: bloc.productDetails?.commodity?.value,
                     },
                   );

@@ -9,6 +9,7 @@ enum CommentListingPopupMenuOption { edit, remove }
 class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> {
   /// Response model for comments added.
   CommentsAddedResponseModel? commentsAddedResponseModel;
+  List<Comments> commentsList = [];
 
   /// Catalogue and Product IDs for fetching comments.
   String catalogueId = '';
@@ -59,6 +60,8 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
       (commentsAddedResponse) {
         if (commentsAddedResponse != null) {
           commentsAddedResponseModel = commentsAddedResponse;
+          commentsList = commentsAddedResponse.comments ?? [];
+          commentsList.sort((a, b) => DateTime.parse(b.createdAt ?? '').compareTo(DateTime.parse(a.createdAt ?? '')));
         }
       },
     );
