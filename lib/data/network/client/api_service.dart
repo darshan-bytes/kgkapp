@@ -55,6 +55,7 @@ class ApiService implements ApiProvider {
   }) async {
     try {
       if (!await ConnectivityManager().checkInternet()) {
+        BlocProvider.of<AppBloc>(getNavigatorKeyContext).add(ConnectivityChangedEvent(false));
         return Left(ErrorResponse(code: 0, message: APPStrings.checkInternet.tr));
       }
       http.Response response;

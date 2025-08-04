@@ -3,6 +3,7 @@ import 'package:kgk/kgk.dart';
 class FilterData {
   String? name;
   String? code;
+  bool? isMultipleSelection;
   List<SecondaryFilterData>? secondaryFilterData;
   bool? isAdvanceFilter;
   String? inputType;
@@ -16,6 +17,7 @@ class FilterData {
   FilterData({
     this.name,
     this.code,
+    this.isMultipleSelection,
     this.secondaryFilterData,
     this.isAdvanceFilter,
     this.inputType,
@@ -33,6 +35,7 @@ class FilterData {
     return other is FilterData &&
         other.name == name &&
         other.code == code &&
+        other.isMultipleSelection == isMultipleSelection &&
         other.secondaryFilterData == secondaryFilterData &&
         other.isAdvanceFilter == isAdvanceFilter &&
         other.inputType == inputType &&
@@ -48,6 +51,7 @@ class FilterData {
   int get hashCode =>
       name.hashCode ^
       code.hashCode ^
+      isMultipleSelection.hashCode ^
       secondaryFilterData.hashCode ^
       isAdvanceFilter.hashCode ^
       inputType.hashCode ^

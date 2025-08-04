@@ -418,7 +418,9 @@ class DetailColumn extends StatelessWidget {
         SmartText(title, style: style.orderItemLabelStyle),
         SizedBox(height: 4.h),
         isOrderStatus
-            ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
+            ? SmartStatusBadge(
+              currentStatus: ProjectStatus.values.firstWhereOrNull((orderStatus) => orderStatus.value == value) ?? ProjectStatus.expired,
+            )
             : SmartText(
               value.isNullOrEmpty ? APPStrings.dash.tr : value,
               style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,

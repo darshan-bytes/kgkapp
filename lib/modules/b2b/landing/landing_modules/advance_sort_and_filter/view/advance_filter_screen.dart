@@ -23,6 +23,7 @@ class AdvanceFilterScreen extends StatelessWidget {
                   context: context,
                   onApply: (List<FilterData> data) {
                     onApply(data);
+                    context.pop();
                   },
                 ),
               );

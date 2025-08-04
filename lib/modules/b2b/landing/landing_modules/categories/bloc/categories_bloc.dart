@@ -100,7 +100,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
               appBloc.userPermissions?.permissions?.styleLibrary?.list?.allowed == true ||
               appBloc.userPermissions?.permissions?.skuLibrary?.list?.allowed == true);
       bool isDigitalCatalogueEnabled = appBloc.userPermissions?.permissions?.digitalCatalogue?.list?.allowed == true;
-      bool isExhibitionEnabled = appBloc.userPermissions?.permissions?.exhibitions?.view?.allowed == true;
+      bool isExhibitionEnabled = appBloc.userPermissions?.permissions?.exhibitions?.list?.allowed == true;
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
         CategoriesModel(

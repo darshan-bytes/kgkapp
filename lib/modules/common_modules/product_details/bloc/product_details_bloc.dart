@@ -541,7 +541,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             suid: skuLibraryData.suid,
             name: productName,
             jewelleryType: skuLibraryData.jewelleryType,
-            productSku: skuLibraryData.skuNo,
+            productSku: skuLibraryData.skuNo ?? skuLibraryData.contractNoSkuNo,
+            contractNoSkuNo: skuLibraryData.contractNoSkuNo,
             imageUrl:
                 skuLibraryData.multipleFinishedViewImage.isNullOrEmpty ? '' : skuLibraryData.multipleFinishedViewImage[0].imageUrl ?? '',
             components: skuLibraryData.components,

@@ -806,6 +806,7 @@
   "mob_this_product_is_currently_not_in_stock": "This product is currently not in stock",
   "mob_expired": "Expired",
   "mob_preferences_saved": "Preferences Updated Successfully",
+  "mob_d": "d",
   "mob_hrs": "hrs",
   "mob_secs": "secs",
   "mob_working_hours": "Monday – Friday 9 AM – 5 PM",
@@ -877,5 +878,10 @@
   "mob_jewellery_details": "Jewellery Details",
   "mob_inquiry_detail": "Inquiry Detail",
   "mob_type_your_message": "Type your message",
-  "mob_send": "Send"
+  "mob_send": "Send",
+  "mob_karatage": "Karatage",
+  "mob_grams": "Grams",
+  "mob_intl_quality": "Intl. Quality",
+  "mob_no_of_diamonds": "No. of Diamonds",
+  "mob_no_of_color_stones": "No. of Color Stones"
 }
