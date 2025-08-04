@@ -49,7 +49,7 @@ class AuctionListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: _buildDetailColumn(APPStrings.type.tr, model.type, style, stoneTypeImage: stoneTypeImage)),
-                Expanded(child: _buildDetailColumn(APPStrings.bidAmount.tr, model.bidAmount, style)),
+                Expanded(child: _buildDetailColumn(APPStrings.bidAmount.tr, model.bidAmount, style, isAutoSizeText: true)),
               ],
             ),
             SizedBox(height: 16.h),
@@ -63,7 +63,14 @@ class AuctionListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailColumn(String title, String? value, AuctionListItemStyle style, {bool isOrderStatus = false, String? stoneTypeImage}) {
+  Widget _buildDetailColumn(
+    String title,
+    String? value,
+    AuctionListItemStyle style, {
+    bool isOrderStatus = false,
+    String? stoneTypeImage,
+    bool isAutoSizeText = false,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -89,6 +96,7 @@ class AuctionListItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: style.valueStyle,
+                    isAutoSizeText: isAutoSizeText,
                   ),
                 ),
               ],

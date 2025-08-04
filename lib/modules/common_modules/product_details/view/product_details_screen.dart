@@ -941,7 +941,7 @@ class ProductDetailsScreen extends StatelessWidget {
           SmartRichText(
             spans: [
               SmartTextSpan(text: APPStrings.yourBidOf.tr, style: style.auctionTimerStyle),
-              SmartTextSpan(text: " ${bloc.auctionDataModel?.myBidValue} ", style: style.recentBidValueStyle),
+              SmartTextSpan(text: " ${bloc.auctionDataModel?.myBidValue?.setCurrency} ", style: style.recentBidValueStyle),
               SmartTextSpan(text: APPStrings.hasBeenPlaced.tr, style: style.auctionTimerStyle),
             ],
           ),

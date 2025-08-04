@@ -151,13 +151,13 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     return List.generate(orderProductList.length, (index) {
       final product = orderProductList[index];
       return OrderDetailsProductModel(
-        id: product.productProductId,
-        image: product.image,
-        name: product.productDescription,
+        id: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.productId : product.productProductId,
+        image: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.image : product.image,
+        name: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.productDescription : product.productDescription,
         price: product.ourAmount?.setCurrency,
         quantity: product.quantity?.toString(),
-        sku: product.productProductId,
-        suid: product.styleNo,
+        sku: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.productId : product.productProductId,
+        suid: placeOrderResponse?.getCommodity == Commodity.diy ? product.jewellery?.styleNo : product.styleNo,
       );
     });
   }

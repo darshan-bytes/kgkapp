@@ -197,7 +197,12 @@ class DesignListingGridItem extends StatelessWidget {
   ) {
     return [
       if (designModel.strDesignNumber.isNotNullNorEmpty) ...[
-        SmartText(designModel.strDesignNumber, style: style.productNameStyle, maxLines: 2, overflow: TextOverflow.ellipsis),
+        SmartText(
+          designModel.strDesignNumber,
+          style: designListingGridItemStyle.dbfNumberTextStyle,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
         SizedBox(height: 8.h),
       ],
       if (designModel.strDbfNumber.isNotNullNorEmpty) ...[
@@ -205,7 +210,7 @@ class DesignListingGridItem extends StatelessWidget {
           designModel.strDbfNumber,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: designListingGridItemStyle.dbfNumberTextStyle,
+          style: style.productNameStyle,
           isAutoSizeText: true,
         ),
         SizedBox(height: 8.h),

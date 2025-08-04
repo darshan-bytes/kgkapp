@@ -273,6 +273,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
               inputType: filterOption.type,
               filterType: filterOption.getFilterType(filterType: filterOption.type),
               secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+              isMultipleSelection: filterOption.isMultipleSelection ?? false,
             );
             filterData.add(filter);
           }

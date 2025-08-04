@@ -9,6 +9,7 @@ class SkuLibraryListItemDataModel {
     required this.combination,
     required this.componentDetails,
     required this.contractNumber,
+    required this.contractNoSkuNo,
     required this.coordinatorSalesman,
     required this.createdAt,
     required this.cscCode,
@@ -70,6 +71,7 @@ class SkuLibraryListItemDataModel {
   final String? combination;
   final List<SkuComponentDetail> componentDetails;
   final String? contractNumber;
+  final String? contractNoSkuNo;
   final String? coordinatorSalesman;
   final DateTime? createdAt;
   final String? cscCode;
@@ -146,6 +148,7 @@ class SkuLibraryListItemDataModel {
               ? []
               : List<SkuComponentDetail>.from(json["component_details"]!.map((x) => SkuComponentDetail.fromJson(x))),
       contractNumber: json["contract_number"],
+      contractNoSkuNo: json["contract_no_sku_no"],
       coordinatorSalesman: json["coordinator_salesman"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       cscCode: json["csc_code"],
@@ -215,6 +218,7 @@ class SkuLibraryListItemDataModel {
     "combination": combination,
     "component_details": componentDetails.map((x) => x.toJson()).toList(),
     "contract_number": contractNumber,
+    "contract_no_sku_no": contractNoSkuNo,
     "coordinator_salesman": coordinatorSalesman,
     "created_at": createdAt?.toIso8601String(),
     "csc_code": cscCode,

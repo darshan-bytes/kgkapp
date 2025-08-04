@@ -806,6 +806,7 @@
   "mob_this_product_is_currently_not_in_stock": "இந்த தயாரிப்பு தற்போது கையிருப்பில் இல்லை",
   "mob_expired": "காலாவதியானது",
   "mob_preferences_saved": "விருப்பத்தேர்வுகள் வெற்றிகரமாக புதுப்பிக்கப்பட்டன",
+  "mob_d": "d",
   "mob_hrs": "மணி",
   "mob_secs": "வினாடிகள்",
   "mob_working_hours": "திங்கள் - வெள்ளி 9 முதல் 5 மணி",
@@ -877,5 +878,10 @@
   "mob_jewellery_details": "நகை விவரங்கள்",
   "mob_inquiry_detail": "விசாரணை விவரங்கள்",
   "mob_type_your_message": "உங்கள் செய்தியைத் தட்டச்சு செய்யவும்",
-  "mob_send": "அனுப்பு"
+  "mob_send": "அனுப்பு",
+  "mob_karatage": "",
+  "mob_grams": "",
+  "mob_intl_quality": "",
+  "mob_no_of_diamonds": "",
+  "mob_no_of_color_stones": "จำนวนอัญมณีสี"
 }

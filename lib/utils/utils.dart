@@ -452,7 +452,7 @@ class Utils {
     List<String> parts = [];
 
     if (days > 0) {
-      parts.add("$days${"d"}");
+      parts.add("$days${"d".tr}");
     }
     if (hours > 0) {
       parts.add("$hours${"hrs".tr}");
@@ -463,6 +463,7 @@ class Utils {
     if (seconds > 0 || parts.isEmpty) {
       parts.add("$seconds${"secs".tr}");
     }
+
     return parts.join(" : ");
   }
 
