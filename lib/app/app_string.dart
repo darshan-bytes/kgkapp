@@ -1046,4 +1046,5 @@ class APPStrings {
 
   //no_of_color_stones
   static const String noOfColorStones = 'mob_no_of_color_stones';
+  static const String yourDiscountInterpolate = 'mob_your_discount_interpolate';
 }

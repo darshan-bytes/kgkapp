@@ -239,3 +239,65 @@ enum DIYType {
 
   final String value;
 }
+
+enum ProductTagType {
+  inHouse('inHouse'),
+  auction('auction'),
+  exclusive('exclusive'),
+  newArrival('newArrival'),
+  bestSeller('bestSeller'),
+  specialOffer('specialOffer'),
+  discount('discount'),
+  trending('trending'),
+  leavingSoon('leavingSoon');
+
+  const ProductTagType(this.value);
+
+  final String value;
+
+  String get label {
+    switch (this) {
+      case ProductTagType.inHouse:
+        return 'In-House';
+      case ProductTagType.auction:
+        return 'Auction';
+      case ProductTagType.exclusive:
+        return 'Exclusive';
+      case ProductTagType.newArrival:
+        return 'New Arrival';
+      case ProductTagType.bestSeller:
+        return 'Best Seller';
+      case ProductTagType.specialOffer:
+        return 'Special Offer';
+      case ProductTagType.discount:
+        return 'Discount';
+      case ProductTagType.trending:
+        return 'Trending';
+      case ProductTagType.leavingSoon:
+        return 'Leaving Soon';
+    }
+  }
+
+  int get priority {
+    switch (this) {
+      case ProductTagType.newArrival:
+        return 1;
+      case ProductTagType.exclusive:
+        return 2;
+      case ProductTagType.bestSeller:
+        return 3;
+      case ProductTagType.specialOffer:
+        return 4;
+      case ProductTagType.discount:
+        return 5;
+      case ProductTagType.trending:
+        return 6;
+      case ProductTagType.leavingSoon:
+        return 7;
+      case ProductTagType.auction:
+        return 8;
+      case ProductTagType.inHouse:
+        return 9;
+    }
+  }
+}

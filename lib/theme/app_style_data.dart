@@ -1272,4 +1272,8 @@ class LightModeTheme extends AppTheme {
     iconColor: colors.color8C8C8C,
     headerStyle: interMediumBoldTextStyle,
   );
+
+  @override
+  ProductTagStyle get productTagStyle =>
+      ProductTagStyle(discountColor: colors.color50B83C, exclusiveColor: colors.colorEEC200, auctionColor: colors.color4885A3);
 }

@@ -883,5 +883,6 @@
   "mob_grams": "グラム",
   "mob_intl_quality": "",
   "mob_no_of_diamonds": "",
-  "mob_no_of_color_stones": "カラーストーンの数"
+  "mob_no_of_color_stones": "カラーストーンの数",
+  "mob_your_discount_interpolate": "Your discount [{#}%]"
 }

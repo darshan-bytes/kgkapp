@@ -883,5 +883,6 @@
   "mob_grams": "Grams",
   "mob_intl_quality": "Intl. Quality",
   "mob_no_of_diamonds": "No. of Diamonds",
-  "mob_no_of_color_stones": "No. of Color Stones"
+  "mob_no_of_color_stones": "No. of Color Stones",
+  "mob_your_discount_interpolate": "Your discount [{#}%]"
 }

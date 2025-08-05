@@ -259,6 +259,8 @@ abstract class AppTheme {
   ProductPhotoViewGalleryStyle get productPhotoViewGalleryStyle;
 
   CommentListingStyle get commentListingStyle;
+
+  ProductTagStyle get productTagStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2398,4 +2400,15 @@ class CommentListingStyle {
     required this.iconColor,
     required this.headerStyle,
   });
+}
+
+class ProductTagStyle {
+  //50b83c -> Discount
+  //eec200 -> Exclusive
+  //4885A3 -> Auction
+  final Color discountColor;
+  final Color exclusiveColor;
+  final Color auctionColor;
+
+  ProductTagStyle({required this.discountColor, required this.exclusiveColor, required this.auctionColor});
 }
