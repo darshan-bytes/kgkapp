@@ -883,5 +883,6 @@
   "mob_grams": "ग्राम",
   "mob_intl_quality": "",
   "mob_no_of_diamonds": "",
-  "mob_no_of_color_stones": "रंगीन पत्थरों की संख्या"
+  "mob_no_of_color_stones": "रंगीन पत्थरों की संख्या",
+  "mob_your_discount_interpolate": "Your discount [{#}%]"
 }

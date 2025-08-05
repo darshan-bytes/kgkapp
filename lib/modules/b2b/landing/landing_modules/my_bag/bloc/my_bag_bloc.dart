@@ -328,6 +328,17 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       },
       (r) {
         bagOrderSummaryData = r;
+        bagOrderSummaryData?.charges.add(
+          BagOrderCharge(
+            id: bagOrderSummaryData?.percentage?.toString() ?? '',
+            title: APPStrings.yourDiscountInterpolate.tr.interpolate([bagOrderSummaryData?.percentage]),
+            displayValue: bagOrderSummaryData?.afterDiscountSubtractAmount,
+            value: bagOrderSummaryData?.percentage,
+            percentage: bagOrderSummaryData?.percentage,
+            fromPercentage: true,
+            symbol: 'sub',
+          ),
+        );
         variationController.text = (bagOrderSummaryData?.percentage ?? 0).toString();
 
         emit(MyBagOrderSummaryDataLoadedState());

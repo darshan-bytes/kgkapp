@@ -196,4 +196,19 @@ class AppImages {
 
   static const String icDIYRing = 'assets/images/ic_diy_ring.svg';
   static const String icDIYDiamond = 'assets/images/ic_diy_diamond.svg';
+
+  static const String icTagTrail = 'assets/images/ic_tag_trail.svg';
+  static String icAuctionTag = 'assets/images/ic_auction_tag_prefix.svg';
+  static String icNewArrivalTag = 'assets/images/ic_new_arrival_tag_prefix.svg';
+  static String icExclusiveTag = 'assets/images/ic_exclusive_tag_prefix.svg';
+  static String icBestSellerTag = 'assets/images/ic_best_seller_tag_prefix.svg';
+  static String icDiscountTag = 'assets/images/ic_discount_tag_prefix.svg';
+  static String icInHouseTag = 'assets/images/ic_in_house_tag_prefix.svg';
+  // static String icSpecialOfferTag = 'assets/images/ic_special_offer_tag_prefix.svg';
+  // static String icTrendingTag = 'assets/images/ic_trending_tag_prefix.svg';
+  // static String icLeavingSoonTag = 'assets/images/ic_leaving_soon_tag_prefix.svg';
 }
+
+//50b83c -> Discount
+//eec200 -> Exclusive
+//4885A3 -> Auction

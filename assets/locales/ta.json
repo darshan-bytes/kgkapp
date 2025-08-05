@@ -883,5 +883,6 @@
   "mob_grams": "",
   "mob_intl_quality": "",
   "mob_no_of_diamonds": "",
-  "mob_no_of_color_stones": "จำนวนอัญมณีสี"
+  "mob_no_of_color_stones": "จำนวนอัญมณีสี",
+  "mob_your_discount_interpolate": "Your discount [{#}%]"
 }

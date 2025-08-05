@@ -883,5 +883,6 @@
   "mob_grams": "جرامات",
   "mob_intl_quality": "",
   "mob_no_of_diamonds": "",
-  "mob_no_of_color_stones": "عدد الأحجار الكريمة الملونة"
+  "mob_no_of_color_stones": "عدد الأحجار الكريمة الملونة",
+  "mob_your_discount_interpolate": "Your discount [{#}%]"
 }
