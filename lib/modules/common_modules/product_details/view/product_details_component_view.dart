@@ -65,7 +65,10 @@ class ProductDetailsComponentsView extends StatelessWidget {
         bool isUrl = valueElement.value?.isURL ?? false;
         widgets.add(
           _settingWidget(
-            (valueElement.mobSubLabel != valueElement.mobSubLabel?.tr ? valueElement.mobSubLabel?.tr : valueElement.title) ?? '',
+            ((valueElement.mobSubLabel != valueElement.mobSubLabel?.tr && valueElement.mobSubLabel?.tr.isNotNullNorEmpty == true)
+                    ? valueElement.mobSubLabel?.tr
+                    : valueElement.title) ??
+                '',
             isUrl ? APPStrings.clickHeretoView : valueElement.value ?? '',
             context,
             url: isUrl ? valueElement.value : null,

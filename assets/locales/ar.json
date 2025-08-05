@@ -806,8 +806,9 @@
   "mob_this_product_is_currently_not_in_stock": "هذا المنتج حاليا ليس في المخزون",
   "mob_expired": "منتهي الصلاحية",
   "mob_preferences_saved": "تفضيلات تحديث بنجاح",
+  "mob_d": "د",
   "mob_hrs": "ساعات",
-  "mob_secs": "Secs",
+  "mob_secs": "ثانية",
   "mob_working_hours": "الاثنين - الجمعة 9 صباحًا - 5 مساءً",
   "mob_no_internet_connection_or_server_not_reachable": "لا يمكن الوصول إلى اتصال الإنترنت أو الخادم",
   "mob_auction": "مزاد",
@@ -877,5 +878,10 @@
   "mob_jewellery_details": "تفاصيل المجوهرات",
   "mob_inquiry_detail": "تفاصيل الاستفسار",
   "mob_type_your_message": "اكتب رسالتك",
-  "mob_send": "يرسل"
+  "mob_send": "يرسل",
+  "mob_karatage": "العيار",
+  "mob_grams": "جرامات",
+  "mob_intl_quality": "",
+  "mob_no_of_diamonds": "",
+  "mob_no_of_color_stones": "عدد الأحجار الكريمة الملونة"
 }

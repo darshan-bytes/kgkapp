@@ -1039,4 +1039,11 @@ class APPStrings {
   static const String inquiryDetail = 'mob_inquiry_detail';
   static const String typeYourMessage = 'mob_type_your_message';
   static const String send = 'mob_send';
+  static const String karatage = 'mob_karatage';
+  static const String grams = 'mob_grams';
+  static const String intlQuality = 'mob_intl_quality';
+  static const String noOfDiamonds = 'mob_no_of_diamonds';
+
+  //no_of_color_stones
+  static const String noOfColorStones = 'mob_no_of_color_stones';
 }

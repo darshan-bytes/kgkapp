@@ -806,6 +806,7 @@
   "mob_this_product_is_currently_not_in_stock": "この製品は現在在庫がありません",
   "mob_expired": "期限切れ",
   "mob_preferences_saved": "好みが正常に更新されました",
+  "mob_d": "d",
   "mob_hrs": "時間",
   "mob_secs": "秒",
   "mob_working_hours": "月曜日-金曜日9時-17時",
@@ -877,5 +878,10 @@
   "mob_jewellery_details": "ジュエリーの詳細",
   "mob_inquiry_detail": "お問い合わせ内容",
   "mob_type_your_message": "メッセージを入力してください",
-  "mob_send": "送信"
+  "mob_send": "送信",
+  "mob_karatage": "カラット数",
+  "mob_grams": "グラム",
+  "mob_intl_quality": "",
+  "mob_no_of_diamonds": "",
+  "mob_no_of_color_stones": "カラーストーンの数"
 }

@@ -806,6 +806,7 @@
   "mob_this_product_is_currently_not_in_stock": "यह उत्पाद वर्तमान में स्टॉक में नहीं है",
   "mob_expired": "समय समाप्त",
   "mob_preferences_saved": "पसंद सहेजी गई",
+  "mob_d": "डी",
   "mob_hrs": "घंटे",
   "mob_secs": "सेकंड",
   "mob_working_hours": "सोमवार - शुक्रवार 9 बजे सुबह से 5 बजे शाम तक",
@@ -877,5 +878,10 @@
   "mob_jewellery_details": "आभूषण विवरण",
   "mob_inquiry_detail": "जांच की जानकारी",
   "mob_type_your_message": "अपना संदेश टाइप करें",
-  "mob_send": "भेजना"
+  "mob_send": "भेजना",
+  "mob_karatage": "कैरेटेज",
+  "mob_grams": "ग्राम",
+  "mob_intl_quality": "",
+  "mob_no_of_diamonds": "",
+  "mob_no_of_color_stones": "रंगीन पत्थरों की संख्या"
 }

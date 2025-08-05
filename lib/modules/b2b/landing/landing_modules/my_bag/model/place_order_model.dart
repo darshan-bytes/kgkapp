@@ -304,6 +304,8 @@ extension PlaceOrderModelExt on PlaceOrderResponse {
         return ProjectStatus.cancelled;
       case "on-going":
         return ProjectStatus.onGoing;
+      case "delay":
+        return ProjectStatus.delay;
       default:
         return null;
     }

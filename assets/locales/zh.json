@@ -806,6 +806,7 @@
   "mob_this_product_is_currently_not_in_stock": "该产品目前尚未库存",
   "mob_expired": "已到期",
   "mob_preferences_saved": "偏好已保存",
+  "mob_d": "d",
   "mob_hrs": "小时",
   "mob_secs": "秒",
   "mob_working_hours": "周一至周五上午9点至下午5点",
@@ -877,5 +878,10 @@
   "mob_jewellery_details": "珠宝详情",
   "mob_inquiry_detail": "查询详情",
   "mob_type_your_message": "输入您的消息",
-  "mob_send": "发送"
+  "mob_send": "发送",
+  "mob_karatage": "克拉数",
+  "mob_grams": "克",
+  "mob_intl_quality": "",
+  "mob_no_of_diamonds": "",
+  "mob_no_of_color_stones": "彩色宝石的数量"
 }
