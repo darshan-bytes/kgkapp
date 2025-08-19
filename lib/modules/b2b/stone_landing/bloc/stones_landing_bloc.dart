@@ -7,6 +7,7 @@ import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dar
 import '../model/diamonds_strapi_model.dart';
 
 part 'stones_landing_event.dart';
+
 part 'stones_landing_state.dart';
 
 class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
@@ -1392,7 +1393,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         return AuctionListModel(
           id: item.id?.toString() ?? '',
           name: item.commodityName,
-          imageUrl: item.image?.setMediaUrl,
+          imageUrl: item.image,
           redirectTo: RedirectionTo.jewellery.toString(),
         );
       });
