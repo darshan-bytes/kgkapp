@@ -1588,6 +1588,34 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, List<UserIdDetails>>?> jewelleryInternalUsers() async {
+    context.setAppLoading(true);
+    var response = await getMethod<UserIdDetails>(ApiClient.jewelleryInternalUsers);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, List<PresentationSharedUserData>>?> sharedUsersByPresentationNumber(String presentationNumber) async {
+    context.setAppLoading(true);
+    var response = await getMethod<PresentationSharedUserData>(ApiClient.sharedUsersByPresentationNumber(presentationNumber));
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, List<CatalogueSharedUserWrapper>>?> digitalCatalogueShareList(String catalogueId) async {
+    context.setAppLoading(true);
+    var response = await getMethod<CatalogueSharedUserWrapper>(ApiClient.digitalCatalogueShareList(catalogueId));
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> digitalCatalogueShare({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<CommonResponse>(ApiClient.digitalCatalogueShare, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

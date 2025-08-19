@@ -49,3 +49,12 @@ final class PresentationApproveEvent extends PddPreviewEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class NavigateToSharePresentationEvent extends PddPreviewEvent {
+  final BuildContext context;
+
+  const NavigateToSharePresentationEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}

@@ -167,7 +167,7 @@ class ExhibitionImage {
 
   Map<String, dynamic> toJson() => {"id": id, "title": title, "url": url, "mobile_image": mobileImage?.toJson(), "image": image?.toJson()};
 
-  String? get imageUrl => (image ?? mobileImage)?.data?.attributes?.url?.setStrapiMediaUrl;
+  String? get imageUrl => (mobileImage ?? image)?.data?.attributes?.url?.setStrapiMediaUrl;
 }
 
 class ExhibitionImageClass {

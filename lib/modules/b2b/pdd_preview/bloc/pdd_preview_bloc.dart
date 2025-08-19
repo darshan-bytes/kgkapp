@@ -30,6 +30,7 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
     on<VersionHistoryChangeEvent>(_onVersionHistoryChangeEvent);
     on<NavigateToPddVersionHistoryEvent>(_onNavigateToPddVersionHistoryEvent);
     on<PresentationApproveEvent>(_onPresentationApproveEvent);
+    on<NavigateToSharePresentationEvent>(_onNavigateToSharePresentation);
   }
 
   void getRouteData(BuildContext context) async {
@@ -264,5 +265,12 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
   void popWithData(BuildContext context) {
     canPop = true;
     context.pop(arguments: {RoutesData.isNeedToReloadListOnBack: isNeedToReloadListOnBack});
+  }
+
+  Future<void> _onNavigateToSharePresentation(NavigateToSharePresentationEvent event, Emitter<PddPreviewState> emit) async {
+    BlocProvider.of<SharePresentationBloc>(
+      event.context,
+    ).add(SharePresentationInitialEvent(event.context, isPresentation: true, webUrl: presentationId));
+    Utils.showSmartModalBottomSheet(context: event.context, builder: (context) => SharePresentationScreen(webUrl: presentationId));
   }
 }

@@ -9,7 +9,11 @@ class SharePresentationBloc extends Bloc<SharePresentationEvent, SharePresentati
 
   String appBarTitle = "";
   final TextEditingController emailController = TextEditingController();
-  List<UserListModel> userList = [];
+  final FocusNode emailFocusNode = FocusNode();
+  MultipleSearchController controller = MultipleSearchController(allowDuplicateSelection: false, minCharsToShowItems: 0);
+  List<PresentationSharedUserData> userList = [];
+
+  List<UserIdDetails> userIdDetailsList = [];
 
   UserAccessType? selectedGeneralAccessType;
 
@@ -23,10 +27,9 @@ class SharePresentationBloc extends Bloc<SharePresentationEvent, SharePresentati
 
   // People access types
   final List<UserAccessType> arrPeopleAccessType = [
-    UserAccessType(accessType: "Owner"),
-    UserAccessType(accessType: "Editor"),
-    UserAccessType(accessType: "Commenter"),
-    UserAccessType(accessType: "Viewer"),
+    UserAccessType(accessType: "Viewer", code: "viewer"),
+    UserAccessType(accessType: "Editor", code: "editor"),
+    UserAccessType(accessType: "Remove Access?", code: "remove_access", isRemove: true),
   ];
 
   // General access types
@@ -45,43 +48,19 @@ class SharePresentationBloc extends Bloc<SharePresentationEvent, SharePresentati
     selectedGeneralAccessType = arrGeneralAccessType.first;
     emit(const SharePresentationLoadingState());
     emit(SharePresentationTitleLoadedState(appBarTitle));
-    await Future.delayed(const Duration(seconds: 1));
-    userList = [
-      UserListModel(
-        name: "Albert Flores",
-        image: "https://i.ibb.co/729SGNK/Ellipse-10.png",
-        email: "user@domain.com",
-        role: UserRole(roleName: APPStrings.owner.tr, isModifiable: false),
-        userAccessType: arrPeopleAccessType.first,
-      ),
-      UserListModel(
-        name: "Brooklyn Simmons",
-        image: "https://i.ibb.co/fxCNcfr/Ellipse-9.png",
-        email: "user@domain.com",
-        role: UserRole(roleName: APPStrings.viewer.tr),
-        userAccessType: arrPeopleAccessType.last,
-      ),
-      UserListModel(
-        name: "Ralph Edwards",
-        image: "https://i.ibb.co/SRqFmPK/Ellipse-91.png",
-        email: "user@domain.com",
-        role: UserRole(roleName: APPStrings.viewer.tr),
-        userAccessType: arrPeopleAccessType.last,
-      ),
-      UserListModel(
-        name: "Albert Flores",
-        image: "https://i.ibb.co/Cm7hxkk/Ellipse-92.png",
-        email: "user@domain.com",
-        role: UserRole(roleName: APPStrings.editor.tr),
-        userAccessType: arrPeopleAccessType.last,
-      ),
-    ];
+    await fetchUserList(event.context);
+    if (isPresentation) {
+      await fetchSharedUserList(event.context, event.webUrl ?? "");
+    } else {
+      await fetchSharedCatalogueList(event.context, event.webUrl ?? "");
+    }
     emit(const SharePresentationLoadedState());
   }
 
   void _onChangeUserAccessTypeEvent(ChangeUserAccessTypeEvent event, Emitter<SharePresentationState> emit) {
     emit(const SharePresentationReloadState());
-    event.user.userAccessType = event.selectedUserAccessType;
+    //TODO: Update the user access type in the user list
+    // event.user.userAccessType = event.selectedUserAccessType;
     emit(ChangeUserAccessTypeState(event.selectedUserAccessType));
   }
 
@@ -89,5 +68,52 @@ class SharePresentationBloc extends Bloc<SharePresentationEvent, SharePresentati
     emit(const SharePresentationReloadState());
     selectedGeneralAccessType = event.selectedGeneralAccessType;
     emit(ChangeGeneralAccessTypeState(event.selectedGeneralAccessType));
+  }
+
+  Future<void> fetchUserList(BuildContext context) async {
+    final result = await AppRepository(context).jewelleryInternalUsers();
+    result?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+        userIdDetailsList = [];
+      },
+      (r) {
+        userIdDetailsList = r;
+      },
+    );
+  }
+
+  Future<void> fetchSharedUserList(BuildContext context, String presentationNumber) async {
+    final result = await AppRepository(context).sharedUsersByPresentationNumber(presentationNumber);
+    result?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+        userList = [];
+      },
+      (r) {
+        userList = r;
+      },
+    );
+  }
+
+  Future<void> fetchSharedCatalogueList(BuildContext context, String catalogueType) async {
+    final result = await AppRepository(context).digitalCatalogueShareList(catalogueType);
+    result?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+        userList = [];
+      },
+      (r) {
+        userList =
+            r.firstOrNull?.sharedWith.map((e) {
+              return PresentationSharedUserData(
+                accessType: e.isViewer ? 'viewer' : (e.isEditable ? 'editor' : ''),
+                userId: e.id,
+                userIdDetails: e.user,
+              );
+            }).toList() ??
+            [];
+      },
+    );
   }
 }

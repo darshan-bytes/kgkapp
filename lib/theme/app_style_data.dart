@@ -14,31 +14,31 @@ class LightModeTheme extends AppTheme {
 
   @override
   TextStyle get interMediumBoldTextStyle =>
-      TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.w500, fontFamily: AppFonts.interMedium, color: colors.color303538);
+      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500, fontFamily: AppFonts.interMedium, color: colors.color303538);
 
   @override
   TextStyle get interSemiBoldTextStyle =>
-      TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.w600, fontFamily: AppFonts.interSemiBold, color: colors.color303538);
+      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, fontFamily: AppFonts.interSemiBold, color: colors.color303538);
 
   @override
   TextStyle get interBoldTextStyle =>
-      TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.w700, fontFamily: AppFonts.interBold, color: colors.color303538);
+      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700, fontFamily: AppFonts.interBold, color: colors.color303538);
 
   @override
   TextStyle get eBGaramondRegularTextStyle =>
-      TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.w400, fontFamily: AppFonts.eBGaramond, color: colors.color303538);
+      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400, fontFamily: AppFonts.eBGaramond, color: colors.color303538);
 
   @override
   TextStyle get eBGaramondMediumTextStyle =>
-      TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.w500, fontFamily: AppFonts.eBGaramondMedium, color: colors.color303538);
+      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500, fontFamily: AppFonts.eBGaramondMedium, color: colors.color303538);
 
   @override
   TextStyle get eBGaramondSemiBoldTextStyle =>
-      TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.w600, fontFamily: AppFonts.eBGaramondSemiBold, color: colors.color303538);
+      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, fontFamily: AppFonts.eBGaramondSemiBold, color: colors.color303538);
 
   @override
   TextStyle get eBGaramondBoldTextStyle =>
-      TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.w700, fontFamily: AppFonts.eBGaramondBold, color: colors.color303538);
+      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700, fontFamily: AppFonts.eBGaramondBold, color: colors.color303538);
 
   @override
   PrimaryButtonStyle get primaryButtonStyle => PrimaryButtonStyle(
@@ -934,6 +934,7 @@ class LightModeTheme extends AppTheme {
     userEmailTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
     closeIconColor: colors.color303538,
     userRoleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
+    pickedUserBorderColor: colors.colorD3DAE0,
   );
 
   @override

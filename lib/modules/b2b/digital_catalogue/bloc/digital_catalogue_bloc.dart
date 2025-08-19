@@ -128,7 +128,8 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         case FilterType.checkbox:
           List<String?>? selectedCodes = element.secondaryFilterData?.where((e) => e.isSelected).map((e) => e.code).toList();
           if (selectedCodes != null && selectedCodes.isNotEmpty) {
-            filters[ApiKey.dynamicObject]?[element.code ?? ''] = selectedCodes;
+            filters[ApiKey.dynamicObject]?[element.code ?? ''] =
+                element.isMultipleSelection == false ? selectedCodes.join(',') : selectedCodes;
           }
           break;
 
@@ -295,31 +296,47 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   Future<void> _onDigitalCatalogueShareEvent(DigitalCatalogueShareEvent event, Emitter<DigitalCatalogueState> emit) async {
     BuildContext context = event.context;
     DigitalCatalogueListingModel digitalCatalogue = digitalCatalogueList[event.index];
-    String? link = await BlocProvider.of<AppBloc>(
-      context,
-    ).handleShareCatalogue(context: context, productDetails: digitalCatalogue, isShowLoading: true);
-    if (link != null) {
-      Utils.showSmartModalBottomSheet(
-        context: context,
-        enableDrag: false,
-        builder:
-            (sheetContext) => ShareOptionSheet(
-              title: APPStrings.share.tr,
-              onTapQrCode: () async {
-                sheetContext.pop();
-                Utils.showQrCodeDialog(context: context, data: link);
-              },
-              onTapCopy: () async {
-                await Clipboard.setData(ClipboardData(text: link));
-                Utils.showMessage(APPStrings.textCopied.tr);
-              },
-              onTapOther: () async {
-                Utils.onTapShareLink(context: sheetContext, link: link, title: digitalCatalogue.name, imageUrl: digitalCatalogue.image);
-              },
-            ),
-      );
+    final appBloc = BlocProvider.of<AppBloc>(context);
+    final UserType userType = appBloc.userType;
+    if (userType != UserType.internal) {
+      String? link = await appBloc.handleShareCatalogue(context: context, productDetails: digitalCatalogue, isShowLoading: true);
+      if (link != null) {
+        Utils.showSmartModalBottomSheet(
+          context: context,
+          enableDrag: false,
+          builder:
+              (sheetContext) => ShareOptionSheet(
+                title: APPStrings.share.tr,
+                onTapQrCode: () async {
+                  sheetContext.pop();
+                  Utils.showQrCodeDialog(context: context, data: link);
+                },
+                onTapCopy: () async {
+                  await Clipboard.setData(ClipboardData(text: link));
+                  Utils.showMessage(APPStrings.textCopied.tr);
+                },
+                onTapOther: () async {
+                  Utils.onTapShareLink(context: sheetContext, link: link, title: digitalCatalogue.name, imageUrl: digitalCatalogue.image);
+                },
+              ),
+        );
+      } else {
+        Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+      }
     } else {
-      Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+      bool isInitialized = false;
+      Utils.showSmartModalBottomSheet(
+        context: event.context,
+        builder: (context) {
+          if (!isInitialized) {
+            BlocProvider.of<SharePresentationBloc>(
+              event.context,
+            ).add(SharePresentationInitialEvent(event.context, isPresentation: false, webUrl: digitalCatalogue.id));
+            isInitialized = true;
+          }
+          return SharePresentationScreen(webUrl: digitalCatalogue.id, isPresentation: false);
+        },
+      );
     }
   }
 }

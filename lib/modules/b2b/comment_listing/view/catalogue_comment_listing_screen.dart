@@ -41,7 +41,7 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                       id: commentModel.updatedIdDetails?.fullName ?? '',
                       createdAt: commentModel.displayDate ?? '',
                       message: commentModel.message ?? '',
-                      userImage: commentModel.updatedIdDetails?.profilePic ?? '',
+                      userImage: commentModel.updatedIdDetails?.profilePicUrl?.setMediaUrl ?? '',
                       onEditPressed:
                           commentModel.isCreatedByMe
                               ? () {
