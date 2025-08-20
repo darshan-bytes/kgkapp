@@ -22,3 +22,12 @@ final class SelectCompanyListEvent extends CompanyEvent {
   @override
   List<Object> get props => [index];
 }
+
+final class SearchCompanyListEvent extends CompanyEvent {
+  final String searchQuery;
+
+  const SearchCompanyListEvent(this.searchQuery);
+
+  @override
+  List<Object> get props => [searchQuery];
+}
