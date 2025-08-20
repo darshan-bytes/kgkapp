@@ -26,7 +26,6 @@ class BlocGenerator {
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
       BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
-      BlocProvider<PddListingBloc>(create: (_) => PddListingBloc()),
       BlocProvider<ConceptListBloc>(create: (_) => ConceptListBloc()),
       BlocProvider<ProjectListingBloc>(create: (_) => ProjectListingBloc()),
       BlocProvider<DesignBriefsBloc>(create: (_) => DesignBriefsBloc()),
@@ -46,6 +45,7 @@ class BlocGenerator {
       BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc(), lazy: false),
       BlocProvider<AdvanceSortFilterBloc>(create: (_) => AdvanceSortFilterBloc()),
       BlocProvider<MyInquiryBloc>(create: (_) => MyInquiryBloc()),
+      BlocProvider<SharePresentationBloc>(create: (_) => SharePresentationBloc()),
     ];
   }
 }

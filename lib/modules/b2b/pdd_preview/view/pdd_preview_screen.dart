@@ -83,11 +83,7 @@ class PddPreviewScreen extends StatelessWidget {
                 isSelected: false,
                 image: AppImages.icShare,
                 onTap: () {
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    enableDrag: false,
-                    builder: (context) => const SharePresentationScreen(),
-                  );
+                  bloc.add(NavigateToSharePresentationEvent(context: context));
                 },
               ),
             ],

@@ -207,6 +207,10 @@ class CommonResponse<T> {
         return UserPermissions.fromJson(json);
       case const (MyInquiriesModel):
         return MyInquiriesModel.fromJson(json);
+      case const (PresentationSharedUserData):
+        return PresentationSharedUserData.fromJson(json);
+      case const (CatalogueSharedUserWrapper):
+        return CatalogueSharedUserWrapper.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):

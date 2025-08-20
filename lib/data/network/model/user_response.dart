@@ -92,6 +92,8 @@ class UserIdDetails {
     this.companyName,
     this.companySlug,
     this.businessType,
+    this.userId,
+    this.customerId,
   });
 
   String? firstname;
@@ -109,9 +111,9 @@ class UserIdDetails {
   String? customerCode;
   String? companyName;
   String? companySlug;
-
-  //business_type
   String? businessType;
+  String? userId;
+  String? customerId;
 
   factory UserIdDetails.fromJson(Map<String, dynamic> json) {
     return UserIdDetails(
@@ -131,6 +133,8 @@ class UserIdDetails {
       companyName: json["company_name"],
       companySlug: json["company_slug"],
       businessType: json["business_type"]?.toString(),
+      userId: json["user_id"]?.toString(),
+      customerId: json["customer_id"]?.toString(),
     );
   }
 
@@ -151,6 +155,8 @@ class UserIdDetails {
     "company_name": companyName,
     "company_slug": companySlug,
     "business_type": businessType,
+    "user_id": userId,
+    "customer_id": customerId,
   };
 }
 

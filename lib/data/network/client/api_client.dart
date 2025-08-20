@@ -287,6 +287,14 @@ class ApiClient {
   static String inquiryCommentsList(String inquiryId) => '$apiBaseUrl/customer-inquiry/comments/$inquiryId/list';
 
   static const String submitInquiryComment = '$apiBaseUrl/customer-inquiry/comment';
+
+  static const String jewelleryInternalUsers = '$apiBaseUrl/common-modules/jewellery-internal-users/customers';
+
+  static String sharedUsersByPresentationNumber(String presentationNumber) => '$apiBaseUrl/presentations/$presentationNumber/shared-users';
+
+  static String digitalCatalogueShareList(String catalogueIds) => '$apiBaseUrl/digital-catalogue/share/list?catalogueIds=$catalogueIds';
+
+  static const String digitalCatalogueShare = '$apiBaseUrl/digital-catalogue/share';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

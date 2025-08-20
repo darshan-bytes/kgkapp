@@ -57,6 +57,8 @@ class AdvanceSortFilterBloc extends Bloc<AdvanceSortFilterEvent, AdvanceSortFilt
         minMaxValues: item.minMaxValues,
         rangeValues: item.rangeValues,
         subFilterCodes: item.subFilterCodes,
+        isMultipleSelection: item.isMultipleSelection,
+        date: item.date,
       );
 
       List<SecondaryFilterData> secondaryFilterData = [];

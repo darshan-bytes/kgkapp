@@ -1798,6 +1798,7 @@ class SharePresentationStyle {
   final TextStyle userEmailTextStyle;
   final TextStyle userRoleStyle;
   final Color closeIconColor;
+  final Color pickedUserBorderColor;
 
   SharePresentationStyle({
     required this.backgroundColor,
@@ -1808,6 +1809,7 @@ class SharePresentationStyle {
     required this.userEmailTextStyle,
     required this.userRoleStyle,
     required this.closeIconColor,
+    required this.pickedUserBorderColor,
   });
 }
 

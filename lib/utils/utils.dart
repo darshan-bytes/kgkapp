@@ -403,17 +403,6 @@ class Utils {
     }
   }
 
-  /// Pre-caches a list of images by downloading them and storing them in the cache.
-  static Future<void> precacheImageList(List<String> imageUrlList) async {
-    await Future.forEach(imageUrlList, (String imageUrl) async {
-      try {
-        await DefaultCacheManager().downloadFile(imageUrl, force: true);
-      } catch (e) {
-        printWrapped(e.toString());
-      }
-    });
-  }
-
   static Future<void> showLoginRequiredDialog(BuildContext context, {VoidCallback? onDenied, VoidCallback? onApproved}) async {
     await Utils.showSmartModalBottomSheet(
       context: context,

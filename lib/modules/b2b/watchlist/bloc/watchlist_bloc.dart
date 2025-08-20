@@ -69,7 +69,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     );
     watchListingList.clear();
     await fetchWatchlist(event.context, emit, false, 1);
-    _fetchFilterData(event.context, emit);
+    await _fetchFilterData(event.context, emit);
     refreshCompleter.complete(true);
 
     emit(const WatchlistLoadedState());
@@ -324,7 +324,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     }
   }
 
-  void _fetchFilterData(BuildContext context, Emitter<WatchlistState> emit) async {
+  Future<void> _fetchFilterData(BuildContext context, Emitter<WatchlistState> emit) async {
     if (filterData.isEmpty) {
       await _setupFilters(context);
     }
