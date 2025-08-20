@@ -29,13 +29,13 @@ dependencies:
 
   # For API
   dartz: ^0.10.1
-  http: ^1.4.0
+  http: ^1.5.0
 
   # For Device Info
   device_info_plus: ^11.5.0
 
   # For Connectivity
-  connectivity_plus: ^6.1.4
+  connectivity_plus: ^6.1.5
 
   # For Local Storage
   hive: ^2.2.3
@@ -80,7 +80,7 @@ dependencies:
   dotted_border: ^3.1.0
 
   #For Image Pick
-  image_picker: ^1.1.2
+  image_picker: ^1.2.0
 
   #For Permission Handle
   permission_handler: ^12.0.1
@@ -98,18 +98,18 @@ dependencies:
   google_maps_flutter: ^2.12.3
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^30.1.42
+  syncfusion_flutter_sliders: ^30.2.6
 
   #For Calendar
-  syncfusion_flutter_calendar: ^30.1.42
+  syncfusion_flutter_calendar: ^30.2.6
 
-  syncfusion_flutter_charts: ^30.1.42
+  syncfusion_flutter_charts: ^30.2.6
 
   #For QR Code
   qr_flutter: ^4.1.0
 
   #For Share
-  share_plus: ^11.0.0
+  share_plus: ^11.1.0
 
   #For Bounce animation
   flutter_bounceable: ^1.2.0
