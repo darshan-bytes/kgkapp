@@ -135,6 +135,10 @@ class AdvanceSortFilterBloc extends Bloc<AdvanceSortFilterEvent, AdvanceSortFilt
     bool areFiltersCleared = filterData.every((element) {
       if (element.filterType == FilterType.dateRange) {
         return element.dateRange == null;
+      } else if (element.filterType == FilterType.date) {
+        return element.date == null;
+      } else if (element.filterType == FilterType.range) {
+        return element.rangeValues == null;
       }
       return element.secondaryFilterData?.every((secondaryElement) => !secondaryElement.isSelected) ?? true;
     });
@@ -147,6 +151,8 @@ class AdvanceSortFilterBloc extends Bloc<AdvanceSortFilterEvent, AdvanceSortFilt
 
     for (var filter in filterData) {
       filter.dateRange = null;
+      filter.date = null;
+      filter.rangeValues = null;
       filter.secondaryFilterData?.forEach((secondaryFilter) => secondaryFilter.isSelected = false);
     }
     selectedFilterData = filterData.isNotEmpty ? filterData.first : null;
