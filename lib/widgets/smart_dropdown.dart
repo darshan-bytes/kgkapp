@@ -174,7 +174,8 @@ class SmartDropDownView<T> extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(
           maxHeight: context.height * 0.75,
-          minHeight: (context.height * 0.75) - MediaQuery.viewInsetsOf(context).bottom,
+          //REF: https://thekgk.atlassian.net/browse/TA-824
+          // minHeight: (context.height * 0.75) - MediaQuery.viewInsetsOf(context).bottom,
         ),
         decoration: BoxDecoration(
           color: style.backgroundColor,
