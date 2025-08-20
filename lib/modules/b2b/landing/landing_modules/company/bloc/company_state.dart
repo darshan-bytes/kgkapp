@@ -15,13 +15,10 @@ final class CompanyReloadState extends CompanyState {
 }
 
 final class SelectCompanyListState extends CompanyState {
-  final int index;
-  final int oldIndex;
-
-  const SelectCompanyListState(this.index, this.oldIndex);
+  const SelectCompanyListState();
 
   @override
-  List<Object> get props => [index, oldIndex];
+  List<Object> get props => [];
 }
 
 final class CompanyListLoadedState extends CompanyState {
